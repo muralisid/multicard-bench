@@ -53,9 +53,15 @@ def main(argv: list[str] | None = None) -> int:
 
     mod_name, fn_name = REGISTRY[a.experiment]
     mod = __import__(mod_name, fromlist=[fn_name])
+    # The encoder may use every core. Verified on this project: transformer
+    # encoding is bit-identical regardless of thread count, so threading it costs
+    # nothing in reproducibility and saves most of the wall clock. Determinism of
+    # the scoring step is handled where it actually breaks, by accumulating the
+    # similarity products in double precision.
     try:
         import torch
-        torch.set_num_threads(int(_THREADS))
+        torch.set_num_threads(int(os.environ.get(
+            "MCB_TORCH_THREADS", max(1, (os.cpu_count() or 2) // 2))))
     except ImportError:
         pass
     print(f"[mcb] {a.experiment} at {git_sha()} seed={a.seed} threads={_THREADS}")
