@@ -24,6 +24,8 @@ import sys  # noqa: E402
 REGISTRY = {
     "e0_dilution": ("multicard.experiments.e0_dilution", "run"),
     "e1_limit": ("multicard.experiments.e1_limit", "run"),
+    "e1_scifact": ("multicard.experiments.e1_beir", "run"),
+    "e1_nfcorpus": ("multicard.experiments.e1_beir", "run"),
 }
 
 
@@ -55,7 +57,11 @@ def main(argv: list[str] | None = None) -> int:
         pass
     print(f"[mcb] {a.experiment} at {git_sha()} seed={a.seed} threads={_THREADS}")
     fn = getattr(mod, fn_name)
-    fn(n_docs=a.n_docs, queries_per_k=a.queries_per_k, seed=a.seed, model=a.model)
+    kwargs = dict(n_docs=a.n_docs, queries_per_k=a.queries_per_k, seed=a.seed,
+                  model=a.model)
+    if a.experiment.startswith("e1_") and a.experiment != "e1_limit":
+        kwargs["collection"] = a.experiment.removeprefix("e1_")
+    fn(**kwargs)
     return 0
 
 
