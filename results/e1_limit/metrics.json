@@ -1,0 +1,104 @@
+{
+  "experiment": "e1_limit",
+  "dataset": "orionweller/LIMIT-small",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_docs": 46,
+  "n_queries_scored": 1000,
+  "attrs_per_doc_mean": 44.0,
+  "cards_total": 2024,
+  "chunks_total": 186,
+  "chunk_words": 30,
+  "chunk_overlap": 10,
+  "wall_seconds": 1.5,
+  "summary": {
+    "bm25": {
+      "ndcg10": 0.9969894122591996,
+      "recall10": 1.0,
+      "recall2": 0.9905,
+      "success10": 1.0
+    },
+    "dense-pooled": {
+      "ndcg10": 0.3136420249502341,
+      "recall10": 0.4805,
+      "recall2": 0.162,
+      "success10": 0.729
+    },
+    "dense-chunk": {
+      "ndcg10": 0.38955227072138315,
+      "recall10": 0.5495,
+      "recall2": 0.2245,
+      "success10": 0.799
+    },
+    "dense-multicard": {
+      "ndcg10": 0.9876755043519099,
+      "recall10": 0.9965,
+      "recall2": 0.9645,
+      "success10": 0.999
+    },
+    "hybrid-rrf": {
+      "ndcg10": 0.9968976588465818,
+      "recall10": 0.9995,
+      "recall2": 0.9895,
+      "success10": 1.0
+    }
+  },
+  "significance_vs_dense_pooled": {
+    "bm25": {
+      "n": 1000,
+      "mean_a": 0.9969894122591996,
+      "mean_b": 0.3136420249502341,
+      "mean_delta": 0.6833473873089656,
+      "ci_low": 0.6660338247734541,
+      "ci_high": 0.7001472984478662,
+      "p_value": 9.999000099990002e-05,
+      "wins": 975,
+      "ties": 23,
+      "losses": 2,
+      "effect_size": 2.47519392405375,
+      "significant_holm_0.05": true
+    },
+    "dense-chunk": {
+      "n": 1000,
+      "mean_a": 0.38955227072138315,
+      "mean_b": 0.3136420249502341,
+      "mean_delta": 0.07591024577114903,
+      "ci_low": 0.05797352799720525,
+      "ci_high": 0.09379858453513804,
+      "p_value": 9.999000099990002e-05,
+      "wins": 487,
+      "ties": 181,
+      "losses": 332,
+      "effect_size": 0.2648834311275443,
+      "significant_holm_0.05": true
+    },
+    "dense-multicard": {
+      "n": 1000,
+      "mean_a": 0.9876755043519099,
+      "mean_b": 0.3136420249502341,
+      "mean_delta": 0.6740334794016758,
+      "ci_low": 0.6564824029971447,
+      "ci_high": 0.691148906597403,
+      "p_value": 9.999000099990002e-05,
+      "wins": 973,
+      "ties": 20,
+      "losses": 7,
+      "effect_size": 2.3979471342825005,
+      "significant_holm_0.05": true
+    },
+    "hybrid-rrf": {
+      "n": 1000,
+      "mean_a": 0.9968976588465818,
+      "mean_b": 0.3136420249502341,
+      "mean_delta": 0.6832556338963477,
+      "ci_low": 0.6660841147831292,
+      "ci_high": 0.6999700563520198,
+      "p_value": 9.999000099990002e-05,
+      "wins": 975,
+      "ties": 24,
+      "losses": 1,
+      "effect_size": 2.482358882192853,
+      "significant_holm_0.05": true
+    }
+  }
+}

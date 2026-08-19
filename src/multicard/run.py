@@ -23,6 +23,7 @@ import sys  # noqa: E402
 
 REGISTRY = {
     "e0_dilution": ("multicard.experiments.e0_dilution", "run"),
+    "e1_limit": ("multicard.experiments.e1_limit", "run"),
 }
 
 
