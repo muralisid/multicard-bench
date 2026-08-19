@@ -1,10 +1,10 @@
-# AGENT.md: catalog entry for the fn7 research agent
+# AGENT.md: catalog entry for the research agent
 
 Per the recognition test in the agentic-enterprise guide (agents registered with owners and risk tiers; every action attributable and gated or reversible; behavior changes shipped through evals). This entry is the contract; the controls column is binding.
 
 | Field | Value |
 |---|---|
-| Agent | fn7 research agent (rename pending RQ-004 Q5) |
+| Agent | the research agent |
 | Runtime | Claude Code (Anthropic), operated in sessions by the Sponsor |
 | Purpose | Execute the multi-card proof and publication program: provisional spec drafting, clean-room implementation, experiments E1 to E3, paper, publication logistics prep, and the guide case study |
 | Sponsor and Owner | Murali Sid (murali@fn7.io); CODEOWNER on all program repos; the named accountable human |

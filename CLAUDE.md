@@ -1,4 +1,4 @@
-# CLAUDE.md: the fn7 research agent working in multicard-bench
+# CLAUDE.md: the research agent working in multicard-bench
 
 ## What this repo is
 
