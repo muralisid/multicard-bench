@@ -90,8 +90,24 @@ def run(n_docs: int = 4000, queries_per_k: int = 0, seed: int = 13,
                                        1 - target_recall))
     flat_metrics = evaluate_gate(apply_gate(feats[te], flat, order), labels[te], flat)
 
+    # How much of the corpus survives at each recall target? The economic
+    # argument for a two-pass design is proportional to what the gate discards,
+    # so this trade is reported rather than left implicit at one operating point.
+    sweep = []
+    for tr_recall in (0.80, 0.90, 0.95, 0.98, 0.99):
+        f = fit_gate(feats[tr], labels[tr], order, target_recall=tr_recall, seed=seed)
+        m = evaluate_gate(apply_gate(feats[te], f, order), labels[te], f)
+        sweep.append({
+            "target_recall": tr_recall,
+            "recall": round(m["recall_at_threshold"], 4),
+            "precision": round(m["precision_at_threshold"], 4),
+            "survival_rate": round(m["survival_rate"], 4),
+            "discarded_fraction": round(1 - m["survival_rate"], 4),
+        })
+
     result = {
         "experiment": "e2_gate",
+        "recall_cost_sweep": sweep,
         "model": model,
         "seed": seed,
         "n_on_purpose": len(on),
@@ -113,5 +129,9 @@ def run(n_docs: int = 4000, queries_per_k: int = 0, seed: int = 13,
           f"precision {metrics['precision_at_threshold']:.3f}, "
           f"survival {metrics['survival_rate']:.3f}")
     print(f"unweighted baseline ROC-AUC {flat_metrics['roc_auc']:.3f}")
+    print("\nrecall target -> what the gate actually discards:")
+    for r in sweep:
+        print(f"  target {r['target_recall']:.2f}: recall {r['recall']:.3f}, "
+              f"precision {r['precision']:.3f}, discards {r['discarded_fraction']:.1%}")
     print("fitted weights: " + ", ".join(f"{k}={v:+.3f}" for k, v in fit.weights.items()))
     return result
