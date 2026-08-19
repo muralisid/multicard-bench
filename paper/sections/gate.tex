@@ -1,0 +1,56 @@
+A two-pass design rests on a first pass that is cheap enough to run over
+everything and discriminating enough to be worth running. This section tests that
+premise, and finds that it holds while two pieces of received practice around it
+do not.
+
+\paragraph{Setting.}
+On-purpose items are 4,000 messages from a public corporate email corpus;
+off-purpose items are 4,000 Usenet posts from unrelated groups. Provenance gives
+exact labels at no annotation cost. Three anchor sets describe facets of the
+purpose, each item scores the mean of its best few similarities to each set, and
+the combination is fitted on one half and reported on the other.
+
+\paragraph{The gate discriminates.}
+Held-out ROC-AUC is 0.933 and PR-AUC 0.935. A first pass built from nothing but
+embeddings and a handful of anchor phrases separates on-purpose from off-purpose
+material well enough to be a filter rather than a sample.
+
+\paragraph{Fitting the weights is worth almost nothing.}
+Giving the three anchor sets equal weight yields ROC-AUC 0.931 against 0.933 for
+fitted weights. Practitioners tune such weightings at length; on this evidence
+the discrimination comes from having several purpose-specific anchor sets at all,
+not from how they are mixed.
+
+\begin{table}[t]
+\caption{What the gate discards, by recall target. The economic case for a first
+pass is proportional to the fraction it removes, and at the high recall such a
+filter is supposed to hold, that fraction is modest.}
+\label{tab:gate}
+\centering
+\begin{tabular}{rrrr}
+\toprule
+recall target & achieved recall & precision & corpus discarded \\
+\midrule
+0.80 & 0.781 & 0.910 & 57.7\% \\
+0.90 & 0.901 & 0.830 & 46.5\% \\
+0.95 & 0.954 & 0.710 & 33.7\% \\
+0.98 & 0.981 & 0.605 & 20.0\% \\
+0.99 & 0.993 & 0.557 & 12.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The filter is not where the saving comes from.}
+Table~\ref{tab:gate} corrects a common framing. A first pass is usually described
+as discarding most of a corpus, but at recall 0.95 it discards about a third, and
+at recall 0.99 about an eighth. Gating therefore contributes a linear factor
+between one and two, bought directly with recall. The order-of-magnitude saving
+in a two-pass design comes from elsewhere: from attaching generative cost to the
+number of discovered topics rather than to the number of documents. Attributing
+the saving to the filter overstates the filter and understates the substitution.
+
+\paragraph{Caveat.}
+Separating corporate email from Usenet is easier than separating on-purpose from
+off-purpose material inside one corpus, which is what a deployed gate faces.
+These numbers bound discrimination from above; failure here would have been
+disqualifying, and success here is necessary rather than sufficient.
