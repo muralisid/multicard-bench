@@ -24,7 +24,7 @@ Per the recognition test in the agentic-enterprise guide (agents registered with
 
 - LLM API: USD 500 hard cap for the program (costmeter-enforced); USD 10 default per-run cap unless a config raises it with a reason.
 - Human raters (October, venue version): USD 300 to 600, pre-approved ceiling, spent only by Murali.
-- Attorney review option: AUD 1,000 to 2,000, Murali's call in month 1.
+- IP costs (Murali pays directly, never the agent): Indian provisional filing roughly INR 1,600 (natural person, e-filing) plus a Class 3 DSC roughly INR 1,500 to 2,500 if self e-filing, or a registered Indian patent agent roughly INR 5,000 to 15,000 to file the prepared spec; optional month-1 professional review roughly INR 10,000 to 25,000.
 
 ## Kill switch
 
