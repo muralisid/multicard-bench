@@ -33,3 +33,6 @@ FREEZE
 
 # Local pointer to the private program-state repo (path only; never committed)
 .boundary/
+
+# uv lockfile is committed; the venv is not
+.venv/
