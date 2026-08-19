@@ -1,0 +1,56 @@
+The preceding sections concern how a document is represented. This one concerns
+what is selected once candidates are retrieved, which is where the study's second
+claim lives: that the right amount of diversity depends on who consumes the
+results. This section settles the measurable half of that claim, namely what each
+policy actually delivers; the consumer half is future work
+(Section~\ref{sec:limitations}).
+
+\paragraph{Setting.}
+Each of 120 constructed queries is associated with several distinct facts, and
+each candidate document realises at most one of them, so the subtopics a
+selection covers can be counted exactly rather than inferred. Deriving subtopics
+by clustering would have been circular, since one of the policies under test
+selects by cluster. Candidates are gated to the upper half by relevance first, as
+a first pass would do, and each policy then selects ten items.
+
+\begin{table}[t]
+\caption{Selection policies on a constructed coverage task. All coverage gains
+over relevance ranking are significant under Holm-corrected paired permutation
+tests. Relevance differences are within noise, an artefact of the strong gate
+discussed below.}
+\label{tab:diversity}
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+policy & S-recall & $\alpha$-nDCG & nDCG@10 & answerless rate \\
+\midrule
+relevance only          & 0.628 & 0.692 & 0.965 & 0.033 \\
+MMR, $\lambda=0.7$      & 0.666 & 0.723 & 0.964 & 0.032 \\
+MMR, $\lambda=0.3$      & 0.818 & 0.840 & 0.963 & 0.036 \\
+DPP                     & \textbf{0.879} & \textbf{0.877} & 0.963 & 0.035 \\
+cluster round robin     & 0.666 & 0.724 & 0.967 & 0.028 \\
+outlier harvest, 20\%   & 0.716 & 0.734 & 0.966 & 0.031 \\
+outlier harvest, 40\%   & 0.772 & 0.775 & 0.967 & 0.028 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The operator we proposed is not the best operator.}
+Table~\ref{tab:diversity} is not the result we expected. Harvesting the
+low-similarity tail of a gated pool does raise coverage substantially, by 0.144
+S-recall at a 40 percent quota, but a determinantal point process raises it by
+0.251 and maximal marginal relevance at $\lambda=0.3$ by 0.190. We report this
+because it sharpens rather than weakens the position we are arguing for. The
+claim worth defending is not that a particular diversification operator is best;
+it is that the quantity of diversity is a function of the consumer, and that
+function applies to whichever operator a system already has. On this evidence the
+strongest implementation of the idea is a determinantal point process whose
+quality-diversity balance is set per consumer, not the harvest rule.
+
+\paragraph{Under a strong gate, coverage is nearly free.}
+No policy paid a measurable relevance penalty, and the answerless rate did not
+move. Both follow from gating: when the pool is already bounded for relevance,
+spending part of the budget away from its centre costs little and risks little.
+This is an argument for the gate rather than evidence that diversity is free, and
+we would expect the trade to reappear with a weaker filter or a stricter
+relevance criterion.
