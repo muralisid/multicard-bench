@@ -1,6 +1,8 @@
 # CLEANROOM: how this repo was built
 
-This repo is a clean-room implementation. Its only production-derived input is docs/PATTERN_SPEC.md, which restates a publicly published pattern description. The production system that motivated the pattern (referred to publicly only as "a hypothesis validated in the social media domain") was not consulted while writing this code: its source, configuration, taxonomies, weights, and thresholds were never opened during development, and an automated audit greps every public artifact (tree, history, paper source, figures) against a private blocklist of production terms before any push.
+This repo is a clean-room implementation. Its only production-derived input is docs/PATTERN_SPEC.md, a general architectural description carrying no parameters. The production systems that motivated the pattern (referred to only as prior work in the social media domain) were not consulted while writing this code: their source, configuration, taxonomies, weights, and thresholds were never opened during development of anything in this repository, and an automated audit greps every artifact (tree, history, paper source, figures) against a private blocklist of production terms before any push.
+
+For completeness, since the point of this document is candour rather than marketing: the same author reviewed those production systems separately, in a private context, to prepare a patent specification. That review informed no line of code here. What a reader of the paper needs to trust is narrower and is verifiable: no production constant, taxonomy, or threshold appears in this repository, every parameter reported was fit on public data by code committed here, and every number regenerates from a clean clone.
 
 Consequences a reader can rely on:
 

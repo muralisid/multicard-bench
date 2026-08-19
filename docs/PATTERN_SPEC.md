@@ -1,6 +1,6 @@
 # PATTERN_SPEC: the general multi-card pattern (sole clean-room input)
 
-This file is the only production-derived input to this repo. Sources: the publicly published technique entry (agentic-enterprise, techniques/multi-view-embeddings.md, public 2026-08-19) and its glossary definition, plus the consumer-aware selection concept whose public disclosure is gated on the provisional filing receipt (see the note at the end). No weights, thresholds, taxonomies, or implementation internals from any production system appear here; every concrete number in this repo is fit fresh on public data.
+This file is the only production-derived input to this repo. Its content is the general pattern as the owner has approved for eventual publication (the same description carried by the technique entry in the guide repository, which is itself not yet public). No weights, thresholds, taxonomies, or implementation internals from any production system appear here; every concrete number in this repo is fit fresh on public data. Item 7 below carries an additional disclosure gate, described at the end.
 
 ## The pattern
 
