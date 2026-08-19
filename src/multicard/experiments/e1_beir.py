@@ -123,15 +123,13 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
     chunks = enc.encode(chunk_texts)
 
     builder = AnchorCardBuilder(SCIENTIFIC_ASPECTS, enc, spans_per_card=spans_per_card)
+    pairs = [(d, doc_text[d]) for d in doc_ids]
     card_sets = {}
     for method in ("extractive_anchor", "template_frame"):
-        ids, texts, own = [], [], {}
-        for d in doc_ids:
-            for c in builder.build(d, doc_text[d], method=method):
-                ids.append(c.card_id)
-                texts.append(c.text)
-                own[c.card_id] = d
-        card_sets[method] = (ids, enc.encode(texts), own)
+        cards = builder.build_many(pairs, method=method)
+        ids = [c.card_id for c in cards]
+        own = {c.card_id: c.doc_id for c in cards}
+        card_sets[method] = (ids, enc.encode([c.text for c in cards]), own)
 
     bm25 = BM25(doc_ids, [doc_text[d] for d in doc_ids])
     qv = enc.encode([q_text[q] for q in scored_qids]).astype(np.float64)

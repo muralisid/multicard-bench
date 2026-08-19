@@ -95,14 +95,45 @@ class AnchorCardBuilder:
             out[a.key] = top.mean(axis=1)
         return out
 
-    def build(self, doc_id: str, text: str, method: str = "extractive_anchor",
-              span_size: int = 60, span_overlap: int = 20) -> list[Card]:
+    def _spans_for(self, text: str, span_size: int, span_overlap: int) -> list[str]:
         spans = sentences(text)
         if len(spans) < 2:
             spans = windows(text, span_size, span_overlap) or [text]
-        vecs = self.encoder.encode(spans).astype(np.float64)
-        scores = self._aspect_scores(vecs)
+        return spans
 
+    def build_many(self, docs: list[tuple[str, str]], method: str = "extractive_anchor",
+                   span_size: int = 60, span_overlap: int = 20) -> list[Card]:
+        """Build cards for a whole corpus in one batched encoder pass.
+
+        Encoding document by document is correct but slow: the per-call overhead
+        dominates once there are thousands of documents, and it fragments the
+        embedding cache into thousands of tiny files. Here every span in the
+        corpus is encoded together and then split back out by document, which is
+        the same computation with one call instead of thousands.
+        """
+        all_spans: list[str] = []
+        bounds: list[tuple[str, int, int]] = []
+        for doc_id, text in docs:
+            spans = self._spans_for(text, span_size, span_overlap)
+            bounds.append((doc_id, len(all_spans), len(all_spans) + len(spans)))
+            all_spans.extend(spans)
+
+        vecs = self.encoder.encode(all_spans).astype(np.float64)
+
+        cards: list[Card] = []
+        for doc_id, lo, hi in bounds:
+            cards.extend(self._cards_from(doc_id, all_spans[lo:hi], vecs[lo:hi], method))
+        return cards
+
+    def build(self, doc_id: str, text: str, method: str = "extractive_anchor",
+              span_size: int = 60, span_overlap: int = 20) -> list[Card]:
+        spans = self._spans_for(text, span_size, span_overlap)
+        vecs = self.encoder.encode(spans).astype(np.float64)
+        return self._cards_from(doc_id, spans, vecs, method)
+
+    def _cards_from(self, doc_id: str, spans: list[str], vecs: np.ndarray,
+                    method: str) -> list[Card]:
+        scores = self._aspect_scores(vecs)
         cards: list[Card] = []
         for a in self.aspects:
             s = scores[a.key]
@@ -117,7 +148,7 @@ class AnchorCardBuilder:
                               aspect=a.key, text=body, method=method))
         if not cards:  # never leave an item unrepresented
             cards.append(Card(card_id=f"{doc_id}##fallback", doc_id=doc_id,
-                              aspect="fallback", text=text[:1500],
+                              aspect="fallback", text=" ".join(spans)[:1500],
                               method=method))
         return cards
 
