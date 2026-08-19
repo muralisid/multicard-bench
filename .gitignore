@@ -1,0 +1,35 @@
+# Data is downloaded by script, never committed, never redistributed
+data/
+!data/README.md
+
+# Caches (embeddings, LLM responses) are local checkpoints
+cache/
+*.npz
+*.sqlite
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Secrets and local env
+.env
+.env.*
+
+# Paper build artifacts (main.pdf is built by CI/latexmk; .bbl IS committed for arXiv)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# OS
+.DS_Store
+
+# Kill switch marker is never committed
+FREEZE
+
+# Local pointer to the private program-state repo (path only; never committed)
+.boundary/
