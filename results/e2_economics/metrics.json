@@ -1,0 +1,28 @@
+{
+  "experiment": "e2_economics",
+  "corpus": "enron",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "gate_quantile": 0.5,
+  "K_vs_N_exponent": 0.0557675696988782,
+  "cost_ratio_vs_N_exponent": 0.46535116624252143,
+  "wall_seconds": 70.2,
+  "rows": [
+    {
+      "n_documents": 500,
+      "survivors": 250,
+      "survival_rate": 0.5,
+      "clusters_K": 2,
+      "generative_calls_two_pass": 2,
+      "generative_calls_full_llm": 500,
+      "encoder_tokens": 159797,
+      "two_pass_generative_tokens_in": 271,
+      "full_llm_generative_tokens_in": 159797,
+      "two_pass_usd": 0.000123,
+      "full_llm_usd": 0.03998,
+      "two_pass_usd_per_1k": 0.000246,
+      "full_llm_usd_per_1k": 0.079959,
+      "cost_ratio": 325.0406504065041
+    }
+  ]
+}

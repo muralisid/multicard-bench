@@ -27,6 +27,7 @@ REGISTRY = {
     "e1_scifact": ("multicard.experiments.e1_beir", "run"),
     "e1_nfcorpus": ("multicard.experiments.e1_beir", "run"),
     "e2_economics": ("multicard.experiments.e2_economics", "run"),
+    "e3_diversity": ("multicard.experiments.e3_diversity", "run"),
 }
 
 

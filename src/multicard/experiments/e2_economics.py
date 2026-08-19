@@ -108,12 +108,19 @@ def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
               f"ratio {row['cost_ratio']:.1f}x")
 
     # Does K grow sublinearly with N? Fit K ~ N^beta on the log scale.
+    # A single corpus size cannot support a slope, so refuse to report one rather
+    # than emit a fit through one point.
     ns = np.array([r["n_documents"] for r in rows], dtype=float)
     ks = np.array([max(1, r["clusters_K"]) for r in rows], dtype=float)
-    beta = float(np.polyfit(np.log(ns), np.log(ks), 1)[0])
-
     ratios = np.array([r["cost_ratio"] for r in rows], dtype=float)
-    ratio_slope = float(np.polyfit(np.log(ns), np.log(ratios), 1)[0])
+    if len(rows) < 3:
+        beta = float("nan")
+        ratio_slope = float("nan")
+        print(f"\nonly {len(rows)} corpus size(s) ran; scaling exponents need at "
+              f"least 3. Pass --n-docs large enough to reach several sizes.")
+    else:
+        beta = float(np.polyfit(np.log(ns), np.log(ks), 1)[0])
+        ratio_slope = float(np.polyfit(np.log(ns), np.log(ratios), 1)[0])
 
     result = {
         "experiment": "e2_economics",
@@ -128,6 +135,7 @@ def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
     }
     (out / "metrics.json").write_text(json.dumps(result, indent=2))
 
-    print(f"\nclusters grow as N^{beta:.3f} (sublinear if below 1.0)")
-    print(f"cost advantage grows as N^{ratio_slope:.3f} (widening if above 0)")
+    if len(rows) >= 3:
+        print(f"\nclusters grow as N^{beta:.3f} (sublinear if below 1.0)")
+        print(f"cost advantage grows as N^{ratio_slope:.3f} (widening if above 0)")
     return result
