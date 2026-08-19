@@ -1,0 +1,98 @@
+\pdfoutput=1
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{microtype}
+% hyperref: llncs ships an outdated compatibility path that breaks against the
+% current hyperref (undefined \Hy@pdfmajorversion). The draft builds without it;
+% revisit before camera-ready, when Springer supplies its own class bundle.
+%\usepackage[hidelinks]{hyperref}
+
+% Anonymised for double-blind review; set to false for the preprint.
+\newif\ifanon
+\anontrue
+
+\begin{document}
+
+\title{Multi-Card Retrieval: Purpose-Specific Embedding Views for Aspect-Rich Corpora}
+
+\ifanon
+  \author{Anonymous}
+  \institute{Anonymous}
+\else
+  \author{Muralidhar Siddavatam\orcidID{0000-0000-0000-0000}}
+  \institute{fn7, Hyderabad, India\\ \email{murali@fn7.io}}
+\fi
+
+\maketitle
+
+\begin{abstract}
+A document that covers several distinct matters is usually indexed as one dense
+vector, which averages those matters together. We quantify the resulting loss and
+show how to avoid it cheaply. On a controlled corpus in which each document
+carries exactly $k$ near-orthogonal aspects, the similarity between an
+aspect-directed query and a pooled document vector decays as $k^{-0.32}$ while
+the maximum over per-aspect embeddings stays flat, and retrieval quality follows:
+at $k=10$, nDCG@10 falls from 0.682 to 0.273 under pooling but holds at 0.672
+under per-aspect cards. On the LIMIT capacity benchmark, where single-vector
+retrieval is known to fail, the decisive comparison is against chunking rather
+than against pooling: splitting the same text into fixed windows lifts nDCG@10 by
+0.076, while splitting it into purpose-aligned cards lifts it by 0.674. The
+benefit therefore comes from aligning the unit of representation with the unit
+the query asks about, not from storing more vectors per document. We report the
+storage multiplier each corpus actually incurs, and we release the code, the
+seeds, and every per-query score.
+\keywords{Dense retrieval \and Multi-vector representations \and Aspect-based
+retrieval \and Reproducibility}
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+% TODO(G4): motivate from the enterprise problem, keep to 1 page in LNCS.
+Enterprise corpora are full of documents that are about several things at once.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+  \item A measurement of aspect dilution on a controlled corpus, giving a fitted
+    decay exponent that is milder than the orthogonality argument predicts
+    (Section~\ref{sec:dilution}).
+  \item Evidence that purpose alignment, not embedding count, drives the benefit,
+    via a chunking control on identical source text (Section~\ref{sec:limit}).
+  \item An open, seeded, single-command reproduction of every number reported.
+\end{enumerate}
+
+\section{Related work}
+\label{sec:related}
+
+% TODO(G4): multi-vector retrieval (late interaction); multi-representation
+% indexing; embedding capacity limits; diversification; cost-efficient pipelines.
+% Every citation must be verified by the citation checker before submission.
+
+\section{Aspect dilution}
+\label{sec:dilution}
+
+\input{sections/dilution}
+
+\section{Capacity: does alignment or count explain the gain?}
+\label{sec:limit}
+
+\input{sections/limit}
+
+\section{Limitations}
+\label{sec:limitations}
+
+\input{sections/limitations}
+
+\section{Reproducibility}
+\label{sec:repro}
+
+\input{sections/reproducibility}
+
+\bibliographystyle{splncs04}
+\bibliography{refs}
+
+\end{document}

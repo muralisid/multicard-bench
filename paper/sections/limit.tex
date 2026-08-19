@@ -1,0 +1,56 @@
+The previous section compares cards against a single pooled vector, which leaves
+an obvious objection open: cards store more vectors per document, so perhaps
+capacity alone explains the gain and any decomposition would do. This section
+answers that objection with a control.
+
+\paragraph{Setting.}
+LIMIT~\cite{weller2025limit} is constructed to expose the representational
+ceiling of single-vector retrieval. Each document names a person and lists the
+things they like; each query asks who likes one specific thing. The small variant
+has 46 documents, 44.0 attributes each, and 1{,}000 queries, so the task looks
+trivial and yet defeats dense retrievers. It also hands us an unambiguous aspect
+decomposition, which makes it the sharpest available test of whether alignment
+matters. We compare five systems, all scored at document level: BM25; a pooled
+dense vector; the same text cut into 30-word windows with 10-word overlap
+(186 chunks); the same text cut into per-attribute cards (2{,}024 cards); and
+reciprocal rank fusion of the card system with BM25.
+
+\begin{table}[t]
+\caption{LIMIT-small. Deltas are against the pooled dense baseline, paired
+permutation with Holm correction over 1{,}000 queries. Chunking and carding both
+raise the embedding count from one per document to many; only carding recovers
+the lost performance.}
+\label{tab:limit}
+\centering
+\begin{tabular}{lrrrrl}
+\toprule
+system & nDCG@10 & R@2 & R@10 & $\Delta$ vs pooled & $p$ \\
+\midrule
+BM25                       & 0.997 & 0.991 & 1.000 & $+0.683$ & $<0.001$ \\
+dense, pooled              & 0.314 & 0.162 & 0.480 & baseline & \\
+dense, 30-word chunks      & 0.390 & 0.225 & 0.549 & $+0.076$ & $<0.001$ \\
+dense, per-aspect cards    & 0.988 & 0.965 & 0.997 & $+0.674$ & $<0.001$ \\
+cards $\oplus$ BM25 (RRF)  & 0.997 & 0.990 & 1.000 & $+0.683$ & $<0.001$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Alignment, not count.}
+Table~\ref{tab:limit} separates the two explanations. Chunking multiplies the
+embedding budget and recovers 0.076 nDCG@10. Carding multiplies the same budget
+and recovers 0.674, roughly nine times as much, from identical source text under
+an identical encoder. The difference between the two is only where the boundaries
+fall: a 30-word window spans several attributes and dilutes each of them in the
+same way the pooled vector does, whereas a card corresponds to exactly the unit a
+query names. Capacity is necessary and not sufficient; the decomposition has to
+match the query distribution.
+
+\paragraph{What this result does not show.}
+LIMIT supplies a perfect decomposition for free, and its queries are effectively
+exact-attribute lookups, which is why BM25 wins outright and the hybrid only
+matches it. Real corpora arrive undecomposed, the taxonomy must be designed and
+may be misaligned, and the honest reading of this table is as an upper bound on
+what alignment can buy rather than as an estimate of what it will buy. We also
+note the cost: 44 cards per document here, far above the small constant that the
+pattern implies elsewhere, so the storage multiplier is a property of the corpus
+and must be reported per corpus rather than assumed.

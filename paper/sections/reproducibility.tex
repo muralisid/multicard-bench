@@ -1,0 +1,15 @@
+Every number in this paper is produced by one command per experiment against
+committed code and seeds, and every per-query score is released alongside the
+aggregates so that the significance tests can be recomputed independently.
+
+Determinism is enforced rather than assumed: two seeded runs must produce
+byte-identical per-query output, which is checked in the repository. Reaching
+that required accumulating similarity in double precision, because on some
+platforms a single-precision matrix product varies by around $10^{-8}$ between
+runs with the reduction order, enough to move a recorded value across a rounding
+boundary.
+
+Metric implementations are covered by hand-worked golden tests, and the selection
+policies by property tests, for example that maximal marginal relevance with
+$\lambda = 1$ reduces exactly to relevance ranking and that reciprocal rank fusion
+is invariant to the order of its input lists.
