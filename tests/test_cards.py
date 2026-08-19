@@ -53,7 +53,7 @@ def test_raw_chunks_have_no_aspect_structure():
 
 def test_anchor_builder_routes_spans_to_the_right_aspect():
     enc = FakeEncoder()
-    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.1)
+    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.1, partition=False)
     text = ("The contract language needs review by counsel today. "
             "Can we move the meeting to tomorrow afternoon please.")
     cards = {c.aspect: c.text for c in b.build("d1", text)}
@@ -63,7 +63,7 @@ def test_anchor_builder_routes_spans_to_the_right_aspect():
 
 def test_template_frame_names_the_aspect_in_the_text():
     enc = FakeEncoder()
-    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.1)
+    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.1, partition=False)
     text = "The contract language needs review by counsel today soon."
     cards = b.build("d1", text, method="template_frame")
     legal = [c for c in cards if c.aspect == "legal"][0]
@@ -72,6 +72,35 @@ def test_template_frame_names_the_aspect_in_the_text():
 
 def test_items_matching_no_aspect_still_get_a_card():
     enc = FakeEncoder()
-    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.9)
+    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.9, partition=False)
     cards = b.build("d1", "Completely unrelated text about gardening and weather.")
     assert len(cards) == 1 and cards[0].aspect == "fallback"
+
+
+def test_partition_mode_keeps_every_span():
+    """The cards together must contain the whole document.
+
+    Losing text is the failure that made a real-corpus comparison meaningless:
+    a lossy card set competing against lossless chunks measures information loss,
+    not purpose alignment.
+    """
+    enc = FakeEncoder()
+    b = AnchorCardBuilder(ASPECTS, enc, partition=True)
+    text = ("The contract language needs review by counsel today. "
+            "Can we move the meeting to tomorrow afternoon please. "
+            "An unrelated sentence about gardening and the weather outside.")
+    cards = b.build("d1", text)
+    card_words = set(" ".join(c.text for c in cards).lower().split())
+    doc_words = set(text.lower().split())
+    assert doc_words <= card_words, "partition mode dropped part of the document"
+
+
+def test_lossy_mode_is_lossy_and_that_is_the_point_of_the_ablation():
+    enc = FakeEncoder()
+    b = AnchorCardBuilder(ASPECTS, enc, spans_per_card=1, floor=0.0, partition=False)
+    text = ("The contract language needs review by counsel today. "
+            "Can we move the meeting to tomorrow afternoon please. "
+            "An unrelated sentence about gardening and the weather outside.")
+    cards = b.build("d1", text)
+    card_words = set(" ".join(c.text for c in cards).lower().split())
+    assert not set(text.lower().split()) <= card_words

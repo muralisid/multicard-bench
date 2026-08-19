@@ -74,7 +74,7 @@ SCIENTIFIC_ASPECTS = [
 ]
 
 SYSTEMS = ["bm25", "dense-pooled", "dense-chunk", "dense-multicard-extractive",
-           "dense-multicard-template", "hybrid-rrf"]
+           "dense-multicard-template", "dense-multicard-lossy", "hybrid-rrf"]
 
 
 def _load(collection: str):
@@ -122,11 +122,16 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
             chunk_own[c.card_id] = d
     chunks = enc.encode(chunk_texts)
 
-    builder = AnchorCardBuilder(SCIENTIFIC_ASPECTS, enc, spans_per_card=spans_per_card)
+    builder = AnchorCardBuilder(SCIENTIFIC_ASPECTS, enc, spans_per_card=spans_per_card,
+                                partition=True)
+    lossy = AnchorCardBuilder(SCIENTIFIC_ASPECTS, enc, spans_per_card=spans_per_card,
+                              partition=False)
     pairs = [(d, doc_text[d]) for d in doc_ids]
     card_sets = {}
-    for method in ("extractive_anchor", "template_frame"):
-        cards = builder.build_many(pairs, method=method)
+    for method in ("extractive_anchor", "template_frame", "lossy_topspans"):
+        src = lossy if method == "lossy_topspans" else builder
+        cards = src.build_many(pairs, method=("extractive_anchor"
+                                              if method == "lossy_topspans" else method))
         ids = [c.card_id for c in cards]
         own = {c.card_id: c.doc_id for c in cards}
         card_sets[method] = (ids, enc.encode([c.text for c in cards]), own)
@@ -158,6 +163,9 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
             "dense-multicard-template": unit_rank(
                 card_sets["template_frame"][0], sim_cards["template_frame"][qi],
                 card_sets["template_frame"][2], depth * 5),
+            "dense-multicard-lossy": unit_rank(
+                card_sets["lossy_topspans"][0], sim_cards["lossy_topspans"][qi],
+                card_sets["lossy_topspans"][2], depth * 5),
         }
         ranks["hybrid-rrf"] = rrf([ranks["dense-multicard-extractive"], ranks["bm25"]], k=60)
 

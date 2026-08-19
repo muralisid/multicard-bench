@@ -36,7 +36,8 @@ SIZES = [500, 1000, 2000, 5000, 10000, 20000]
 
 def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
         model: str = "sentence-transformers/all-MiniLM-L6-v2",
-        gate_quantile: float = 0.5, out_dir: str = "results/e2_economics") -> dict:
+        gate_quantile: float = 0.5, min_cluster_size: int | None = None,
+        out_dir: str = "results/e2_economics") -> dict:
     set_seed(seed)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -76,8 +77,16 @@ def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
         survivors = [t for t, k in zip(texts, keep) if k]
         surv_vecs = vecs[keep]
 
-        clusters = discover(surv_vecs, seed=seed)
+        clusters = discover(surv_vecs, min_cluster_size=min_cluster_size, seed=seed)
         payloads = summarise_for_naming(clusters, survivors)
+        # What fraction of the survivors ends up inside a named topic? A cost
+        # ratio means nothing without this: naming two clusters that swallow the
+        # whole corpus produces one label, and naming many small clusters leaves
+        # most of the corpus uncovered. Either way the cheap design is not doing
+        # the same job as the expensive one, and the ratio must be read per unit
+        # of coverage rather than per document.
+        clustered = sum(len(c.members) for c in clusters)
+        coverage = clustered / max(1, len(survivors))
         payload_texts = [
             "Name this topic.\nKeywords: " + ", ".join(p["keywords"])
             + "\nExamples:\n" + "\n".join(p["examples"])
@@ -101,11 +110,16 @@ def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
             "two_pass_usd_per_1k": tp["usd_per_1k_docs"],
             "full_llm_usd_per_1k": fl["usd_per_1k_docs"],
             "cost_ratio": (fl["usd"] / tp["usd"]) if tp["usd"] > 0 else float("inf"),
+            "min_cluster_size": min_cluster_size,
+            "topic_coverage_of_survivors": round(coverage, 4),
+            "noise_fraction": round(1 - coverage, 4),
+            "documents_per_topic": round(clustered / max(1, len(clusters)), 1),
         }
         rows.append(row)
         print(f"N={n:>6}  survivors={row['survivors']:>6}  K={row['clusters_K']:>4}  "
+              f"coverage={coverage:>6.1%}  docs/topic={row['documents_per_topic']:>7.1f}  "
               f"two-pass ${tp['usd']:.4f}  full-LLM ${fl['usd']:.4f}  "
-              f"ratio {row['cost_ratio']:.1f}x")
+              f"ratio {row['cost_ratio']:.0f}x")
 
     # Does K grow sublinearly with N? Fit K ~ N^beta on the log scale.
     # A single corpus size cannot support a slope, so refuse to report one rather

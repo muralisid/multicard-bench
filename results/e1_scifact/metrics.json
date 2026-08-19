@@ -1,0 +1,164 @@
+{
+  "experiment": "e1_scifact",
+  "collection": "scifact",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_docs": 5183,
+  "n_queries_scored": 300,
+  "chunks_total": 28440,
+  "cards_total": 14333,
+  "cards_per_doc": 2.7653868415975302,
+  "chunks_per_doc": 5.487169592899865,
+  "wall_seconds": 851.8,
+  "summary": {
+    "bm25": {
+      "ndcg10": 0.6616913885341652,
+      "recall10": 0.7739444444444444,
+      "recall100": 0.8758888888888888,
+      "success10": 0.7966666666666666,
+      "judged10": 0.086
+    },
+    "dense-pooled": {
+      "ndcg10": 0.6450816521455776,
+      "recall10": 0.7833333333333333,
+      "recall100": 0.925,
+      "success10": 0.7933333333333333,
+      "judged10": 0.08833333333333332
+    },
+    "dense-chunk": {
+      "ndcg10": 0.6725833750486386,
+      "recall10": 0.8033333333333333,
+      "recall100": 0.936,
+      "success10": 0.81,
+      "judged10": 0.09033333333333332
+    },
+    "dense-multicard-extractive": {
+      "ndcg10": 0.6354252566144677,
+      "recall10": 0.777888888888889,
+      "recall100": 0.9233333333333333,
+      "success10": 0.7866666666666666,
+      "judged10": 0.08766666666666666
+    },
+    "dense-multicard-template": {
+      "ndcg10": 0.6342126706192266,
+      "recall10": 0.7801111111111111,
+      "recall100": 0.9216666666666666,
+      "success10": 0.79,
+      "judged10": 0.08766666666666666
+    },
+    "dense-multicard-lossy": {
+      "ndcg10": 0.4520034380363661,
+      "recall10": 0.5986111111111111,
+      "recall100": 0.7925,
+      "success10": 0.62,
+      "judged10": 0.06699999999999999
+    },
+    "hybrid-rrf": {
+      "ndcg10": 0.6847726812041913,
+      "recall10": 0.8158888888888889,
+      "recall100": 0.9483333333333334,
+      "success10": 0.8266666666666667,
+      "judged10": 0.092
+    }
+  },
+  "significance": {
+    "bm25": {
+      "n": 300,
+      "mean_a": 0.6616913885341652,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": 0.016609736388587634,
+      "ci_low": -0.024074806435490922,
+      "ci_high": 0.05576713795921254,
+      "p_value": 0.41775822417758224,
+      "wins": 73,
+      "ties": 160,
+      "losses": 67,
+      "effect_size": 0.04792956118067741,
+      "significant_holm_0.05": false
+    },
+    "dense-chunk": {
+      "n": 300,
+      "mean_a": 0.6725833750486386,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": 0.027501722903061014,
+      "ci_low": 0.0005755068770535044,
+      "ci_high": 0.054278215596083285,
+      "p_value": 0.05039496050394961,
+      "wins": 66,
+      "ties": 183,
+      "losses": 51,
+      "effect_size": 0.11463172463805925,
+      "significant_holm_0.05": false
+    },
+    "dense-multicard-extractive": {
+      "n": 300,
+      "mean_a": 0.6354252566144677,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": -0.009656395531109852,
+      "ci_low": -0.03543667820906756,
+      "ci_high": 0.016691392069406973,
+      "p_value": 0.4784521547845215,
+      "wins": 40,
+      "ties": 203,
+      "losses": 57,
+      "effect_size": -0.041820841499997534,
+      "significant_holm_0.05": false
+    },
+    "dense-multicard-template": {
+      "n": 300,
+      "mean_a": 0.6342126706192266,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": -0.010868981526351029,
+      "ci_low": -0.037085971907778764,
+      "ci_high": 0.015359475873902205,
+      "p_value": 0.42455754424557546,
+      "wins": 41,
+      "ties": 201,
+      "losses": 58,
+      "effect_size": -0.04696732362988898,
+      "significant_holm_0.05": false
+    },
+    "dense-multicard-lossy": {
+      "n": 300,
+      "mean_a": 0.4520034380363661,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": -0.19307821410921144,
+      "ci_low": -0.23684411676646164,
+      "ci_high": -0.1500869585774713,
+      "p_value": 9.999000099990002e-05,
+      "wins": 35,
+      "ties": 137,
+      "losses": 128,
+      "effect_size": -0.5091066239190094,
+      "significant_holm_0.05": true
+    },
+    "hybrid-rrf": {
+      "n": 300,
+      "mean_a": 0.6847726812041913,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": 0.03969102905861381,
+      "ci_low": 0.008552594922330455,
+      "ci_high": 0.07013887096135872,
+      "p_value": 0.012198780121987801,
+      "wins": 76,
+      "ties": 179,
+      "losses": 45,
+      "effect_size": 0.1466365035385734,
+      "significant_holm_0.05": false
+    },
+    "multicard_vs_chunk": {
+      "n": 300,
+      "mean_a": 0.6354252566144677,
+      "mean_b": 0.6725833750486386,
+      "mean_delta": -0.03715811843417086,
+      "ci_low": -0.06326980394871837,
+      "ci_high": -0.01101568102230181,
+      "p_value": 0.0053994600539946005,
+      "wins": 39,
+      "ties": 190,
+      "losses": 71,
+      "effect_size": -0.16057106429519677,
+      "significant_holm_0.05": true
+    }
+  }
+}

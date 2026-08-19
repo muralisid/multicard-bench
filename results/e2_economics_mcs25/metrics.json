@@ -5,8 +5,8 @@
   "seed": 13,
   "gate_quantile": 0.5,
   "K_vs_N_exponent": 0.5203773749508515,
-  "cost_ratio_vs_N_exponent": 0.43972176397116586,
-  "wall_seconds": 2137.4,
+  "cost_ratio_vs_N_exponent": 0.4354607650254634,
+  "wall_seconds": 22.8,
   "rows": [
     {
       "n_documents": 500,
@@ -16,13 +16,17 @@
       "generative_calls_two_pass": 2,
       "generative_calls_full_llm": 500,
       "encoder_tokens": 159739,
-      "two_pass_generative_tokens_in": 271,
+      "two_pass_generative_tokens_in": 267,
       "full_llm_generative_tokens_in": 159739,
       "two_pass_usd": 0.000123,
       "full_llm_usd": 0.039974,
-      "two_pass_usd_per_1k": 0.000246,
+      "two_pass_usd_per_1k": 0.000245,
       "full_llm_usd_per_1k": 0.079948,
-      "cost_ratio": 324.9918699186992
+      "cost_ratio": 324.9918699186992,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.496,
+      "noise_fraction": 0.504,
+      "documents_per_topic": 62.0
     },
     {
       "n_documents": 1000,
@@ -32,13 +36,17 @@
       "generative_calls_two_pass": 3,
       "generative_calls_full_llm": 1000,
       "encoder_tokens": 587205,
-      "two_pass_generative_tokens_in": 459,
+      "two_pass_generative_tokens_in": 385,
       "full_llm_generative_tokens_in": 587205,
-      "two_pass_usd": 0.00019,
+      "two_pass_usd": 0.000182,
       "full_llm_usd": 0.10672,
-      "two_pass_usd_per_1k": 0.00019,
+      "two_pass_usd_per_1k": 0.000182,
       "full_llm_usd_per_1k": 0.10672,
-      "cost_ratio": 561.6842105263157
+      "cost_ratio": 586.3736263736263,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.47,
+      "noise_fraction": 0.53,
+      "documents_per_topic": 78.3
     },
     {
       "n_documents": 2000,
@@ -48,13 +56,17 @@
       "generative_calls_two_pass": 2,
       "generative_calls_full_llm": 2000,
       "encoder_tokens": 876473,
-      "two_pass_generative_tokens_in": 256,
+      "two_pass_generative_tokens_in": 279,
       "full_llm_generative_tokens_in": 876473,
-      "two_pass_usd": 0.000122,
+      "two_pass_usd": 0.000124,
       "full_llm_usd": 0.183647,
-      "two_pass_usd_per_1k": 6.1e-05,
+      "two_pass_usd_per_1k": 6.2e-05,
       "full_llm_usd_per_1k": 0.091824,
-      "cost_ratio": 1505.3032786885246
+      "cost_ratio": 1481.024193548387,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.598,
+      "noise_fraction": 0.402,
+      "documents_per_topic": 299.0
     },
     {
       "n_documents": 5000,
@@ -70,7 +82,11 @@
       "full_llm_usd": 0.440222,
       "two_pass_usd_per_1k": 9.3e-05,
       "full_llm_usd_per_1k": 0.088044,
-      "cost_ratio": 946.7139784946236
+      "cost_ratio": 946.7139784946236,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.976,
+      "noise_fraction": 0.024,
+      "documents_per_topic": 348.6
     },
     {
       "n_documents": 10000,
@@ -86,7 +102,11 @@
       "full_llm_usd": 0.848129,
       "two_pass_usd_per_1k": 4.6e-05,
       "full_llm_usd_per_1k": 0.084813,
-      "cost_ratio": 1823.9333333333332
+      "cost_ratio": 1823.9333333333332,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.9482,
+      "noise_fraction": 0.0518,
+      "documents_per_topic": 677.3
     },
     {
       "n_documents": 20000,
@@ -102,7 +122,11 @@
       "full_llm_usd": 1.706439,
       "two_pass_usd_per_1k": 4.6e-05,
       "full_llm_usd_per_1k": 0.085322,
-      "cost_ratio": 1840.8187702265373
+      "cost_ratio": 1840.8187702265373,
+      "min_cluster_size": 25,
+      "topic_coverage_of_survivors": 0.6794,
+      "noise_fraction": 0.3206,
+      "documents_per_topic": 485.3
     }
   ]
 }

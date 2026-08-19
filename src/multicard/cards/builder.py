@@ -77,11 +77,15 @@ class AnchorCardBuilder:
     """
 
     def __init__(self, aspects: list[Aspect], encoder, spans_per_card: int = 2,
-                 floor: float = 0.15):
+                 floor: float = 0.15, partition: bool = True):
         self.aspects = aspects
         self.encoder = encoder
         self.spans_per_card = spans_per_card
         self.floor = floor
+        # partition=True assigns every span to its best aspect, so the cards
+        # cover the document. partition=False keeps the top spans per aspect,
+        # which is lossy and is retained only as an ablation.
+        self.partition = partition
         self._anchor_mat = {
             a.key: encoder.encode(a.anchors).astype(np.float64) for a in aspects
         }
@@ -134,6 +138,33 @@ class AnchorCardBuilder:
     def _cards_from(self, doc_id: str, spans: list[str], vecs: np.ndarray,
                     method: str) -> list[Card]:
         scores = self._aspect_scores(vecs)
+
+        if self.partition:
+            # Every span goes to exactly one aspect, its best match, so the cards
+            # together contain the whole document. This matters more than it
+            # sounds: with a top-n-spans-per-aspect rule the cards keep only part
+            # of the text, and a comparison against chunking then measures
+            # information loss rather than the effect of purpose alignment.
+            keys = [a.key for a in self.aspects]
+            label_of = {a.key: a.label for a in self.aspects}
+            mat = np.vstack([scores[k] for k in keys])          # (aspects, spans)
+            owner = mat.argmax(axis=0)
+            cards: list[Card] = []
+            for ai, key in enumerate(keys):
+                chosen = [spans[i] for i in range(len(spans)) if owner[i] == ai]
+                if not chosen:
+                    continue
+                body = " ".join(chosen)
+                if method == "template_frame":
+                    body = f"{label_of[key]}: {body}"
+                cards.append(Card(card_id=f"{doc_id}##{key}", doc_id=doc_id,
+                                  aspect=key, text=body, method=method))
+            if not cards:
+                cards.append(Card(card_id=f"{doc_id}##fallback", doc_id=doc_id,
+                                  aspect="fallback", text=" ".join(spans)[:1500],
+                                  method=method))
+            return cards
+
         cards: list[Card] = []
         for a in self.aspects:
             s = scores[a.key]

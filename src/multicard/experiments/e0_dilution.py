@@ -27,8 +27,10 @@ from pathlib import Path
 
 import numpy as np
 
-from ..data.synthetic import build
+from ..cards.builder import Aspect, AnchorCardBuilder, build_raw_chunks
+from ..data.synthetic import POOLS, POOL_NAMES, build
 from ..index.encoder import Encoder
+from ..index.lexical import fold_to_docs
 from ..metrics.ranking import ndcg_at_k, recall_at_k
 from ..utils.seeds import set_seed
 
@@ -40,6 +42,10 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
         out_dir: str = "results/e0_dilution") -> dict:
     set_seed(seed)
     enc = Encoder(model_name=model)
+    # The builder must infer the decomposition; it never sees the pool structure.
+    aspects = [Aspect(p, p.capitalize(), [POOLS[p]["templates"][0].format(
+        a=POOLS[p]["a"][0], b=POOLS[p]["b"][0], n=7)]) for p in POOL_NAMES]
+    builder = AnchorCardBuilder(aspects, enc, partition=True)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
@@ -55,7 +61,9 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
         # Pooled: one vector per document.
         pooled = enc.encode([d.pooled_text for d in ds.docs])
 
-        # Cards: k vectors per document, flattened with an owner map.
+        # ORACLE cards: the generating passages themselves. These are not a
+        # method, they are an upper bound, and were previously reported as if
+        # they were a result. Kept only as a ceiling for the real builder.
         card_texts: list[str] = []
         owner: list[int] = []
         for di, d in enumerate(ds.docs):
@@ -64,6 +72,26 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
                 owner.append(di)
         cards = enc.encode(card_texts)
         owner_arr = np.asarray(owner)
+
+        # INFERRED cards: what the real builder produces without being told the
+        # decomposition. This is the honest multi-card arm.
+        pairs = [(d.doc_id, d.pooled_text) for d in ds.docs]
+        inferred = builder.build_many(pairs)
+        inf_owner = np.array([idx_of[c.doc_id] for c in inferred])
+        inf_vecs = enc.encode([c.text for c in inferred])
+
+        # CHUNK control, matched as closely as possible on units per document.
+        units_per_doc = len(inferred) / len(ds.docs)
+        words = int(np.mean([len(d.pooled_text.split()) for d in ds.docs]))
+        size = max(20, int(words / max(1.0, units_per_doc)))
+        chunk_texts: list[str] = []
+        chunk_owner: list[int] = []
+        for di, d in enumerate(ds.docs):
+            for c in build_raw_chunks(d.doc_id, d.pooled_text, size, size // 4):
+                chunk_texts.append(c.text)
+                chunk_owner.append(di)
+        chunk_vecs = enc.encode(chunk_texts)
+        chunk_owner_arr = np.asarray(chunk_owner)
 
         qv = enc.encode([q.text for q in ds.queries])
 
@@ -76,13 +104,20 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
         qv64, pooled64, cards64 = (x.astype(np.float64) for x in (qv, pooled, cards))
         sim_pooled_all = qv64 @ pooled64.T                  # (nq, ndocs)
         sim_cards_all = qv64 @ cards64.T                    # (nq, ncards)
-        # Fold cards to documents by maximum.
         nq = sim_cards_all.shape[0]
-        sim_max_all = np.full((nq, len(doc_ids)), -1.0, dtype=np.float64)
-        np.maximum.at(sim_max_all.T, owner_arr, sim_cards_all.T)
+
+        def fold_max(sims, owners):
+            out = np.full((nq, len(doc_ids)), -1.0, dtype=np.float64)
+            np.maximum.at(out.T, owners, sims.T)
+            return out
+
+        sim_max_all = fold_max(sim_cards_all, owner_arr)
+        sim_inf_all = fold_max(qv64 @ inf_vecs.astype(np.float64).T, inf_owner)
+        sim_chunk_all = fold_max(qv64 @ chunk_vecs.astype(np.float64).T, chunk_owner_arr)
 
         tp, tm = [], []
         nd_p, nd_m, rc_p, rc_m = [], [], [], []
+        nd_i, nd_c = [], []
         for qi, q in enumerate(ds.queries):
             # Similarity is measured against the relevant documents themselves,
             # averaged, so the curve reflects the aspect signal rather than one
@@ -96,6 +131,10 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
             rel = {d: 1.0 for d in q.relevant}
             rank_p = [doc_ids[i] for i in np.argsort(-sim_pooled_all[qi])[:100]]
             rank_m = [doc_ids[i] for i in np.argsort(-sim_max_all[qi])[:100]]
+            rank_i = [doc_ids[i] for i in np.argsort(-sim_inf_all[qi])[:100]]
+            rank_c = [doc_ids[i] for i in np.argsort(-sim_chunk_all[qi])[:100]]
+            nd_i.append(ndcg_at_k(rank_i, rel, 10))
+            nd_c.append(ndcg_at_k(rank_c, rel, 10))
             nd_p.append(ndcg_at_k(rank_p, rel, 10))
             nd_m.append(ndcg_at_k(rank_m, rel, 10))
             rc_p.append(recall_at_k(rank_p, rel, 10))
@@ -104,7 +143,8 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
                 "k": k, "query_id": q.qid, "aspect": q.pool,
                 "n_relevant": len(q.relevant),
                 "sim_pooled": sp, "sim_maxcard": sm,
-                "ndcg10_pooled": nd_p[-1], "ndcg10_maxcard": nd_m[-1],
+                "ndcg10_pooled": nd_p[-1], "ndcg10_oraclecard": nd_m[-1],
+                "ndcg10_inferredcard": nd_i[-1], "ndcg10_chunk": nd_c[-1],
                 "recall10_pooled": rc_p[-1], "recall10_maxcard": rc_m[-1],
             })
 
@@ -120,14 +160,20 @@ def run(n_docs: int = 500, queries_per_k: int = 200, seed: int = 13,
             "ratio_measured": float(np.mean(tp) / np.mean(tm)),
             "ratio_predicted": float(1.0 / np.sqrt(k)),
             "ndcg10_pooled": float(np.mean(nd_p)),
-            "ndcg10_maxcard": float(np.mean(nd_m)),
+            "ndcg10_oraclecard": float(np.mean(nd_m)),
+            "ndcg10_inferredcard": float(np.mean(nd_i)),
+            "ndcg10_chunk": float(np.mean(nd_c)),
+            "units_per_doc_cards": float(len(inferred) / len(ds.docs)),
+            "units_per_doc_chunks": float(len(chunk_texts) / len(ds.docs)),
             "recall10_pooled": float(np.mean(rc_p)),
             "recall10_maxcard": float(np.mean(rc_m)),
         }
         rows.append(row)
-        print(f"k={k:2d}  sim pooled {row['sim_pooled']:.4f}  maxcard {row['sim_maxcard']:.4f}"
-              f"  ratio {row['ratio_measured']:.4f} (theory {row['ratio_predicted']:.4f})"
-              f"  nDCG@10 {row['ndcg10_pooled']:.3f} -> {row['ndcg10_maxcard']:.3f}")
+        print(f"k={k:2d}  nDCG@10  pooled {row['ndcg10_pooled']:.3f} | "
+              f"chunk {row['ndcg10_chunk']:.3f} ({row['units_per_doc_chunks']:.1f}u) | "
+              f"inferred-card {row['ndcg10_inferredcard']:.3f} ({row['units_per_doc_cards']:.1f}u) | "
+              f"oracle-card {row['ndcg10_oraclecard']:.3f}   "
+              f"dilution ratio {row['ratio_measured']:.3f}")
 
     result = {
         "experiment": "e0_dilution",
