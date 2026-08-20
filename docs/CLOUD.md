@@ -24,3 +24,23 @@ needs a secret.
 
 What does NOT move to the cloud: the private program-state repo path (the
 boundary blocklist stays local), and any credential of any kind.
+
+## Fresh-machine setup (spare laptop or any clean box)
+
+```
+git clone https://github.com/muralisidfn7/multicard-bench.git
+cd multicard-bench
+uv sync --python 3.11        # installs everything, ~2 GB with torch
+uv run pytest -q             # 66 tests must pass before anything else
+uv run mcb run e0_dilution   # first full experiment, no credentials needed
+```
+
+Notes for the spare laptop specifically. Apple Silicon or Linux machines can
+relax the torch pin in pyproject.toml (it exists for Intel Mac wheels); results
+are CPU-deterministic either way. Experiments that include a view-design or
+topic-naming step need Vertex credentials in the environment
+(VERTEX_AI_SERVICE_ACCOUNT_JSON); everything else runs with none. The private
+program-state repo and the boundary blocklist are NOT needed to run experiments,
+only to push public artifacts. Corpora download on first use into data/ (Enron
+is the big one at ~423 MB via scripts/download_enron.sh; the rest fetch from
+Hugging Face automatically).
