@@ -150,9 +150,17 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
     gen = GenerativeClient(model=gen_model, meter=meter, tier="vertex-flash")
     # A separate client for judging so the model can differ from the synthesiser
     # if wanted; blinded either way, since the judge sees only text and facts.
-    judge = GenerativeClient(model=judge_model, meter=meter,
-                             tier=("vertex-pro" if "pro" in judge_model
-                                   else "vertex-flash"))
+    # Judges may come from a different vendor entirely. Cross-family judging is
+    # the check that matters most here, because two judges sharing a training
+    # lineage can agree for reasons unrelated to the text they are scoring.
+    if judge_model.startswith("azure:"):
+        from ..llm.azure import AzureClient
+        judge = AzureClient(model=judge_model.split(":", 1)[1] or None,
+                            meter=meter, tier="azure-gpt54")
+    else:
+        judge = GenerativeClient(model=judge_model, meter=meter,
+                                 tier=("vertex-pro" if "pro" in judge_model
+                                       else "vertex-flash"))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()

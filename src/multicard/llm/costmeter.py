@@ -34,6 +34,9 @@ PRICES_USD_PER_MTOK = {
     "vertex-pro": {"in": 1.25, "out": 5.00},
     "vertex-partner-claude": {"in": 3.00, "out": 15.00},
     "vertex-partner-llama": {"in": 0.25, "out": 0.75},
+    # Azure, used for cross-family judging. Billed as cash rather than against
+    # the Google credit grant, so it is priced and reported separately.
+    "azure-gpt54": {"in": 1.25, "out": 10.00},
     "generative-cheap": {"in": 0.10, "out": 0.40},
     "generative-mid": {"in": 0.40, "out": 1.60},
     "generative-frontier": {"in": 3.00, "out": 15.00},
