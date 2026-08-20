@@ -1,0 +1,26 @@
+# Running the suite in the cloud
+
+Three working routes, in order of readiness. A design principle makes all of
+them safe: the experiment suite needs generative calls only for the view-design
+and topic-naming steps, a handful per corpus. Those run once on a machine that
+holds credentials, and their responses land in the committed prompt cache, after
+which every experiment is pure CPU over public datasets. No cloud runner ever
+needs a secret.
+
+1. **GitHub Actions (live now).** Every push runs the full test suite plus a
+   seeded smoke experiment on a clean Ubuntu runner (.github/workflows/ci.yml),
+   which is the continuous proof that a stranger's machine can reproduce the
+   harness. Full experiments could run the same way via workflow_dispatch, but
+   runners are 2-core, so a full corpus pass that takes minutes locally takes
+   an hour there. Fine for verification, wasteful for iteration.
+
+2. **A Claude Code cloud session.** Both repositories are on GitHub, so a cloud
+   session can clone them and run `uv sync && uv run mcb run <id>` end to end.
+   The pre-cached design responses make credentials unnecessary there too.
+
+3. **The dormant H100 VM** (documented in the owner's infrastructure repo) if
+   bulk generation ever becomes the bottleneck. Current spend patterns are cents
+   per study, so this stays parked.
+
+What does NOT move to the cloud: the private program-state repo path (the
+boundary blocklist stays local), and any credential of any kind.

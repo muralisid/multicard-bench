@@ -1,0 +1,31 @@
+name: ci
+
+# Proves the harness runs on a clean cloud machine with no secrets: install,
+# full test suite (65 tests including the two-process determinism check), and a
+# tiny seeded experiment. Experiments proper are NOT run here; they execute only
+# after their preregistered hypotheses are approved, and the few generative
+# design calls they need run outside CI so no credential ever reaches a runner.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install
+        run: uv sync --python 3.11
+      - name: Cache encoder
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-minilm-v1
+      - name: Tests
+        run: uv run pytest -q
+      - name: Seeded smoke experiment
+        run: uv run python -c "from multicard.experiments.e0_dilution import run, KS; KS.clear(); KS.extend([2]); run(n_docs=40, queries_per_k=10, seed=13, out_dir='/tmp/smoke')"
