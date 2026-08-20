@@ -1,0 +1,67 @@
+Four lines of work bear on the question of which units a corpus should be indexed
+by, and where the decision comes from.
+
+\paragraph{Multiple representations per item.}
+Giving a document several embeddings rather than one is well established.
+Multi-view document representation learns several latent viewer embeddings per
+document with a global-local objective~\cite{zhang2022multiview}; multi-aspect
+dense retrieval learns explicit aspect embeddings from product
+metadata~\cite{kong2022madral}; MC-indexing indexes each section under three
+fixed views, raw text, keywords and summary~\cite{dong2024mcindexing}; and late
+interaction is the limiting case where views are tokens~\cite{khattab2020colbert}.
+Vector databases now ship the mechanism directly as named vectors with per-view
+indexes. In every case the view set is fixed in advance, by a designer, by a
+learned architecture, or by available metadata. None varies with the question the
+index is being built to answer, and our results show that this is the property
+that decides whether views help at all.
+
+\paragraph{Choosing the unit of indexing.}
+A parallel line asks what a retrieval unit should be. Proposition indexing
+rewrites documents into atomic propositions~\cite{chen2024densex}; contextual
+retrieval prepends situating text to each chunk before
+embedding~\cite{anthropic2024contextual}; LumberChunker and its successors place
+chunk boundaries with a model~\cite{duarte2024lumberchunker}; and
+mixture-of-granularity routes queries among pre-segmented
+granularities~\cite{zhong2024mog}. These decide a granularity, globally and once,
+and several require the model to read every item, which is the cost this work
+avoids. They do not produce semantically named views, and the decision is not
+conditioned on a stated goal.
+
+\paragraph{Generative models that build index structures.}
+GraphRAG has a model extract an entity graph and community summaries for
+query-focused sensemaking~\cite{edge2024graphrag}, with auto prompt tuning
+generating the extraction schema from roughly a one percent corpus
+sample~\cite{microsoft2024autotune}; RAPTOR builds a recursive summary
+tree~\cite{sarthi2024raptor}; EVAPORATE has a model synthesise extraction
+functions from a sample which then run over the whole corpus, reducing token cost
+by two orders of magnitude~\cite{arora2023evaporate}; and StructRAG selects a
+corpus structure type per task from a fixed menu~\cite{li2024structrag}. The
+closest of all is TnT-LLM, which derives a label taxonomy from corpus samples
+under a use-case instruction and distils it into lightweight classifiers that
+execute at scale~\cite{wan2024tntllm}: the same economics as our design phase,
+producing a flat taxonomy for classification rather than a set of embedding views
+serving retrieval. Most recently CAMI has an agent propose candidate enrichment
+indexes and select a portfolio under a cost budget~\cite{qidwai2026cami}, which
+conditions index construction on the corpus and a budget but not on what the user
+is trying to find out.
+
+\paragraph{Conditioning representations on instructions.}
+Instruction-following encoders produce a different vector for the same text under
+a different instruction~\cite{su2023instructor,weller2024followir,weller2025promptriever},
+and recent work materialises per-instruction views cheaply without re-encoding
+the corpus~\cite{sun2025gstransform}. These subsume the execution layer of our
+method: given $k$ instructions, they produce $k$ views. What they do not supply is
+the step above, deciding which $k$ views a corpus and an objective call for. We
+therefore treat an instruction-conditioned encoder given the objective text as the
+primary baseline rather than as related work, since it is the cheapest credible
+alternative to the entire approach.
+
+\paragraph{Position of this work.}
+Against that background we make no claim to multiple views per item, to generative
+design from a sample, or to agentic index selection. We ask a narrower question
+that, to our knowledge, none of the above tests: does conditioning the view set on
+a free-form statement of the research objective change which views are chosen, and
+does that change the retrieval quality of the resulting index? We answer it with a
+conditioning ladder in which every rung shares an encoder, a builder and an index,
+and only what the designer is shown varies, and with a cross-over design in which
+two objectives over one corpus must each be better served by their own view set.
