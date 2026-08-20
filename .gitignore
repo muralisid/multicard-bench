@@ -1,9 +1,12 @@
-# Data is downloaded by script, never committed, never redistributed
-data/
-!data/README.md
+# Data is downloaded by script, never committed, never redistributed.
+# Anchored to the repo root: an unanchored data/ also swallowed the
+# src/multicard/data package, so every clone was missing the corpus loaders
+# and only the first CI run caught it.
+/data/
+!/data/README.md
 
 # Caches (embeddings, LLM responses) are local checkpoints
-cache/
+/data/cache/
 *.npz
 *.sqlite
 
