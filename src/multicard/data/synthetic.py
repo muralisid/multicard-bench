@@ -12,6 +12,8 @@ the encoder, so the same corpus measures any encoder's dilution curve.
 
 from dataclasses import dataclass, field
 
+import numpy as np
+
 from ..utils.seeds import rng
 
 # Topic pools are deliberately unrelated to one another so that the aspects a
@@ -191,7 +193,9 @@ def _passage(pool: str, fact: tuple[str, str, str], r, sentences: int = 3) -> st
     return " ".join(out)
 
 
-def build(k: int, n_docs: int, seed: int = 13, queries_per_k: int = 200) -> SyntheticSet:
+def build(k: int, n_docs: int, seed: int = 13, queries_per_k: int = 200,
+          pool_probs: dict[str, float] | None = None,
+          query_pools: list[str] | None = None) -> SyntheticSet:
     """Build a corpus where every document carries exactly k aspects.
 
     Relevance is defined by construction rather than assumed: a query asks about
@@ -207,7 +211,13 @@ def build(k: int, n_docs: int, seed: int = 13, queries_per_k: int = 200) -> Synt
 
     docs: list[SyntheticDoc] = []
     for i in range(n_docs):
-        pools = list(r.choice(POOL_NAMES, size=k, replace=False))
+        if pool_probs:
+            names = list(pool_probs)
+            weights = np.array([pool_probs[n] for n in names], dtype=float)
+            weights = weights / weights.sum()
+            pools = list(r.choice(names, size=k, replace=False, p=weights))
+        else:
+            pools = list(r.choice(POOL_NAMES, size=k, replace=False))
         passages, facts = {}, {}
         for p in pools:
             spec = POOLS[p]
@@ -225,6 +235,8 @@ def build(k: int, n_docs: int, seed: int = 13, queries_per_k: int = 200) -> Synt
 
     # Ask only about facts that some document actually realises.
     live = [f for f in all_facts if f in by_fact]
+    if query_pools:
+        live = [f for f in live if f[0] in query_pools]
     queries: list[Query] = []
     for qi in range(queries_per_k):
         fact = live[int(r.integers(len(live)))]

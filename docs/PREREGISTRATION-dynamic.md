@@ -62,3 +62,8 @@ Seed 13; byte-identical seeded reruns; stats-verifier recomputation before any d
 - H-DYN-1, 3 and 4 all supported: the paper is "use-case-specific multi-view embeddings", with the ladder as its central figure, Ring 1 and CAMI-style conditioning as measured baselines, and the earlier negative static results as honest framing. H-DYN-6 supported on top of that upgrades the contribution from a design method to a complete pipeline for heterogeneous enterprise corpora, with the sampler as its second measured differentiator against CAMI. The narrow patent residue gets its best available evidence.
 - H-DYN-1 supported but 4 fails: views help but the objective is not doing the work; the claim collapses to corpus-conditioned design, which CAMI occupies; publish as a systems note, do not patent further.
 - H-DYN-1 fails: instruction embeddings subsume the idea; defensive publication of mechanisms plus the established negative results; decline further patent spend.
+
+
+## Encoder-choice record, 2026-08-20, before any H-DYN-1 evaluation
+
+hkunlp/instructor-base cannot load on the study hardware: its weight format requires torch 2.6 or later, and the machine (Intel Mac) has no torch wheel beyond 2.2.2. Per the declared fallback rule, the instruction arm uses intfloat/e5-small-v2, with the objective text prepended to the query prefix, which is that model's supported form of task conditioning. Limitation recorded now: e5-small-v2 is a weaker instruction baseline than instructor-class or Promptriever-class models, so a win for the designed views over it is necessary but not sufficient against the strongest instruction-conditioned systems; the venue version must run those on capable hardware.
