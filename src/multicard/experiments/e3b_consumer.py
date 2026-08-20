@@ -46,55 +46,111 @@ from ..select.policies import outlier_harvest, top_k
 from ..utils.seeds import set_seed
 from .e3_diversity import build_diverse_task
 
-CONSUMER_PROMPTS = {
-    "machine": (
-        "You are assembling an evidence summary that another system will use to "
-        "answer questions about this material. Cover every distinct matter that "
-        "appears in the excerpts, including minor ones. Be comprehensive rather "
-        "than selective.\n\nExcerpts:\n{items}\n\nQuestion: {query}\n\n"
-        "Write the summary as plain prose, at most 200 words."
-    ),
-    "human": (
-        "You are writing a short brief for a busy colleague who will read it once "
-        "and act on it. Lead with what matters most and leave out anything "
-        "peripheral.\n\nExcerpts:\n{items}\n\nQuestion: {query}\n\n"
-        "Write the brief as plain prose, at most 200 words."
-    ),
+# A consumer is defined by its budget as well as its purpose. A person reads a
+# short brief once; a downstream model ingests a long context and can afford to
+# be told everything. Earlier versions gave both the same word limit, which tested
+# only the framing and found, unsurprisingly, no difference between them.
+CONSUMER_SPECS = {
+    "machine": {
+        "words": 600,
+        "max_output_tokens": 1600,
+        "prompt": (
+            "You are assembling an evidence summary that another system will use "
+            "to answer questions about this material. Cover every distinct matter "
+            "that appears in the excerpts, including minor ones. Be comprehensive "
+            "rather than selective, and do not omit anything.\n\n"
+            "Excerpts:\n{items}\n\nQuestion: {query}\n\n"
+            "Write the summary as plain prose, up to {words} words."
+        ),
+    },
+    "human": {
+        "words": 100,
+        "max_output_tokens": 400,
+        "prompt": (
+            "You are writing a short brief for a busy colleague who will read it "
+            "once and act on it. Lead with what matters most and leave out "
+            "anything peripheral.\n\n"
+            "Excerpts:\n{items}\n\nQuestion: {query}\n\n"
+            "Write the brief as plain prose, at most {words} words."
+        ),
+    },
 }
 
 POLICIES = ("relevance", "harvest")
 CONSUMERS = ("machine", "human")
 
+# Phrase matching is a blunt instrument in both directions: a bag-of-words rule
+# fires on shared topic vocabulary without evidence, and a strict phrase rule
+# misses ordinary paraphrase. This asks a model which facts a passage actually
+# states. It is an extraction task, not a preference judgement, and the judge
+# never learns which policy produced the text, so the usual self-preference and
+# position biases do not apply.
+JUDGE_PROMPT = (
+    "Below is a summary, followed by a numbered list of candidate facts.\n\n"
+    "For each fact, decide whether the summary actually states it. Paraphrase "
+    "counts. Merely touching the same general topic does not count; the summary "
+    "must convey that specific fact.\n\n"
+    "Summary:\n{summary}\n\nCandidate facts:\n{facts}\n\n"
+    "Reply with only the numbers of the facts the summary states, comma "
+    "separated, or the word NONE."
+)
 
-def subtopic_terms(fact: tuple[str, str, str]) -> list[str]:
-    """The words that distinguish one subtopic from its siblings."""
+
+def judged_coverage(gen, summary: str, facts: list[tuple[str, str, str]]) -> set[int]:
+    """Which of the candidate facts does this summary actually state?"""
+    if not summary.strip():
+        return set()
+    listing = "\n".join(f"{i + 1}. {a}, and the decision to {b}"
+                         for i, (_, a, b) in enumerate(facts))
+    r = gen.generate(JUDGE_PROMPT.format(summary=summary, facts=listing),
+                     max_output_tokens=120)
+    out = set()
+    for tok in re.findall(r"\d+", r.text or ""):
+        i = int(tok) - 1
+        if 0 <= i < len(facts):
+            out.add(i)
+    return out
+
+
+def subtopic_terms(fact: tuple[str, str, str]) -> tuple[str, str]:
+    """The attribute and action phrases that identify one subtopic."""
     _, a, b = fact
-    return [w.lower() for w in re.findall(r"[a-z]{4,}", f"{a} {b}", re.I)]
+    return (a.lower(), b.lower())
 
 
-def covered(text: str, terms: list[str]) -> bool:
-    """A subtopic counts as covered when most of its distinguishing terms appear.
+def covered(text: str, terms: tuple[str, str]) -> bool:
+    """A subtopic counts as covered when both of its phrases appear together.
 
-    A strict all-terms rule punishes ordinary paraphrase; a single-term rule fires
-    on coincidence. Requiring a majority is the compromise, and it is applied
-    identically to every condition so no policy is advantaged by the choice.
+    An earlier version counted a majority of the individual words, which was far
+    too loose: every document in a task comes from one topic pool and shares its
+    vocabulary, so a summary of any excerpt from that pool used enough of those
+    words to trigger a match. The measured consequence was absurd, outputs
+    "covering" two and a half times as many subtopics as their own selection
+    contained, which can only mean the metric was firing without evidence.
+
+    Requiring both the attribute and the action phrase, as phrases rather than
+    bags of words, ties a match to the specific fact rather than to the topic.
     """
     if not terms:
         return False
     low = text.lower()
-    hits = sum(1 for t in terms if t in low)
-    return hits >= max(1, (len(terms) + 1) // 2)
+    a, b = terms
+    return a in low and b in low
 
 
 def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
         model: str = "sentence-transformers/all-MiniLM-L6-v2",
-        gen_model: str = "gemini-2.5-flash", n_tasks: int = 60, budget: int = 10,
+        gen_model: str = "gemini-2.5-flash", judge_model: str = "gemini-2.5-flash",
+        n_tasks: int = 60, budget: int = 10,
         harvest_fraction: float = 0.4, max_usd: float = 5.0,
         out_dir: str = "results/e3b_consumer") -> dict:
     set_seed(seed)
     enc = Encoder(model_name=model)
     meter = CostMeter(max_usd=max_usd)
     gen = GenerativeClient(model=gen_model, meter=meter, tier="vertex-flash")
+    # A separate client for judging so the model can differ from the synthesiser
+    # if wanted; blinded either way, since the judge sees only text and facts.
+    judge = GenerativeClient(model=judge_model, meter=meter, tier="vertex-flash")
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
@@ -134,13 +190,16 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
                     sel_subs |= t["subtopics"].get(d, set())
 
                 for consumer in CONSUMERS:
-                    prompt = CONSUMER_PROMPTS[consumer].format(
-                        items=items, query=t["query"])
-                    r = gen.generate(prompt, max_output_tokens=1200)
+                    spec = CONSUMER_SPECS[consumer]
+                    prompt = spec["prompt"].format(
+                        items=items, query=t["query"], words=spec["words"])
+                    r = gen.generate(prompt,
+                                     max_output_tokens=spec["max_output_tokens"])
                     text = r.text
 
                     covered_subs = {s for s in t["all_subtopics"]
                                     if by_sub.get(s) and covered(text, by_sub[s])}
+                    judged_subs = judged_coverage(judge, text, t["facts"])
                     out_words = set(re.findall(r"[a-z]{4,}", text.lower()))
                     unsupported = len(out_words - sel_vocab) / max(1, len(out_words))
 
@@ -151,12 +210,17 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
                         "subtopics_covered_in_output": len(covered_subs),
                         "coverage_rate": round(
                             len(covered_subs) / max(1, len(t["all_subtopics"])), 6),
+                        "judged_covered": len(judged_subs),
+                        "judged_coverage_rate": round(
+                            len(judged_subs) / max(1, len(t["all_subtopics"])), 6),
+                        "judged_beyond_selection": len(judged_subs - sel_subs),
                         "unsupported_word_rate": round(unsupported, 6),
                         "output_words": len(text.split()),
                         "cached": int(r.cached),
                     })
     finally:
         gen.close()
+        judge.close()
 
     # The claim is an interaction: does harvesting help the machine consumer more
     # than the human one?
@@ -166,7 +230,8 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
 
     tests, pvals = {}, {}
     for consumer in CONSUMERS:
-        for field in ("coverage_rate", "unsupported_word_rate"):
+        for field in ("coverage_rate", "judged_coverage_rate",
+                      "unsupported_word_rate"):
             a = series("harvest", consumer, field)
             b = series("relevance", consumer, field)
             if a and b and len(a) == len(b):
@@ -178,13 +243,13 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
         tests[k]["significant_holm_0.05"] = sig.get(k, False)
 
     interaction = None
-    if all(f"{c}::coverage_rate" in tests for c in CONSUMERS):
-        m = tests["machine::coverage_rate"]["mean_delta"]
-        h = tests["human::coverage_rate"]["mean_delta"]
-        per_task_m = np.array(series("harvest", "machine", "coverage_rate")) - \
-            np.array(series("relevance", "machine", "coverage_rate"))
-        per_task_h = np.array(series("harvest", "human", "coverage_rate")) - \
-            np.array(series("relevance", "human", "coverage_rate"))
+    if all(f"{c}::judged_coverage_rate" in tests for c in CONSUMERS):
+        m = tests["machine::judged_coverage_rate"]["mean_delta"]
+        h = tests["human::judged_coverage_rate"]["mean_delta"]
+        per_task_m = np.array(series("harvest", "machine", "judged_coverage_rate")) - \
+            np.array(series("relevance", "machine", "judged_coverage_rate"))
+        per_task_h = np.array(series("harvest", "human", "judged_coverage_rate")) - \
+            np.array(series("relevance", "human", "judged_coverage_rate"))
         it = compare(per_task_m, per_task_h)
         interaction = {"machine_gain": m, "human_gain": h, **it.as_dict()}
 
@@ -200,6 +265,8 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
         "wall_seconds": round(time.time() - t0, 1),
         "cells": {f"{p}/{c}": {
             "coverage_rate": float(np.mean(series(p, c, "coverage_rate"))),
+            "judged_coverage_rate": float(np.mean(series(p, c, "judged_coverage_rate"))),
+            "judged_beyond_selection": float(np.mean(series(p, c, "judged_beyond_selection"))),
             "unsupported_word_rate": float(np.mean(series(p, c, "unsupported_word_rate"))),
             "output_words": float(np.mean(series(p, c, "output_words"))),
         } for p in POLICIES for c in CONSUMERS},
@@ -214,12 +281,15 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
 
     print(f"\n{len(tasks)} tasks, {len(rows)} generations, "
           f"${meter.total_usd():.4f} of credit, {meter.total_calls()} calls\n")
-    print(f"{'cell':<22}{'coverage':>10}{'unsupported':>13}{'words':>8}")
+    print(f"{'cell':<22}{'phrase':>9}{'judged':>9}{'beyond':>8}"
+          f"{'unsup':>8}{'words':>7}")
     for p in POLICIES:
         for c in CONSUMERS:
             d = result["cells"][f"{p}/{c}"]
-            print(f"{p + '/' + c:<22}{d['coverage_rate']:>10.3f}"
-                  f"{d['unsupported_word_rate']:>13.3f}{d['output_words']:>8.0f}")
+            print(f"{p + '/' + c:<22}{d['coverage_rate']:>9.3f}"
+                  f"{d['judged_coverage_rate']:>9.3f}"
+                  f"{d['judged_beyond_selection']:>8.2f}"
+                  f"{d['unsupported_word_rate']:>8.3f}{d['output_words']:>7.0f}")
     print("\nharvest minus relevance, per consumer:")
     for k, t in tests.items():
         print(f"  {k:<34} {t['mean_delta']:+.3f} "
