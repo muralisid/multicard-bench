@@ -30,6 +30,7 @@ REGISTRY = {
     "e3_diversity": ("multicard.experiments.e3_diversity", "run"),
     "e2_gate": ("multicard.experiments.e2_gate", "run"),
     "e1_anchor_sensitivity": ("multicard.experiments.e1_anchor_sensitivity", "run"),
+    "e3b_consumer": ("multicard.experiments.e3b_consumer", "run"),
 }
 
 

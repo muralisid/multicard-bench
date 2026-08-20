@@ -149,6 +149,17 @@ def run(n_docs: int = 20000, queries_per_k: int = 0, seed: int = 13,
     }
     (out / "metrics.json").write_text(json.dumps(result, indent=2))
 
+    # This experiment has no per-query unit: its unit of observation is a corpus
+    # size, not a query. The file is written under that name anyway so the
+    # reproducibility statement holds for every experiment, with the distinction
+    # recorded in the header rather than left for a reader to infer.
+    import csv
+    with open(out / "per_query.csv", "w", newline="") as fh:
+        fh.write("# unit of observation is a corpus size, not a query\n")
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+
     if len(rows) >= 3:
         print(f"\nclusters grow as N^{beta:.3f} (sublinear if below 1.0)")
         print(f"cost advantage grows as N^{ratio_slope:.3f} (widening if above 0)")

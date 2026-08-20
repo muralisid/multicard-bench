@@ -94,6 +94,10 @@ def build_diverse_task(n_queries: int = 120, docs_per_query: int = 60,
             "docs": docs,
             "subtopics": subtopics,
             "all_subtopics": set(range(len(facts))),
+            # The (pool, attribute, action) triple behind each subtopic index.
+            # Exposed so downstream experiments can score coverage against ground
+            # truth instead of inferring it from shared document vocabulary.
+            "facts": facts,
         })
     return tasks
 

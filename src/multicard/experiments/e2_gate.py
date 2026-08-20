@@ -123,6 +123,14 @@ def run(n_docs: int = 4000, queries_per_k: int = 0, seed: int = 13,
     }
     (out / "metrics.json").write_text(json.dumps(result, indent=2))
 
+    import csv
+    with open(out / "per_query.csv", "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["item_index", "label", "gate_score", "passed"])
+        for i, (li, sc) in enumerate(zip(labels[te], scores_te)):
+            w.writerow([int(te[i]), int(li), round(float(sc), 6),
+                        int(sc >= fit.threshold)])
+
     print(f"\nheld-out ROC-AUC {metrics['roc_auc']:.3f}  PR-AUC {metrics['pr_auc']:.3f}")
     print(f"at the recall-{target_recall:.2f} threshold: "
           f"recall {metrics['recall_at_threshold']:.3f}, "
