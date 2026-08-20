@@ -150,7 +150,9 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
     gen = GenerativeClient(model=gen_model, meter=meter, tier="vertex-flash")
     # A separate client for judging so the model can differ from the synthesiser
     # if wanted; blinded either way, since the judge sees only text and facts.
-    judge = GenerativeClient(model=judge_model, meter=meter, tier="vertex-flash")
+    judge = GenerativeClient(model=judge_model, meter=meter,
+                             tier=("vertex-pro" if "pro" in judge_model
+                                   else "vertex-flash"))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()

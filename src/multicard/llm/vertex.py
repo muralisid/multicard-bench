@@ -38,13 +38,18 @@ class GenerativeClient:
 
     def __init__(self, model: str = DEFAULT_MODEL, location: str = "us-central1",
                  meter=None, tier: str = "vertex-flash", cache: bool = True,
-                 temperature: float = 0.0):
+                 temperature: float = 0.0, disable_thinking: bool | None = None):
         self.model = model
         self.location = location
         self.meter = meter
         self.tier = tier
         self.cache = cache
         self.temperature = temperature
+        # Some models refuse a zero thinking budget outright. Default to
+        # disabling it where allowed, since these are summarisation and
+        # extraction tasks rather than reasoning ones, and fall back cleanly.
+        self.disable_thinking = (disable_thinking if disable_thinking is not None
+                                 else "pro" not in model)
         self._client = None
         self._cred_path = None
         self._init_cache()
@@ -96,7 +101,7 @@ class GenerativeClient:
     def _key(self, prompt: str, max_output_tokens: int) -> str:
         h = hashlib.sha256()
         for part in (self.model, str(self.temperature), str(max_output_tokens),
-                     str(self.CONFIG_VERSION)):
+                     str(self.disable_thinking), str(self.CONFIG_VERSION)):
             h.update(part.encode())
             h.update(b"\x00")
         h.update(prompt.encode("utf-8"))
@@ -113,19 +118,16 @@ class GenerativeClient:
 
         from google.genai import types
 
+        cfg = dict(temperature=self.temperature,
+                   max_output_tokens=max_output_tokens)
+        if self.disable_thinking:
+            # Reasoning models spend the output allowance on hidden thinking
+            # before writing anything, which returned ten-word stubs where a
+            # two-hundred-word summary was asked for.
+            cfg["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
         r = self.client.models.generate_content(
-            model=self.model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=self.temperature,
-                max_output_tokens=max_output_tokens,
-                # Reasoning models spend the output allowance on hidden thinking
-                # before writing anything, which returned ten-word stubs where a
-                # two-hundred-word summary was asked for. The task here is
-                # summarisation, not reasoning, so the budget goes to the answer.
-                thinking_config=types.ThinkingConfig(thinking_budget=0),
-            ),
-        )
+            model=self.model, contents=prompt,
+            config=types.GenerateContentConfig(**cfg))
         text = (r.text or "").strip()
         u = getattr(r, "usage_metadata", None)
         tin = int(getattr(u, "prompt_token_count", 0) or 0)
