@@ -363,27 +363,60 @@ def hdyn4(gen, meter, seed=13):
 
 
 # ---------------------------------------------------------------- H-DYN-6
-def _stratified_sample(texts, enc, gen, n=30, seed=13):
-    vecs = enc.encode(texts).astype(np.float64)
-    labels = None
-    try:
-        import umap
-        from sklearn.cluster import HDBSCAN
-        X = umap.UMAP(n_components=10, metric="cosine",
-                      random_state=seed).fit_transform(vecs)
-        for mcs in (25, 10, 5):
-            lab = HDBSCAN(min_cluster_size=mcs, min_samples=1).fit_predict(X)
-            kk = len(set(lab)) - (1 if -1 in lab else 0)
-            cov = float((lab != -1).mean())
-            if 8 <= kk <= 64 and cov >= 0.60:
-                labels = lab
-                break
-    except Exception as e:
-        print(f"  [sampler] UMAP/HDBSCAN unavailable or failed ({e}); k-means fallback")
-    if labels is None:
-        from sklearn.cluster import KMeans
-        labels = KMeans(n_clusters=20, n_init=10, random_state=seed).fit_predict(vecs)
+def _bertopic_sample(texts, enc, gen, n=30, seed=13):
+    """Topic-stratified design sample, using BERTopic's own pipeline.
 
+    BERTopic is used as the library intends rather than reimplemented: its
+    default UMAP dimensionality reduction, HDBSCAN density clustering with an
+    explicit noise label, and c-TF-IDF topic representation. The noise label is
+    what makes this sampler work, since it collects exactly the minority and
+    outlier material that a uniform sample of a skewed corpus misses, so a
+    clusterer that assigns every point (k-means, for instance) would defeat the
+    purpose.
+
+    Returns (chosen_indices, topic_names, diagnostics). Topic names come from
+    c-TF-IDF keywords passed once to a generative model, never from the
+    documents, so the generative cost is one call regardless of corpus size.
+    """
+    from bertopic import BERTopic
+    from hdbscan import HDBSCAN
+    from umap import UMAP
+
+    vecs = enc.encode(texts).astype(np.float32)
+    n_docs = len(texts)
+
+    # Sweep min_cluster_size for a usable structure, per the preregistration:
+    # the largest value giving 8 to 64 topics with at least 60 percent clustered.
+    chosen_model, labels, diag = None, None, {}
+    for mcs in (25, 10, 5):
+        topic_model = BERTopic(
+            umap_model=UMAP(n_components=10, n_neighbors=15, metric="cosine",
+                            min_dist=0.0, random_state=seed),
+            hdbscan_model=HDBSCAN(min_cluster_size=mcs, min_samples=1,
+                                  metric="euclidean", prediction_data=True),
+            calculate_probabilities=False, verbose=False)
+        try:
+            lab, _ = topic_model.fit_transform(texts, embeddings=vecs)
+        except Exception as e:      # degenerate structure at this setting
+            diag[f"mcs_{mcs}"] = f"failed: {type(e).__name__}"
+            continue
+        lab = np.asarray(lab)
+        k = len({int(x) for x in lab} - {-1})
+        cov = float((lab != -1).mean())
+        diag[f"mcs_{mcs}"] = {"topics": k, "clustered_fraction": round(cov, 4)}
+        if 8 <= k <= 64 and cov >= 0.60:
+            chosen_model, labels = topic_model, lab
+            diag["selected_min_cluster_size"] = mcs
+            break
+        if chosen_model is None:    # keep the best attempt as a fallback
+            chosen_model, labels = topic_model, lab
+            diag["selected_min_cluster_size"] = mcs
+
+    labels = np.asarray(labels)
+    diag["n_topics"] = len({int(x) for x in labels} - {-1})
+    diag["noise_fraction"] = round(float((labels == -1).mean()), 4)
+
+    # Stratified draw: round robin across topics, plus a bounded residue quota.
     r_ = rng(seed + 7)
     by = {}
     for i, l in enumerate(labels):
@@ -391,29 +424,33 @@ def _stratified_sample(texts, enc, gen, n=30, seed=13):
     for l in by:
         r_.shuffle(by[l])
     noise = by.pop(-1, [])
-    quota_noise = min(len(noise), max(0, int(round(min(0.25, len(noise) / len(texts)) * n))))
-    chosen = noise[:quota_noise]
-    clusters = sorted(by, key=lambda l: -len(by[l]))
+    quota = min(len(noise), int(round(min(0.25, len(noise) / max(1, n_docs)) * n)))
+    chosen = noise[:quota]
+    diag["residue_quota"] = quota
+    order = sorted(by, key=lambda l: -len(by[l]))
     ci = 0
     while len(chosen) < n and any(by.values()):
-        l = clusters[ci % len(clusters)]
+        l = order[ci % len(order)]
         if by[l]:
             chosen.append(by[l].pop(0))
         ci += 1
-    # topic names for the designer, from cluster keyword summaries (1 call)
-    from collections import Counter
+
+    # Topic names from c-TF-IDF keywords: one generative call for the corpus.
     names = []
-    payload = []
-    for l in clusters[:20]:
-        idxs = by[l][:50] + [i for i in chosen if labels[i] == l]
-        words = Counter(w for i in idxs[:30] for w in re.findall(r"[a-z]{5,}", texts[i].lower()))
-        payload.append(f"cluster {l}: " + ", ".join(w for w, _ in words.most_common(8)))
-    if payload:
-        r = gen.generate("Name each cluster in 2-4 words from its keywords. Reply "
-                         "as a plain list, one name per line.\n\n" + "\n".join(payload),
-                         max_output_tokens=300)
-        names = [ln.strip("-* ").strip() for ln in r.text.splitlines() if ln.strip()][:20]
-    return chosen, names
+    if chosen_model is not None:
+        payload = []
+        for t in sorted({int(x) for x in labels} - {-1})[:20]:
+            words = [w for w, _ in (chosen_model.get_topic(t) or [])[:8]]
+            if words:
+                payload.append(f"topic {t}: " + ", ".join(words))
+        if payload:
+            resp = gen.generate(
+                "Name each topic in 2 to 4 words from its keywords. Reply as a "
+                "plain list, one name per line, no numbering.\n\n"
+                + "\n".join(payload), max_output_tokens=300)
+            names = [ln.strip("-* ").strip() for ln in resp.text.splitlines()
+                     if ln.strip()][:20]
+    return chosen, names, diag
 
 
 def hdyn6(gen, meter, seed=13):
@@ -433,7 +470,10 @@ def hdyn6(gen, meter, seed=13):
         qv_obj = enc.encode([OBJ_ALL]).astype(np.float64)[0]
         dv = enc.encode(texts).astype(np.float64)
         idx_rel = list(np.argsort(-(dv @ qv_obj))[:30])
-        idx_strat, topic_names = _stratified_sample(texts, enc, gen, n=30, seed=seed)
+        idx_strat, topic_names, topo_diag = _bertopic_sample(texts, enc, gen, n=30, seed=seed)
+        print(f"  [sampler] BERTopic: {topo_diag.get('n_topics')} topics, "
+              f"noise {topo_diag.get('noise_fraction'):.1%}, "
+              f"min_cluster_size={topo_diag.get('selected_min_cluster_size')}")
 
         def minority_frac(idxs):
             pools = {p for i in idxs for p in ds.docs[i].passages}
@@ -458,6 +498,7 @@ def hdyn6(gen, meter, seed=13):
         pq_all.extend(pq)
 
         res = {"minority_pools_in_sample": sample_cov,
+               "bertopic": topo_diag,
                "means": {a: float(np.mean(v)) for a, v in sc.items()},
                "tests": {}}
         minority_idx = [i for i, q in enumerate(ds.queries) if q.pool in MINORITY]

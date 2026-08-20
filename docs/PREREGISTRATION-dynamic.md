@@ -17,7 +17,9 @@ Everyone who designs from a sample faces a question nobody states: WHICH sample?
 
 Note for the paper's narrative: the production system used these same components in reverse order (gate, then cards, then clustering for consumption); here clustering runs first, in service of design. The machinery and its measured economics (O(N) encoder tokens plus O(topics) generative calls) are identical.
 
-Sampling procedure, fixed in advance: UMAP to 10 components (cosine), HDBSCAN with min_cluster_size chosen from {25, 10, 5} as the largest value yielding between 8 and 64 topics with at least 60 percent of items clustered, else k-means with K=20 as the declared fallback; stratified draw = round robin across topics plus a noise-stratum quota proportional to noise mass, capped at 25 percent of the sample.
+Sampling procedure, fixed in advance and amended 2026-08-20 before any H-DYN-6 result was produced: the topic stage uses BERTopic with its own defaults rather than a reimplementation, namely UMAP to 10 components (cosine, n_neighbors 15) followed by HDBSCAN with an explicit noise label, and c-TF-IDF for topic representation. min_cluster_size is swept over {25, 10, 5} and the first value yielding between 8 and 64 topics with at least 60 percent of items clustered is taken; if none qualifies, the best attempt is kept and its diagnostics reported. The k-means fallback declared in the first draft is withdrawn: k-means assigns every point and therefore has no residue, and the residue is the mechanism under test, so falling back to it would silently test something else. Stratified draw = round robin across topics plus a residue quota proportional to noise mass, capped at 25 percent of the sample. Topic names come from c-TF-IDF keywords in a single generative call.
+
+Amendment recorded before results per the deviation rule; the reason is that the owner directed the use of BERTopic's established techniques rather than a bespoke pipeline, which also matches the production system this work derives from.
 
 ## The conditioning ladder (the experiment's spine)
 
