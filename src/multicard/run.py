@@ -29,6 +29,14 @@ REGISTRY = {
     "e2_economics": ("multicard.experiments.e2_economics", "run"),
     "e3_diversity": ("multicard.experiments.e3_diversity", "run"),
     "e2_gate": ("multicard.experiments.e2_gate", "run"),
+    "e1_anchor_sensitivity": ("multicard.experiments.e1_anchor_sensitivity", "run"),
+}
+
+
+# experiment id -> BEIR collection name
+BEIR_COLLECTIONS = {
+    "e1_scifact": "scifact",
+    "e1_nfcorpus": "nfcorpus",
 }
 
 
@@ -68,8 +76,11 @@ def main(argv: list[str] | None = None) -> int:
     fn = getattr(mod, fn_name)
     kwargs = dict(n_docs=a.n_docs, queries_per_k=a.queries_per_k, seed=a.seed,
                   model=a.model)
-    if a.experiment.startswith("e1_") and a.experiment != "e1_limit":
-        kwargs["collection"] = a.experiment.removeprefix("e1_")
+    # BEIR collections share one entrypoint and take the collection name from the
+    # experiment id. Listing them explicitly rather than inferring from the "e1_"
+    # prefix, which silently passed a bogus collection to any new e1 experiment.
+    if a.experiment in BEIR_COLLECTIONS:
+        kwargs["collection"] = BEIR_COLLECTIONS[a.experiment]
     fn(**kwargs)
     return 0
 
