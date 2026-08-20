@@ -31,6 +31,7 @@ REGISTRY = {
     "e2_gate": ("multicard.experiments.e2_gate", "run"),
     "e1_anchor_sensitivity": ("multicard.experiments.e1_anchor_sensitivity", "run"),
     "e3b_consumer": ("multicard.experiments.e3b_consumer", "run"),
+    "e1_llm_taxonomy": ("multicard.experiments.e1_llm_taxonomy", "run"),
 }
 
 
