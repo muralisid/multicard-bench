@@ -44,3 +44,28 @@ program-state repo and the boundary blocklist are NOT needed to run experiments,
 only to push public artifacts. Corpora download on first use into data/ (Enron
 is the big one at ~423 MB via scripts/download_enron.sh; the rest fetch from
 Hugging Face automatically).
+
+## Full programme checkout on a second machine (both repos into ~/github_other)
+
+```
+mkdir -p ~/github_other && cd ~/github_other
+gh repo clone muralisidfn7/multicard-bench
+gh repo clone muralisidfn7/the-private-programme-repo
+cd multicard-bench
+mkdir -p .boundary
+echo "$HOME/github_other/the-private-programme-repo" > .boundary/state-repo-path
+uv sync --python 3.11
+uv run pytest -q
+```
+
+Scope honesty: "everything" means these two repos. The guide repos
+(agentic-enterprise and its local workbench) are not needed to run experiments;
+the workbench is not a git repository at all and exists only on the primary
+machine. Optional accelerators: copying data/cache/ from the primary machine
+skips re-encoding (first runs otherwise rebuild it deterministically in under an
+hour), and copying data/raw/enron_mail_20150507.tar.gz skips the 423 MB
+download. Credentials: only view-design and topic-naming steps read
+VERTEX_AI_SERVICE_ACCOUNT_JSON from the environment; set it on the second
+machine only if those steps will run there. Both clones push and pull the same
+origin, so work done on either machine lands in the same place; run the boundary
+grep before pushing public artifacts from anywhere.
