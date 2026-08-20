@@ -22,6 +22,7 @@ dependencies = [
     "pandas>=2.2",
     "tqdm>=4.66",
     "datasets>=2.19",
+    "google-genai>=1.0",
 ]
 
 [project.scripts]

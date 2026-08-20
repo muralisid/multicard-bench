@@ -41,7 +41,7 @@ POLICY_ORDER = ["top_k", "mmr_0.7", "mmr_0.3", "dpp", "cluster_rr",
 
 
 def build_diverse_task(n_queries: int = 120, docs_per_query: int = 60,
-                       facts_per_query: int = 6, distractors: int = 240,
+                       facts_per_query: int = 6, distractors_per_query: int = 40,
                        seed: int = 13):
     """A broad query whose relevant material spans several distinct facts.
 
@@ -69,7 +69,12 @@ def build_diverse_task(n_queries: int = 120, docs_per_query: int = 60,
                 did = f"q{qi}_f{fi}_{j}"
                 docs.append((did, _passage(pool, fact, r, sentences=3)))
                 subtopics[did] = {fi}
-        for j in range(distractors // n_queries + 1):
+        # A distractor pool large enough that a policy can actually lose by
+        # selecting from it. An earlier version divided a corpus-wide count by the
+        # query count and produced two per task, which saturated every relevance
+        # metric and made "diversity is nearly free" an artefact of there being
+        # almost nothing non-relevant to pick.
+        for j in range(distractors_per_query):
             did = f"q{qi}_x{j}"
             other = (pool, spec["a"][r.integers(len(spec["a"]))],
                      spec["b"][r.integers(len(spec["b"]))])
@@ -78,7 +83,11 @@ def build_diverse_task(n_queries: int = 120, docs_per_query: int = 60,
             docs.append((did, _passage(pool, other, r, sentences=3)))
             subtopics[did] = set()
 
-        query = f"Summarise everything about {spec['a'][r.integers(len(spec['a']))]} in this material."
+        # The query must be about the subtopics it is scored against. Drawing its
+        # attribute from the pool at large left 27 percent of tasks asking about
+        # something no subtopic-bearing document discussed.
+        query_attr = facts[int(r.integers(len(facts)))][1]
+        query = f"Summarise everything about {query_attr} in this material."
         tasks.append({
             "qid": f"q{qi:04d}",
             "query": query,

@@ -23,7 +23,17 @@ from pathlib import Path
 # reader can substitute current prices. Encoder cost is zero here because the
 # encoders run locally on the researcher's own machine.
 PRICES_USD_PER_MTOK = {
+    # Local encoding is free of cash cost but not of compute. Pricing it at zero
+    # flatters every cost ratio in the study, so the paper reports encoder tokens
+    # separately and states the assumption rather than hiding it behind a zero.
     "encoder-local": {"in": 0.0, "out": 0.0},
+    # Google Cloud tiers. Charged against a credit grant rather than cash, but
+    # tracked in the same units so that credit consumption stays visible; a
+    # prepaid resource is still finite.
+    "vertex-flash": {"in": 0.10, "out": 0.40},
+    "vertex-pro": {"in": 1.25, "out": 5.00},
+    "vertex-partner-claude": {"in": 3.00, "out": 15.00},
+    "vertex-partner-llama": {"in": 0.25, "out": 0.75},
     "generative-cheap": {"in": 0.10, "out": 0.40},
     "generative-mid": {"in": 0.40, "out": 1.60},
     "generative-frontier": {"in": 3.00, "out": 15.00},
