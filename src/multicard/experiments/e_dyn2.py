@@ -224,7 +224,8 @@ def pipeline(gen, enc, texts, objective, use_objective: bool, seed=13, n_sample=
 
 
 def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
-        model: str = "", max_usd: float = 4.0) -> dict:
+        model: str = "", max_usd: float = 4.0, gate_keep: float = 0.5,
+        out_tag: str = "") -> dict:
     set_seed(seed)
     OUT.mkdir(parents=True, exist_ok=True)
     enc = Encoder()
@@ -242,7 +243,7 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
         all_text = {d.doc_id: d.pooled_text for d in ds.docs}
         texts_all = [all_text[d] for d in all_ids]
 
-        keep, anchor_keys = objective_gate(gen, enc, texts_all, OBJ_A, 0.5, seed)
+        keep, anchor_keys = objective_gate(gen, enc, texts_all, OBJ_A, gate_keep, seed)
         gated_ids = [all_ids[i] for i in keep]
         gated_texts = [texts_all[i] for i in keep]
         gset = set(gated_ids)
@@ -290,7 +291,7 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
             "verdict": ("SUPPORTED" if t_obj.mean_delta > 0 and t_obj.p_value < 0.05
                         else "NOT SUPPORTED"),
         }
-        save("../e_dyn2/ladder", result["ladder"], pq)
+        save(f"../e_dyn2/ladder{out_tag}", result["ladder"], pq)
         print("  " + "  ".join(f"{a}={means[a]:.3f}" for a in
                                ("L0_pooled", "L1_chunks", "L4_corpus", "L5_objective")))
         print(f"  objective increment: {t_obj.mean_delta:+.3f} "
@@ -306,7 +307,7 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
         cells, tests, pq_all = {}, {}, []
         built = {}
         for tag, obj in (("T_A", OBJ_A), ("T_B", OBJ_B)):
-            keep_o, _ = objective_gate(gen, enc, texts_all, obj, 0.5, seed)
+            keep_o, _ = objective_gate(gen, enc, texts_all, obj, gate_keep, seed)
             ids_o = [all_ids[i] for i in keep_o]
             txt_o = [texts_all[i] for i in keep_o]
             views_o, diag_o = pipeline(gen, enc, txt_o, obj, use_objective=True, seed=seed)
@@ -315,20 +316,20 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
                   f"{diag_o['topics_raw']} topics guided by {diag_o['n_seed_topics']} seeds")
 
         for wname, ws in (("A", wa), ("B", wb)):
-            arms_w = {}
+            sc_w = {}
             for tag in ("T_A", "T_B"):
                 ids_o, pairs_o, views_o, _ = built[tag]
                 sim, ids, own, _ = card_sim(views_o, pairs_o, enc,
                                             [q.text for q in ws.queries])
-                arms_w[tag] = (sim, ids, own, ids_o)
-            # each taxonomy scores over its own gated pool
-            sc_w = {}
-            for tag, (sim, ids, own, ids_o) in arms_w.items():
-                s_, pq_ = eval_arms({tag: (sim, ids, own)}, ws.queries, ids_o)
+                s_, _ = eval_arms({tag: (sim, ids, own)}, ws.queries, ids_o)
                 sc_w[tag] = s_[tag]
-                for row in pq_:
-                    row["workload"] = wname
-                pq_all.extend(pq_)
+            # One row per query carrying both taxonomies' scores, so the file has
+            # a single stable schema and the pairing is explicit.
+            for qi, q in enumerate(ws.queries):
+                pq_all.append({"workload": wname, "query_id": q.qid, "pool": q.pool,
+                               "n_relevant": len(q.relevant),
+                               "T_A": round(sc_w["T_A"][qi], 6),
+                               "T_B": round(sc_w["T_B"][qi], 6)})
             for tag in ("T_A", "T_B"):
                 cells[f"{tag}_on_{wname}"] = float(np.mean(sc_w[tag]))
             own_t, other_t = (("T_A", "T_B") if wname == "A" else ("T_B", "T_A"))
@@ -341,7 +342,7 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
         result["crossover"] = {"cells": cells, "tests": tests, "verdict": verdict,
                                "taxonomies": {t: [a.key for a in built[t][2]]
                                               for t in ("T_A", "T_B")}}
-        save("../e_dyn2/crossover", result["crossover"], pq_all)
+        save(f"../e_dyn2/crossover{out_tag}", result["crossover"], pq_all)
         print(f"  T_A on A {cells['T_A_on_A']:.3f} vs T_B on A {cells['T_B_on_A']:.3f} "
               f"({ta['mean_delta']:+.3f} p={ta['p_value']:.4f})")
         print(f"  T_B on B {cells['T_B_on_B']:.3f} vs T_A on B {cells['T_A_on_B']:.3f} "
@@ -352,7 +353,7 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
 
     result["economics"] = {"cost": meter.as_dict(), "calls": meter.total_calls(),
                            "wall_seconds": round(time.time() - t0, 1)}
-    (OUT / "round2.json").write_text(json.dumps(result, indent=2, default=str))
+    (OUT / f"round2{out_tag}.json").write_text(json.dumps(result, indent=2, default=str))
     print(f"\nround 2 complete in {result['economics']['wall_seconds']}s, "
           f"{meter.total_calls()} calls, ${meter.total_usd():.4f}")
     return result

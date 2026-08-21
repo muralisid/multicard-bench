@@ -1,0 +1,52 @@
+{
+  "cells": {
+    "T_A_on_A": 0.5300349637301158,
+    "T_B_on_A": 0.3928471141834678,
+    "T_A_on_B": 0.5891745950036236,
+    "T_B_on_B": 0.7307558763146034
+  },
+  "tests": {
+    "workload_A": {
+      "n": 200,
+      "mean_a": 0.5300349637301158,
+      "mean_b": 0.3928471141834678,
+      "mean_delta": 0.13718784954664812,
+      "ci_low": 0.10907979395611714,
+      "ci_high": 0.16632388463240066,
+      "p_value": 9.999000099990002e-05,
+      "wins": 149,
+      "ties": 4,
+      "losses": 47,
+      "effect_size": 0.6578359314333424
+    },
+    "workload_B": {
+      "n": 200,
+      "mean_a": 0.7307558763146034,
+      "mean_b": 0.5891745950036236,
+      "mean_delta": 0.1415812813109798,
+      "ci_low": 0.11776672394031786,
+      "ci_high": 0.1657140169171815,
+      "p_value": 9.999000099990002e-05,
+      "wins": 157,
+      "ties": 6,
+      "losses": 37,
+      "effect_size": 0.806275791414146
+    }
+  },
+  "verdict": "SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_supplier",
+      "security_incidents",
+      "actions_decided"
+    ],
+    "T_B": [
+      "logistics_actions",
+      "incident_actions",
+      "facilities_actions",
+      "system_degradation_actions",
+      "pipeline_instrumentation_actions"
+    ]
+  }
+}
