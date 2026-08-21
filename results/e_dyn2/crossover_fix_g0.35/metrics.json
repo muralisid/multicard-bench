@@ -1,0 +1,56 @@
+{
+  "cells": {
+    "T_A_on_A": 0.5326132404050768,
+    "T_B_on_A": 0.4621784994584805,
+    "T_A_on_B": 0.6722374635244793,
+    "T_B_on_B": 0.738575916172389
+  },
+  "tests": {
+    "workload_A": {
+      "n": 150,
+      "mean_a": 0.5326132404050768,
+      "mean_b": 0.4621784994584805,
+      "mean_delta": 0.07043474094659624,
+      "ci_low": 0.03852387229884212,
+      "ci_high": 0.10160830462146138,
+      "p_value": 9.999000099990002e-05,
+      "wins": 94,
+      "ties": 4,
+      "losses": 52,
+      "effect_size": 0.3550957685386563,
+      "common_pool_size": 280,
+      "relevant_retained": 0.456
+    },
+    "workload_B": {
+      "n": 150,
+      "mean_a": 0.738575916172389,
+      "mean_b": 0.6722374635244793,
+      "mean_delta": 0.06633845264790973,
+      "ci_low": 0.023773667756582698,
+      "ci_high": 0.10902236374956832,
+      "p_value": 0.0028997100289971,
+      "wins": 84,
+      "ties": 14,
+      "losses": 52,
+      "effect_size": 0.250937458054322,
+      "common_pool_size": 280,
+      "relevant_retained": 0.4424
+    }
+  },
+  "verdict": "SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_logistics",
+      "security_incidents",
+      "financial_hedging_forecasts",
+      "operational_actions"
+    ],
+    "T_B": [
+      "incidents_actions",
+      "facilities_equipment",
+      "logistics_shipments",
+      "standing_arrangements"
+    ]
+  }
+}
