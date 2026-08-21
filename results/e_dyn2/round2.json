@@ -1,0 +1,164 @@
+{
+  "ladder": {
+    "gate": {
+      "kept": 250,
+      "of": 500,
+      "relevant_retained": 0.6412916980751733,
+      "anchor_sets": [
+        "domain",
+        "objective",
+        "intent"
+      ]
+    },
+    "means": {
+      "L4_corpus": 0.5398541344575968,
+      "L5_objective": 0.5300349637301158,
+      "L0_pooled": 0.26130737505834306,
+      "L1_chunks": 0.4832980021207949
+    },
+    "units_per_doc": {
+      "L4_corpus": 5.304,
+      "L5_objective": 3.828
+    },
+    "diagnostics": {
+      "L4": {
+        "min_cluster_size": 10,
+        "topics_raw": 12,
+        "noise_fraction_raw": 0.1,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 10,
+        "n_seed_topics": 0,
+        "sample_size": 30
+      },
+      "L5": {
+        "min_cluster_size": 10,
+        "topics_raw": 12,
+        "noise_fraction_raw": 0.1,
+        "guided": true,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 9,
+        "n_seed_topics": 8,
+        "sample_size": 30
+      }
+    },
+    "objective_increment": {
+      "n": 200,
+      "mean_a": 0.5300349637301158,
+      "mean_b": 0.5398541344575968,
+      "mean_delta": -0.00981917072748093,
+      "ci_low": -0.03704030628306859,
+      "ci_high": 0.016334031270842594,
+      "p_value": 0.45865413458654136,
+      "wins": 99,
+      "ties": 9,
+      "losses": 92,
+      "effect_size": -0.052008909518665186
+    },
+    "verdict": "NOT SUPPORTED"
+  },
+  "crossover": {
+    "cells": {
+      "T_A_on_A": 0.5300349637301158,
+      "T_B_on_A": 0.46847859397654396,
+      "T_A_on_B": 0.6683121111828768,
+      "T_B_on_B": 0.7307558763146034
+    },
+    "tests": {
+      "workload_A": {
+        "n": 200,
+        "mean_a": 0.5300349637301158,
+        "mean_b": 0.46847859397654396,
+        "mean_delta": 0.06155636975357197,
+        "ci_low": 0.03264066040428848,
+        "ci_high": 0.0911024454954511,
+        "p_value": 9.999000099990002e-05,
+        "wins": 126,
+        "ties": 3,
+        "losses": 71,
+        "effect_size": 0.293495139582793,
+        "common_pool_size": 250,
+        "relevant_retained": 0.6413
+      },
+      "workload_B": {
+        "n": 200,
+        "mean_a": 0.7307558763146034,
+        "mean_b": 0.6683121111828768,
+        "mean_delta": 0.06244376513172647,
+        "ci_low": 0.04218123427127419,
+        "ci_high": 0.08240616660327815,
+        "p_value": 9.999000099990002e-05,
+        "wins": 119,
+        "ties": 9,
+        "losses": 72,
+        "effect_size": 0.4208832951207658,
+        "common_pool_size": 250,
+        "relevant_retained": 0.6238
+      }
+    },
+    "verdict": "SUPPORTED",
+    "taxonomies": {
+      "T_A": [
+        "contractual_obligations",
+        "procurement_supplier",
+        "security_incidents",
+        "actions_decided"
+      ],
+      "T_B": [
+        "logistics_actions",
+        "incident_actions",
+        "facilities_actions",
+        "system_degradation_actions",
+        "pipeline_instrumentation_actions"
+      ]
+    }
+  },
+  "economics": {
+    "cost": {
+      "prices_as_of": "2026-08-19",
+      "prices_usd_per_mtok": {
+        "encoder-local": {
+          "in": 0.0,
+          "out": 0.0
+        },
+        "vertex-flash": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "vertex-pro": {
+          "in": 1.25,
+          "out": 5.0
+        },
+        "vertex-partner-claude": {
+          "in": 3.0,
+          "out": 15.0
+        },
+        "vertex-partner-llama": {
+          "in": 0.25,
+          "out": 0.75
+        },
+        "azure-gpt54": {
+          "in": 1.25,
+          "out": 10.0
+        },
+        "generative-cheap": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "generative-mid": {
+          "in": 0.4,
+          "out": 1.6
+        },
+        "generative-frontier": {
+          "in": 3.0,
+          "out": 15.0
+        }
+      },
+      "total_usd": 0,
+      "total_calls": 0,
+      "by_tier": {}
+    },
+    "calls": 0,
+    "wall_seconds": 23.0
+  }
+}

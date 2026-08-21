@@ -128,7 +128,11 @@ def topic_model(texts, vecs, seeds=None, seed=13, clean_with=None):
     from umap import UMAP
 
     best = None
-    for mcs in (25, 10, 5):
+    # Sweep further and refuse to proceed on a degenerate model. An earlier
+    # version stopped at three settings and silently kept the best attempt, which
+    # let one arm run on a 3-topic model while another had 12, making an
+    # asymmetric comparison look like an asymmetric effect.
+    for mcs in (25, 15, 10, 5, 3):
         tm = BERTopic(
             umap_model=UMAP(n_components=10, n_neighbors=15, metric="cosine",
                             min_dist=0.0, random_state=seed),
@@ -148,6 +152,10 @@ def topic_model(texts, vecs, seeds=None, seed=13, clean_with=None):
             best = (tm, lab, mcs, k, cov)
             break
     tm, lab, mcs, k, cov = best
+    if k < 5:
+        raise RuntimeError(
+            f"degenerate topic model: {k} topics at min_cluster_size={mcs} over "
+            f"{len(texts)} documents; refusing to build views on it")
     diag = {"min_cluster_size": mcs, "topics_raw": k,
             "noise_fraction_raw": round(1 - cov, 4), "guided": seeds is not None}
 
@@ -308,23 +316,32 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
         built = {}
         for tag, obj in (("T_A", OBJ_A), ("T_B", OBJ_B)):
             keep_o, _ = objective_gate(gen, enc, texts_all, obj, gate_keep, seed)
-            ids_o = [all_ids[i] for i in keep_o]
             txt_o = [texts_all[i] for i in keep_o]
             views_o, diag_o = pipeline(gen, enc, txt_o, obj, use_objective=True, seed=seed)
-            built[tag] = (ids_o, [(d, all_text[d]) for d in ids_o], views_o, diag_o)
-            print(f"  {tag}: gate kept {len(ids_o)}, "
+            built[tag] = (views_o, diag_o)
+            print(f"  {tag}: designed on its own gated pool of {len(keep_o)}, "
                   f"{diag_o['topics_raw']} topics guided by {diag_o['n_seed_topics']} seeds")
 
-        for wname, ws in (("A", wa), ("B", wb)):
+        # Evaluation must isolate the VIEW SET. Both taxonomies are therefore
+        # scored over the SAME pool for a given workload, gated by that
+        # workload's own objective. An earlier version scored each taxonomy over
+        # its own gated pool, which made the gate rather than the views carry the
+        # comparison: a taxonomy built for another objective was being judged on
+        # a pool that had already discarded the answers.
+        for wname, ws, wobj in (("A", wa, OBJ_A), ("B", wb, OBJ_B)):
+            keep_w, _ = objective_gate(gen, enc, texts_all, wobj, gate_keep, seed)
+            ids_w = [all_ids[i] for i in keep_w]
+            pairs_w = [(d, all_text[d]) for d in ids_w]
+            gset_w = set(ids_w)
+            retained = float(np.mean([len(q.relevant & gset_w) / max(1, len(q.relevant))
+                                      for q in ws.queries]))
             sc_w = {}
             for tag in ("T_A", "T_B"):
-                ids_o, pairs_o, views_o, _ = built[tag]
-                sim, ids, own, _ = card_sim(views_o, pairs_o, enc,
+                views_o, _ = built[tag]
+                sim, ids, own, _ = card_sim(views_o, pairs_w, enc,
                                             [q.text for q in ws.queries])
-                s_, _ = eval_arms({tag: (sim, ids, own)}, ws.queries, ids_o)
+                s_, _ = eval_arms({tag: (sim, ids, own)}, ws.queries, ids_w)
                 sc_w[tag] = s_[tag]
-            # One row per query carrying both taxonomies' scores, so the file has
-            # a single stable schema and the pairing is explicit.
             for qi, q in enumerate(ws.queries):
                 pq_all.append({"workload": wname, "query_id": q.qid, "pool": q.pool,
                                "n_relevant": len(q.relevant),
@@ -334,13 +351,17 @@ def run(n_docs: int = 800, queries_per_k: int = 150, seed: int = 13,
                 cells[f"{tag}_on_{wname}"] = float(np.mean(sc_w[tag]))
             own_t, other_t = (("T_A", "T_B") if wname == "A" else ("T_B", "T_A"))
             tests[f"workload_{wname}"] = compare(sc_w[own_t], sc_w[other_t]).as_dict()
+            tests[f"workload_{wname}"]["common_pool_size"] = len(ids_w)
+            tests[f"workload_{wname}"]["relevant_retained"] = round(retained, 4)
+            print(f"  workload {wname}: common pool {len(ids_w)} docs, "
+                  f"{retained:.1%} of relevant retained")
 
         ta, tb = tests["workload_A"], tests["workload_B"]
         verdict = ("SUPPORTED" if ta["mean_delta"] > 0 and ta["p_value"] < 0.05
                    and tb["mean_delta"] > 0 and tb["p_value"] < 0.05
                    else "NOT SUPPORTED")
         result["crossover"] = {"cells": cells, "tests": tests, "verdict": verdict,
-                               "taxonomies": {t: [a.key for a in built[t][2]]
+                               "taxonomies": {t: [a.key for a in built[t][0]]
                                               for t in ("T_A", "T_B")}}
         save(f"../e_dyn2/crossover{out_tag}", result["crossover"], pq_all)
         print(f"  T_A on A {cells['T_A_on_A']:.3f} vs T_B on A {cells['T_B_on_A']:.3f} "

@@ -1,0 +1,56 @@
+{
+  "cells": {
+    "T_A_on_A": 0.52919624866615,
+    "T_B_on_A": 0.4621784994584805,
+    "T_A_on_B": 0.7157162244648424,
+    "T_B_on_B": 0.738575916172389
+  },
+  "tests": {
+    "workload_A": {
+      "n": 150,
+      "mean_a": 0.52919624866615,
+      "mean_b": 0.4621784994584805,
+      "mean_delta": 0.06701774920766954,
+      "ci_low": 0.040897020872297754,
+      "ci_high": 0.09351242570703029,
+      "p_value": 9.999000099990002e-05,
+      "wins": 91,
+      "ties": 1,
+      "losses": 58,
+      "effect_size": 0.40304345410705117,
+      "common_pool_size": 280,
+      "relevant_retained": 0.456
+    },
+    "workload_B": {
+      "n": 150,
+      "mean_a": 0.738575916172389,
+      "mean_b": 0.7157162244648424,
+      "mean_delta": 0.022859691707546648,
+      "ci_low": -0.007996500100365204,
+      "ci_high": 0.05309779203515048,
+      "p_value": 0.1491850814918508,
+      "wins": 77,
+      "ties": 19,
+      "losses": 54,
+      "effect_size": 0.11854495978962164,
+      "common_pool_size": 280,
+      "relevant_retained": 0.4424
+    }
+  },
+  "verdict": "NOT SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_supplier",
+      "security_incidents",
+      "incident_response",
+      "actions_decided"
+    ],
+    "T_B": [
+      "incidents_actions",
+      "facilities_equipment",
+      "logistics_shipments",
+      "standing_arrangements"
+    ]
+  }
+}
