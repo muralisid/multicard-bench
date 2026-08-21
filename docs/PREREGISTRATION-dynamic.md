@@ -77,3 +77,22 @@ hkunlp/instructor-base cannot load on the study hardware: its weight format requ
 **The repair, fixed in advance.** The min_cluster_size sweep currently accepts the first setting that yields 8 to 64 topics with at least 60 percent clustered, and otherwise keeps the best attempt silently. It will instead: continue the sweep to smaller values (25, 15, 10, 5, 3) and accept the first qualifying setting; if none qualifies, raise a diagnosable failure rather than proceeding on a degenerate model; and record the accepted topic count for every arm so that any future asymmetry is visible in the results file rather than only in the log.
 
 **The honesty condition.** This is a repair to a diagnosed defect, not a search for a favourable outcome, and it is bounded so that it cannot become one. The full gate-strength sweep will be rerun after the repair, and BOTH the pre-repair and post-repair tables will be reported side by side in the sprint brief and in any paper. If the repair does not make the B direction robust, that is the finding and it stands. No further pipeline change will be made in pursuit of significance on this hypothesis; any further change must be justified by a defect diagnosable without reference to the result, as this one is.
+
+## Round 4, preregistered 2026-08-21 before implementation
+
+Motivated by the owner's argument that the conditioning signal in rounds 1 to 3 was pitched at the wrong level: a narrow query objective rather than the standing business context for which an enterprise organises data, and that guided topic modelling must not suppress genuinely discovered structure.
+
+**Setting.** One corpus representing a line of business, ten departments. The workload is deliberately VARIED, spanning several departments, representing the questions several agents in that line of business would ask, rather than the single narrow workload used in rounds 1 to 3. Conditioning inputs never reveal the queries; the metadata describes what data exists, not what will be asked.
+
+**H-DYN-7, the conditioning ladder by level.** Arms, all sharing gate, encoder, builder and index, differing only in what the view designer is shown:
+- C0: corpus sample only (the control from earlier rounds).
+- C1: sample plus a broad business-context statement (what the line of business does and what its agents are for).
+- C2: C1 plus schema-style metadata (the data sources present and their fields).
+- C3: C2 plus a narrow query objective (the round-1 to round-3 style input).
+Primary metric nDCG@10 on the varied workload; paired permutation, Holm across the family. **Supported if C2 beats C0 significantly.** Reported alongside: whether C3 beats C2, which tests whether narrowing past business context helps or hurts, and the pairwise cosine similarity between the view sets each level produces, which measures the convergence risk that context-guided and corpus-derived taxonomies end up the same thing.
+
+**H-DYN-8, zero-shot versus seeded versus unguided.** At conditioning level C2, three topic-modelling modes: unguided BERTopic; seeded (seed_topic_list, which converges representations around supplied seed words); zero-shot (zeroshot_topic_list with a similarity threshold, which assigns matching documents to supplied topics and lets the remainder cluster freely and keep their own topics). **Supported if zero-shot retains more discovered non-supplied topics than seeded AND is not worse on retrieval.** Reported: topic counts, the fraction of documents assigned to supplied versus discovered topics, and retrieval split by whether a query targets a department the supplied topics named.
+
+**Failure conditions stated in advance.** If C2 does not beat C0, the conditioning claim does not survive at any level and the programme stops pursuing it. If the view sets across levels are near-identical (mean pairwise cosine above 0.95 between level taxonomies), the convergence risk is realised and the claim collapses regardless of the retrieval numbers, because there would be no distinct artefact to attribute an effect to.
+
+**Forking-paths acknowledgement.** This is the fourth round, and each previous round revised the architecture after seeing results. Every revision addressed a defect diagnosable without reference to the outcome, and every round is reported. This round is preregistered before implementation. If it fails, the programme's conclusion is that the conditioning claim is not supported and no further architectural revision will be made in pursuit of it.
