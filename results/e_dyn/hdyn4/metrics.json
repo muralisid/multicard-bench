@@ -1,0 +1,51 @@
+{
+  "cells": {
+    "T_A_on_A": 0.605210688714248,
+    "T_B_on_A": 0.5850292561070827,
+    "T_A_on_B": 0.7838934684130799,
+    "T_B_on_B": 0.7823894318980028
+  },
+  "tests": {
+    "workload_A": {
+      "n": 150,
+      "mean_a": 0.605210688714248,
+      "mean_b": 0.5850292561070827,
+      "mean_delta": 0.020181432607165265,
+      "ci_low": -0.02172623954959419,
+      "ci_high": 0.06251884545386055,
+      "p_value": 0.35226477352264773,
+      "wins": 73,
+      "ties": 2,
+      "losses": 75,
+      "effect_size": 0.07675025889894822
+    },
+    "workload_B": {
+      "n": 150,
+      "mean_a": 0.7823894318980028,
+      "mean_b": 0.7838934684130799,
+      "mean_delta": -0.0015040365150772493,
+      "ci_low": -0.03001354520617965,
+      "ci_high": 0.02711435482779932,
+      "p_value": 0.9176082391760824,
+      "wins": 65,
+      "ties": 41,
+      "losses": 44,
+      "effect_size": -0.008349451133187412
+    }
+  },
+  "verdict": "NOT SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_supplier",
+      "security_incidents",
+      "specific_actions"
+    ],
+    "T_B": [
+      "logistics",
+      "engineering_incidents",
+      "facilities_equipment",
+      "actions_decisions"
+    ]
+  }
+}

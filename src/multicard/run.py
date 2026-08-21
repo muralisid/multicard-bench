@@ -33,6 +33,7 @@ REGISTRY = {
     "e3b_consumer": ("multicard.experiments.e3b_consumer", "run"),
     "e1_llm_taxonomy": ("multicard.experiments.e1_llm_taxonomy", "run"),
     "e_dyn_all": ("multicard.experiments.e_dyn", "run"),
+    "e_dyn2": ("multicard.experiments.e_dyn2", "run"),
 }
 
 
