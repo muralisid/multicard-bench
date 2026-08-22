@@ -1,0 +1,158 @@
+{
+  "experiment": "e1_llm_taxonomy_scifact",
+  "collection": "scifact",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "design_model": "gemini-2.5-flash",
+  "seed": 13,
+  "n_docs": 5183,
+  "n_test_queries": 300,
+  "n_train_queries_shown_to_designer": 809,
+  "llm_taxonomy": [
+    "molecular_mechanisms",
+    "disease_pathology_treatment",
+    "physiological_responses",
+    "experimental_methods_models",
+    "clinical_public_health"
+  ],
+  "units_per_doc": {
+    "cards_llm": 2.429288057109782,
+    "cards_static": 2.7653868415975302,
+    "chunks": 3.529616052479259
+  },
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0.000809,
+    "total_calls": 1,
+    "by_tier": {
+      "vertex-flash": {
+        "calls": 1,
+        "tokens_in": 4433,
+        "tokens_out": 915,
+        "usd": 0.000809
+      }
+    }
+  },
+  "wall_seconds": 791.6,
+  "summary": {
+    "dense-pooled": {
+      "ndcg10": 0.6450816521455776,
+      "recall10": 0.7833333333333333,
+      "recall100": 0.925,
+      "judged10": 0.08833333333333332
+    },
+    "dense-chunk": {
+      "ndcg10": 0.6633719031756455,
+      "recall10": 0.8022222222222222,
+      "recall100": 0.9293333333333333,
+      "judged10": 0.08999999999999998
+    },
+    "cards-static": {
+      "ndcg10": 0.6354252566144677,
+      "recall10": 0.777888888888889,
+      "recall100": 0.9233333333333333,
+      "judged10": 0.08766666666666666
+    },
+    "cards-llm": {
+      "ndcg10": 0.6121120081548238,
+      "recall10": 0.771,
+      "recall100": 0.9233333333333333,
+      "judged10": 0.087
+    }
+  },
+  "significance": {
+    "llm_vs_chunk": {
+      "n": 300,
+      "mean_a": 0.6121120081548238,
+      "mean_b": 0.6633719031756455,
+      "mean_delta": -0.051259895020821795,
+      "ci_low": -0.07669990127066761,
+      "ci_high": -0.025919960697335223,
+      "p_value": 9.999000099990002e-05,
+      "wins": 38,
+      "ties": 186,
+      "losses": 76,
+      "effect_size": -0.22667392635210915,
+      "significant_holm_0.05": true
+    },
+    "llm_vs_static": {
+      "n": 300,
+      "mean_a": 0.6121120081548238,
+      "mean_b": 0.6354252566144677,
+      "mean_delta": -0.023313248459643936,
+      "ci_low": -0.04755866728371829,
+      "ci_high": 0.0005579935958835293,
+      "p_value": 0.05829417058294171,
+      "wins": 52,
+      "ties": 193,
+      "losses": 55,
+      "effect_size": -0.11065416051165552,
+      "significant_holm_0.05": false
+    },
+    "llm_vs_pooled": {
+      "n": 300,
+      "mean_a": 0.6121120081548238,
+      "mean_b": 0.6450816521455776,
+      "mean_delta": -0.03296964399075378,
+      "ci_low": -0.05745174955203095,
+      "ci_high": -0.008689742706855757,
+      "p_value": 0.009999000099990002,
+      "wins": 37,
+      "ties": 193,
+      "losses": 70,
+      "effect_size": -0.1518242408524823,
+      "significant_holm_0.05": true
+    },
+    "static_vs_chunk": {
+      "n": 300,
+      "mean_a": 0.6354252566144677,
+      "mean_b": 0.6633719031756455,
+      "mean_delta": -0.027946646561177874,
+      "ci_low": -0.05069229418465258,
+      "ci_high": -0.0052266025237904246,
+      "p_value": 0.0183981601839816,
+      "wins": 36,
+      "ties": 198,
+      "losses": 66,
+      "effect_size": -0.1389184678862608,
+      "significant_holm_0.05": true
+    }
+  }
+}

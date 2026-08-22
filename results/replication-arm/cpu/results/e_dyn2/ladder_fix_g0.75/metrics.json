@@ -1,0 +1,58 @@
+{
+  "gate": {
+    "kept": 600,
+    "of": 800,
+    "relevant_retained": 0.8329514901586466,
+    "anchor_sets": [
+      "domain",
+      "objective",
+      "intent"
+    ]
+  },
+  "means": {
+    "L4_corpus": 0.6456135250066339,
+    "L5_objective": 0.6649821994160129,
+    "L0_pooled": 0.29326798807190024,
+    "L1_chunks": 0.5786399721579126
+  },
+  "units_per_doc": {
+    "L4_corpus": 4.545,
+    "L5_objective": 4.638333333333334
+  },
+  "diagnostics": {
+    "L4": {
+      "min_cluster_size": 25,
+      "topics_raw": 10,
+      "noise_fraction_raw": 0.2,
+      "guided": false,
+      "noise_fraction_after_reduction": 0.0,
+      "llm_flagged_noise_topics": 2,
+      "n_seed_topics": 0,
+      "sample_size": 30
+    },
+    "L5": {
+      "min_cluster_size": 25,
+      "topics_raw": 10,
+      "noise_fraction_raw": 0.2,
+      "guided": true,
+      "noise_fraction_after_reduction": 0.0,
+      "llm_flagged_noise_topics": 4,
+      "n_seed_topics": 8,
+      "sample_size": 30
+    }
+  },
+  "objective_increment": {
+    "n": 150,
+    "mean_a": 0.6649821994160129,
+    "mean_b": 0.6456135250066339,
+    "mean_delta": 0.01936867440937885,
+    "ci_low": -0.006422306013511442,
+    "ci_high": 0.04457106588123941,
+    "p_value": 0.14038596140385962,
+    "wins": 79,
+    "ties": 17,
+    "losses": 54,
+    "effect_size": 0.1200981869129566
+  },
+  "verdict": "NOT SUPPORTED"
+}

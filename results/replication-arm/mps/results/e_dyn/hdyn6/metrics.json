@@ -1,0 +1,159 @@
+{
+  "skewed": {
+    "minority_pools_in_sample": {
+      "random": 0.6,
+      "relevance": 0.6,
+      "stratified": 0.6
+    },
+    "bertopic": {
+      "mcs_25": {
+        "topics": 6,
+        "clustered_fraction": 1.0
+      },
+      "selected_min_cluster_size": 10,
+      "mcs_10": {
+        "topics": 40,
+        "clustered_fraction": 0.8985
+      },
+      "n_topics": 40,
+      "noise_fraction": 0.1015,
+      "residue_quota": 3
+    },
+    "means": {
+      "random": 0.7773183228658457,
+      "relevance": 0.7533042750674706,
+      "stratified": 0.7837525044046694
+    },
+    "tests": {
+      "strat_vs_rand_all": {
+        "n": 200,
+        "mean_a": 0.7837525044046694,
+        "mean_b": 0.7773183228658457,
+        "mean_delta": 0.006434181538823838,
+        "ci_low": -0.027264186431242655,
+        "ci_high": 0.041971625320624185,
+        "p_value": 0.7150284971502849,
+        "wins": 67,
+        "ties": 69,
+        "losses": 64,
+        "effect_size": 0.026022140853716576
+      },
+      "strat_vs_rand_minority": {
+        "n": 94,
+        "mean_a": 0.6526932824933943,
+        "mean_b": 0.6133128877608547,
+        "mean_delta": 0.03938039473253953,
+        "ci_low": -0.026660890591656234,
+        "ci_high": 0.10783691649796695,
+        "p_value": 0.24867513248675133,
+        "wins": 43,
+        "ties": 14,
+        "losses": 37,
+        "effect_size": 0.12007098959847277
+      },
+      "strat_vs_rel_all": {
+        "n": 200,
+        "mean_a": 0.7837525044046694,
+        "mean_b": 0.7533042750674706,
+        "mean_delta": 0.03044822933719879,
+        "ci_low": 0.0038492966341862633,
+        "ci_high": 0.05729350132914919,
+        "p_value": 0.028597140285971403,
+        "wins": 70,
+        "ties": 76,
+        "losses": 54,
+        "effect_size": 0.15660729941364454
+      },
+      "strat_vs_rel_minority": {
+        "n": 94,
+        "mean_a": 0.6526932824933943,
+        "mean_b": 0.5948976110116553,
+        "mean_delta": 0.05779567148173897,
+        "ci_low": 0.009668382225305548,
+        "ci_high": 0.10500748769729128,
+        "p_value": 0.0212978702129787,
+        "wins": 42,
+        "ties": 20,
+        "losses": 32,
+        "effect_size": 0.2406988061526029
+      }
+    }
+  },
+  "balanced": {
+    "minority_pools_in_sample": {
+      "random": 1.0,
+      "relevance": 1.0,
+      "stratified": 1.0
+    },
+    "bertopic": {
+      "mcs_25": {
+        "topics": 14,
+        "clustered_fraction": 0.9585
+      },
+      "selected_min_cluster_size": 25,
+      "n_topics": 14,
+      "noise_fraction": 0.0415,
+      "residue_quota": 1
+    },
+    "means": {
+      "random": 0.802235087648194,
+      "relevance": 0.8453783171915865,
+      "stratified": 0.870075553346044
+    },
+    "tests": {
+      "strat_vs_rand_all": {
+        "n": 200,
+        "mean_a": 0.870075553346044,
+        "mean_b": 0.802235087648194,
+        "mean_delta": 0.06784046569785013,
+        "ci_low": 0.03926101975914677,
+        "ci_high": 0.09643507606491532,
+        "p_value": 9.999000099990002e-05,
+        "wins": 96,
+        "ties": 58,
+        "losses": 46,
+        "effect_size": 0.3281073937797888
+      },
+      "strat_vs_rand_minority": {
+        "n": 100,
+        "mean_a": 0.8393002859573825,
+        "mean_b": 0.7566983256464617,
+        "mean_delta": 0.08260196031092076,
+        "ci_low": 0.035272245302917164,
+        "ci_high": 0.13127633984091716,
+        "p_value": 0.0013998600139986002,
+        "wins": 53,
+        "ties": 24,
+        "losses": 23,
+        "effect_size": 0.33043423677873407
+      },
+      "strat_vs_rel_all": {
+        "n": 200,
+        "mean_a": 0.870075553346044,
+        "mean_b": 0.8453783171915865,
+        "mean_delta": 0.024697236154457645,
+        "ci_low": 0.0027797659351094595,
+        "ci_high": 0.04817474212673232,
+        "p_value": 0.0347965203479652,
+        "wins": 70,
+        "ties": 76,
+        "losses": 54,
+        "effect_size": 0.14810097518422943
+      },
+      "strat_vs_rel_minority": {
+        "n": 100,
+        "mean_a": 0.8393002859573825,
+        "mean_b": 0.8389215794954471,
+        "mean_delta": 0.00037870646193548853,
+        "ci_low": -0.03302047577557884,
+        "ci_high": 0.035415986814252565,
+        "p_value": 0.9839016098390161,
+        "wins": 29,
+        "ties": 35,
+        "losses": 36,
+        "effect_size": 0.002169114170474086
+      }
+    }
+  },
+  "verdict": "NOT SUPPORTED"
+}

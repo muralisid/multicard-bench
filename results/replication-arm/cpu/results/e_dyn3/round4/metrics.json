@@ -1,0 +1,208 @@
+{
+  "workload": {
+    "queries": 200,
+    "departments": [
+      "engineering",
+      "finance",
+      "legal",
+      "logistics",
+      "procurement",
+      "security"
+    ]
+  },
+  "gate": {
+    "kept": 250,
+    "relevant_retained": 0.5064229185086685
+  },
+  "supplied_topics": 10,
+  "topic_modes": {
+    "unguided": {
+      "mode": "unguided",
+      "min_cluster_size": 10,
+      "topics": 8,
+      "noise_fraction": 0.088,
+      "supplied_topics": 0,
+      "topics_beyond_supplied": 8
+    },
+    "seeded": {
+      "mode": "seeded",
+      "min_cluster_size": 10,
+      "topics": 8,
+      "noise_fraction": 0.088,
+      "supplied_topics": 10,
+      "topics_beyond_supplied": 0
+    },
+    "zeroshot": {
+      "mode": "zeroshot",
+      "min_cluster_size": 10,
+      "topics": 8,
+      "noise_fraction": 0.088,
+      "supplied_topics": 10,
+      "topics_beyond_supplied": 0
+    }
+  },
+  "means": {
+    "C0_sample_only": 0.5363806388823913,
+    "C1_business_context": 0.48864330319406307,
+    "C2_context_plus_metadata": 0.48566699190649487,
+    "C3_narrow_objective": 0.4747671442032012,
+    "L0_pooled": 0.3025637303634473,
+    "L1_chunks": 0.5025255993009982
+  },
+  "units_per_doc": {
+    "C0_sample_only": 5.04,
+    "C1_business_context": 3.604,
+    "C2_context_plus_metadata": 3.584,
+    "C3_narrow_objective": 3.652
+  },
+  "tests": {
+    "C2_vs_C0": {
+      "n": 200,
+      "mean_a": 0.48566699190649487,
+      "mean_b": 0.5363806388823913,
+      "mean_delta": -0.05071364697589633,
+      "ci_low": -0.06942047877932059,
+      "ci_high": -0.032325490543448056,
+      "p_value": 9.999000099990002e-05,
+      "wins": 73,
+      "ties": 5,
+      "losses": 122,
+      "effect_size": -0.37564824778116435,
+      "significant_holm_0.05": true
+    },
+    "C1_vs_C0": {
+      "n": 200,
+      "mean_a": 0.48864330319406307,
+      "mean_b": 0.5363806388823913,
+      "mean_delta": -0.047737335688328206,
+      "ci_low": -0.06595592397164615,
+      "ci_high": -0.029647236463497213,
+      "p_value": 9.999000099990002e-05,
+      "wins": 74,
+      "ties": 9,
+      "losses": 117,
+      "effect_size": -0.35976001200651225,
+      "significant_holm_0.05": true
+    },
+    "C3_vs_C2": {
+      "n": 200,
+      "mean_a": 0.4747671442032012,
+      "mean_b": 0.48566699190649487,
+      "mean_delta": -0.010899847703293688,
+      "ci_low": -0.03857009947989847,
+      "ci_high": 0.01740545164435701,
+      "p_value": 0.46145385461453853,
+      "wins": 95,
+      "ties": 7,
+      "losses": 98,
+      "effect_size": -0.0534758527256372,
+      "significant_holm_0.05": false
+    },
+    "C2_vs_chunks": {
+      "n": 200,
+      "mean_a": 0.48566699190649487,
+      "mean_b": 0.5025255993009982,
+      "mean_delta": -0.01685860739450332,
+      "ci_low": -0.04551689147084745,
+      "ci_high": 0.012593339264123642,
+      "p_value": 0.2655734426557344,
+      "wins": 86,
+      "ties": 8,
+      "losses": 106,
+      "effect_size": -0.07859347712749765,
+      "significant_holm_0.05": false
+    }
+  },
+  "taxonomy_convergence": {
+    "pairwise": {
+      "C0_sample_only__C1_business_context": 0.9193256119048794,
+      "C0_sample_only__C2_context_plus_metadata": 0.9255301747527749,
+      "C0_sample_only__C3_narrow_objective": 0.8539848110061607,
+      "C1_business_context__C2_context_plus_metadata": 0.9674247056928357,
+      "C1_business_context__C3_narrow_objective": 0.818944244176008,
+      "C2_context_plus_metadata__C3_narrow_objective": 0.8285753836118331
+    },
+    "mean_cosine": 0.8856308218574153
+  },
+  "views": {
+    "C0_sample_only": [
+      "incident_report",
+      "maintenance_access",
+      "financial_reporting",
+      "legal_agreements",
+      "logistics_shipping",
+      "system_instrumentation"
+    ],
+    "C1_business_context": [
+      "commercial_agreements",
+      "operations_incidents",
+      "finance_reporting",
+      "risk_compliance"
+    ],
+    "C2_context_plus_metadata": [
+      "agreements_suppliers",
+      "operations_incidents",
+      "finance_reporting",
+      "security_compliance"
+    ],
+    "C3_narrow_objective": [
+      "legal_agreements",
+      "procurement_decisions",
+      "security_incidents",
+      "operational_incidents"
+    ]
+  },
+  "verdict_H_DYN_7": "NOT SUPPORTED",
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0.002244,
+    "total_calls": 4,
+    "by_tier": {
+      "vertex-flash": {
+        "calls": 4,
+        "tokens_in": 13711,
+        "tokens_out": 2183,
+        "usd": 0.002244
+      }
+    }
+  },
+  "wall_seconds": 99.6
+}

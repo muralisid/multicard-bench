@@ -1,0 +1,57 @@
+{
+  "cells": {
+    "T_A_on_A": 0.5836181675299627,
+    "T_B_on_A": 0.45369245841026357,
+    "T_A_on_B": 0.7092429114031303,
+    "T_B_on_B": 0.6911598325854516
+  },
+  "tests": {
+    "workload_A": {
+      "n": 150,
+      "mean_a": 0.5836181675299627,
+      "mean_b": 0.45369245841026357,
+      "mean_delta": 0.12992570911969906,
+      "ci_low": 0.09452792580133373,
+      "ci_high": 0.1654449243353851,
+      "p_value": 9.999000099990002e-05,
+      "wins": 110,
+      "ties": 3,
+      "losses": 37,
+      "effect_size": 0.5821431876568732,
+      "common_pool_size": 280,
+      "relevant_retained": 0.456
+    },
+    "workload_B": {
+      "n": 150,
+      "mean_a": 0.6911598325854516,
+      "mean_b": 0.7092429114031303,
+      "mean_delta": -0.018083078817678927,
+      "ci_low": -0.05403725452026288,
+      "ci_high": 0.016588565622430367,
+      "p_value": 0.3207679232076792,
+      "wins": 79,
+      "ties": 14,
+      "losses": 57,
+      "effect_size": -0.08135638272142744,
+      "common_pool_size": 280,
+      "relevant_retained": 0.4424
+    }
+  },
+  "verdict": "NOT SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_logistics",
+      "security_incidents",
+      "financial_reporting",
+      "operational_maintenance"
+    ],
+    "T_B": [
+      "eng_incidents",
+      "facilities_faults",
+      "logistics_shipments",
+      "service_degradations",
+      "pipeline_instrumentation"
+    ]
+  }
+}

@@ -11,6 +11,16 @@ more than an identical rerun.
 from __future__ import annotations
 
 import os
+import sys
+
+# Python randomises string hashing per process, so any iteration over a set of
+# strings comes out in a different order each run. Setting PYTHONHASHSEED from
+# inside the process (as utils.seeds does) cannot affect the interpreter that is
+# already running; it has to be in the environment before start-up. Re-exec once
+# with it fixed so that seeded sampling over such orders is reproducible.
+if os.environ.get("PYTHONHASHSEED") is None:
+    os.environ["PYTHONHASHSEED"] = "13"
+    os.execv(sys.executable, [sys.executable, "-m", "multicard.run", *sys.argv[1:]])
 
 _THREADS = os.environ.get("MCB_THREADS", "1")
 for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
@@ -19,7 +29,6 @@ for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
 
 import argparse  # noqa: E402
 import subprocess  # noqa: E402
-import sys  # noqa: E402
 
 REGISTRY = {
     "e0_dilution": ("multicard.experiments.e0_dilution", "run"),

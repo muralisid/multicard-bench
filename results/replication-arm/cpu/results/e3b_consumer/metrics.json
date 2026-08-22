@@ -1,0 +1,185 @@
+{
+  "experiment": "e3b_consumer",
+  "gen_model": "gemini-2.5-flash",
+  "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_tasks": 60,
+  "budget": 10,
+  "harvest_fraction": 0.4,
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0,
+    "total_calls": 0,
+    "by_tier": {}
+  },
+  "wall_seconds": 0.6,
+  "cells": {
+    "relevance/machine": {
+      "coverage_rate": 0.32444439999999997,
+      "judged_coverage_rate": 0.2794444,
+      "judged_beyond_selection": 0.0,
+      "unsupported_word_rate": 0.4391098333333333,
+      "output_words": 127.43333333333334
+    },
+    "relevance/human": {
+      "coverage_rate": 0.19694446666666668,
+      "judged_coverage_rate": 0.3036110666666666,
+      "judged_beyond_selection": 0.06666666666666667,
+      "unsupported_word_rate": 0.4056241833333333,
+      "output_words": 47.733333333333334
+    },
+    "harvest/machine": {
+      "coverage_rate": 0.27805555000000004,
+      "judged_coverage_rate": 0.30777776666666656,
+      "judged_beyond_selection": 0.05,
+      "unsupported_word_rate": 0.39063339999999996,
+      "output_words": 110.8
+    },
+    "harvest/human": {
+      "coverage_rate": 0.1908333833333333,
+      "judged_coverage_rate": 0.24694443333333335,
+      "judged_beyond_selection": 0.016666666666666666,
+      "unsupported_word_rate": 0.33870674999999995,
+      "output_words": 45.13333333333333
+    }
+  },
+  "tests": {
+    "machine::coverage_rate": {
+      "n": 60,
+      "mean_a": 0.27805555000000004,
+      "mean_b": 0.32444439999999997,
+      "mean_delta": -0.04638885,
+      "ci_low": -0.09389580833333333,
+      "ci_high": -0.0005555166666666667,
+      "p_value": 0.06269373062693731,
+      "wins": 6,
+      "ties": 37,
+      "losses": 17,
+      "effect_size": -0.24829004554577538,
+      "significant_holm_0.05": false
+    },
+    "machine::judged_coverage_rate": {
+      "n": 60,
+      "mean_a": 0.30777776666666656,
+      "mean_b": 0.2794444,
+      "mean_delta": 0.02833336666666667,
+      "ci_low": -0.012222150416666662,
+      "ci_high": 0.07055558375000001,
+      "p_value": 0.18198180181981802,
+      "wins": 13,
+      "ties": 39,
+      "losses": 8,
+      "effect_size": 0.17258495196764043,
+      "significant_holm_0.05": false
+    },
+    "machine::unsupported_word_rate": {
+      "n": 60,
+      "mean_a": 0.39063339999999996,
+      "mean_b": 0.4391098333333333,
+      "mean_delta": -0.04847643333333334,
+      "ci_low": -0.09872792125000002,
+      "ci_high": 0.0011532949999999652,
+      "p_value": 0.06719328067193281,
+      "wins": 26,
+      "ties": 0,
+      "losses": 34,
+      "effect_size": -0.24324548313292482,
+      "significant_holm_0.05": false
+    },
+    "human::coverage_rate": {
+      "n": 60,
+      "mean_a": 0.1908333833333333,
+      "mean_b": 0.19694446666666668,
+      "mean_delta": -0.006111083333333332,
+      "ci_low": -0.04916663375,
+      "ci_high": 0.03638891708333333,
+      "p_value": 0.7947205279472053,
+      "wins": 10,
+      "ties": 39,
+      "losses": 11,
+      "effect_size": -0.035762829387821646,
+      "significant_holm_0.05": false
+    },
+    "human::judged_coverage_rate": {
+      "n": 60,
+      "mean_a": 0.24694443333333335,
+      "mean_b": 0.3036110666666666,
+      "mean_delta": -0.05666663333333333,
+      "ci_low": -0.09638885000000001,
+      "ci_high": -0.019166633333333332,
+      "p_value": 0.0046995300469953,
+      "wins": 4,
+      "ties": 41,
+      "losses": 15,
+      "effect_size": -0.37133007062589185,
+      "significant_holm_0.05": true
+    },
+    "human::unsupported_word_rate": {
+      "n": 60,
+      "mean_a": 0.33870674999999995,
+      "mean_b": 0.4056241833333333,
+      "mean_delta": -0.06691743333333332,
+      "ci_low": -0.10558823416666667,
+      "ci_high": -0.02601367791666667,
+      "p_value": 0.0017998200179982,
+      "wins": 18,
+      "ties": 0,
+      "losses": 42,
+      "effect_size": -0.4187839616670831,
+      "significant_holm_0.05": true
+    }
+  },
+  "interaction": {
+    "machine_gain": 0.02833336666666667,
+    "human_gain": -0.05666663333333333,
+    "n": 60,
+    "mean_a": 0.02833336666666667,
+    "mean_b": -0.05666663333333333,
+    "mean_delta": 0.085,
+    "ci_low": 0.034166666250000005,
+    "ci_high": 0.1400070249999999,
+    "p_value": 0.0020997900209979003,
+    "wins": 21,
+    "ties": 31,
+    "losses": 8,
+    "effect_size": 0.4013788204534462
+  }
+}

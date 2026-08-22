@@ -112,7 +112,10 @@ def run(n_docs: int = 0, queries_per_k: int = 0, seed: int = 13,
     # Train queries for the designer: the split the qrels loader does not serve.
     from datasets import load_dataset
     train_rows = load_dataset(f"BeIR/{collection}-qrels")["train"]
-    train_qids = {str(r["query-id"]) for r in train_rows}
+    # Sorted: iterating a set of strings follows the per-process hash seed, so
+    # the seeded draw below sampled different queries on every run, the prompt
+    # never hit the cache, and each run designed a different taxonomy.
+    train_qids = sorted({str(r["query-id"]) for r in train_rows})
     train_queries = [q_text[q] for q in train_qids
                      if q in q_text and q not in qrels]
     print(f"designer sees {len(train_queries)} train queries; "

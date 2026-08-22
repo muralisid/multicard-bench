@@ -16,6 +16,13 @@ import numpy as np
 
 DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 CACHE_DIR = Path(os.environ.get("MCB_CACHE", "data/cache/embeddings"))
+# The CPU is the reproducibility contract. Left to choose for itself,
+# sentence-transformers picks the Apple GPU (mps) on Apple Silicon, and under
+# torch 2.2.2 that path returned e5-small-v2 vectors differing from the CPU's by
+# up to 6e-2 and hung inside a device-to-host copy. Cached vectors carry no
+# device tag, so one GPU run would silently contaminate every later CPU run.
+# Set MCB_DEVICE to opt into a GPU deliberately.
+DEFAULT_DEVICE = os.environ.get("MCB_DEVICE", "cpu")
 
 
 class Encoder:
@@ -23,7 +30,7 @@ class Encoder:
                  device: str | None = None, cache: bool = True):
         self.model_name = model_name
         self.batch_size = batch_size
-        self.device = device
+        self.device = device or DEFAULT_DEVICE
         self.cache = cache
         self._model = None
         self._mem: dict[str, np.ndarray] = {}

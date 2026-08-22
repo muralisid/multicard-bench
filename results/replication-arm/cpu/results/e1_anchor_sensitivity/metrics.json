@@ -1,0 +1,82 @@
+{
+  "experiment": "e1_anchor_sensitivity",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_docs": 500,
+  "queries_per_k": 200,
+  "anchors": {
+    "legal": "contracts, liability, counsel and formal obligations between parties",
+    "logistics": "shipping, warehousing, freight movement and delivery schedules",
+    "finance": "revenue, margins, hedging, rates and financial exposure",
+    "engineering": "software services, outages, deployments and technical incidents",
+    "personnel": "staff, hiring, reviews, promotion and team composition",
+    "marketing": "campaigns, audience segments, messaging and customer response",
+    "facilities": "buildings, equipment servicing, site access and physical plant",
+    "research": "studies, experiments, replication and reported effects",
+    "security": "intrusions, credentials, audits and access control failures",
+    "procurement": "tenders, suppliers, bids and purchasing agreements"
+  },
+  "wall_seconds": 470.7,
+  "rows": [
+    {
+      "k": 3,
+      "chunk_ndcg10": 0.670802,
+      "card_ndcg10": 0.693566,
+      "delta": 0.022763,
+      "ci_low": -0.005202,
+      "ci_high": 0.051741,
+      "p_value": 0.12468753124687532,
+      "wins": 97,
+      "ties": 11,
+      "losses": 92,
+      "units_per_doc_cards": 4.444,
+      "units_per_doc_chunks": 6.01,
+      "significant_holm_0.05": false
+    },
+    {
+      "k": 5,
+      "chunk_ndcg10": 0.643348,
+      "card_ndcg10": 0.741975,
+      "delta": 0.098626,
+      "ci_low": 0.071852,
+      "ci_high": 0.125364,
+      "p_value": 9.999000099990002e-05,
+      "wins": 136,
+      "ties": 18,
+      "losses": 46,
+      "units_per_doc_cards": 6.504,
+      "units_per_doc_chunks": 8.796,
+      "significant_holm_0.05": true
+    },
+    {
+      "k": 7,
+      "chunk_ndcg10": 0.676395,
+      "card_ndcg10": 0.774447,
+      "delta": 0.098052,
+      "ci_low": 0.069362,
+      "ci_high": 0.127967,
+      "p_value": 9.999000099990002e-05,
+      "wins": 107,
+      "ties": 26,
+      "losses": 67,
+      "units_per_doc_cards": 8.118,
+      "units_per_doc_chunks": 10.92,
+      "significant_holm_0.05": true
+    },
+    {
+      "k": 10,
+      "chunk_ndcg10": 0.615039,
+      "card_ndcg10": 0.803184,
+      "delta": 0.188145,
+      "ci_low": 0.152474,
+      "ci_high": 0.224782,
+      "p_value": 9.999000099990002e-05,
+      "wins": 135,
+      "ties": 31,
+      "losses": 34,
+      "units_per_doc_cards": 9.824,
+      "units_per_doc_chunks": 13.0,
+      "significant_holm_0.05": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "key": "molecular_mechanisms",
+    "label": "Molecular Mechanisms and Cellular Processes",
+    "anchors": [
+      "Efficient T cell activation requires both TCR signals and costimulatory signals.",
+      "S-Nitrosylation, the reversible post-translational modification of selective cysteine residues in proteins, has emerged as an important mechanism by which NO acts as a signaling molecule.",
+      "Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes.",
+      "Macroautophagy, the process by which cytosolic components and organelles are engulfed and degraded by a double-membrane structure, could be viewed as a specialized, multistep membrane transport process."
+    ]
+  },
+  {
+    "key": "disease_pathology_treatment",
+    "label": "Disease Pathology and Treatment",
+    "anchors": [
+      "CD28-/- mice were highly susceptible to infection with wild-type S. typhimurium and even failed to control infection with attenuated aroA- S. typhimuriu",
+      "GS-9620, an oral agonist of toll-like receptor 7 (TLR7), is in clinical development for the treatment of chronic hepatitis B (CHB).",
+      "The 5T33 multiple myeloma is one of a series of transplantable murine myelomas arising spontaneously in C57BL/KaLwRij mice.",
+      "The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation and autoimmune conditions."
+    ]
+  },
+  {
+    "key": "physiological_responses",
+    "label": "Physiological Responses and Systems Biology",
+    "anchors": [
+      "The changes in the metabolite content in freeze-clamped livers of fed rats occurring on perfusion with 10mm-d-fructose have been examined.",
+      "The object of this study was to assess the role of brown adipose tissue (BAT) and the sympathetic nervous system in the rise in heat production associated with endotoxin-induced fever.",
+      "Vascular stiffness increases with advancing age and is a major risk factor for age-related morbidity and mortality.",
+      "Serum human chorionic gonadotropin (hCG) levels were higher in primigravidae and in women carrying female fetuses."
+    ]
+  },
+  {
+    "key": "experimental_methods_models",
+    "label": "Experimental Methods and Models",
+    "anchors": [
+      "We developed a translation-controlled pulse-chase system that allows time-resolved isolation of newly forming multiprotein complexes in chemical quantities suitable for biochemical and cell biological analysis.",
+      "In an experiment to clarify the involvement of oxygen radicals in lung carcinogenesis induced by diesel exhaust particles (DEP), we found that there is a strong relation between lung tumor response and formation of 8-hydroxydeoxyguanosine (8-OHdG) in lung DNA of mice administered DEP by repeated intratracheal instillation.",
+      "Microarray analysis of pneumococcal genes expressed in these models identified body site-specific patterns of ex",
+      "The localization and synthesis of basic fibroblast growth factor (bFGF) in the rat carotid artery were investigated at times of chronic smooth muscle cell proliferation."
+    ]
+  },
+  {
+    "key": "clinical_public_health",
+    "label": "Clinical and Public Health Outcomes",
+    "anchors": [
+      "Since the concept of early gastric cancer was first described in Japan in 1962, its treatment has evolved from curative surgical resection to endoscopic resection, initially with polypectomy to more recently with endoscopic submucosal dissection.",
+      "This study assessed psychiatric medications and their potential lethality in a representative sample of suicide attempts.",
+      "The computer alert reduced the risk of deep-vein thrombosis or pulmonary embolism at 90 days by 41 percent (hazard ratio, 0.59; 95 percent confidence interval, 0.43 to 0.81;",
+      "Functional studies on colorectal cancer cells indicated a protective role of the interferon-inducible dsDNA sensor Absent in Melanoma 2 (AIM2) in cancer progression."
+    ]
+  }
+]

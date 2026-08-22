@@ -1,0 +1,56 @@
+{
+  "cells": {
+    "T_A_on_A": 0.6437589142820279,
+    "T_B_on_A": 0.5537029309364785,
+    "T_A_on_B": 0.7218077116886658,
+    "T_B_on_B": 0.7465288600359838
+  },
+  "tests": {
+    "workload_A": {
+      "n": 150,
+      "mean_a": 0.6437589142820279,
+      "mean_b": 0.5537029309364785,
+      "mean_delta": 0.09005598334554947,
+      "ci_low": 0.05838172133767767,
+      "ci_high": 0.12109043321319958,
+      "p_value": 9.999000099990002e-05,
+      "wins": 99,
+      "ties": 3,
+      "losses": 48,
+      "effect_size": 0.4526962058885554,
+      "common_pool_size": 400,
+      "relevant_retained": 0.6165
+    },
+    "workload_B": {
+      "n": 150,
+      "mean_a": 0.7465288600359838,
+      "mean_b": 0.7218077116886658,
+      "mean_delta": 0.024721148347318145,
+      "ci_low": -0.004508128395950596,
+      "ci_high": 0.054219311393661596,
+      "p_value": 0.10678932106789321,
+      "wins": 72,
+      "ties": 21,
+      "losses": 57,
+      "effect_size": 0.13271195833505198,
+      "common_pool_size": 400,
+      "relevant_retained": 0.5984
+    }
+  },
+  "verdict": "NOT SUPPORTED",
+  "taxonomies": {
+    "T_A": [
+      "contractual_obligations",
+      "procurement_logistics",
+      "security_incidents",
+      "financial_compliance",
+      "operational_actions"
+    ],
+    "T_B": [
+      "logistics_actions",
+      "engineering_incidents",
+      "facilities_equipment_issues",
+      "operational_decisions"
+    ]
+  }
+}

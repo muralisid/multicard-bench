@@ -1,0 +1,171 @@
+{
+  "ladder": {
+    "gate": {
+      "kept": 400,
+      "of": 800,
+      "relevant_retained": 0.6164576200914119,
+      "anchor_sets": [
+        "domain",
+        "objective",
+        "intent"
+      ]
+    },
+    "means": {
+      "L4_corpus": 0.6300781681270495,
+      "L5_objective": 0.6437589142820279,
+      "L0_pooled": 0.29383497770741485,
+      "L1_chunks": 0.5384266228590405
+    },
+    "units_per_doc": {
+      "L4_corpus": 4.975,
+      "L5_objective": 4.66
+    },
+    "diagnostics": {
+      "L4": {
+        "min_cluster_size": 25,
+        "topics_raw": 8,
+        "noise_fraction_raw": 0.155,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 4,
+        "n_seed_topics": 0,
+        "sample_size": 30
+      },
+      "L5": {
+        "min_cluster_size": 25,
+        "topics_raw": 8,
+        "noise_fraction_raw": 0.155,
+        "guided": true,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 6,
+        "n_seed_topics": 8,
+        "sample_size": 30
+      }
+    },
+    "objective_increment": {
+      "n": 150,
+      "mean_a": 0.6437589142820279,
+      "mean_b": 0.6300781681270495,
+      "mean_delta": 0.0136807461549784,
+      "ci_low": -0.013438684367910637,
+      "ci_high": 0.04139316799144536,
+      "p_value": 0.33086691330866913,
+      "wins": 65,
+      "ties": 17,
+      "losses": 68,
+      "effect_size": 0.07959477346090474
+    },
+    "verdict": "NOT SUPPORTED"
+  },
+  "crossover": {
+    "cells": {
+      "T_A_on_A": 0.6437589142820279,
+      "T_B_on_A": 0.5537029309364785,
+      "T_A_on_B": 0.7218077116886658,
+      "T_B_on_B": 0.7465288600359838
+    },
+    "tests": {
+      "workload_A": {
+        "n": 150,
+        "mean_a": 0.6437589142820279,
+        "mean_b": 0.5537029309364785,
+        "mean_delta": 0.09005598334554947,
+        "ci_low": 0.05838172133767767,
+        "ci_high": 0.12109043321319958,
+        "p_value": 9.999000099990002e-05,
+        "wins": 99,
+        "ties": 3,
+        "losses": 48,
+        "effect_size": 0.4526962058885554,
+        "common_pool_size": 400,
+        "relevant_retained": 0.6165
+      },
+      "workload_B": {
+        "n": 150,
+        "mean_a": 0.7465288600359838,
+        "mean_b": 0.7218077116886658,
+        "mean_delta": 0.024721148347318145,
+        "ci_low": -0.004508128395950596,
+        "ci_high": 0.054219311393661596,
+        "p_value": 0.10678932106789321,
+        "wins": 72,
+        "ties": 21,
+        "losses": 57,
+        "effect_size": 0.13271195833505198,
+        "common_pool_size": 400,
+        "relevant_retained": 0.5984
+      }
+    },
+    "verdict": "NOT SUPPORTED",
+    "taxonomies": {
+      "T_A": [
+        "contractual_obligations",
+        "procurement_logistics",
+        "security_incidents",
+        "financial_compliance",
+        "operational_actions"
+      ],
+      "T_B": [
+        "logistics_actions",
+        "engineering_incidents",
+        "facilities_equipment_issues",
+        "operational_decisions"
+      ]
+    }
+  },
+  "economics": {
+    "cost": {
+      "prices_as_of": "2026-08-19",
+      "prices_usd_per_mtok": {
+        "encoder-local": {
+          "in": 0.0,
+          "out": 0.0
+        },
+        "vertex-flash": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "vertex-pro": {
+          "in": 1.25,
+          "out": 5.0
+        },
+        "vertex-partner-claude": {
+          "in": 3.0,
+          "out": 15.0
+        },
+        "vertex-partner-llama": {
+          "in": 0.25,
+          "out": 0.75
+        },
+        "azure-gpt54": {
+          "in": 1.25,
+          "out": 10.0
+        },
+        "generative-cheap": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "generative-mid": {
+          "in": 0.4,
+          "out": 1.6
+        },
+        "generative-frontier": {
+          "in": 3.0,
+          "out": 15.0
+        }
+      },
+      "total_usd": 0.001854,
+      "total_calls": 6,
+      "by_tier": {
+        "vertex-flash": {
+          "calls": 6,
+          "tokens_in": 9944,
+          "tokens_out": 2150,
+          "usd": 0.001854
+        }
+      }
+    },
+    "calls": 6,
+    "wall_seconds": 185.9
+  }
+}

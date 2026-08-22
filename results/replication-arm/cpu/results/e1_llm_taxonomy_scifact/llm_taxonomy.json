@@ -1,0 +1,72 @@
+[
+  {
+    "key": "molecular_mechanisms",
+    "label": "Molecular Mechanisms and Cellular Processes",
+    "anchors": [
+      "Efficient T cell activation requires both TCR signals and costimulatory signals.",
+      "S-Nitrosylation, the reversible post-translational modification of selective cysteine residues in proteins, has emerged as an important mechanism by which NO acts as a signaling molecule.",
+      "Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes.",
+      "Macroautophagy, the process by which cytosolic components and organelles are engulfed and degraded by a double-membrane structure, could be viewed as a specialized, multistep membrane transport process."
+    ]
+  },
+  {
+    "key": "disease_pathology",
+    "label": "Disease Pathology and Treatment",
+    "anchors": [
+      "CD28-/- mice were highly susceptible to infection with wild-type S. typhimurium and even failed to control infection with attenuated aroA- S. typhimuriu",
+      "GS-9620, an oral agonist of toll-like receptor 7 (TLR7), is in clinical development for the treatment of chronic hepatitis B (CHB).",
+      "The 5T33 multiple myeloma is one of a series of transplantable murine myelomas arising spontaneously in C57BL/KaLwRij mice.",
+      "The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation and autoimmune conditions."
+    ]
+  },
+  {
+    "key": "experimental_methods",
+    "label": "Experimental Methods and Techniques",
+    "anchors": [
+      "We used mice deficient in CD28 expression (CD28-/- mice) to analyze the role of CD28 in the immune response against the intracellular bacterium Salmonella typhimurium.",
+      "Herein, we investigated the molecular mechanisms that contribute to the antiviral response to GS-9620 using in vitro models of hepatitis B virus (HBV) infection.",
+      "We developed a translation-controlled pulse-chase system that allows time-resolved isolation of newly forming multiprotein complexes in chemical quantities suitable for biochemical and cell biological analysis.",
+      "This is the first study to examine the expression of S. pneumoniae genes in vivo by using whole-genome microarrays available from The Institute for Genomic Research."
+    ]
+  },
+  {
+    "key": "physiological_systems",
+    "label": "Physiological Systems and Regulation",
+    "anchors": [
+      "The role of the diffusible messenger nitric oxide (NO) in the regulation of pain transmission is still a debate of matter, pro-nociceptive and/or anti-nociceptive.",
+      "The object of this study was to assess the role of brown adipose tissue (BAT) and the sympathetic nervous system in the rise in heat production associated with endotoxin-induced fever.",
+      "Vascular stiffness increases with advancing age and is a major risk factor for age-related morbidity and mortality.",
+      "The changes in the metabolite content in freeze-clamped livers of fed rats occurring on perfusion with 10mm-d-fructose have been examined."
+    ]
+  },
+  {
+    "key": "cancer_biology",
+    "label": "Cancer Biology and Tumorigenesis",
+    "anchors": [
+      "Since the concept of early gastric cancer was first described in Japan in 1962, its treatment has evolved from curative surgical resection to endoscopic resection.",
+      "Functional studies on colorectal cancer cells indicated a protective role of the interferon-inducible dsDNA sensor Absent in Melanoma 2 (AIM2) in cancer progression.",
+      "In an experiment to clarify the involvement of oxygen radicals in lung carcinogenesis induced by diesel exhaust particles (DEP), we found that there is a strong relation between lung tumor response and formation of 8-hydroxydeoxyguanosine (8-OHdG) in lung DNA of mice administered DEP by repeated intratracheal instillation.",
+      "Recent studies indicate the presence of a small, stem-like cell population in several human cancers that is crucial for the tumour (re)population."
+    ]
+  },
+  {
+    "key": "immunology_inflammation",
+    "label": "Immunology and Inflammation",
+    "anchors": [
+      "The involvement of the immune system in the response to tissue injury has raised the possibility that it might influence tissue, organ or appendage regeneration following injury.",
+      "CD4+ T cell help guides formation of CD103+ lung-resident memory CD8+ T cells during influenza viral infection.",
+      "Neutrophil apoptosis is a highly regulated process essential for inflammation resolution, the molecular mechanisms of which are only partially elucidated.",
+      "T cell-specific deletion of Blimp-1 causes abnormal T cell homeostasis and function, leading to spontaneous, fatal colitis in mice."
+    ]
+  },
+  {
+    "key": "clinical_outcomes_public_health",
+    "label": "Clinical Outcomes and Public Health",
+    "anchors": [
+      "How safe are psychiatric medications after a voluntary overdose?",
+      "The computer alert reduced the risk of deep-vein thrombosis or pulmonary embolism at 90 days by 41 percent (hazard ratio, 0.59; 95 percent confidence interval, 0.43 to 0.81; P 0.001).",
+      "A total of 527 blood samples was obtained from an unselected population of women between 36 and 40 weeks gestation.",
+      "Globally, about 1% of pregnant women are persistently infected with the hepatitis C virus (HCV)."
+    ]
+  }
+]

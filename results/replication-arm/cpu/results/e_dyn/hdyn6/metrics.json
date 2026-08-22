@@ -1,0 +1,159 @@
+{
+  "skewed": {
+    "minority_pools_in_sample": {
+      "random": 0.6,
+      "relevance": 0.6,
+      "stratified": 1.0
+    },
+    "bertopic": {
+      "mcs_25": {
+        "topics": 6,
+        "clustered_fraction": 1.0
+      },
+      "selected_min_cluster_size": 10,
+      "mcs_10": {
+        "topics": 25,
+        "clustered_fraction": 0.9335
+      },
+      "n_topics": 25,
+      "noise_fraction": 0.0665,
+      "residue_quota": 2
+    },
+    "means": {
+      "random": 0.7773183228658457,
+      "relevance": 0.7533042750674706,
+      "stratified": 0.7712108003881933
+    },
+    "tests": {
+      "strat_vs_rand_all": {
+        "n": 200,
+        "mean_a": 0.7712108003881933,
+        "mean_b": 0.7773183228658457,
+        "mean_delta": -0.006107522477652336,
+        "ci_low": -0.030320995613790067,
+        "ci_high": 0.017572788782820984,
+        "p_value": 0.6071392860713929,
+        "wins": 59,
+        "ties": 81,
+        "losses": 60,
+        "effect_size": -0.03561889735691464
+      },
+      "strat_vs_rand_minority": {
+        "n": 94,
+        "mean_a": 0.5905146101779636,
+        "mean_b": 0.6133128877608547,
+        "mean_delta": -0.022798277582891092,
+        "ci_low": -0.06945434342542689,
+        "ci_high": 0.021815972660734265,
+        "p_value": 0.3414658534146585,
+        "wins": 38,
+        "ties": 16,
+        "losses": 40,
+        "effect_size": -0.10034358907076885
+      },
+      "strat_vs_rel_all": {
+        "n": 200,
+        "mean_a": 0.7712108003881933,
+        "mean_b": 0.7533042750674706,
+        "mean_delta": 0.017906525320722615,
+        "ci_low": -0.013737090602852633,
+        "ci_high": 0.04846269723509709,
+        "p_value": 0.2722727727227277,
+        "wins": 70,
+        "ties": 80,
+        "losses": 50,
+        "effect_size": 0.07839954771534552
+      },
+      "strat_vs_rel_minority": {
+        "n": 94,
+        "mean_a": 0.5905146101779636,
+        "mean_b": 0.5948976110116553,
+        "mean_delta": -0.004383000833691638,
+        "ci_low": -0.06656653972478214,
+        "ci_high": 0.053977386490797245,
+        "p_value": 0.8877112288771123,
+        "wins": 42,
+        "ties": 15,
+        "losses": 37,
+        "effect_size": -0.014421754226258828
+      }
+    }
+  },
+  "balanced": {
+    "minority_pools_in_sample": {
+      "random": 1.0,
+      "relevance": 1.0,
+      "stratified": 1.0
+    },
+    "bertopic": {
+      "mcs_25": {
+        "topics": 12,
+        "clustered_fraction": 0.9635
+      },
+      "selected_min_cluster_size": 25,
+      "n_topics": 12,
+      "noise_fraction": 0.0365,
+      "residue_quota": 1
+    },
+    "means": {
+      "random": 0.802235087648194,
+      "relevance": 0.8453783171915865,
+      "stratified": 0.8455347004121583
+    },
+    "tests": {
+      "strat_vs_rand_all": {
+        "n": 200,
+        "mean_a": 0.8455347004121583,
+        "mean_b": 0.802235087648194,
+        "mean_delta": 0.04329961276396439,
+        "ci_low": 0.0117272576597654,
+        "ci_high": 0.07499633526488646,
+        "p_value": 0.0059994000599940004,
+        "wins": 91,
+        "ties": 55,
+        "losses": 54,
+        "effect_size": 0.19257951144974825
+      },
+      "strat_vs_rand_minority": {
+        "n": 100,
+        "mean_a": 0.8065331164936396,
+        "mean_b": 0.7566983256464617,
+        "mean_delta": 0.04983479084717759,
+        "ci_low": -0.003287526523349414,
+        "ci_high": 0.10404704482987163,
+        "p_value": 0.07979202079792021,
+        "wins": 50,
+        "ties": 23,
+        "losses": 27,
+        "effect_size": 0.17873306342278877
+      },
+      "strat_vs_rel_all": {
+        "n": 200,
+        "mean_a": 0.8455347004121583,
+        "mean_b": 0.8453783171915865,
+        "mean_delta": 0.0001563832205719165,
+        "ci_low": -0.024913796536759195,
+        "ci_high": 0.024717370146084206,
+        "p_value": 0.9899010098990101,
+        "wins": 65,
+        "ties": 68,
+        "losses": 67,
+        "effect_size": 0.0008685836068822381
+      },
+      "strat_vs_rel_minority": {
+        "n": 100,
+        "mean_a": 0.8065331164936396,
+        "mean_b": 0.8389215794954471,
+        "mean_delta": -0.032388463001807706,
+        "ci_low": -0.07095525165563643,
+        "ci_high": 0.007098472499489265,
+        "p_value": 0.10648935106489352,
+        "wins": 27,
+        "ties": 33,
+        "losses": 40,
+        "effect_size": -0.16218764566031504
+      }
+    }
+  },
+  "verdict": "NOT SUPPORTED"
+}

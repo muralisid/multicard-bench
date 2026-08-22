@@ -37,7 +37,11 @@ uv run mcb run e0_dilution   # first full experiment, no credentials needed
 
 Notes for the spare laptop specifically. Apple Silicon or Linux machines can
 relax the torch pin in pyproject.toml (it exists for Intel Mac wheels); results
-are CPU-deterministic either way. Experiments that include a view-design or
+are CPU-deterministic either way. The encoder runs on the CPU unless MCB_DEVICE
+says otherwise: on Apple Silicon the auto-selected GPU path produced different
+vectors from the CPU and hung under torch 2.2.2, and cached vectors carry no
+device tag. Direct `python -c` invocations should set PYTHONHASHSEED=13, which
+the `mcb` entrypoint does for itself. Experiments that include a view-design or
 topic-naming step need Vertex credentials in the environment
 (VERTEX_AI_SERVICE_ACCOUNT_JSON); everything else runs with none. The private
 program-state repo and the boundary blocklist are NOT needed to run experiments,

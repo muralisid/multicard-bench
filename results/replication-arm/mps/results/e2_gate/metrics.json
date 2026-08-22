@@ -1,0 +1,88 @@
+{
+  "experiment": "e2_gate",
+  "recall_cost_sweep": [
+    {
+      "target_recall": 0.8,
+      "recall": 0.7952,
+      "precision": 0.9,
+      "survival_rate": 0.44,
+      "discarded_fraction": 0.56
+    },
+    {
+      "target_recall": 0.9,
+      "recall": 0.8996,
+      "precision": 0.8205,
+      "survival_rate": 0.546,
+      "discarded_fraction": 0.454
+    },
+    {
+      "target_recall": 0.95,
+      "recall": 0.9478,
+      "precision": 0.688,
+      "survival_rate": 0.686,
+      "discarded_fraction": 0.314
+    },
+    {
+      "target_recall": 0.98,
+      "recall": 0.988,
+      "precision": 0.5775,
+      "survival_rate": 0.852,
+      "discarded_fraction": 0.148
+    },
+    {
+      "target_recall": 0.99,
+      "recall": 0.988,
+      "precision": 0.5629,
+      "survival_rate": 0.874,
+      "discarded_fraction": 0.126
+    }
+  ],
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_on_purpose": 500,
+  "n_off_purpose": 500,
+  "target_recall": 0.95,
+  "anchor_sets": [
+    "domain",
+    "objective",
+    "intent"
+  ],
+  "fitted_weights": {
+    "domain": 4.994895909761398,
+    "objective": 5.748141991240391,
+    "intent": 4.391236850522878
+  },
+  "fitted_bias": -1.369312587498948,
+  "threshold": -0.7508421199619596,
+  "held_out": {
+    "roc_auc": 0.9340469447511159,
+    "pr_auc": 0.9462891209719609,
+    "threshold": -0.7508421199619596,
+    "recall_at_threshold": 0.9477911646586346,
+    "precision_at_threshold": 0.6880466472303207,
+    "survival_rate": 0.686,
+    "quarantined": 157,
+    "confusion": {
+      "tp": 236,
+      "fp": 107,
+      "tn": 144,
+      "fn": 13
+    }
+  },
+  "unweighted_baseline": {
+    "roc_auc": 0.9327829245267925,
+    "pr_auc": 0.945267432906328,
+    "threshold": 0.041246978666583986,
+    "recall_at_threshold": 0.9437751004016064,
+    "precision_at_threshold": 0.6871345029239766,
+    "survival_rate": 0.684,
+    "quarantined": 158,
+    "confusion": {
+      "tp": 235,
+      "fp": 107,
+      "tn": 144,
+      "fn": 14
+    }
+  },
+  "wall_seconds": 57.6
+}

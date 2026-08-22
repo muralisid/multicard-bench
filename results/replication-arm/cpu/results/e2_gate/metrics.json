@@ -1,0 +1,88 @@
+{
+  "experiment": "e2_gate",
+  "recall_cost_sweep": [
+    {
+      "target_recall": 0.8,
+      "recall": 0.8074,
+      "precision": 0.9041,
+      "survival_rate": 0.4405,
+      "discarded_fraction": 0.5595
+    },
+    {
+      "target_recall": 0.9,
+      "recall": 0.9123,
+      "precision": 0.8212,
+      "survival_rate": 0.548,
+      "discarded_fraction": 0.452
+    },
+    {
+      "target_recall": 0.95,
+      "recall": 0.96,
+      "precision": 0.6994,
+      "survival_rate": 0.677,
+      "discarded_fraction": 0.323
+    },
+    {
+      "target_recall": 0.98,
+      "recall": 0.9823,
+      "precision": 0.6051,
+      "survival_rate": 0.8007,
+      "discarded_fraction": 0.1993
+    },
+    {
+      "target_recall": 0.99,
+      "recall": 0.9949,
+      "precision": 0.5489,
+      "survival_rate": 0.894,
+      "discarded_fraction": 0.106
+    }
+  ],
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "seed": 13,
+  "n_on_purpose": 4000,
+  "n_off_purpose": 4000,
+  "target_recall": 0.95,
+  "anchor_sets": [
+    "domain",
+    "objective",
+    "intent"
+  ],
+  "fitted_weights": {
+    "domain": 8.170869035642745,
+    "objective": 12.268802050639874,
+    "intent": 9.863347664706547
+  },
+  "fitted_bias": -2.5688134221564165,
+  "threshold": -1.2378068467093488,
+  "held_out": {
+    "roc_auc": 0.9359108197468988,
+    "pr_auc": 0.9368675295658606,
+    "threshold": -1.2378068467093488,
+    "recall_at_threshold": 0.9599594526102382,
+    "precision_at_threshold": 0.6994091580502215,
+    "survival_rate": 0.677,
+    "quarantined": 1292,
+    "confusion": {
+      "tp": 1894,
+      "fp": 814,
+      "tn": 1213,
+      "fn": 79
+    }
+  },
+  "unweighted_baseline": {
+    "roc_auc": 0.932977785201353,
+    "pr_auc": 0.9347861218097672,
+    "threshold": 0.04225785473993505,
+    "recall_at_threshold": 0.9594526102382159,
+    "precision_at_threshold": 0.6923920994879298,
+    "survival_rate": 0.6835,
+    "quarantined": 1266,
+    "confusion": {
+      "tp": 1893,
+      "fp": 841,
+      "tn": 1186,
+      "fn": 80
+    }
+  },
+  "wall_seconds": 340.6
+}
