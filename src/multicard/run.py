@@ -44,6 +44,7 @@ REGISTRY = {
     "e_dyn_all": ("multicard.experiments.e_dyn", "run"),
     "e_dyn2": ("multicard.experiments.e_dyn2", "run"),
     "e_dyn3": ("multicard.experiments.e_dyn3", "run"),
+    "e_dyn4": ("multicard.experiments.e_dyn4", "run"),
 }
 
 

@@ -1,0 +1,165 @@
+{
+  "per_seed": [
+    {
+      "collection": "core17",
+      "substrate_seed": 13,
+      "n_queries": 20,
+      "substrate": {
+        "min_cluster_size": 25,
+        "topics_raw": 53,
+        "noise_fraction_raw": 0.1005,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 1,
+        "shared": true,
+        "substrate_docs": 6000,
+        "n_topic_names": 20,
+        "sample_size": 30
+      },
+      "ndcg10": {
+        "pooled": {
+          "og": {
+            "mean": 0.3927,
+            "n": 20,
+            "sd": 0.2913
+          },
+          "changed": {
+            "mean": 0.2426,
+            "n": 20,
+            "sd": 0.2543
+          }
+        },
+        "instr_pooled": {
+          "og": {
+            "mean": 0.3941,
+            "n": 20,
+            "sd": 0.2667
+          },
+          "changed": {
+            "mean": 0.2422,
+            "n": 20,
+            "sd": 0.2165
+          }
+        },
+        "chunks": {
+          "og": {
+            "mean": 0.4028,
+            "n": 20,
+            "sd": 0.2887
+          },
+          "changed": {
+            "mean": 0.247,
+            "n": 20,
+            "sd": 0.2703
+          }
+        },
+        "cards_corpus": {
+          "og": {
+            "mean": 0.4093,
+            "n": 20,
+            "sd": 0.2871
+          },
+          "changed": {
+            "mean": 0.2467,
+            "n": 20,
+            "sd": 0.2239
+          }
+        },
+        "cards_obj": {
+          "og": {
+            "mean": 0.3494,
+            "n": 20,
+            "sd": 0.2536
+          },
+          "changed": {
+            "mean": 0.2126,
+            "n": 20,
+            "sd": 0.2213
+          }
+        }
+      },
+      "sensitivity_on_changed": {
+        "instr_pooled": {
+          "mean": 0.008,
+          "n": 20,
+          "sd": 0.0395
+        },
+        "cards_obj": {
+          "mean": 0.0247,
+          "n": 20,
+          "sd": 0.0853
+        }
+      },
+      "p_mrr": {
+        "instr_pooled": {
+          "mean": -0.013,
+          "n": 436,
+          "sd": 0.2063
+        },
+        "cards_obj": {
+          "mean": -0.0016,
+          "n": 436,
+          "sd": 0.3526
+        }
+      },
+      "corpus_views": [
+        "politics_social_issues",
+        "arts_culture_leisure",
+        "science_environment_tech",
+        "health_medicine",
+        "business_economy",
+        "international_relations_conflict",
+        "sports_events"
+      ],
+      "card_repr": "concat"
+    }
+  ],
+  "economics": {
+    "cost": {
+      "prices_as_of": "2026-08-19",
+      "prices_usd_per_mtok": {
+        "encoder-local": {
+          "in": 0.0,
+          "out": 0.0
+        },
+        "vertex-flash": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "vertex-pro": {
+          "in": 1.25,
+          "out": 5.0
+        },
+        "vertex-partner-claude": {
+          "in": 3.0,
+          "out": 15.0
+        },
+        "vertex-partner-llama": {
+          "in": 0.25,
+          "out": 0.75
+        },
+        "azure-gpt54": {
+          "in": 1.25,
+          "out": 10.0
+        },
+        "generative-cheap": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "generative-mid": {
+          "in": 0.4,
+          "out": 1.6
+        },
+        "generative-frontier": {
+          "in": 3.0,
+          "out": 15.0
+        }
+      },
+      "total_usd": 0,
+      "total_calls": 0,
+      "by_tier": {}
+    },
+    "calls": 0,
+    "wall_seconds": 1751.6
+  }
+}

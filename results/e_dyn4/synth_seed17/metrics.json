@@ -1,0 +1,52 @@
+{
+  "cells": {
+    "T_A_on_A": 0.5440098535384744,
+    "T_B_on_A": 0.5014585955405577,
+    "T_A_on_B": 0.6921644582273554,
+    "T_B_on_B": 0.6777163846587009
+  },
+  "tests": {
+    "workload_A": {
+      "n": 200,
+      "mean_a": 0.5440098535384744,
+      "mean_b": 0.5014585955405577,
+      "mean_delta": 0.04255125799791671,
+      "ci_low": 0.014863851520577148,
+      "ci_high": 0.070730934548941,
+      "p_value": 0.0038996100389961006,
+      "wins": 113,
+      "ties": 4,
+      "losses": 83,
+      "effect_size": 0.21101419183769599,
+      "relevant_retained": 0.6413,
+      "common_pool_size": 250
+    },
+    "workload_B": {
+      "n": 200,
+      "mean_a": 0.6777163846587009,
+      "mean_b": 0.6921644582273554,
+      "mean_delta": -0.014448073568654579,
+      "ci_low": -0.03369502095854017,
+      "ci_high": 0.004041706384442332,
+      "p_value": 0.1294870512948705,
+      "wins": 98,
+      "ties": 16,
+      "losses": 86,
+      "effect_size": -0.10699401119612648,
+      "relevant_retained": 0.6238,
+      "common_pool_size": 250
+    }
+  },
+  "substrate": {
+    "min_cluster_size": 10,
+    "topics_raw": 17,
+    "noise_fraction_raw": 0.156,
+    "guided": false,
+    "noise_fraction_after_reduction": 0.0,
+    "llm_flagged_noise_topics": 3,
+    "shared": true,
+    "n_topic_names": 17,
+    "sample_size": 30
+  },
+  "two_sided_crossover": false
+}

@@ -1,0 +1,413 @@
+{
+  "summary": {
+    "n_seeds": 5,
+    "two_sided_crossover_fraction": "1/5",
+    "A_direction_mean_delta": 0.0595,
+    "A_direction_range": [
+      0.0344,
+      0.0993
+    ],
+    "B_direction_mean_delta": -0.0032,
+    "B_direction_range": [
+      -0.0375,
+      0.0249
+    ],
+    "verdict": "CROSS-OVER DOES NOT SURVIVE late objective"
+  },
+  "rounds": [
+    {
+      "topic_seed": 11,
+      "cells": {
+        "T_A_on_A": 0.5148340167371143,
+        "T_B_on_A": 0.4305606388948268,
+        "T_A_on_B": 0.6976583923605975,
+        "T_B_on_B": 0.6842214774757457
+      },
+      "tests": {
+        "workload_A": {
+          "n": 200,
+          "mean_a": 0.5148340167371143,
+          "mean_b": 0.4305606388948268,
+          "mean_delta": 0.08427337784228744,
+          "ci_low": 0.05418093308404696,
+          "ci_high": 0.11437746794183683,
+          "p_value": 9.999000099990002e-05,
+          "wins": 133,
+          "ties": 7,
+          "losses": 60,
+          "effect_size": 0.3891905960570693,
+          "relevant_retained": 0.6413,
+          "common_pool_size": 250
+        },
+        "workload_B": {
+          "n": 200,
+          "mean_a": 0.6842214774757457,
+          "mean_b": 0.6976583923605975,
+          "mean_delta": -0.013436914884851691,
+          "ci_low": -0.037262128642427936,
+          "ci_high": 0.010518817276171879,
+          "p_value": 0.27217278272172785,
+          "wins": 93,
+          "ties": 9,
+          "losses": 98,
+          "effect_size": -0.07729105975000075,
+          "relevant_retained": 0.6238,
+          "common_pool_size": 250
+        }
+      },
+      "substrate": {
+        "min_cluster_size": 15,
+        "topics_raw": 12,
+        "noise_fraction_raw": 0.212,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 1,
+        "shared": true,
+        "n_topic_names": 12,
+        "sample_size": 30
+      },
+      "taxonomies": {
+        "T_A": [
+          "contractual_obligations",
+          "procurement_logistics",
+          "security_incidents",
+          "financial_forecasts",
+          "campaign_performance"
+        ],
+        "T_B": [
+          "logistics_actions",
+          "engineering_incidents_actions",
+          "facilities_equipment_actions",
+          "operational_decisions"
+        ]
+      },
+      "two_sided_crossover": false
+    },
+    {
+      "topic_seed": 13,
+      "cells": {
+        "T_A_on_A": 0.5798743679806012,
+        "T_B_on_A": 0.48061281464546285,
+        "T_A_on_B": 0.7427552229809578,
+        "T_B_on_B": 0.7052457963312281
+      },
+      "tests": {
+        "workload_A": {
+          "n": 200,
+          "mean_a": 0.5798743679806012,
+          "mean_b": 0.48061281464546285,
+          "mean_delta": 0.0992615533351384,
+          "ci_low": 0.07271855662518274,
+          "ci_high": 0.12568545688375363,
+          "p_value": 9.999000099990002e-05,
+          "wins": 141,
+          "ties": 6,
+          "losses": 53,
+          "effect_size": 0.5197161569313586,
+          "relevant_retained": 0.6413,
+          "common_pool_size": 250
+        },
+        "workload_B": {
+          "n": 200,
+          "mean_a": 0.7052457963312281,
+          "mean_b": 0.7427552229809578,
+          "mean_delta": -0.03750942664972969,
+          "ci_low": -0.056882085547256066,
+          "ci_high": -0.018299127847305658,
+          "p_value": 0.00029997000299970003,
+          "wins": 69,
+          "ties": 12,
+          "losses": 119,
+          "effect_size": -0.2691049260973643,
+          "relevant_retained": 0.6238,
+          "common_pool_size": 250
+        }
+      },
+      "substrate": {
+        "min_cluster_size": 15,
+        "topics_raw": 12,
+        "noise_fraction_raw": 0.166,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 2,
+        "shared": true,
+        "n_topic_names": 12,
+        "sample_size": 30
+      },
+      "taxonomies": {
+        "T_A": [
+          "contractual_obligations",
+          "procurement_logistics",
+          "security_incidents",
+          "financial_reporting",
+          "operational_actions"
+        ],
+        "T_B": [
+          "logistics_actions",
+          "incident_actions",
+          "facilities_actions",
+          "general_operational_decisions"
+        ]
+      },
+      "two_sided_crossover": false
+    },
+    {
+      "topic_seed": 17,
+      "cells": {
+        "T_A_on_A": 0.5440098535384744,
+        "T_B_on_A": 0.5014585955405577,
+        "T_A_on_B": 0.6921644582273554,
+        "T_B_on_B": 0.6777163846587009
+      },
+      "tests": {
+        "workload_A": {
+          "n": 200,
+          "mean_a": 0.5440098535384744,
+          "mean_b": 0.5014585955405577,
+          "mean_delta": 0.04255125799791671,
+          "ci_low": 0.014863851520577148,
+          "ci_high": 0.070730934548941,
+          "p_value": 0.0038996100389961006,
+          "wins": 113,
+          "ties": 4,
+          "losses": 83,
+          "effect_size": 0.21101419183769599,
+          "relevant_retained": 0.6413,
+          "common_pool_size": 250
+        },
+        "workload_B": {
+          "n": 200,
+          "mean_a": 0.6777163846587009,
+          "mean_b": 0.6921644582273554,
+          "mean_delta": -0.014448073568654579,
+          "ci_low": -0.03369502095854017,
+          "ci_high": 0.004041706384442332,
+          "p_value": 0.1294870512948705,
+          "wins": 98,
+          "ties": 16,
+          "losses": 86,
+          "effect_size": -0.10699401119612648,
+          "relevant_retained": 0.6238,
+          "common_pool_size": 250
+        }
+      },
+      "substrate": {
+        "min_cluster_size": 10,
+        "topics_raw": 17,
+        "noise_fraction_raw": 0.156,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 3,
+        "shared": true,
+        "n_topic_names": 17,
+        "sample_size": 30
+      },
+      "taxonomies": {
+        "T_A": [
+          "contract_compliance",
+          "procurement_logistics",
+          "security_incidents",
+          "operational_actions",
+          "financial_risk"
+        ],
+        "T_B": [
+          "logistics_shipments",
+          "engineering_incidents",
+          "facilities_equipment",
+          "operational_actions"
+        ]
+      },
+      "two_sided_crossover": false
+    },
+    {
+      "topic_seed": 19,
+      "cells": {
+        "T_A_on_A": 0.4425032602455611,
+        "T_B_on_A": 0.4056864607624591,
+        "T_A_on_B": 0.6750320868477943,
+        "T_B_on_B": 0.6996275742898649
+      },
+      "tests": {
+        "workload_A": {
+          "n": 200,
+          "mean_a": 0.4425032602455611,
+          "mean_b": 0.4056864607624591,
+          "mean_delta": 0.03681679948310189,
+          "ci_low": 0.005572208366159876,
+          "ci_high": 0.06838209705495371,
+          "p_value": 0.024197580241975804,
+          "wins": 94,
+          "ties": 11,
+          "losses": 95,
+          "effect_size": 0.16158981093442396,
+          "relevant_retained": 0.6413,
+          "common_pool_size": 250
+        },
+        "workload_B": {
+          "n": 200,
+          "mean_a": 0.6996275742898649,
+          "mean_b": 0.6750320868477943,
+          "mean_delta": 0.024595487442070726,
+          "ci_low": 0.0028280775710167977,
+          "ci_high": 0.046463387139137884,
+          "p_value": 0.029797020297970205,
+          "wins": 103,
+          "ties": 11,
+          "losses": 86,
+          "effect_size": 0.15453020959740757,
+          "relevant_retained": 0.6238,
+          "common_pool_size": 250
+        }
+      },
+      "substrate": {
+        "min_cluster_size": 15,
+        "topics_raw": 11,
+        "noise_fraction_raw": 0.17,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 1,
+        "shared": true,
+        "n_topic_names": 11,
+        "sample_size": 30
+      },
+      "taxonomies": {
+        "T_A": [
+          "contractual_obligations",
+          "procurement_supplier",
+          "security_incidents",
+          "action_decisions"
+        ],
+        "T_B": [
+          "logistics_actions",
+          "engineering_incidents_actions",
+          "facilities_equipment_actions",
+          "general_operational_actions"
+        ]
+      },
+      "two_sided_crossover": true
+    },
+    {
+      "topic_seed": 23,
+      "cells": {
+        "T_A_on_A": 0.48973363206274795,
+        "T_B_on_A": 0.45531372023755934,
+        "T_A_on_B": 0.7235469183168982,
+        "T_B_on_B": 0.7483990196973349
+      },
+      "tests": {
+        "workload_A": {
+          "n": 200,
+          "mean_a": 0.48973363206274795,
+          "mean_b": 0.45531372023755934,
+          "mean_delta": 0.03441991182518864,
+          "ci_low": -0.006049129657722991,
+          "ci_high": 0.0757625992323108,
+          "p_value": 0.10128987101289871,
+          "wins": 105,
+          "ties": 5,
+          "losses": 90,
+          "effect_size": 0.11678886961630353,
+          "relevant_retained": 0.6413,
+          "common_pool_size": 250
+        },
+        "workload_B": {
+          "n": 200,
+          "mean_a": 0.7483990196973349,
+          "mean_b": 0.7235469183168982,
+          "mean_delta": 0.02485210138043672,
+          "ci_low": 0.006049523403710421,
+          "ci_high": 0.044318091749455155,
+          "p_value": 0.009099090090990901,
+          "wins": 108,
+          "ties": 16,
+          "losses": 76,
+          "effect_size": 0.18274116229095363,
+          "relevant_retained": 0.6238,
+          "common_pool_size": 250
+        }
+      },
+      "substrate": {
+        "min_cluster_size": 25,
+        "topics_raw": 8,
+        "noise_fraction_raw": 0.14,
+        "guided": false,
+        "noise_fraction_after_reduction": 0.0,
+        "llm_flagged_noise_topics": 1,
+        "shared": true,
+        "n_topic_names": 8,
+        "sample_size": 30
+      },
+      "taxonomies": {
+        "T_A": [
+          "contractual_obligations",
+          "procurement_logistics",
+          "security_incidents",
+          "financial_performance",
+          "maintenance_access"
+        ],
+        "T_B": [
+          "logistics_shipments",
+          "engineering_incidents",
+          "facilities_equipment",
+          "operational_actions"
+        ]
+      },
+      "two_sided_crossover": false
+    }
+  ],
+  "economics": {
+    "cost": {
+      "prices_as_of": "2026-08-19",
+      "prices_usd_per_mtok": {
+        "encoder-local": {
+          "in": 0.0,
+          "out": 0.0
+        },
+        "vertex-flash": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "vertex-pro": {
+          "in": 1.25,
+          "out": 5.0
+        },
+        "vertex-partner-claude": {
+          "in": 3.0,
+          "out": 15.0
+        },
+        "vertex-partner-llama": {
+          "in": 0.25,
+          "out": 0.75
+        },
+        "azure-gpt54": {
+          "in": 1.25,
+          "out": 10.0
+        },
+        "generative-cheap": {
+          "in": 0.1,
+          "out": 0.4
+        },
+        "generative-mid": {
+          "in": 0.4,
+          "out": 1.6
+        },
+        "generative-frontier": {
+          "in": 3.0,
+          "out": 15.0
+        }
+      },
+      "total_usd": 0.005723,
+      "total_calls": 15,
+      "by_tier": {
+        "vertex-flash": {
+          "calls": 15,
+          "tokens_in": 33061,
+          "tokens_out": 6043,
+          "usd": 0.005723
+        }
+      }
+    },
+    "calls": 15,
+    "wall_seconds": 361.2
+  }
+}
