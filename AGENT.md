@@ -8,7 +8,7 @@ Per the recognition test in the agentic-enterprise guide (agents registered with
 | Runtime | Claude Code (Anthropic), operated in sessions by the Sponsor |
 | Purpose | Execute the multi-card proof and publication program: provisional spec drafting, clean-room implementation, experiments E1 to E3, paper, publication logistics prep, and the guide case study |
 | Sponsor and Owner | Murali Sid (murali@fn7.io); CODEOWNER on all program repos; the named accountable human |
-| Identity level | Level 1 by owner's choice: the agent acts under the owner's identity; all git authorship is Murali Sid / muralisidfn7; agent attribution lives in the private worklog and telemetry only |
+| Identity level | Level 1 by owner's choice: the agent acts under the owner's identity; all git authorship is Murali Sid / muralisid; agent attribution lives in the private worklog and telemetry only |
 | Risk tier | Low-moderate: private repos, capped spend, no outward actions without per-action approval |
 
 ## Autonomy and learning classification (per workload)
