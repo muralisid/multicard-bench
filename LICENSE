@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Muralidhar Siddavatam ("Murali Sid")
+Copyright (c) 2026 Murali Sid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,12 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-The documentation in docs/, the committed outputs in results/, and the paper in
-paper/ are licensed under Creative Commons Attribution-ShareAlike 4.0
-International (CC BY-SA 4.0): https://creativecommons.org/licenses/by-sa/4.0/
-
-The corpora the experiments run against are not redistributed here. Each is
-downloaded from its original source under its own terms.

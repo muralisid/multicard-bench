@@ -1,0 +1,6 @@
+# The published commits were authored from an address on a second GitHub account.
+# The commits themselves are left alone, because the guide cites specific commit
+# hashes as the provenance for every published number and rewriting history would
+# invalidate them. This maps the identity for git log, shortlog and blame.
+Murali Sid <murali.sid@gmail.com> <murali@fn7.io>
+Murali Sid <murali.sid@gmail.com> <murali.sid@fn7.io>

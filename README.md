@@ -102,5 +102,6 @@ reversals are published rather than quietly dropped.
 
 ## Licence
 
-Code is MIT. The documentation, results and paper are CC BY-SA 4.0, matching the guide the
-research supports. Attribution: Murali Sid, https://www.agenticarchitectureskills.com
+Code is MIT (`LICENSE`). The documentation, results and paper are CC BY-SA 4.0
+(`LICENSE-CONTENT.md`), matching the guide the research supports. Attribution: Murali Sid,
+https://www.agenticarchitectureskills.com
