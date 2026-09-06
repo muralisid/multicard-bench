@@ -217,11 +217,42 @@ def make_judge_strong(meter, cache: bool = True):
     return make_reader_b(meter, cache)
 
 
-def generate(client, prompt: str, max_output_tokens: int):
-    """One metered, cached call with the e5 sqlite retry. The output limit
-    never goes below the section 13 floor."""
+_TRANSIENT_MARKERS = ("timeout", "timed out", "connection", "serviceunavailable", "resourceexhausted",
+                      "internalservererror", "remoteprotocolerror", "readerror", "apiconnection",
+                      "rate limit", "429", "500", "502", "503", "504", "overloaded", "unavailable")
+
+
+def _transient(exc: BaseException) -> bool:
+    """A network or service error worth retrying: a timeout, a dropped
+    connection, a 429 or 5xx from the proxy or the providers. A budget stop
+    is never transient."""
+    from ..llm.costmeter import BudgetExceeded
+
+    if isinstance(exc, BudgetExceeded):
+        return False
+    if isinstance(exc, (TimeoutError, ConnectionError)):
+        return True
+    text = (type(exc).__name__ + " " + str(exc)).lower()
+    return any(m in text for m in _TRANSIENT_MARKERS)
+
+
+def generate(client, prompt: str, max_output_tokens: int, attempts: int = 6):
+    """One metered, cached call with the e5 sqlite retry, and a retry with
+    backoff on transient network or service errors (added 2026-09-06 after a
+    socket read timeout ended the LongMemEval judge audit; a budget stop
+    still propagates). The output limit never goes below the section 13
+    floor."""
+    import time as _time
+
     n = max(int(max_output_tokens), MIN_OUTPUT_TOKENS)
-    return _retry(lambda: client.generate(prompt, max_output_tokens=n))
+    for attempt in range(attempts):
+        try:
+            return _retry(lambda: client.generate(prompt, max_output_tokens=n))
+        except Exception as exc:  # noqa: BLE001
+            if attempt == attempts - 1 or not _transient(exc):
+                raise
+            _time.sleep(min(60, 2 ** attempt + 1))
+    raise RuntimeError("unreachable")
 
 
 def caller(client, max_output_tokens: int) -> Callable[[str], object]:
