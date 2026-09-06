@@ -8,9 +8,12 @@ branch, the section 10 predictions with their labels, the failure buckets
 per arm and type, the judge agreement and the primary judge decision, the
 cross-family column of the Reader B rows (section 14 item 3), the cost
 table with post-graph-rag's and Graphiti's metered spend and his build cost
-charged to the arms that read his tables, the disclosures of sections 12 and
-13, the published numbers of section 12, the subsets sha256 and the commit
-hashes. Every number is read from the metrics payload written by
+charged to the arms that read his tables, the cost ledger of every stage
+invocation summed against the section 11 caps beside the last-pass meters,
+the planner attribution, the post-graph-rag build state, the three states
+of an absent arm, the disclosures of sections 12 and 13, the published
+numbers of section 12, the subsets sha256 and the commit hashes. Every
+number is read from the metrics payload written by
 part1.evaluate.build_metrics; a value the payload does not hold prints as
 "n/a". No number is typed here.
 """
@@ -186,13 +189,24 @@ def pass_section(m: dict) -> list[str]:
         ["T7 losses minus wins", fi(q.get("T7_net_losses"))],
         ["T7 holds", yes_no(q.get("T7_holds"))],
     ]
+    # a note on an arm a gate test reads (for example "run without
+    # post-graph-rag tables"); the rule is not changed by it
+    for k in ("T1", "T2", "T8a", "T8b", "T7"):
+        if q.get(f"{k}_note"):
+            rows.append([f"{k} note", str(q[f"{k}_note"])])
     lines += table(["quantity", "value"], rows)
     if d2:
         lines.append(f"D2 reading of T2: {d2.get('label', 'n/a')} (Graphiti status {d2.get('graphiti_status', 'n/a')}).")
         lines.append("")
     sb = m.get("second_build") or (m.get("tests") or {}).get("second_build") or {}
-    lines.append(f"Second post-graph-rag build (section 9): first build cost USD {fusd(sb.get('first_build_usd'))}; "
-                 f"second build ran: {yes_no(sb.get('ran'))}.")
+    if sb.get("evaluated") is False:
+        lines.append(f"Second post-graph-rag build (section 9): first build cost so far USD "
+                     f"{fusd(sb.get('first_build_usd'))} ({sb.get('build_label', 'partial build snapshot')}); "
+                     f"second-build rule: {sb.get('rule', 'not evaluated, build incomplete')}; "
+                     f"second build ran: {yes_no(sb.get('ran'))}.")
+    else:
+        lines.append(f"Second post-graph-rag build (section 9): first build cost USD {fusd(sb.get('first_build_usd'))}; "
+                     f"second build ran: {yes_no(sb.get('ran'))}.")
     t1s = sb.get("T1_second_build")
     if sb.get("ran") and t1s:
         lines.append("")
@@ -229,8 +243,27 @@ def setup_section(m: dict) -> list[str]:
 
 
 def absent_arms(m: dict, corpus: str) -> list[str]:
-    """Arms with no output at all on a corpus (no export found, never run); their rows print as absent."""
+    """Arms with no output at all on a corpus; their rows print as absent."""
     return list((m.get("absent_arms") or {}).get(corpus) or [])
+
+
+def arm_state(m: dict, corpus: str, arm: str) -> str:
+    """One of the three states of an arm on a corpus: run; export present,
+    not run in the retrieve pass; no export (an arm of ours prints "not run
+    in the retrieve pass"). "absent" when the payload predates the states."""
+    return str(((m.get("arm_status") or {}).get(corpus) or {}).get(arm) or "absent")
+
+
+def absent_states_line(m: dict, corpus: str) -> str:
+    """The absent arms of a corpus, each with its state, as one sentence."""
+    absent = absent_arms(m, corpus)
+    if not absent:
+        return ""
+    return "Absent rows: " + "; ".join(f"{a} ({arm_state(m, corpus, a)})" for a in absent) + "."
+
+
+def arm_note(m: dict, corpus: str, arm: str) -> str:
+    return str(((m.get("arm_notes") or {}).get(corpus) or {}).get(arm) or "")
 
 
 def retrieval_section(m: dict) -> list[str]:
@@ -243,6 +276,7 @@ def retrieval_section(m: dict) -> list[str]:
                                    (MULTIHOPRAG, MHR_COLUMNS, "MultiHop-RAG, non-null queries")):
         arms = r.get(corpus) or {}
         budgets = sorted({b for a in arms.values() for b in a}, key=int)
+        notes = (m.get("arm_notes") or {}).get(corpus) or {}
         for budget in budgets:
             lines.append(f"### {title}, budget {fi(budget)} tokens")
             lines.append("")
@@ -255,13 +289,21 @@ def retrieval_section(m: dict) -> list[str]:
                 row += [fi(s.get("n")), fi((missing.get(arm) or {}).get(corpus, {}).get(budget, s.get("n_missing")))]
                 if corpus == MULTIHOPRAG:
                     row.append(fi(s.get("n_all_located")))
+                if notes:
+                    row.append(notes.get(arm, ""))
                 rows.append(row)
             header = ["arm"] + [label for _, label in columns] + ["n", "missing"]
             if corpus == MULTIHOPRAG:
                 header.append("n all located")
+            if notes:
+                header.append("note")
             for arm in absent_arms(m, corpus):
                 rows.append([arm] + ["absent"] * (len(header) - 1))
             lines += table(header, rows)
+            states = absent_states_line(m, corpus)
+            if states:
+                lines.append(states)
+                lines.append("")
             if corpus == LONGMEMEVAL:
                 trunc = [[arm, fi(per_budget.get(budget, {}).get("truncated_evidence")),
                           fi(per_budget.get(budget, {}).get("cut_evidence"))]
@@ -452,20 +494,51 @@ def buckets_section(m: dict) -> list[str]:
              "Bucket 5 is decidable for the head-to-head arms; for the other arms it is decidable on the "
              "audited sample only, and the undecidable count is shown.", ""]
     names = [f"{k} {BUCKET_NAMES[k]}" for k in BUCKET_ORDER]
+
+    def bucket_table(cell: dict) -> list[str]:
+        rows = []
+        for t, c in (cell.get("by_type") or {}).items():
+            rows.append([t, fi(c.get("n_wrong"))] + [fi(c.get(str(k))) for k in BUCKET_ORDER] + [fi(c.get("n_undecidable"))])
+        tot = cell.get("total") or {}
+        rows.append(["all", fi(tot.get("n_wrong"))] + [fi(tot.get(str(k))) for k in BUCKET_ORDER] + [fi(tot.get("n_undecidable"))])
+        out = table(["type", "wrong"] + names + ["bucket 5 undecidable"], rows)
+        out.append(f"Evidence units truncated or half covered whose cut-off part does not contain the gold "
+                   f"answer, counted as inside: {fi(tot.get('n_inside_half_covered'))}. Knowledge-update "
+                   f"cases where the superseding clause could not fire: {fi(tot.get('n_ku_clause_skipped'))}. "
+                   f"Knowledge-update bucket 3 cases where the clause fired: {fi(tot.get('n_ku_clause_fired'))}, "
+                   f"of which the gold turn is the earlier of the two by timestamp: "
+                   f"{fi(tot.get('n_ku_gold_earlier'))}.")
+        out.append("")
+        return out
+
+    n_fired = n_earlier = 0
     for arm, per_corpus in b.items():
         for corpus, cell in per_corpus.items():
-            lines.append(f"### {arm}, {corpus}" + ("" if cell.get("bucket5_decidable") else " (bucket 5 on the audited sample)"))
-            lines.append("")
-            rows = []
-            for t, c in (cell.get("by_type") or {}).items():
-                rows.append([t, fi(c.get("n_wrong"))] + [fi(c.get(str(k))) for k in BUCKET_ORDER] + [fi(c.get("n_undecidable"))])
+            suffix = "" if cell.get("bucket5_decidable") else " (bucket 5 on the audited sample)"
             tot = cell.get("total") or {}
-            rows.append(["all", fi(tot.get("n_wrong"))] + [fi(tot.get(str(k))) for k in BUCKET_ORDER] + [fi(tot.get("n_undecidable"))])
-            lines += table(["type", "wrong"] + names + ["bucket 5 undecidable"], rows)
-            lines.append(f"Evidence units truncated or half covered whose cut-off part does not contain the gold "
-                         f"answer, counted as inside: {fi(tot.get('n_inside_half_covered'))}. Knowledge-update "
-                         f"cases where the superseding clause could not fire: {fi(tot.get('n_ku_clause_skipped'))}.")
-            lines.append("")
+            n_fired += int(tot.get("n_ku_clause_fired") or 0)
+            n_earlier += int(tot.get("n_ku_gold_earlier") or 0)
+            by_reader = cell.get("by_reader") or {}
+            if by_reader:
+                # one table per arm and reader (the pooled counts are in the payload's total)
+                for reader, sub in by_reader.items():
+                    budgets = ", ".join(fi(x) for x in (sub.get("budgets") or [])) or "n/a"
+                    lines.append(f"### {arm}, {corpus}, {reader or 'reader not recorded'}, budget {budgets} tokens{suffix}")
+                    lines.append("")
+                    lines += bucket_table(sub)
+            else:
+                lines.append(f"### {arm}, {corpus}{suffix}")
+                lines.append("")
+                lines += bucket_table(cell)
+                lines.append("Counts pool both readers at 4,000 tokens (the records carry no reader).")
+                lines.append("")
+    if b:
+        lines.append(f"Knowledge-update bucket 3 cases where the gold turn is the earlier of the two by timestamp, "
+                     f"all arms and readers: {fi(n_earlier)} of {fi(n_fired)} cases where the clause fired. The "
+                     f"section 8 rule names the turn holding the gold answer as the superseding turn; when the "
+                     f"question asks about the earlier fact that turn is the superseded one and the clause fires "
+                     f"backwards, so the reader can discount these.")
+        lines.append("")
     if not b:
         lines.append("No bucket data in the metrics file.")
         lines.append("")
@@ -486,6 +559,29 @@ def judges_section(m: dict) -> list[str]:
         lines += table(["arm", "corpus", "reader", "n", "agree", "agreement"],
                        [[c.get("arm"), c.get("corpus"), c.get("reader"), fi(c.get("n")), fi(c.get("n_agree")),
                          f3(c.get("agreement"))] for c in cells])
+    # The qa stage's own record: the pooled n the decision was made on when
+    # it was made (the figures above are recomputed from the stored verdicts).
+    rec = m.get("qa_audit_record") or {}
+    if rec:
+        lines.append(f"Decision as recorded by the qa stage: made on {fi(rec.get('n'))} pooled verdicts, "
+                     f"{fi(rec.get('n_agree'))} agreeing, agreement {f3(rec.get('agreement'))}, primary "
+                     f"{rec.get('primary') or 'n/a'}" + (f", at {rec.get('timestamp')}" if rec.get("timestamp") else "")
+                     + ".")
+        lines.append("")
+        hist = rec.get("history") or []
+        if hist:
+            first = hist[0]
+            lines.append(f"First pass: {fi(first.get('n'))} pooled verdicts, agreement {f3(first.get('agreement'))}, "
+                         f"primary {first.get('primary') or 'n/a'} ({first.get('timestamp') or 'time not recorded'}). "
+                         f"Every qa invocation:")
+            lines.append("")
+            lines += table(["timestamp", "n", "agreement", "primary", "note"],
+                           [[h.get("timestamp") or "n/a", fi(h.get("n")), f3(h.get("agreement")),
+                             h.get("primary") or "n/a", h.get("note") or ""] for h in hist])
+        else:
+            lines.append("No qa audit history is kept yet: the history starts with the next qa invocation, and "
+                         "the first-pass figure is the one recorded above.")
+            lines.append("")
     return lines
 
 
@@ -543,7 +639,7 @@ def answering_section(m: dict) -> list[str]:
     if any(absent.values()):
         for corpus, arms in absent.items():
             if arms:
-                lines.append(f"Absent on {corpus} (no output, no export found): {', '.join(arms)}.")
+                lines.append(f"Absent on {corpus}: " + "; ".join(f"{a} ({arm_state(m, corpus, a)})" for a in arms) + ".")
         lines.append("")
     return lines
 
@@ -562,22 +658,40 @@ def cost_section(m: dict) -> list[str]:
                  "the metrics file holds the job tags and no proxy window total.")
     lines = ["## Cost and time", "",
              "Index-time spend is charged to every arm that reads the tables it built: post-graph-rag's build "
-             "to every arm that reads his entities, relations and aliases, Graphiti's to the graphiti arm. " + cross, ""]
+             "to every arm that reads his entities, relations and aliases, chandan_live and chandan_full included, "
+             "Graphiti's to the graphiti arm. " + cross, ""]
+    builds = c.get("builds") or {}
+
+    def component_label(corpus: str, name: str) -> str:
+        """A build component with its state, for example pgr_build (partial build snapshot, 220 of 500 spaces)."""
+        b = builds.get(corpus) if name == "pgr_build" else None
+        return f"{name} ({b.get('label')})" if b and b.get("label") else name
+
+    # One row per arm and corpus. An arm with numbers prints them with its
+    # state; an arm with none prints as absent with its state, never both.
     rows = []
+    printed = set()
     for arm, per_corpus in (c.get("arms") or {}).items():
         for corpus, r in per_corpus.items():
             if not r.get("n_questions") and not r.get("index_usd"):
                 continue
-            rows.append([arm, corpus, fusd(r.get("index_usd")), ", ".join(r.get("index_components") or []) or "none",
+            state = "pseudo-arm" if arm == "planner" else arm_state(m, corpus, arm)
+            if state == "absent" and not (m.get("arm_status") or {}):
+                state = "run"
+            rows.append([arm, corpus, fusd(r.get("index_usd")),
+                         ", ".join(component_label(corpus, x) for x in (r.get("index_components") or [])) or "none",
                          f3(r.get("query_calls_per_question")), fi(r.get("query_tokens_in_per_question")),
                          fi(r.get("query_tokens_out_per_question")), fusd(r.get("query_usd")),
-                         f3(r.get("seconds_per_question")), fi(r.get("n_questions"))])
+                         f3(r.get("seconds_per_question")), fi(r.get("n_questions")), state])
+            printed.add((arm, corpus))
     for corpus, arms in (m.get("absent_arms") or {}).items():
         for arm in arms:
-            rows.append([arm, corpus] + ["absent"] * 8)
+            if (arm, corpus) not in printed:
+                rows.append([arm, corpus] + ["absent"] * 8 + [arm_state(m, corpus, arm)])
     lines += table(["arm", "corpus", "index USD charged", "components", "query calls per question",
                     "query tokens in per question", "query tokens out per question", "query USD",
-                    "seconds per question", "questions"], rows)
+                    "seconds per question", "questions", "state"], rows)
+    lines += planner_lines(c)
     idx = c.get("index") or {}
     if idx:
         lines.append("Index-time builds as metered:")
@@ -585,12 +699,16 @@ def cost_section(m: dict) -> list[str]:
         rows = []
         for corpus, comps in idx.items():
             for name, comp in comps.items():
-                rows.append([corpus, name, fusd(comp.get("usd")), fi(comp.get("calls")), fi(comp.get("tokens_in")),
-                             fi(comp.get("tokens_out")), fi(comp.get("seconds")),
+                rows.append([corpus, component_label(corpus, name), fusd(comp.get("usd")), fi(comp.get("calls")),
+                             fi(comp.get("tokens_in")), fi(comp.get("tokens_out")), fi(comp.get("seconds")),
                              ", ".join(comp.get("arms") or []) or "(default charge list)"])
         lines += table(["corpus", "component", "USD", "calls", "tokens in", "tokens out", "seconds", "charged to"], rows)
+    lines += builds_lines(builds)
+    lines += ledger_lines(c)
     for key, title in (("answering", "Answering"), ("judging", "Judging"), ("proxy", "Proxy log cross-check"),
-                       ("caps", "Caps"), ("meters", "Meter totals")):
+                       ("caps", "Caps of the last pass of each stage"),
+                       ("meters", "Last-pass meter totals (the meter of the most recent invocation of each stage "
+                                  "on each corpus; earlier passes are in the ledger above)")):
         v = c.get(key) or {}
         if v:
             lines.append(f"{title}:")
@@ -600,6 +718,84 @@ def cost_section(m: dict) -> list[str]:
             lines.append("```")
             lines.append("")
     return lines
+
+
+def planner_lines(c: dict) -> list[str]:
+    """The planner pseudo-arm read against the ledger: whose calls they are,
+    what they cost at the study price, and which pass paid for them."""
+    out = []
+    for corpus, p in (c.get("planner") or {}).items():
+        arms = ", ".join(p.get("arms") or []) or "the S5 arms"
+        text = (f"The planner row on {corpus} is a pseudo-arm, not a system: its calls are the LLM planner "
+                f"decisions shared by the S5 arms ({arms}), made once per question and cached. At the study price "
+                f"its {fi(p.get('calls'))} calls cost USD {fusd(p.get('usd_at_study_price'))}. In the last pass "
+                f"{fi(p.get('cached_last_pass'))} of {fi(p.get('calls'))} were served from the cache and "
+                f"{fi(p.get('uncached_last_pass'))} were paid.")
+        paid = p.get("paid_in") or []
+        if paid:
+            text += " The pass that paid for them: " + "; ".join(
+                f"{x.get('timestamp')} (job tag {x.get('job_tag') or 'none'}, {fi(x.get('uncached_calls'))} uncached "
+                f"calls, USD {fusd(x.get('usd'))} for the whole pass)" for x in paid) + "."
+        else:
+            text += (" The pass that paid for them is not in the ledger: the ledger began after it, so its "
+                     "spend is known only from the log of that pass.")
+        out.append(text)
+        out.append("")
+    return out
+
+
+def builds_lines(builds: dict) -> list[str]:
+    """The post-graph-rag build state per corpus: in progress, stopped, spaces exported against the population."""
+    if not builds:
+        return []
+    out = ["Post-graph-rag builds (the runner's run logs under data/part1/pgr; a log with no end time is a "
+           "runner still writing spaces; the runner meter covers index and query calls together):", ""]
+    rows = []
+    for corpus, b in builds.items():
+        stopped = "; ".join(f"{s.get('job_tag')}: {s.get('stopped')}" for s in (b.get("stopped") or [])) or "none"
+        rows.append([corpus, b.get("label") or "n/a", yes_no(b.get("in_progress")),
+                     ", ".join(b.get("running_job_tags") or []) or "none", stopped, fi(b.get("n_spaces")),
+                     fi(b.get("n_wanted")), b.get("subset") or "ORDER", fusd(b.get("run_log_usd"))])
+    out += table(["corpus", "state", "in progress", "running job tags", "stopped", "spaces exported",
+                  "spaces wanted", "population", "runner meter USD so far"], rows)
+    return out
+
+
+def ledger_lines(c: dict) -> list[str]:
+    """The cost ledger: every invocation of every stage, summed per stage and corpus against the section 11 cap."""
+    ledger = c.get("ledger") or {}
+    stages = ledger.get("stages") or {}
+    out = ["Spend ledger (section 11): every invocation of each stage, appended at the end of the invocation, "
+           "a capped one included; the sum per stage is read against the cap of that stage.", ""]
+    if not stages or not any(s.get("n_invocations") for s in stages.values()):
+        out.append("No ledger rows yet: the ledger starts with the first invocation of a stage after it was "
+                   "added, so the passes before it are known only from their last-pass meters below and the "
+                   "run logs.")
+        out.append("")
+        return out
+    rows = []
+    for stage, s in stages.items():
+        per = ", ".join(f"{k} {fusd(v.get('usd'))} ({fi(v.get('n_invocations'))} invocations)"
+                        for k, v in (s.get("by_corpus") or {}).items()) or "none"
+        rows.append([stage, fusd(s.get("cap_usd")), s.get("cap_components") or "", fusd(s.get("total_usd")),
+                     yes_no(s.get("over_cap")), fi(s.get("n_invocations")), per])
+    out += table(["stage", "section 11 cap USD", "cap covers", "ledger sum USD", "over cap", "invocations",
+                  "per corpus"], rows)
+    out.append(str(ledger.get("note") or ""))
+    out.append("")
+    rows = []
+    for stage, s in stages.items():
+        for inv in s.get("invocations") or []:
+            tiers = ", ".join(f"{t} {fusd(v.get('usd'))}" for t, v in (inv.get("by_tier") or {}).items()) or "none"
+            rows.append([stage, ", ".join(inv.get("corpora") or []), inv.get("timestamp") or "n/a",
+                         inv.get("job_tag") or "none", inv.get("tag") or "none",
+                         ", ".join(inv.get("arms") or []) or "none", ", ".join(inv.get("readers") or []) or "none",
+                         ", ".join(fi(b) for b in (inv.get("budgets") or [])) or "none", fusd(inv.get("max_usd")),
+                         fusd(inv.get("usd")), fi(inv.get("calls")), tiers, inv.get("stopped") or "no",
+                         inv.get("git") or "n/a"])
+    out += table(["stage", "corpora", "timestamp", "job tag", "tag", "arms", "readers", "budgets", "cap USD",
+                  "USD", "calls", "by tier", "stopped", "commit"], rows)
+    return out
 
 
 def location_section(m: dict) -> list[str]:

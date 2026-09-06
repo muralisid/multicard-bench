@@ -425,3 +425,361 @@ def test_new_files_have_no_banned_characters():
         p = root / rel
         if p.exists():
             assert not BANNED.search(p.read_text()), rel
+
+
+# ----------------------------------------------------------------------------
+# Reporting fixes: the cost ledger, the audit history, the build state, the
+# arm states, the planner attribution, the bucket records and the report
+# ----------------------------------------------------------------------------
+from types import SimpleNamespace
+
+import pytest
+
+from multicard.llm.costmeter import CostMeter
+
+
+def mscore(q, v):
+    return S.MhrQuestionScore(qid=q, fact_joint_recall=v, doc_joint_recall=v, candidate_fact_joint_recall=1.0,
+                              candidate_doc_joint_recall=1.0, all_located=True, n_facts=2, n_contained=int(2 * v),
+                              n_fallback=0, doc_hits={"d1": True}, rendered_tokens=3800, duplicate_share=0.0,
+                              n_candidates=100, n_rendered=7, n_truncated=1)
+
+
+def test_iso_datetime_keeps_the_time_of_day():
+    from multicard.data.longmemeval import iso_date, iso_datetime
+
+    assert iso_datetime("2023/05/20 (Sat) 02:21") == "2023-05-20 02:21"
+    assert iso_date("2023/05/20 (Sat) 02:21") == "2023-05-20"
+    assert iso_datetime("2023/05/20") == "2023-05-20" and iso_datetime("") == ""
+    assert iso_datetime("2023/05/20 (Sat) 02:21") < iso_datetime("2023/05/20 (Sat) 14:05")
+
+
+def test_cost_ledger_append_read_and_summary(tmp_path, monkeypatch):
+    monkeypatch.setattr(PT, "OUT", tmp_path / "results" / "part1")
+    monkeypatch.setenv("MCB_JOB_TAG", "pass_x")
+    meter = CostMeter(max_usd=5.0)
+    meter.record("vertex-flash", 100000, 10000)          # 0.01 in, 0.004 out
+    row = PT.append_cost_ledger("", "lme", "retrieve", meter, arms={"S5_noPGR", "ours_cheap"}, budgets=[4000, 8000],
+                                max_usd=35.0, n_questions=500, extra={"query_cost": {"planner": {"uncached": 500}}})
+    assert row["job_tag"] == "pass_x" and row["arms"] == ["S5_noPGR", "ours_cheap"] and row["usd"] == pytest.approx(0.014)
+    assert row["cost"]["by_tier"]["vertex-flash"]["calls"] == 1 and row["git"] and row["stage"] == "retrieve"
+    assert row["invocation_id"].startswith("retrieve-") and row["corpora"] == ["lme"]
+    p = PT.ledger_path("", "lme", "retrieve")
+    assert p == tmp_path / "results" / "part1" / "lme" / "retrieve" / "cost_ledger.jsonl" and p.exists()
+    # a capped rerun appends, never rewrites; two invocations in the same second stay two invocations
+    row2 = PT.append_cost_ledger("", "lme", "retrieve", meter, arms={"S5_noPGR"}, budgets=[4000], max_usd=35.0,
+                                 stopped="spend 35.01 USD exceeds the cap of 35.00")
+    assert row2["invocation_id"] != row["invocation_id"]
+    # one qa invocation over both corpora writes the same id to each corpus ledger
+    qm = CostMeter(max_usd=100.0)
+    qm.record("azure-gpt54", 1_000_000, 100_000)         # 1.25 in, 1.00 out
+    for kind in ("lme", "mhrag"):
+        PT.append_cost_ledger("", kind, "qa", qm, arms=["S5_noPGR"], readers=["reader_a", "reader_b"], budgets=[4000],
+                              max_usd=40.0, corpora=["lme", "mhrag"], invocation_id="qa-1")
+    ledgers = PT.read_cost_ledgers("", ["lme", "mhrag"])
+    assert len(ledgers["retrieve"]["longmemeval"]) == 2
+    assert ledgers["retrieve"]["longmemeval"][1]["stopped"].startswith("spend")
+    assert "index" not in ledgers and set(ledgers["qa"]) == {"longmemeval", "multihoprag"}
+    s = PT.ledger_summary(ledgers)
+    r = s["stages"]["retrieve"]
+    assert r["cap_usd"] == 35.0 and r["total_usd"] == pytest.approx(0.028) and r["n_invocations"] == 2
+    assert not r["over_cap"] and r["by_corpus"]["longmemeval"]["n_invocations"] == 2
+    q = s["stages"]["qa"]
+    assert q["n_invocations"] == 1 and q["total_usd"] == pytest.approx(2.25) and q["cap_usd"] == 100.0
+    assert q["by_corpus"]["longmemeval"]["usd"] == pytest.approx(2.25)
+    assert q["by_corpus"]["multihoprag"]["usd"] == pytest.approx(2.25)
+    inv = q["invocations"][0]
+    assert inv["readers"] == ["reader_a", "reader_b"] and inv["by_tier"]["azure-gpt54"]["usd"] == pytest.approx(2.25)
+    assert s["stages"]["index"]["n_invocations"] == 0 and s["stages"]["index"]["cap_usd"] == 15.0
+    assert not BANNED.search(json.dumps(s))
+    # over the cap is said so
+    big = CostMeter(max_usd=1000.0)
+    big.record("azure-gpt54", 100_000_000, 0)            # 125 USD
+    PT.append_cost_ledger("", "lme", "qa", big, corpora=["lme"], invocation_id="qa-2")
+    s = PT.ledger_summary(PT.read_cost_ledgers("", ["lme", "mhrag"]))
+    assert s["stages"]["qa"]["over_cap"] and s["stages"]["qa"]["n_invocations"] == 2
+
+
+def test_audit_history_seeds_from_the_old_file_and_appends(tmp_path):
+    p = tmp_path / "qa_audit.json"
+    e1 = {"timestamp": "t1", "n": 250, "agreement": 0.848, "primary": "gpt-5.4"}
+    assert PT.audit_history(p, e1) == [e1]
+    p.write_text(json.dumps({"judge_audit": {"n": 450, "agreement": 0.8, "primary": "gpt-5.4"}, "primary_judge": "gpt-5.4"}))
+    h = PT.audit_history(p, {"timestamp": "t2", "n": 460, "agreement": 0.81, "primary": "gpt-5.4"})
+    assert len(h) == 2 and h[0]["n"] == 450 and "seeded" in h[0]["note"] and h[0]["timestamp"] and h[1]["n"] == 460
+    p.write_text(json.dumps({"judge_audit": {"n": 460}, "history": h}))
+    h2 = PT.audit_history(p, {"timestamp": "t3", "n": 470, "agreement": 0.8, "primary": "gpt-5.4"})
+    assert [x["n"] for x in h2] == [450, 460, 470]
+    p.write_text("not json")
+    assert PT.audit_history(p, e1) == [e1]
+
+
+def _run_log(tag, started, ended, usd, stopped=None, subset=None):
+    return json.dumps({"job_tag": tag, "started": started, "ended": ended, "stopped": stopped,
+                       "args": {"subset": subset}, "meter": {"usd": usd}})
+
+
+def test_pgr_build_state_reads_run_logs_and_counts_spaces(tmp_path):
+    subsets = eval_subsets()
+    ids = subsets["ORDER"]["longmemeval"]
+    root = tmp_path / "pgr"
+    (root / "lme").mkdir(parents=True)
+    for q in ids[:3]:
+        (root / "lme" / q).mkdir()
+        (root / "lme" / q / "meta.json").write_text("{}")
+    (root / "lme" / "run_pgr-lme-full-s0.json").write_text(_run_log("pgr-lme-full-s0", "2026-09-06T16:04:05+05:30", None, 14.04))
+    (root / "lme" / "run_pgr-lme-full-s1.json").write_text(_run_log("pgr-lme-full-s1", "2026-09-06T16:04:15+05:30",
+                                                                    "2026-09-06T20:00:00+05:30", 12.6))
+    b = PT._pgr_build_state("lme", subsets, root)
+    assert b["in_progress"] and not b["complete"] and b["running_job_tags"] == ["pgr-lme-full-s0"]
+    assert b["n_spaces"] == 3 and b["n_wanted"] == 8
+    assert b["label"] == "partial build snapshot, 3 of 8 spaces, build in progress"
+    assert b["run_log_usd"] == pytest.approx(26.64) and b["subset"] is None and b["stopped"] == []
+    # every runner ended and every space exported: complete
+    (root / "lme" / "run_pgr-lme-full-s0.json").write_text(_run_log("pgr-lme-full-s0", "2026-09-06T16:04:05+05:30",
+                                                                    "2026-09-07T01:00:00+05:30", 14.04))
+    for q in ids[3:]:
+        (root / "lme" / q).mkdir()
+        (root / "lme" / q / "meta.json").write_text("{}")
+    b = PT._pgr_build_state("lme", subsets, root)
+    assert b["complete"] and not b["in_progress"] and b["label"] == "complete build, 8 of 8 spaces"
+    # a build restricted to a subset counts against the subset
+    (root / "lme" / "run_pgr-lme-g150.json").write_text(_run_log("pgr-lme-g150", "2026-09-07T02:00:00+05:30",
+                                                                 "2026-09-07T03:00:00+05:30", 1.0, subset="GRAPHITI_150"))
+    b = PT._pgr_build_state("lme", subsets, root)
+    assert b["subset"] == "GRAPHITI_150" and b["n_wanted"] == 4 and b["complete"]
+    # MultiHop-RAG: one corpus space; the runner stopped at its cap before exporting it
+    (root / "mhrag").mkdir()
+    (root / "mhrag" / "run_pgr-mhrag-full.json").write_text(_run_log("pgr-mhrag-full", "2026-09-06T16:05:38+05:30",
+                                                                     "2026-09-07T00:24:38+05:30", 10.007077,
+                                                                     stopped="cap: spend 10.0071 USD exceeds the cap of 10.00"))
+    b = PT._pgr_build_state("mhrag", subsets, root)
+    assert not b["complete"] and not b["in_progress"] and b["n_spaces"] == 0 and b["n_wanted"] == 1
+    assert b["label"] == "partial build snapshot, 0 of 1 spaces, build stopped at its cap"
+    assert b["stopped"][0]["job_tag"] == "pgr-mhrag-full" and b["run_log_usd"] == pytest.approx(10.007077)
+    # no export and no log at all: a snapshot of nothing, not a complete build
+    b = PT._pgr_build_state("mhrag", subsets, tmp_path / "nothing")
+    assert not b["complete"] and b["label"] == "partial build snapshot, 0 of 1 spaces" and b["run_log_usd"] == 0.0
+
+
+def test_arm_status_three_states(tmp_path):
+    root, groot = tmp_path / "pgr", tmp_path / "graphiti"
+    ids = ["q1", "q2"]
+    st = PT._arm_status("lme", ids, {"ours_cheap", "S5_noPGR"}, root, groot)
+    assert st["ours_cheap"] == PT.STATUS_RUN and st["S5_noPGR"] == PT.STATUS_RUN
+    assert st["S5_primary"] == PT.STATUS_NOT_RUN and st["chandan_live"] == PT.STATUS_NO_EXPORT
+    assert st["chandan_full"] == PT.STATUS_NO_EXPORT and st["graphiti"] == PT.STATUS_NO_EXPORT
+    (root / "lme" / "q2").mkdir(parents=True)
+    (root / "lme" / "q2" / "relations.parquet").write_bytes(b"")
+    st = PT._arm_status("lme", ids, {"ours_cheap"}, root, groot)
+    assert st["chandan_live"] == st["chandan_full"] == PT.STATUS_EXPORT_NOT_RUN
+    assert st["graphiti"] == PT.STATUS_NO_EXPORT
+    st = PT._arm_status("lme", ids, {"chandan_live"}, root, groot)
+    assert st["chandan_live"] == PT.STATUS_RUN and st["chandan_full"] == PT.STATUS_EXPORT_NOT_RUN
+    # the answer-only arms and his own reader's arm
+    assert st["closed_book"] == st["oracle_full"] == PT.STATUS_NOT_RUN
+    assert st["chandan_full_uncut"] == PT.STATUS_EXPORT_NOT_ANSWERED
+    st0 = PT._arm_status("lme", ids, {"closed_book", "chandan_full_uncut"}, tmp_path / "none", groot)
+    assert st0["closed_book"] == PT.STATUS_RUN and st0["chandan_full_uncut"] == PT.STATUS_RUN
+    assert PT._arm_status("lme", ids, set(), tmp_path / "none", groot)["chandan_full_uncut"] == PT.STATUS_NO_EXPORT
+    # the graphiti export
+    g = groot / "q1"
+    (g / "search").mkdir(parents=True)
+    for f in ("edges.parquet", "episodes.parquet", "meta.json"):
+        (g / f).write_bytes(b"")
+    (g / "search" / "shipped.json").write_text("{}")
+    assert PT._arm_status("lme", ids, set(), root, groot)["graphiti"] == PT.STATUS_EXPORT_NOT_RUN
+    # MultiHop-RAG: the corpus space; graphiti has no row there
+    st = PT._arm_status("mhrag", ids, set(), root, groot)
+    assert "graphiti" not in st and st["chandan_live"] == PT.STATUS_NO_EXPORT and st["S5_primary"] == PT.STATUS_NOT_RUN
+    assert "ours_cheap_norule" not in st
+    (root / "mhrag" / "corpus").mkdir(parents=True)
+    (root / "mhrag" / "corpus" / "relations.parquet").write_bytes(b"")
+    assert PT._arm_status("mhrag", ids, set(), root, groot)["chandan_full"] == PT.STATUS_EXPORT_NOT_RUN
+    for v in st.values():
+        assert not BANNED.search(v)
+
+
+def test_pgr_tables_at_retrieve_and_planner_attribution():
+    assert PT._pgr_tables_at_retrieve({"pgr_tables": {"present": 0, "wanted": 1}}) == \
+        {"present": 0, "wanted": 1, "source": "retrieve metrics pgr_tables"}
+    old = PT._pgr_tables_at_retrieve({"index": {"steps": {"relation_vectors": "116 spaces encoded, 4 present, 500 wanted"}}})
+    assert old["present"] == 120 and old["wanted"] == 500 and "index steps" in old["source"]
+    assert PT._pgr_tables_at_retrieve({})["present"] is None
+    rmeta = {"query_cost": {"planner": {"calls": 500, "uncached": 0, "tokens_in": 99021, "tokens_out": 873, "usd": 0.0}}}
+    rows = [{"timestamp": "t0", "job_tag": "pass1", "usd": 0.0101, "arms": ["S5_noPGR"],
+             "query_cost": {"planner": {"uncached": 500}}},
+            {"timestamp": "t1", "job_tag": "pass1c", "usd": 0.0, "arms": ["S5_noPGR"],
+             "query_cost": {"planner": {"uncached": 0}}},
+            {"timestamp": "t2", "job_tag": "s5", "usd": 0.02, "arms": ["S5_primary"],
+             "query_cost": {"S5_primary": {"uncached": 7}, "S5_noPGR": {"uncached": 0}, "S2_lazy": {"uncached": 900}}}]
+    p = PT._planner_attribution(rmeta, rows, 0.1, 0.4)
+    assert p["calls"] == 500 and p["uncached_last_pass"] == 0 and p["cached_last_pass"] == 500
+    assert p["usd_at_study_price"] == pytest.approx(99021 * 0.1 / 1e6 + 873 * 0.4 / 1e6, abs=1e-6)
+    assert [x["job_tag"] for x in p["paid_in"]] == ["pass1", "s5"] and p["paid_in"][1]["uncached_calls"] == 7
+    assert p["ledger_covers_paying_pass"]
+    assert set(p["arms"]) == {n for n, s in R.ARM_SPECS.items() if s.planner == "llm"}
+    assert PT._planner_attribution({"query_cost": {}}, rows, 0.1, 0.4) is None
+    assert PT._planner_attribution(rmeta, [], 0.1, 0.4)["ledger_covers_paying_pass"] is False
+
+
+def test_bucket_cases_record_reader_budget_and_the_timestamp_reading(tmp_path, monkeypatch):
+    monkeypatch.setattr(PT, "OUT", tmp_path / "results")
+    sessions = {"a": {"date": "2023-05-20", "turns": [{"role": "user", "content": "My bike is red now."},
+                                                     {"role": "assistant", "content": "Noted."}]},
+                "b": {"date": "2023-05-20", "turns": [{"role": "user", "content": "My bike is blue since today."},
+                                                     {"role": "assistant", "content": "Okay."}]}}
+    tabs = U.build_tables(sessions, ["a", "b"])
+    ctx = RD.render(["a#0", "b#0"], 10 ** 6, tabs, counter=Words())
+    out = PT.stage_dir("", "lme", "retrieve")
+    out.mkdir(parents=True)
+    (out / "contexts_4000.jsonl").write_text(json.dumps(PT.context_row("ours_cheap", "q", 4000, ctx, [])) + "\n")
+    x = SimpleNamespace(qid="q", evidence_turns={"a#0", "b#0"}, evidence_sessions={"a", "b"}, session_ids=["a", "b"],
+                        qtype="knowledge-update", abstention=False)
+    rec = E.AnswerRecord(qid="q", corpus="longmemeval", arm="ours_cheap", reader="reader_b", budget=4000,
+                         qtype="knowledge-update", abstention=False, question="What colour is my bike?", gold="red",
+                         answer="blue", verdicts={"j": False}, rendered_tokens=10, context_sha256="x", context_chars=1)
+    E.set_primary([rec], "j")
+    # the gold turn (a#0, red) is displayed first on the shared date: the clause fires; by the time of
+    # day it is the earlier turn, so the case is counted as fired backwards
+    ts = {"a": "2023-05-20 02:21", "b": "2023-05-20 09:40"}
+    res = PT._bucket_cases("lme", "", [rec], {}, tabs, {"q": x}, None, ts)
+    assert len(res) == 1
+    r = res[0]
+    assert r.bucket == 3 and r.ku_clause_fired and r.ku_gold_turn_earlier is True
+    assert r.reader == "reader_b" and r.budget == 4000 and r.arm == "ours_cheap"
+    # with the times the other way round the gold turn is the later one
+    r = PT._bucket_cases("lme", "", [rec], {}, tabs, {"q": x}, None, {"a": "2023-05-20 09:40", "b": "2023-05-20 02:21"})[0]
+    assert r.bucket == 3 and r.ku_gold_turn_earlier is False
+    # no timestamps: the session order of the haystack stands in
+    r = PT._bucket_cases("lme", "", [rec], {}, tabs, {"q": x}, None)[0]
+    assert r.bucket == 3 and r.ku_gold_turn_earlier is True
+    d = r.as_dict()
+    assert d["reader"] == "reader_b" and d["budget"] == 4000 and d["ku_clause_fired"] is True
+
+
+def test_report_prints_ledger_planner_states_notes_and_reader_tables():
+    subsets = eval_subsets()
+    ids = subsets["ORDER"]["longmemeval"]
+    mh = subsets["ORDER"]["multihoprag"]
+    lme = {"S5_noPGR": {4000: {q: qscore(q, 1.0) for q in ids}}, "ours_cheap": {4000: {q: qscore(q, 0.5) for q in ids}}}
+    mhr = {"S5_primary": {4000: {q: mscore(q, 1.0) for q in mh}}, "ours_cheap": {4000: {q: mscore(q, 0.0) for q in mh}}}
+    absent = {"longmemeval": ["S5_primary", "chandan_live", "chandan_full", "graphiti"],
+              "multihoprag": ["chandan_live", "chandan_full", "S4_static"]}
+    status = {"longmemeval": {"S5_noPGR": PT.STATUS_RUN, "ours_cheap": PT.STATUS_RUN, "S5_primary": PT.STATUS_NOT_RUN,
+                              "chandan_live": PT.STATUS_EXPORT_NOT_RUN, "chandan_full": PT.STATUS_EXPORT_NOT_RUN,
+                              "graphiti": PT.STATUS_NO_EXPORT},
+              "multihoprag": {"S5_primary": PT.STATUS_RUN, "ours_cheap": PT.STATUS_RUN, "chandan_live": PT.STATUS_NO_EXPORT,
+                              "chandan_full": PT.STATUS_NO_EXPORT, "S4_static": PT.STATUS_NOT_RUN}}
+    notes = {"multihoprag": {"S5_primary": PT.NOTE_WITHOUT_PGR}}
+    rows = [{"stage": "retrieve", "corpus": "lme", "corpora": ["lme"], "timestamp": "2026-09-06T14:10:00+00:00",
+             "invocation_id": "retrieve-1", "job_tag": "retrieve_lme_pass1", "tag": "", "arms": ["S5_noPGR"], "readers": [],
+             "budgets": [4000, 8000], "max_usd": 35.0, "stopped": None, "usd": 0.0101, "calls": 500,
+             "cost": {"by_tier": {"vertex-flash": {"usd": 0.0101}}}, "git": "09925ad",
+             "query_cost": {"planner": {"uncached": 500}}},
+            {"stage": "retrieve", "corpus": "lme", "corpora": ["lme"], "timestamp": "2026-09-06T15:30:00+00:00",
+             "invocation_id": "retrieve-2", "job_tag": "chain_lme_pass1c", "tag": "", "arms": ["S5_noPGR"], "readers": [],
+             "budgets": [4000, 8000], "max_usd": 35.0, "stopped": None, "usd": 0.0, "calls": 0, "cost": {"by_tier": {}},
+             "git": "1b5614a", "query_cost": {"planner": {"uncached": 0}}}]
+    qrow = {"stage": "qa", "corpus": "lme", "corpora": ["lme", "mhrag"], "timestamp": "2026-09-06T20:00:00+00:00",
+            "invocation_id": "qa-1", "job_tag": "chain_qa_all", "tag": "", "arms": ["S5_noPGR", "ours_cheap"],
+            "readers": ["reader_a", "reader_b"], "budgets": [4000, 8000], "max_usd": 40.0, "stopped": None, "usd": 9.5,
+            "calls": 15200, "cost": {"by_tier": {"azure-gpt54": {"usd": 9.0}, "vertex-flash": {"usd": 0.5}}}, "git": "d8239df"}
+    ledger = PT.ledger_summary({"retrieve": {"longmemeval": rows}, "qa": {"longmemeval": [qrow], "multihoprag": [qrow]}})
+    rmeta = {"query_cost": {"planner": {"calls": 8, "uncached": 0, "tokens_in": 1600, "tokens_out": 16, "usd": 0.0}}}
+    planner = PT._planner_attribution(rmeta, rows, 0.1, 0.4)
+    label = "partial build snapshot, 220 of 500 spaces, build in progress"
+    costs = {"index": {"longmemeval": {"pgr_build": {"usd": 28.5, "calls": 1, "tokens_in": 1, "tokens_out": 1, "seconds": 1}}},
+             "query": {"chandan_live": {"longmemeval": {"calls": 660, "tokens_in": 100, "tokens_out": 10, "usd": 0.01,
+                                                        "seconds_per_question": 3.0, "n_questions": 220}},
+                       "planner": {"longmemeval": {"calls": 8, "tokens_in": 1600, "tokens_out": 16,
+                                                   "usd": planner["usd_at_study_price"], "seconds_per_question": 0.0,
+                                                   "n_questions": 8}}},
+             "ledger": ledger, "planner": {"longmemeval": planner},
+             "builds": {"longmemeval": {"complete": False, "in_progress": True, "label": label, "n_spaces": 220,
+                                        "n_wanted": 500, "running_job_tags": ["pgr-lme-full-s0"], "stopped": [],
+                                        "run_log_usd": 52.2, "subset": None},
+                        "multihoprag": {"complete": False, "in_progress": False,
+                                        "label": "partial build snapshot, 0 of 1 spaces, build stopped at its cap",
+                                        "n_spaces": 0, "n_wanted": 1, "running_job_tags": [],
+                                        "stopped": [{"job_tag": "pgr-mhrag-full", "stopped": "cap"}],
+                                        "run_log_usd": 10.007, "subset": None}},
+             "meters": {"retrieve_lme": {"total_usd": 0}}, "caps": {"retrieve_lme": 35.0}}
+    buckets = [E.BucketResult("q1", "S5_noPGR", "longmemeval", "knowledge-update", 3, "context assembly failure", True,
+                              "superseding turn a#0 rendered before superseded turn b#0 on the same date",
+                              reader="reader_a", budget=4000, ku_clause_fired=True, ku_gold_turn_earlier=True),
+               E.BucketResult("q2", "S5_noPGR", "longmemeval", "multi-session", 4, "reader failure", True,
+                              "every evidence turn inside the rendered context", reader="reader_b", budget=4000)]
+    record = {"n": 450, "n_agree": 360, "agreement": 0.8, "primary": "gpt-5.4", "timestamp": "2026-09-06T17:00:00+00:00",
+              "history": [{"timestamp": "2026-09-06T15:00:00+00:00", "n": 250, "agreement": 0.848, "primary": "gpt-5.4",
+                           "note": "seeded from the qa_audit.json written before the history was kept"},
+                          {"timestamp": "2026-09-06T17:00:00+00:00", "n": 450, "agreement": 0.8, "primary": "gpt-5.4"}]}
+    audit = {"n": 450, "n_agree": 360, "agreement": 0.8, "threshold": 0.9, "cheap": "gemini-2.5-flash-lite",
+             "strong": "gpt-5.4", "primary": "gpt-5.4", "second": "gemini-2.5-flash-lite", "cells": []}
+    payload = E.build_metrics(lme=lme, mhr=mhr, records=[], audit=audit, buckets=buckets, subsets=subsets,
+                              subsets_sha256="abc", commits={"head": "x"}, costs=costs, graphiti_status="dropped",
+                              absent=absent, arm_status=status, arm_notes=notes, qa_audit_record=record)
+    assert payload["arm_status"] == status and payload["arm_notes"] == notes
+    assert payload["tests"]["pass_rule"]["T8b_note"] == "S5_primary run without post-graph-rag tables"
+    assert payload["cost"]["arms"]["chandan_live"]["longmemeval"]["index_usd"] == pytest.approx(28.5)
+    assert payload["cost"]["arms"]["planner"]["longmemeval"]["query_usd"] == pytest.approx(0.0001664, abs=1e-6)
+    text = RP.render_report(payload)
+    # the retrieval rows keep the absent cell and print the state under the table
+    block = text.split("## Retrieval")[1].split("## By question type")[0]
+    assert "| chandan_live | absent |" in block and "| graphiti | absent |" in block
+    assert "Absent rows: S5_primary (not run in the retrieve pass); chandan_full (export present, not run in the " \
+           "retrieve pass); chandan_live (export present, not run in the retrieve pass); graphiti (no export)." in block
+    assert "chandan_live (no export)" in block and "S4_static (not run in the retrieve pass)" in block
+    # the MultiHop-RAG S5 row and the tests that read it carry the label
+    assert "| note |" in block and "| run without post-graph-rag tables |" in block
+    tests_block = text.split("## Pre-declared tests")[1].split("## Predictions")[0]
+    assert "S5_primary run without post-graph-rag tables" in tests_block
+    pass_block = text.split("## The pass rule")[1].split("## Setup")[0]
+    assert "| T8b note | S5_primary run without post-graph-rag tables |" in pass_block
+    assert "second-build rule: not evaluated, build incomplete" in pass_block
+    # one cost row per arm, the build charged to chandan_live, the state beside it, no second absent row
+    cost = text.split("## Cost and time")[1].split("## Missing outputs")[0]
+    assert cost.count("| chandan_live | longmemeval |") == 1
+    assert "| chandan_live | longmemeval | 28.50 | pgr_build (" + label + ") |" in cost
+    assert "| export present, not run in the retrieve pass |" in cost and "| no export |" in cost
+    assert cost.count("| chandan_full | longmemeval |") == 1 and "| planner | longmemeval |" in cost
+    assert "| pseudo-arm |" in cost
+    # the planner sentence and the pass that paid
+    assert "The planner row on longmemeval is a pseudo-arm" in cost
+    assert "S5_primary, S5_primary_norule, S5_noPGR" in cost
+    assert "8 of 8 were served from the cache and 0 were paid" in cost
+    assert "The pass that paid for them: 2026-09-06T14:10:00+00:00 (job tag retrieve_lme_pass1, 500 uncached calls, " \
+           "USD 0.01 for the whole pass)." in cost
+    # the build state and the ledger against the section 11 caps, the last-pass meter beside it
+    assert "| multihoprag | partial build snapshot, 0 of 1 spaces, build stopped at its cap | no | none | pgr-mhrag-full: cap | 0 | 1 | ORDER | 10.01 |" in cost
+    assert "Spend ledger (section 11)" in cost
+    assert "| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.01 | no | 2 | longmemeval 0.01 (2 invocations) |" in cost
+    assert "| qa | 100.00 |" in cost and "| 9.50 | no | 1 | longmemeval 9.50 (1 invocations), multihoprag 9.50 (1 invocations) |" in cost
+    assert "| index | 15.00 | overlay generation 15 | 0.00 | no | 0 | none |" in cost
+    assert "| retrieve | lme | 2026-09-06T14:10:00+00:00 | retrieve_lme_pass1 | none | S5_noPGR | none | 4,000, 8,000 | 35.00 | 0.01 | 500 | vertex-flash 0.01 | no | 09925ad |" in cost
+    assert "| qa | lme, mhrag | 2026-09-06T20:00:00+00:00 | chain_qa_all |" in cost
+    assert "Last-pass meter totals" in cost
+    # one bucket table per arm and reader, with the knowledge-update reading
+    bk = text.split("## Failure buckets")[1].split("## Judges")[0]
+    assert "### S5_noPGR, longmemeval, reader_a, budget 4,000 tokens" in bk
+    assert "### S5_noPGR, longmemeval, reader_b, budget 4,000 tokens" in bk
+    assert "Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1." in bk
+    assert "all arms and readers: 1 of 1 cases where the clause fired" in bk
+    assert "Counts pool both readers" not in bk
+    # the judge decision as the qa stage recorded it, with the first pass
+    jd = text.split("## Judges")[1].split("## Answering accuracy")[0]
+    assert "Decision as recorded by the qa stage: made on 450 pooled verdicts, 360 agreeing, agreement 0.800, " \
+           "primary gpt-5.4, at 2026-09-06T17:00:00+00:00." in jd
+    assert "First pass: 250 pooled verdicts, agreement 0.848, primary gpt-5.4 (2026-09-06T15:00:00+00:00)." in jd
+    assert "Absent on longmemeval: S5_primary (not run in the retrieve pass)" in text
+    assert not BANNED.search(text)
+    prose = re.sub(r"```.*?```", "", text, flags=re.S)
+    assert "None" not in prose and "{" not in prose
+    # an older payload without the states, notes, ledger or history renders as before
+    old = E.build_metrics(lme=lme, mhr=mhr, records=[], audit=audit, buckets=[], subsets=subsets, subsets_sha256="abc",
+                          commits={"head": "x"}, graphiti_status="dropped", absent=absent)
+    old_text = RP.render_report(old)
+    assert "No ledger rows yet" in old_text and "Absent rows: S5_primary (absent)" in old_text
+    assert "No bucket data" in old_text and "Decision as recorded" not in old_text
+    assert "| chandan_live | longmemeval | absent |" in old_text
+    assert not BANNED.search(old_text)

@@ -24,12 +24,22 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 _DATE = re.compile(r"(\d{4})/(\d{2})/(\d{2})")
+_TIME = re.compile(r"(\d{4})/(\d{2})/(\d{2}).*?(\d{1,2}):(\d{2})")
 
 
 def iso_date(s: str) -> str:
     """'2023/05/20 (Sat) 02:21' -> '2023-05-20'. Unparseable input is returned as is."""
     m = _DATE.search(s or "")
     return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else (s or "")
+
+
+def iso_datetime(s: str) -> str:
+    """'2023/05/20 (Sat) 02:21' -> '2023-05-20 02:21', a string that sorts in
+    time order. Falls back to iso_date when the time of day is missing."""
+    m = _TIME.search(s or "")
+    if not m:
+        return iso_date(s)
+    return f"{m.group(1)}-{m.group(2)}-{m.group(3)} {int(m.group(4)):02d}:{m.group(5)}"
 
 
 @dataclass
@@ -77,6 +87,8 @@ def load_longmemeval(path: str | Path) -> dict:
             if sid not in sessions:
                 sessions[sid] = {
                     "date": iso_date(date),
+                    # the time of day, kept so two turns on the same date can be ordered
+                    "datetime": iso_datetime(date),
                     "turns": [{"role": t.get("role", ""), "content": t.get("content", "") or ""}
                               for t in turns],
                 }

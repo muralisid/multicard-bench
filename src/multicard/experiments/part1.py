@@ -38,11 +38,16 @@ from __future__ import annotations
 
 import csv
 import json
+import os
+import re
 import subprocess
+import sys
 import time
+import uuid
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
@@ -115,10 +120,43 @@ READER_B_ARMS = ("S5_primary", "chandan_live", "graphiti", "ours_cheap", "chanda
 OVERLAY_ARMS = tuple(n for n, s in R.ARM_SPECS.items() if s.overlay != "R0")
 INDEX_ARMS = tuple(n for n, s in R.ARM_SPECS.items() if s.kind in ("fused", "lazy"))
 BUCKET_ARMS = tuple(R.ARMS) + COMPETITOR_ARMS
+# The arms that share the LLM planner decision (section 5): S5_noPGR makes no
+# call of its own, so when it runs without an LLM-planner arm before it the
+# decision is metered under the pseudo-arm "planner".
+PLANNER_ARMS = tuple(n for n, s in R.ARM_SPECS.items() if s.planner == "llm")
+PLANNER_PSEUDO_ARM = "planner"
+
+# The cost ledger: one row per invocation of a stage on a corpus, appended
+# and never rewritten, under results/part1[_tag]/<corpus>/<stage>/. Each
+# stage's metrics.json holds only the meter of its last pass; the ledger is
+# what the report sums against the section 11 caps.
+LEDGER_FILE = "cost_ledger.jsonl"
+# Section 11 caps, USD, by stage: the components each stage's meter covers.
+STAGE_CAPS_USD = {
+    "index": {"cap_usd": 15.0, "components": "overlay generation 15"},
+    "retrieve": {"cap_usd": 35.0, "components": "planner 10 and S2 relevance tests 25"},
+    "qa": {"cap_usd": 100.0, "components": "answering and judging 100 across both corpora, both readers and "
+                                          "the chandan_full_uncut reader"},
+}
+STAGES = tuple(STAGE_CAPS_USD)
+
+# The three states of an arm on a corpus in the report (an arm of ours has
+# no export, so it takes the last one when it did not run).
+STATUS_RUN = "run"
+STATUS_EXPORT_NOT_RUN = "export present, not run in the retrieve pass"
+STATUS_EXPORT_NOT_ANSWERED = "export present, not run in the qa pass"   # chandan_full_uncut is read in qa
+STATUS_NO_EXPORT = "no export"
+STATUS_NOT_RUN = "not run in the retrieve pass"
+NOTE_WITHOUT_PGR = "run without post-graph-rag tables"
+_RELVEC_STEP = re.compile(r"(\d+) spaces encoded, (\d+) present, (\d+) wanted")
 
 
 def _log(msg: str) -> None:
     print(f"[part1] {msg}", flush=True)
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 # ----------------------------------------------------------------------------
@@ -257,6 +295,214 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 
 # ----------------------------------------------------------------------------
+# The cost ledger (section 11) and the qa audit history
+# ----------------------------------------------------------------------------
+def ledger_path(tag: str, kind: str, stage: str) -> Path:
+    return stage_dir(tag, kind, stage) / LEDGER_FILE
+
+
+def append_cost_ledger(tag: str, kind: str, stage: str, meter: CostMeter, *, arms=None, readers=None, budgets=None,
+                       max_usd: float | None = None, stopped: str | None = None, corpora=None,
+                       elapsed_s: float | None = None, n_questions: int | None = None,
+                       extra: dict | None = None, invocation_id: str | None = None) -> dict:
+    """Append one row for this invocation to the stage's ledger on the corpus
+    and return it. The row carries the time, the job tag (MCB_JOB_TAG in the
+    environment, else empty), the results tag, the command line, the arms,
+    readers and budgets of the invocation, its cap and whether it stopped at
+    it, the CostMeter as_dict and the git commit. An invocation over several
+    corpora (part1_qa with corpus all) writes the same row, with the same
+    invocation_id (made once by the caller), to every corpus it covered, so
+    the report counts it once in the stage total."""
+    ts = _now()
+    row = {
+        "stage": stage, "corpus": kind, "corpora": list(corpora or [kind]), "timestamp": ts,
+        # unique per call: two invocations in the same second must not merge in the stage total
+        "invocation_id": invocation_id or f"{stage}-{ts}-{os.getpid()}-{uuid.uuid4().hex[:8]}",
+        "job_tag": os.environ.get("MCB_JOB_TAG", ""),
+        "tag": tag, "argv": list(sys.argv[1:]), "arms": sorted(arms) if arms else [],
+        "readers": list(readers or []), "budgets": [int(b) for b in (budgets or [])],
+        "max_usd": max_usd, "stopped": stopped, "elapsed_s": elapsed_s, "n_questions": n_questions,
+        "usd": round(meter.total_usd(), 6), "calls": meter.total_calls(), "cost": meter.as_dict(),
+        "git": git_sha(),
+    }
+    row.update(extra or {})
+    p = ledger_path(tag, kind, stage)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a") as fh:
+        fh.write(json.dumps(E._jsonable(row), ensure_ascii=True, default=str) + "\n")
+    return row
+
+
+def read_cost_ledgers(tag: str, kinds) -> dict[str, dict[str, list[dict]]]:
+    """stage -> corpus name -> the ledger rows on disk, in file order."""
+    out: dict[str, dict[str, list[dict]]] = {}
+    for stage in STAGES:
+        for kind in kinds:
+            rows = _read_jsonl(ledger_path(tag, kind, stage))
+            if rows:
+                out.setdefault(stage, {})[NAMES[kind]] = rows
+    return out
+
+
+def ledger_summary(ledgers: dict[str, dict[str, list[dict]]]) -> dict:
+    """The ledger summed per stage and corpus against the section 11 cap of
+    the stage. A row written to two corpora by one invocation (part1_qa with
+    corpus all) is counted in each corpus sum and once in the stage total,
+    matched by its invocation_id."""
+    stages: dict = {}
+    for stage, cap in STAGE_CAPS_USD.items():
+        per = ledgers.get(stage) or {}
+        by_corpus = {}
+        seen: dict[str, dict] = {}
+        for name, rows in per.items():
+            by_corpus[name] = {"usd": round(sum(float(r.get("usd") or 0.0) for r in rows), 6),
+                               "n_invocations": len(rows)}
+            for r in rows:
+                seen.setdefault(str(r.get("invocation_id") or f"{name}-{r.get('timestamp')}"), r)
+        invocations = sorted(seen.values(), key=lambda r: str(r.get("timestamp") or ""))
+        total = round(sum(float(r.get("usd") or 0.0) for r in invocations), 6)
+        stages[stage] = {
+            "cap_usd": cap["cap_usd"], "cap_components": cap["components"], "total_usd": total,
+            "over_cap": total > cap["cap_usd"], "n_invocations": len(invocations), "by_corpus": by_corpus,
+            "invocations": [{**{k: r.get(k) for k in ("timestamp", "corpora", "job_tag", "tag", "arms", "readers",
+                                                        "budgets", "max_usd", "stopped", "usd", "calls", "git",
+                                                        "n_questions")},
+                             "by_tier": (r.get("cost") or {}).get("by_tier")} for r in invocations],
+        }
+    return {"stages": stages,
+            "note": "one row per invocation of a stage on a corpus, appended at the end of every invocation "
+                    "including a capped one; an invocation over both corpora is written to each corpus ledger, "
+                    "counted in each corpus sum and once in the stage total"}
+
+
+def audit_history(path: Path, entry: dict) -> list[dict]:
+    """The history list of qa_audit.json with entry appended: one record per
+    qa invocation with the timestamp, the pooled n, the agreement and the
+    primary judge decided. A file written before the history was kept seeds
+    the list with its own audit, stamped with the file's modification time
+    and marked as seeded."""
+    prev: dict = {}
+    if path.exists():
+        try:
+            prev = json.loads(path.read_text())
+        except (OSError, ValueError):
+            prev = {}
+    history = list(prev.get("history") or [])
+    ja = prev.get("judge_audit") or {}
+    if not history and ja:
+        mtime = datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat(timespec="seconds")
+        history.append({"timestamp": prev.get("timestamp") or mtime, "n": ja.get("n"),
+                        "agreement": ja.get("agreement"), "primary": prev.get("primary_judge") or ja.get("primary"),
+                        "note": "seeded from the qa_audit.json written before the history was kept; "
+                                "the timestamp is that file's modification time"})
+    history.append(dict(entry))
+    return history
+
+
+# ----------------------------------------------------------------------------
+# Report-time state: the post-graph-rag build, the arm states, the planner
+# ----------------------------------------------------------------------------
+def _pgr_build_state(kind: str, subsets: dict, root: Path | str = C.PGR_ROOT) -> dict:
+    """Whether the post-graph-rag export under root is a complete build. A
+    runner log data/part1/pgr/<corpus>/run_*.json with "ended" null is a
+    runner still writing spaces; the exported spaces (a meta.json each) are
+    counted against the population the build covers (the ORDER ids, or the
+    subset the build was restricted to; one corpus space on MultiHop-RAG).
+    The runner meters of the logs are summed as a cross-check beside the
+    per-space index meters the cost table uses."""
+    name = NAMES[kind]
+    logs = C.pgr_run_logs(kind, root)
+    running = [str(l.get("job_tag") or "") for l in logs if l.get("ended") is None]
+    stopped = [{"job_tag": l.get("job_tag"), "stopped": l.get("stopped")} for l in logs if l.get("stopped")]
+    subset = C.pgr_build_subset(kind, subsets, root)
+    if kind == LME:
+        wanted = list(subsets[subset]) if subset else list(subsets["ORDER"][name])
+    else:
+        wanted = ["corpus"]
+    exported = [s for s in wanted if (C.pgr_space_dir(kind, s, root) / "meta.json").exists()]
+    complete = not running and len(exported) >= len(wanted)
+    n, m = len(exported), len(wanted)
+    label = (f"complete build, {n} of {m} spaces" if complete else f"partial build snapshot, {n} of {m} spaces")
+    if running:
+        label += ", build in progress"
+    elif not complete and stopped:
+        label += ", build stopped at its cap"
+    return {"complete": complete, "in_progress": bool(running), "running_job_tags": running, "stopped": stopped,
+            "n_spaces": n, "n_wanted": m, "subset": subset, "label": label,
+            "run_log_usd": round(sum(float((l.get("meter") or {}).get("usd") or 0.0) for l in logs), 6),
+            "job_tags": [str(l.get("job_tag") or "") for l in logs]}
+
+
+def _arm_status(kind: str, ids: list[str], present: set[str], root: Path | str = C.PGR_ROOT,
+                groot: Path | str = C.GRAPHITI_ROOT) -> dict[str, str]:
+    """arm -> one of the three states: run; export present, not run in the
+    retrieve pass (the competitor's data is under data/part1 but the arm was
+    not in the pass); no export. An arm of ours that did not run is "not run
+    in the retrieve pass" (the answer-only arms have their contexts made
+    there too); chandan_full_uncut, read in the qa pass, says so."""
+    spaces = list(ids) if kind == LME else ["corpus"]
+    pgr_export = any((C.pgr_space_dir(kind, s, root) / "relations.parquet").exists() for s in spaces)
+    g_export = kind == LME and any(C.graphiti_available(q, groot) for q in ids)
+    status: dict[str, str] = {}
+    arms = list(R.arms_for(kind)) + list(COMPETITOR_ARMS) + list(ANSWER_ONLY_ARMS) + [CHANDAN_OWN_ARM]
+    for arm in arms:
+        if kind == MHRAG and arm == "graphiti":
+            continue
+        if arm in present:
+            status[arm] = STATUS_RUN
+        elif arm == CHANDAN_OWN_ARM:
+            status[arm] = STATUS_EXPORT_NOT_ANSWERED if pgr_export else STATUS_NO_EXPORT
+        elif arm in C.CHANDAN_ARMS:
+            status[arm] = STATUS_EXPORT_NOT_RUN if pgr_export else STATUS_NO_EXPORT
+        elif arm == "graphiti":
+            status[arm] = STATUS_EXPORT_NOT_RUN if g_export else STATUS_NO_EXPORT
+        else:
+            status[arm] = STATUS_NOT_RUN
+    return status
+
+
+def _pgr_tables_at_retrieve(rmeta: dict) -> dict:
+    """How many post-graph-rag spaces the retrieve pass had: the pass's own
+    pgr_tables record when it wrote one, else the index step line
+    "N spaces encoded, M present, W wanted" the pass copied from index.json
+    (the spaces present when the index was built)."""
+    pt = rmeta.get("pgr_tables")
+    if isinstance(pt, dict) and pt.get("wanted") is not None:
+        return {"present": int(pt.get("present") or 0), "wanted": int(pt.get("wanted") or 0),
+                "source": "retrieve metrics pgr_tables"}
+    s = str(((rmeta.get("index") or {}).get("steps") or {}).get("relation_vectors") or "")
+    m = _RELVEC_STEP.search(s)
+    if m:
+        return {"present": int(m.group(1)) + int(m.group(2)), "wanted": int(m.group(3)),
+                "source": "index steps relation_vectors (the spaces present when the index was built)"}
+    return {"present": None, "wanted": None, "source": "unknown"}
+
+
+def _planner_attribution(rmeta: dict, ledger_rows: list[dict], price_in: float, price_out: float) -> dict | None:
+    """The planner pseudo-arm read against the ledger: its calls belong to the
+    S5 arms; the pass that paid for them is any retrieve ledger row with
+    uncached planner calls (under the pseudo-arm, or under an S5 arm that
+    made the call itself). None when the pass metered no planner row."""
+    qc = (rmeta.get("query_cost") or {}).get(PLANNER_PSEUDO_ARM)
+    if not qc:
+        return None
+    calls = int(qc.get("calls") or 0)
+    uncached = int(qc.get("uncached") or 0)
+    usd_study = float(qc.get("tokens_in") or 0) * price_in / 1e6 + float(qc.get("tokens_out") or 0) * price_out / 1e6
+    paid = []
+    for r in ledger_rows:
+        q = r.get("query_cost") or {}
+        n_unc = int((q.get(PLANNER_PSEUDO_ARM) or {}).get("uncached") or 0)
+        n_unc += sum(int((q.get(a) or {}).get("uncached") or 0) for a in PLANNER_ARMS if a != "S5_noPGR")
+        if n_unc:
+            paid.append({"timestamp": r.get("timestamp"), "job_tag": r.get("job_tag"), "usd": r.get("usd"),
+                         "uncached_calls": n_unc, "arms": r.get("arms")})
+    return {"arms": list(PLANNER_ARMS), "calls": calls, "uncached_last_pass": uncached,
+            "cached_last_pass": calls - uncached, "usd_at_study_price": round(usd_study, 6),
+            "paid_in": paid, "ledger_covers_paying_pass": bool(paid)}
+
+
+# ----------------------------------------------------------------------------
 # Stage 1: the frozen index (section 4)
 # ----------------------------------------------------------------------------
 def part1_index(corpus: str = LME, limit: int = 0, sample: bool = False, tag: str = "",
@@ -362,8 +608,14 @@ def part1_index(corpus: str = LME, limit: int = 0, sample: bool = False, tag: st
         # design gap: the bridge pairs topics with the topic-weighted communities, the version the community channel ranks
         comms = O.community_members({int(c): list(m) for c, m in zip(comm["community_id"], comm["member_unit_ids"])})
         client, meter = O.make_client(meter)
-        _, overlay_diag = O.run_overlay(name, topic_sets, terms, comms, O.unit_texts(tables), client=client,
-                                        meter=meter, out_dir=odir, seed=seed)
+        try:
+            _, overlay_diag = O.run_overlay(name, topic_sets, terms, comms, O.unit_texts(tables), client=client,
+                                            meter=meter, out_dir=odir, seed=seed)
+        except BudgetExceeded as e:
+            # Section 11: the ledger row is written for a capped invocation too
+            append_cost_ledger(tag, kind, "index", meter, max_usd=max_usd, stopped=str(e),
+                               elapsed_s=time.time() - t_start, n_questions=len(ids), extra={"steps": steps})
+            raise
         steps["overlay"] = "generated"
     seconds["overlay"] = time.time() - t0
     _log(f"overlay {steps['overlay']}: links {overlay_diag.get('links')} ({seconds['overlay']:.0f}s)")
@@ -383,6 +635,8 @@ def part1_index(corpus: str = LME, limit: int = 0, sample: bool = False, tag: st
         "git": git_sha(),
     }
     _write_json(out / "index.json", payload)
+    append_cost_ledger(tag, kind, "index", meter, max_usd=max_usd, elapsed_s=time.time() - t_start,
+                       n_questions=len(ids), extra={"steps": steps})
     _log(f"index written to {out} in {(time.time() - t_start) / 60:.1f} min, USD {meter.total_usd():.4f}")
     return payload
 
@@ -559,6 +813,10 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
                                                        "seconds": 0.0, "n_questions": 0, "usd_metered": 0.0})
     refused: dict[str, set[str]] = defaultdict(set)
     n_present = {"chandan": 0, "graphiti": 0, "cal": 0, "second": 0}
+    # Questions whose space had post-graph-rag's tables when our arms ran
+    # (one corpus space on MultiHop-RAG), whatever arms the pass wanted; the
+    # report labels the S4 and S5 rows of a pass that ran without them.
+    n_pgr_tables = 1 if (kind == MHRAG and pgr_corpus is not None) else 0
     arms_seen: set[str] = set()
     # Section 5: the raised variant is run "until the rendered context reaches
     # B"; the runners stop at a top step (a design gap they mark), so the
@@ -670,6 +928,8 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
             if kind == LME:
                 qt = question_tables(kind, tables, x)
                 pgr = C.load_pgr_space(kind, qid) if C.pgr_available(kind, qid, qid) else None
+                if pgr is not None:
+                    n_pgr_tables += 1
                 space = R.build_space(qt, kind, topics=topics, communities=communities, links=links, pgr=pgr,
                                       rel_vecs=rel_vecs_for(qid, pgr) if pgr else None, enc=enc)
                 rel_index = C.relation_index(pgr)
@@ -854,15 +1114,18 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
     qcost = {}
     for arm, qc in query_cost.items():
         nq = qc["n_questions"] or 1
-        # ours: priced at the study model's rate; competitors: their own meters (the proxy usage field)
-        usd = (qc["tokens_in"] * price_in / 1e6 + qc["tokens_out"] * price_out / 1e6) if arm in R.ARM_SPECS \
-            else float(qc["usd_metered"])
+        # ours (the planner pseudo-arm included): priced at the study model's
+        # rate; competitors: their own meters (the proxy usage field)
+        usd = (qc["tokens_in"] * price_in / 1e6 + qc["tokens_out"] * price_out / 1e6) \
+            if (arm in R.ARM_SPECS or arm == PLANNER_PSEUDO_ARM) else float(qc["usd_metered"])
         qcost[arm] = {**qc, "usd": usd, "seconds_per_question": qc["seconds"] / nq / max(1, len(budgets))}
     payload = {
         "design": DESIGN, "corpus": kind, "corpus_name": name, "tag": tag, "sample": sample, "budgets": budgets,
         "n_questions": len(questions), "question_ids": [x.qid for x in questions], "containers": len(containers),
         "arms_run": sorted(arms_seen), "arms_skipped": skipped, "arm_specs": {a: asdict(R.ARM_SPECS[a]) for a in ours},
         "competitor_exports_present": n_present, "chosen_variant": chosen, "summary": summary,
+        "pgr_tables": {"present": n_pgr_tables, "wanted": len(questions) if kind == LME else 1,
+                       "unit": "questions with a post-graph-rag space" if kind == LME else "corpus space"},
         "raised_not_reached": {a: {str(b): dict(v) for b, v in d.items()} for a, d in raised_stats.items()},
         "query_cost": qcost, "planner": {"n_decisions": len(llm.decisions), "n_off_list": len(llm.off_list_log),
                                          "predecided_for_S5_noPGR": predecide},
@@ -874,6 +1137,13 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
         "elapsed_s": time.time() - t_start, "git": git_sha(),
     }
     _write_json(out / "metrics.json", payload)
+    append_cost_ledger(tag, kind, "retrieve", meter, arms=set(arms_seen) | set(ours), budgets=budgets,
+                       max_usd=max_usd, stopped=stopped_at, elapsed_s=time.time() - t_start,
+                       n_questions=len(processed),
+                       extra={"query_cost": {a: {k: q.get(k) for k in ("calls", "uncached", "tokens_in",
+                                                                        "tokens_out", "usd", "n_questions")}
+                                             for a, q in qcost.items()},
+                              "pgr_tables": payload["pgr_tables"], "lazy_tests": len(lazy_memo)})
     _log(f"retrieve written to {out} in {(time.time() - t_start) / 60:.1f} min, USD {meter.total_usd():.4f}")
     for b in budgets:
         for arm, s_ in summary[str(b)].items():
@@ -966,8 +1236,10 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
     all_records: list[E.AnswerRecord] = []
     per_kind: dict[str, dict] = {}
     partial: dict[str, list[str]] = {}
+    answering_usd: dict[str, float] = {}     # the meter's growth over each corpus's answering loop
     for kind in kinds:
         name = NAMES[kind]
+        usd_before = meter.total_usd()
         rmeta = _retrieve_meta(kind, tag)
         chosen = {k: v for k, v in (rmeta.get("chosen_variant") or {}).items() if not k.endswith("_means")}
         ids = list(rmeta["question_ids"])
@@ -1065,6 +1337,7 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
                     qid=q, corpus=name, arm=CHANDAN_OWN_ARM, reader=CHANDAN_OWN, budget=E.BUDGET_PRIMARY,
                     qtype=qtype, abstention=abst, question=question, gold=gold, answer=a["answer"],
                     context_sha256=E.context_sha256(a["context"]), context_chars=len(a["context"])))
+        answering_usd[kind] = round(meter.total_usd() - usd_before, 6)
         per_kind[kind] = {"out": out, "records": records, "n_jobs": len(jobs), "arms": arms_present,
                           "populations": {"reader_a": len(pop_a), "reader_b": len(pop_b), "chandan_own": len(pop_own),
                                           "chandan_subset": chandan_subset, "second_build_subset": second_subset,
@@ -1131,8 +1404,29 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
                     extra = (f"  cheap judge {x['acc_all']} agreement {x['agreement']} "
                              f"({x['n_scored']} of {x['n']})" if x else "")
                     _log(f"  {kind} {reader} {arm:22s} {b}: all {cell['acc_all']}  n {cell['n']}{extra}")
-    _write_json(out_root(tag) / "qa_audit.json", {"judge_audit": audit.as_dict(), "primary_judge": audit.primary,
-                                                  "second_judge": audit.second, "cost": meter.as_dict()})
+    # The audit record of this invocation and the history of every one before
+    # it, so the report can print the pooled n the decision was made on and
+    # the first-pass figure beside it.
+    stamp = _now()
+    audit_path = out_root(tag) / "qa_audit.json"
+    history = audit_history(audit_path, {"timestamp": stamp, "n": audit.n, "agreement": audit.agreement,
+                                         "primary": audit.primary, "corpora": list(kinds), "readers": reader_names,
+                                         "judging_stopped": judging_stopped})
+    _write_json(audit_path, {"judge_audit": audit.as_dict(), "primary_judge": audit.primary,
+                             "second_judge": audit.second, "cost": meter.as_dict(), "timestamp": stamp,
+                             "history": history})
+    judging_usd = round(meter.total_usd() - sum(answering_usd.values()), 6)
+    invocation_id = f"qa-{stamp}-{os.getpid()}-{uuid.uuid4().hex[:8]}"     # one id for the row in every corpus ledger
+    for kind, d in per_kind.items():
+        stops = [s for s in (d.get("stopped"), judging_stopped) if s]
+        append_cost_ledger(tag, kind, "qa", meter, arms=d["arms"], readers=reader_names, budgets=budgets,
+                           max_usd=max_usd, stopped="; ".join(stops) if stops else None, corpora=list(kinds),
+                           elapsed_s=time.time() - t_start, n_questions=len(d["records"]), invocation_id=invocation_id,
+                           extra={"answering_usd_by_corpus": answering_usd, "judging_usd": judging_usd,
+                                  "answering_cap_usd": max_usd * (1.0 - JUDGING_RESERVE),
+                                  "judge_audit": {"n": audit.n, "agreement": audit.agreement,
+                                                  "primary": audit.primary},
+                                  "n_cross_family_scored": n_cross})
     _log(f"qa done in {(time.time() - t_start) / 60:.1f} min, USD {meter.total_usd():.4f}")
     return result
 
@@ -1178,9 +1472,15 @@ def _pooled_audit(records: list[E.AnswerRecord], subsets: dict, cheap: str, stro
 
 
 def _bucket_cases(kind: str, tag: str, records: list[E.AnswerRecord], chosen: dict[str, str],
-                  tables: dict, questions: dict, docs_by_id: dict | None) -> list[E.BucketResult]:
-    """Section 8 over the wrong answers at the primary budget under both readers."""
+                  tables: dict, questions: dict, docs_by_id: dict | None,
+                  timestamps: dict[str, str] | None = None) -> list[E.BucketResult]:
+    """Section 8 over the wrong answers at the primary budget under both
+    readers; every result carries its reader and budget. timestamps (session
+    id -> a time string that sorts, the session date and time of day) lets
+    the knowledge-update clause record whether the gold turn is the earlier
+    of the two; without it the session order of the haystack stands in."""
     rows = load_contexts(kind, tag, E.BUDGET_PRIMARY, chosen)
+    timestamps = timestamps or {}
     results: list[E.BucketResult] = []
     pgr_cache: dict[str, tuple] = {}
     graphiti_cache: dict[str, tuple] = {}
@@ -1222,13 +1522,20 @@ def _bucket_cases(kind: str, tag: str, records: list[E.AnswerRecord], chosen: di
             cand_units = RD.candidate_units_from_ids(row.get("candidates") or [], qt)
         if kind == LME:
             ev = sorted(x.evidence_turns)
+            order = {sid: i for i, sid in enumerate(qt)}
+
+            def time_key(t: str) -> tuple:
+                sid, i = t.rsplit("#", 1)
+                return (timestamps.get(sid) or qt[sid].date, order.get(sid, 0), int(i))
+
             case = E.BucketCase(
                 qid=r.qid, arm=r.arm, corpus=r.corpus, qtype=r.qtype, gold=r.gold, rendered=rendered,
                 candidate_units=cand_units, verdict_primary=r.correct, verdict_second=r.second_verdict(),
                 evidence=ev, lengths=S.turn_lengths(qt, ev),
                 texts={t: qt[t.rsplit("#", 1)[0]].turns[int(t.rsplit("#", 1)[1])].text for t in ev},
                 dates={t: qt[t.rsplit("#", 1)[0]].date for t in ev}, index_units=index_units,
-                session_level=r.arm in E.SESSION_LEVEL_ARMS, evidence_sessions=sorted(x.evidence_sessions))
+                session_level=r.arm in E.SESSION_LEVEL_ARMS, evidence_sessions=sorted(x.evidence_sessions),
+                reader=r.reader, budget=r.budget, timestamps={t: time_key(t) for t in ev})
         else:
             locations = U.locate_query(x, tables)
             texts = {}
@@ -1239,7 +1546,7 @@ def _bucket_cases(kind: str, tag: str, records: list[E.AnswerRecord], chosen: di
             case = E.BucketCase(
                 qid=r.qid, arm=r.arm, corpus=r.corpus, qtype=r.qtype, gold=r.gold, rendered=rendered,
                 candidate_units=cand_units, verdict_primary=r.correct, verdict_second=r.second_verdict(),
-                texts=texts, index_units=index_units, locations=locations)
+                texts=texts, index_units=index_units, locations=locations, reader=r.reader, budget=r.budget)
         results.append(E.assign_bucket(case))
         counts["bucketed"] += 1
     _log(f"  {kind}: {counts['bucketed']} wrong answers bucketed, {counts['no_context']} without a context row")
@@ -1339,11 +1646,19 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
     lme: dict = {}
     mhr: dict = {}
     records: list[E.AnswerRecord] = []
-    costs: dict = {"index": {}, "query": {}, "answering": {}, "judging": {}, "meters": {}, "caps": {}, "proxy": {}}
+    # Section 11: the ledger of every invocation, summed against the caps; the
+    # last-pass meters stay beside it under "meters".
+    ledgers = read_cost_ledgers(tag, kinds)
+    costs: dict = {"index": {}, "query": {}, "answering": {}, "judging": {}, "meters": {}, "caps": {}, "proxy": {},
+                   "ledger": ledger_summary(ledgers), "builds": {}, "planner": {}}
+    models = E.load_models()
+    price_in, price_out = _chunk_price(models)
     refused: dict[str, set[str]] = defaultdict(set)
     partial: dict[str, bool] = {}
     partial_answering: dict[str, set[str]] = defaultdict(set)
     absent: dict[str, list[str]] = {}
+    arm_status: dict[str, dict[str, str]] = {}
+    arm_notes: dict[str, dict[str, str]] = {}
     setup: dict = {"tag": tag, "encoder": DEFAULT_MODEL, "stages": {}}
     location: dict = {}
     context_hashes: dict[str, dict[str, str]] = defaultdict(dict)
@@ -1363,6 +1678,8 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         rmeta = _retrieve_meta(kind, tag)
         if rmeta is None:
             absent[name] = list(R.ARMS) + list(COMPETITOR_ARMS)
+            arm_status[name] = _arm_status(kind, list(subsets["ORDER"][name]), set())
+            costs["builds"][name] = _pgr_build_state(kind, subsets)
             continue
         chosen = {k: v for k, v in (rmeta.get("chosen_variant") or {}).items() if not k.endswith("_means")}
         chosen_all[name] = rmeta.get("chosen_variant")
@@ -1381,6 +1698,25 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         present = set(scores) | {r.arm for r in recs}
         absent[name] = [a for a in list(R.arms_for(kind)) + list(COMPETITOR_ARMS) if a not in present
                         and not (kind == MHRAG and a == "graphiti")]
+        arm_status[name] = _arm_status(kind, ids, present)
+        # The S4 and S5 arms read post-graph-rag's tables; a pass whose spaces
+        # had none ran them without his tables, and every row and test that
+        # reads them says so.
+        pgr_rt = _pgr_tables_at_retrieve(rmeta)
+        export_now = any(v == STATUS_EXPORT_NOT_RUN or (a in C.CHANDAN_ARMS and v == STATUS_RUN)
+                         for a, v in arm_status[name].items())
+        if pgr_rt["present"] == 0 or (pgr_rt["present"] is None and not export_now):
+            note = NOTE_WITHOUT_PGR
+        elif pgr_rt["present"] and pgr_rt["wanted"] and pgr_rt["present"] < pgr_rt["wanted"]:
+            note = f"run with post-graph-rag tables on {pgr_rt['present']} of {pgr_rt['wanted']} questions"
+        else:
+            note = ""
+        noted = [a for a in scores if a in R.ARM_SPECS and R.ARM_SPECS[a].pgr]
+        if note and noted:
+            arm_notes[name] = {a: note for a in noted}
+            disclosures.append(f"On {name} the arms that read post-graph-rag's tables ({', '.join(noted)}) were "
+                               f"{note} (source: {pgr_rt['source']}); their rows and every test that reads them "
+                               f"carry that label.")
         for a, v in (rmeta.get("refused") or {}).items():
             refused[a] |= set(v)
         for a in list(scores) + list(COMPETITOR_ARMS):
@@ -1432,10 +1768,20 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         }
         comp_index, comp_query = _competitor_costs(kind, ids, chosen)
         costs["index"][name].update(comp_index)
+        # Section 9 reads the first build's cost: while the runner is still
+        # writing spaces the meta sum is a snapshot, labelled as such.
+        costs["builds"][name] = _pgr_build_state(kind, subsets)
         for arm, qc in (rmeta.get("query_cost") or {}).items():
-            costs["query"].setdefault(arm, {})[name] = qc
+            costs["query"].setdefault(arm, {})[name] = dict(qc)
         for arm, qc in comp_query.items():
             costs["query"].setdefault(arm, {})[name] = qc
+        # The planner pseudo-arm: its calls belong to the S5 arms. Priced at
+        # the study rate like every arm of ours (a pass before this pricing
+        # wrote 0), and read against the ledger for the pass that paid.
+        pa = _planner_attribution(rmeta, (ledgers.get("retrieve") or {}).get(name) or [], price_in, price_out)
+        if pa:
+            costs["planner"][name] = pa
+            costs["query"][PLANNER_PSEUDO_ARM][name]["usd"] = pa["usd_at_study_price"]
         costs["meters"][f"index_{kind}"] = idx_cost
         costs["meters"][f"retrieve_{kind}"] = rmeta.get("cost")
         costs["caps"][f"index_{kind}"] = idx_meta.get("max_usd")
@@ -1483,11 +1829,13 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
             if gd.get("ego_node") is not None:
                 disclosures.append(f"graphrag's ego-node rule removed one content phrase after the hub rule: "
                                    f"{gd['ego_node']!r}.")
+        session_ts: dict[str, str] = {}
         if kind == LME:
             instances, sessions = lme_data()
             questions = {q: instances[q] for q in ids if q in instances}
             tables = lme_tables(sessions, list(idx_meta["containers"]), None)
             setup["long_evidence_turns"] = _long_evidence_turns(instances, sessions)
+            session_ts = {sid: str(s.get("datetime") or s.get("date") or "") for sid, s in sessions.items()}
             docs_by_id = None
             if not g_status:
                 g_status = C.graphiti_status(list(subsets["GRAPHITI_150"]))
@@ -1513,11 +1861,10 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
             tables = mhr_tables(docs, list(idx_meta["containers"]), None)
             docs_by_id = {d.doc_id: d for d in docs}
         if recs:
-            buckets.extend(_bucket_cases(kind, tag, recs, chosen, tables, questions, docs_by_id))
+            buckets.extend(_bucket_cases(kind, tag, recs, chosen, tables, questions, docs_by_id, session_ts))
 
     if not g_status:
         g_status = "dropped"
-    models = E.load_models()
     cheap, strong = models["chat_model"], E.JUDGE_STRONG_MODEL
     audit = _pooled_audit(records, subsets, cheap, strong)
     E.set_primary(records, audit.primary)
@@ -1531,7 +1878,22 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
                                                           else "."))
     for name, arms_ in absent.items():
         if arms_:
-            disclosures.append(f"Arms absent on {name} (no output, no export found): {', '.join(arms_)}.")
+            st = arm_status.get(name) or {}
+            disclosures.append(f"Arms absent on {name}: "
+                               + "; ".join(f"{a} ({st.get(a) or 'no output'})" for a in arms_) + ".")
+    # The qa stage's own record of the judge decision: the pooled n it was
+    # made on, and the history of every qa invocation when one is kept.
+    qa_audit_record: dict = {}
+    audit_path = root / "qa_audit.json"
+    if audit_path.exists():
+        try:
+            qa_file = json.loads(audit_path.read_text())
+        except (OSError, ValueError):
+            qa_file = {}
+        ja = qa_file.get("judge_audit") or {}
+        qa_audit_record = {"n": ja.get("n"), "n_agree": ja.get("n_agree"), "agreement": ja.get("agreement"),
+                           "primary": qa_file.get("primary_judge") or ja.get("primary"),
+                           "timestamp": qa_file.get("timestamp"), "history": list(qa_file.get("history") or [])}
     commits = {"head": git_sha()}
     if SUBSETS_SHA_PATH.exists():
         commits["subsets_sha256_file"] = SUBSETS_SHA_PATH.read_text().split()[0]
@@ -1542,7 +1904,8 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         disclosures=disclosures, models=models, absent=absent, restrict=restrict,
         partial_answering={r: sorted(a) for r, a in partial_answering.items()}, overrides=overrides,
         arm_populations=arm_populations, arm_populations_label=arm_populations_label,
-        second_build=second_build, extra_summary=extra_summary)
+        second_build=second_build, extra_summary=extra_summary, arm_notes=arm_notes, arm_status=arm_status,
+        qa_audit_record=qa_audit_record)
     payload["absent_arms"] = absent
     payload["chosen_variant"] = chosen_all
     E.write_metrics(payload, root / "metrics.json")

@@ -672,6 +672,11 @@ class BucketCase:
     locations: list[FactLocation] | None = None
     session_level: bool = False
     evidence_sessions: list[str] = field(default_factory=list)
+    reader: str = ""                  # the reader whose wrong answer this is
+    budget: int = 0                   # the rendered budget of that answer
+    # turn id -> a key that sorts in time order (session time of day, session
+    # order, turn index); used only to read the knowledge-update clause
+    timestamps: dict[str, tuple] = field(default_factory=dict)
 
 
 @dataclass
@@ -686,6 +691,14 @@ class BucketResult:
     reason: str
     n_inside_half_covered: int = 0    # evidence units truncated or half covered whose tail lacks the gold
     ku_clause_skipped: bool = False   # knowledge-update clause could not fire
+    reader: str = ""                  # the reader of the answer (empty in records written before it was kept)
+    budget: int = 0                   # the budget of the answer (0 in records written before it was kept)
+    ku_clause_fired: bool = False     # the knowledge-update same-date clause put the case in bucket 3
+    # when the clause fired: the turn holding the gold answer is the earlier of
+    # the two by timestamp (the question asks about the earlier fact, so the
+    # clause fired backwards); None when the clause did not fire or no
+    # timestamp was available
+    ku_gold_turn_earlier: bool | None = None
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -710,9 +723,9 @@ def _covered(turn_id: str, units: list[RenderedUnit], length: int) -> bool:
 
 
 def _result(case: BucketCase, bucket: int, decidable: bool, reason: str, half: int = 0,
-            ku_skipped: bool = False) -> BucketResult:
+            ku_skipped: bool = False, ku_fired: bool = False, ku_gold_earlier: bool | None = None) -> BucketResult:
     return BucketResult(case.qid, case.arm, case.corpus, case.qtype, bucket, BUCKET_NAMES.get(bucket, "not wrong"),
-                        decidable, reason, half, ku_skipped)
+                        decidable, reason, half, ku_skipped, case.reader, case.budget, ku_fired, ku_gold_earlier)
 
 
 def _bucket_longmemeval(case: BucketCase, decidable: bool) -> BucketResult:
@@ -756,9 +769,16 @@ def _bucket_longmemeval(case: BucketCase, decidable: bool) -> BucketResult:
                     continue
                 po = _display_position(o, case.rendered.units)
                 if ps is not None and po is not None and ps < po:
+                    # The rule names the gold holder the superseding turn. When
+                    # the gold holder is the earlier of the two by timestamp the
+                    # question asks about the earlier fact and the clause fired
+                    # backwards; the count is reported so the reader can
+                    # discount those cases. The rule itself is unchanged.
+                    ts, to = case.timestamps.get(s), case.timestamps.get(o)
+                    earlier = bool(ts < to) if ts is not None and to is not None else None
                     return _result(case, 3, decidable,
                                    f"superseding turn {s} rendered before superseded turn {o} on the same date",
-                                   half, ku_skipped)
+                                   half, ku_skipped, ku_fired=True, ku_gold_earlier=earlier)
     return _result(case, 4, decidable, "every evidence turn inside the rendered context", half, ku_skipped)
 
 
@@ -822,9 +842,14 @@ def assign_bucket(case: BucketCase) -> BucketResult:
 
 
 def bucket_counts(results: list[BucketResult]) -> dict:
-    """arm -> corpus -> {by_type: {type: counts}, total: counts}. counts holds
-    one entry per bucket in the stated order plus n_wrong, n_undecidable
-    (bucket 5 not testable), n_inside_half_covered and n_ku_clause_skipped."""
+    """arm -> corpus -> {by_type: {type: counts}, total: counts, by_reader:
+    {reader: {budgets, total, by_type}}}. counts holds one entry per bucket
+    in the stated order plus n_wrong, n_undecidable (bucket 5 not testable),
+    n_inside_half_covered, n_ku_clause_skipped, n_ku_clause_fired and
+    n_ku_gold_earlier (the knowledge-update clause fired and the gold turn is
+    the earlier of the two by timestamp). total pools every reader; by_reader
+    splits the same rows by the reader recorded on them (records written
+    before the reader was kept fall under the empty reader)."""
 
     def counts(rows: list[BucketResult]) -> dict:
         wrong = [r for r in rows if r.bucket != 0]
@@ -834,15 +859,26 @@ def bucket_counts(results: list[BucketResult]) -> dict:
             "n_undecidable": sum(1 for r in wrong if not r.decidable),
             "n_inside_half_covered": sum(r.n_inside_half_covered for r in wrong),
             "n_ku_clause_skipped": sum(1 for r in wrong if r.ku_clause_skipped),
+            "n_ku_clause_fired": sum(1 for r in wrong if r.ku_clause_fired),
+            "n_ku_gold_earlier": sum(1 for r in wrong if r.ku_gold_turn_earlier),
         }
+
+    def by_type(rows: list[BucketResult]) -> dict:
+        return {t: counts([r for r in rows if r.qtype == t]) for t in sorted({r.qtype for r in rows})}
 
     out: dict = {}
     for arm, corpus in sorted({(r.arm, r.corpus) for r in results}):
         rows = [r for r in results if (r.arm, r.corpus) == (arm, corpus)]
         out.setdefault(arm, {})[corpus] = {
             "total": counts(rows),
-            "by_type": {t: counts([r for r in rows if r.qtype == t]) for t in sorted({r.qtype for r in rows})},
+            "by_type": by_type(rows),
             "bucket5_decidable": arm in HEAD_TO_HEAD_ARMS,
+            "by_reader": {
+                reader: {"budgets": sorted({r.budget for r in rows if r.reader == reader}),
+                         "total": counts([r for r in rows if r.reader == reader]),
+                         "by_type": by_type([r for r in rows if r.reader == reader])}
+                for reader in sorted({r.reader for r in rows})
+            },
         }
     return out
 
@@ -1072,7 +1108,8 @@ def t7_rule(t7: PairedTest, max_net_losses: int = T7_MAX_NET_LOSSES) -> dict:
             "label": ("partial run" if t7.partial else ("holds" if holds else "does not hold"))}
 
 
-def pass_rule(t1: PairedTest, t2: PairedTest, t8a: PairedTest, t7: PairedTest, graphiti_status: str) -> dict:
+def pass_rule(t1: PairedTest, t2: PairedTest, t8a: PairedTest, t7: PairedTest, graphiti_status: str,
+              notes: dict[str, str] | None = None) -> dict:
     """Section 9: passes when T1 is shown (D1), T8a is positive and significant
     after Holm within Family A, T2 passes under D2 or is not run, and T7 holds.
     One boolean over named quantities."""
@@ -1098,6 +1135,11 @@ def pass_rule(t1: PairedTest, t2: PairedTest, t8a: PairedTest, t7: PairedTest, g
         "T7_holds": t7r["holds"],
         "T8b_reported": True,
     }
+    # A note on an arm a gate test reads (for example "run without
+    # post-graph-rag tables") is printed beside the rule; the rule itself is
+    # unchanged by it.
+    for k, v in (notes or {}).items():
+        q[f"{k}_note"] = v
     q["passed"] = bool(q["T1_shown"] and q["T8a_positive_and_significant"] and q["T2_ok"] and q["T7_holds"])
     return q
 
@@ -1357,7 +1399,7 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
               restrict: dict[str, set[str]] | None = None,
               partial_answering: dict[str, set[str]] | None = None,
               arm_ids: dict[str, list[str]] | None = None, arm_ids_label: str = "",
-              graph_shares: dict | None = None) -> dict:
+              graph_shares: dict | None = None, arm_notes: dict[str, dict[str, str]] | None = None) -> dict:
     """Every test of section 9 as data, at B equals 4,000, and the section 10
     predictions read against them.
 
@@ -1384,11 +1426,16 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
     GRAPHITI_150, section 13); every test with that arm is intersected with
     it and labelled arm_ids_label. graph_shares (variant -> {"nodes", "units"}
     largest community share) feeds the section 10 community prediction.
+    arm_notes (corpus -> arm -> note) labels every test that reads a noted
+    arm on that corpus, for example the S4 and S5 arms on MultiHop-RAG when
+    they ran without post-graph-rag's tables; the pass rule prints the notes
+    of its gate tests beside the rule and is not changed by them.
     """
     refused = refused or {}
     partial = partial or {}
     overrides = overrides or {}
     context_hashes = context_hashes or {}
+    arm_notes = {k: dict(v) for k, v in (arm_notes or {}).items()}
     absent = {k: set(v) for k, v in (absent or {}).items()}
     restrict = {k: set(v) for k, v in (restrict or {}).items()}
     partial_answering = {k: set(v) for k, v in (partial_answering or {}).items()}
@@ -1569,12 +1616,22 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
         second = {"ran": True, "arm": SECOND_BUILD_ARM, "T1_second_build": t1s.as_dict(),
                   "sign_differs": sign_differs, "significance_differs": sig_differs,
                   "first_build_decides": True}
+    def note_for(t) -> str:
+        """The arm notes of a test's two arms on its corpus, as one label."""
+        per = arm_notes.get(t.corpus) or {}
+        return "; ".join(f"{a} {per[a]}" for a in (t.arm_a, t.arm_b) if per.get(a))
+
     for t in family_a + family_b + family_c + [p0_r0, t7]:
         note = restricted_label(t.corpus)
         if t.ran and note:
             t.label = (t.label + "; " if t.label else "") + note
         if t.ran and arm_ids_label and narrowed(t.arm_a, t.arm_b):
             t.label = (t.label + "; " if t.label else "") + arm_ids_label
+        an = note_for(t)
+        if t.ran and an:
+            t.label = (t.label + "; " if t.label else "") + an
+    gate_notes = {k: v for k, v in (("T1", note_for(t1)), ("T2", note_for(t2)), ("T8a", note_for(t8a)),
+                                    ("T8b", note_for(t8b)), ("T7", note_for(t7))) if v}
 
     tests = {
         "alpha": ALPHA,
@@ -1589,9 +1646,10 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
         "holm": {"A": holm_a, "B": holm_b, "C": holm_c},
         "D1": d1_label(t1),
         "D2": d2,
-        "pass_rule": pass_rule(t1, t2, t8a, t7, graphiti_status),
+        "pass_rule": pass_rule(t1, t2, t8a, t7, graphiti_status, gate_notes),
         "graphiti_status": graphiti_status,
         "second_build": second,
+        "arm_notes": arm_notes,
         "populations": {"LongMemEval answerable": len(answerable), "GRAPHITI_150": len(g150),
                         "MultiHop-RAG all located": len(located), "LOCAL_120": len(local),
                         "LongMemEval all": len(lme_all)},
@@ -1760,9 +1818,15 @@ def index_charges(costs: dict, arms: list[str]) -> dict:
 
 def cost_table(costs: dict, arms: list[str]) -> dict:
     """The per-arm cost rows: index charge, query-time calls and tokens per
-    question, seconds per question, USD; plus the metered totals as given."""
-    charges = index_charges(costs, arms)
+    question, seconds per question, USD; plus the metered totals as given.
+
+    An arm with a query-time row is charged its index-time components even
+    when it produced no scored output (sections 1 and 7: chandan_live and
+    chandan_full read his tables, so his build cost is theirs whenever his
+    query files exist). The ledger, the build states and the planner
+    attribution are passed through as the runner gives them."""
     query = costs.get("query") or {}
+    charges = index_charges(costs, sorted(set(arms) | set(query)))
     rows: dict = {}
     for arm in sorted(set(arms) | set(charges) | set(query)):
         rows[arm] = {}
@@ -1782,7 +1846,9 @@ def cost_table(costs: dict, arms: list[str]) -> dict:
             }
     return {"arms": rows, "index": costs.get("index") or {}, "answering": costs.get("answering") or {},
             "judging": costs.get("judging") or {}, "meters": costs.get("meters") or {},
-            "proxy": costs.get("proxy") or {}, "caps": costs.get("caps") or {}}
+            "proxy": costs.get("proxy") or {}, "caps": costs.get("caps") or {},
+            "ledger": costs.get("ledger") or {}, "builds": costs.get("builds") or {},
+            "planner": costs.get("planner") or {}}
 
 
 # ----------------------------------------------------------------------------
@@ -1815,7 +1881,9 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
                   models: dict | None = None, absent: dict | None = None,
                   restrict: dict | None = None, partial_answering: dict | None = None,
                   arm_populations: dict | None = None, arm_populations_label: str = "",
-                  second_build: dict | None = None, extra_summary: dict | None = None) -> dict:
+                  second_build: dict | None = None, extra_summary: dict | None = None,
+                  arm_notes: dict | None = None, arm_status: dict | None = None,
+                  qa_audit_record: dict | None = None) -> dict:
     """Assemble results/part1/metrics.json.
 
     lme and mhr map arm -> budget -> qid -> score (part1.score objects).
@@ -1833,7 +1901,14 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
     carries per-arm counts from the retrieve stage into the retrieval tables
     (arm_tables). The tests run on the primary budget. The Reader B cells
     of the answering tables carry the section 14 item 3 column when the
-    audit made the Reader B model primary.
+    audit made the Reader B model primary. arm_notes (corpus -> arm -> note)
+    labels the retrieval rows and the tests that read a noted arm.
+    arm_status (corpus -> arm -> "run", "export present, not run in the
+    retrieve pass", "no export" or "not run in the retrieve pass") is
+    printed for every absent row. qa_audit_record is the qa stage's own
+    record of the judge decision (n, agreement, primary, timestamp, history).
+    costs["builds"] (corpus -> build state) gates the section 9 second-build
+    rule: it is not evaluated while a post-graph-rag build is incomplete.
     """
     refused = {a: set(v) for a, v in (refused or {}).items()}
     partial = dict(partial or {})
@@ -1848,12 +1923,24 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
     graph_shares = {v: {"nodes": d.get("largest_community_share_nodes"), "units": d.get("largest_community_share_units")}
                     for v, d in shares.items()} if shares else {}
     tests = run_tests(lme4k, mhr4k, records, subsets, refused, partial, graphiti_status, context_hashes, overrides,
-                      absent, restrict, partial_answering, arm_populations, arm_populations_label, graph_shares)
+                      absent, restrict, partial_answering, arm_populations, arm_populations_label, graph_shares,
+                      arm_notes)
     second = dict(second_build or {})
     second.update(tests.get("second_build") or {})
     second.setdefault("ran", False)
     first_usd = sum(float((comps.get("pgr_build") or {}).get("usd", 0.0)) for comps in (costs or {}).get("index", {}).values())
     second.setdefault("first_build_usd", first_usd)
+    # Section 9 reads the first build's metered cost. While a build is still
+    # being written (or stopped short of its population) the summed meta files
+    # are a snapshot, so the rule is not evaluated on them.
+    builds = (costs or {}).get("builds") or {}
+    incomplete = {c: b for c, b in builds.items() if isinstance(b, dict) and not b.get("complete", True)}
+    if incomplete:
+        second["evaluated"] = False
+        second["rule"] = "not evaluated, build incomplete"
+        second["build_label"] = "; ".join(f"{c}: {b.get('label', 'partial build snapshot')}" for c, b in incomplete.items())
+    else:
+        second.setdefault("evaluated", True)
     tests["second_build"] = second
     arms = sorted(set(lme) | set(mhr) | {r.arm for r in records})
     n_missing = {}
@@ -1908,6 +1995,9 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
         "disclosures": list(DISCLOSURES) + list(disclosures or []),
         "published": {**PUBLISHED, **(published or {})},
         "absent_arms": {k: sorted(v) for k, v in (absent or {}).items()},
+        "arm_status": {k: dict(v) for k, v in (arm_status or {}).items()},
+        "arm_notes": {k: dict(v) for k, v in (arm_notes or {}).items()},
+        "qa_audit_record": dict(qa_audit_record or {}),
         "restricted_to": {k: len(v) for k, v in (restrict or {}).items()},
     }
     return _jsonable(payload)

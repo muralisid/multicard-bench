@@ -921,3 +921,132 @@ def test_index_charges_and_register_price_tiers():
     assert PRICES_USD_PER_MTOK["vertex-flash"]["in"] != 9
     PRICES_USD_PER_MTOK.pop("test-model-xyz", None)
     assert E.generate.__doc__ and E.MIN_OUTPUT_TOKENS == 64
+
+
+# ----------------------------------------------------------------------------
+# Reporting fixes: bucket records by reader, the knowledge-update reading,
+# the chandan charge, the arm notes, the second-build gate
+# ----------------------------------------------------------------------------
+def test_bucket_records_carry_reader_budget_and_the_ku_timestamp_reading():
+    t1, t2 = "s1#0", "s2#0"
+    early = {t1: ("2023-05-20 02:21", 0, 0), t2: ("2023-05-20 03:05", 1, 0)}
+    r = E.assign_bucket(lme_case(qtype="knowledge-update", reader="reader_b", budget=4000, timestamps=early))
+    assert r.bucket == 3 and r.ku_clause_fired and r.ku_gold_turn_earlier is True
+    assert r.reader == "reader_b" and r.budget == 4000
+    late = {t1: ("2023-05-20 03:05", 1, 0), t2: ("2023-05-20 02:21", 0, 0)}
+    r = E.assign_bucket(lme_case(qtype="knowledge-update", timestamps=late))
+    assert r.bucket == 3 and r.ku_clause_fired and r.ku_gold_turn_earlier is False
+    # no timestamps: the clause still fires, the reading is unknown
+    r = E.assign_bucket(lme_case(qtype="knowledge-update"))
+    assert r.bucket == 3 and r.ku_clause_fired and r.ku_gold_turn_earlier is None
+    # a case where the clause does not fire records neither flag
+    r = E.assign_bucket(lme_case())
+    assert r.bucket == 4 and not r.ku_clause_fired and r.ku_gold_turn_earlier is None
+    d = r.as_dict()
+    for k in ("reader", "budget", "ku_clause_fired", "ku_gold_turn_earlier"):
+        assert k in d
+    # a record written before the fields existed still loads
+    old = {k: v for k, v in d.items() if k not in ("reader", "budget", "ku_clause_fired", "ku_gold_turn_earlier")}
+    back = E.BucketResult(**old)
+    assert back.reader == "" and back.budget == 0 and back.ku_gold_turn_earlier is None
+
+
+def test_bucket_counts_split_by_reader_and_count_the_ku_reading():
+    early = {"s1#0": ("2023-05-20 02:21", 0, 0), "s2#0": ("2023-05-20 03:05", 1, 0)}
+    rows = [E.assign_bucket(lme_case(qtype="knowledge-update", reader="reader_a", budget=4000, timestamps=early)),
+            E.assign_bucket(lme_case(reader="reader_a", budget=4000)),
+            E.assign_bucket(lme_case(reader="reader_b", budget=4000, verdict_second=True))]
+    counts = E.bucket_counts(rows)
+    cell = counts["S5_primary"][E.LONGMEMEVAL]
+    assert cell["total"]["n_wrong"] == 3 and cell["total"]["n_ku_clause_fired"] == 1
+    assert cell["total"]["n_ku_gold_earlier"] == 1
+    assert set(cell["by_reader"]) == {"reader_a", "reader_b"}
+    ra, rb = cell["by_reader"]["reader_a"], cell["by_reader"]["reader_b"]
+    assert ra["budgets"] == [4000] and ra["total"]["n_wrong"] == 2 and ra["total"]["3"] == 1 and ra["total"]["4"] == 1
+    assert rb["total"]["5"] == 1 and rb["total"]["n_ku_gold_earlier"] == 0
+    assert ra["by_type"]["knowledge-update"]["n_ku_gold_earlier"] == 1
+    assert ra["by_type"]["multi-session"]["n_ku_clause_fired"] == 0
+
+
+def test_cost_table_charges_the_build_to_chandan_arms_that_only_have_query_rows():
+    q = {"calls": 660, "tokens_in": 100, "tokens_out": 10, "usd": 0.01, "seconds_per_question": 3.0, "n_questions": 220}
+    costs = {"index": {E.LONGMEMEVAL: {"pgr_build": {"usd": 28.5, "calls": 10, "tokens_in": 1, "tokens_out": 1}}},
+             "query": {"chandan_live": {E.LONGMEMEVAL: dict(q)}, "chandan_full": {E.LONGMEMEVAL: dict(q)}},
+             "ledger": {"stages": {}}, "builds": {E.LONGMEMEVAL: {"complete": False}},
+             "planner": {E.LONGMEMEVAL: {"calls": 5}}}
+    # the chandan arms are not among the scored arms of the pass, yet they read his tables
+    t = E.cost_table(costs, ["S5_noPGR", "ours_cheap"])
+    for arm in ("chandan_live", "chandan_full"):
+        assert t["arms"][arm][E.LONGMEMEVAL]["index_usd"] == pytest.approx(28.5)
+        assert t["arms"][arm][E.LONGMEMEVAL]["index_components"] == ["pgr_build"]
+        assert t["arms"][arm][E.LONGMEMEVAL]["n_questions"] == 220
+    assert t["arms"]["ours_cheap"][E.LONGMEMEVAL]["index_usd"] == 0.0
+    assert "S5_primary" not in t["arms"]        # no scored output and no query row: no row at all
+    assert t["ledger"] == {"stages": {}} and t["builds"][E.LONGMEMEVAL]["complete"] is False
+    assert t["planner"][E.LONGMEMEVAL]["calls"] == 5
+
+
+def test_arm_notes_label_the_tests_and_the_pass_rule_without_changing_it():
+    subsets, lme, mhr, records, payload = synthetic_run()
+    lme4k = {a: d.get(4000, {}) for a, d in lme.items()}
+    mhr4k = {a: d.get(4000, {}) for a, d in mhr.items()}
+    notes = {E.MULTIHOPRAG: {"S5_primary": "run without post-graph-rag tables"}}
+    plain = E.run_tests(lme4k, mhr4k, records, subsets)
+    noted = E.run_tests(lme4k, mhr4k, records, subsets, arm_notes=notes)
+    t8a, t8b = noted["family_A"][2], noted["family_A"][3]
+    assert t8a["ran"] and "S5_primary run without post-graph-rag tables" in t8a["label"]
+    assert t8b["ran"] and "S5_primary run without post-graph-rag tables" in t8b["label"]
+    assert "post-graph-rag" not in (noted["family_A"][0]["label"] or "")      # T1 is on LongMemEval
+    assert "post-graph-rag" not in (noted["T7"]["label"] or "")
+    pr, pr0 = noted["pass_rule"], plain["pass_rule"]
+    assert pr["T8a_note"] == pr["T8b_note"] == "S5_primary run without post-graph-rag tables"
+    assert "T1_note" not in pr and "T7_note" not in pr
+    # the rule reads the same quantities and gives the same answer
+    assert {k: v for k, v in pr.items() if not k.endswith("_note")} == pr0
+    assert noted["arm_notes"] == notes
+    text = RP.render_report({**payload, "tests": noted})
+    block = text.split("## The pass rule")[1].split("## Setup")[0]
+    assert "| T8b note | S5_primary run without post-graph-rag tables |" in block
+    assert block.count("| n/a |") == 0
+
+
+def _metrics_with_costs(costs):
+    subsets = synthetic_subsets()
+    answerable = E.answerable_ids(subsets)
+    lme = {"S5_primary": {4000: {q: qs(q, 1.0) for q in answerable}},
+           "chandan_live": {4000: {q: qs(q, 0.5) for q in answerable}}}
+    audit = {"n": 0, "n_agree": 0, "agreement": 0.0, "threshold": 0.9, "cheap": "c", "strong": "s",
+             "primary": "s", "second": "c", "cells": []}
+    return E.build_metrics(lme=lme, mhr={}, records=[], audit=audit, buckets=[], subsets=subsets,
+                           subsets_sha256="abc", commits={"head": "x"}, costs=costs, graphiti_status="dropped",
+                           absent={E.MULTIHOPRAG: ["S5_primary", "chandan_live", "ours_cheap"]})
+
+
+def test_second_build_rule_is_not_evaluated_on_an_incomplete_build():
+    label = "partial build snapshot, 220 of 500 spaces, build in progress"
+    costs = {"index": {E.LONGMEMEVAL: {"pgr_build": {"usd": 28.5, "calls": 1, "tokens_in": 1, "tokens_out": 1,
+                                                     "seconds": 1}}},
+             "builds": {E.LONGMEMEVAL: {"complete": False, "in_progress": True, "label": label, "n_spaces": 220,
+                                        "n_wanted": 500, "running_job_tags": ["pgr-lme-full-s0"], "stopped": [],
+                                        "run_log_usd": 52.2, "subset": None}}}
+    m = _metrics_with_costs(costs)
+    sb = m["second_build"]
+    assert sb["evaluated"] is False and sb["rule"] == "not evaluated, build incomplete"
+    assert sb["first_build_usd"] == pytest.approx(28.5) and sb["ran"] is False
+    text = RP.render_report(m)
+    assert "first build cost so far USD 28.50 (longmemeval: " + label + "); second-build rule: " \
+           "not evaluated, build incomplete; second build ran: no." in text
+    assert f"pgr_build ({label})" in text
+    assert f"| longmemeval | {label} | yes | pgr-lme-full-s0 | none | 220 | 500 | ORDER | 52.20 |" in text
+    assert not BANNED.search(text)
+    prose = re.sub(r"```.*?```", "", text, flags=re.S)
+    assert "None" not in prose
+    # a complete build keeps the section 9 sentence and evaluates the rule
+    costs["builds"][E.LONGMEMEVAL] = {"complete": True, "in_progress": False, "label": "complete build, 500 of 500 spaces",
+                                      "n_spaces": 500, "n_wanted": 500, "running_job_tags": [], "stopped": [],
+                                      "run_log_usd": 60.0, "subset": None}
+    m = _metrics_with_costs(costs)
+    assert m["second_build"]["evaluated"] is True
+    assert "Second post-graph-rag build (section 9): first build cost USD 28.50; second build ran: no." in RP.render_report(m)
+    # no build state at all (an older payload): evaluated as before
+    assert _metrics_with_costs({"index": {}})["second_build"]["evaluated"] is True
