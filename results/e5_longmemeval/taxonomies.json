@@ -1,0 +1,249 @@
+{
+  "hand": [
+    {
+      "key": "about_me",
+      "label": "Facts, possessions and status about me",
+      "anchors": [
+        "I own two cars and drive the older one to work",
+        "I work as a nurse at a hospital in Denver",
+        "I used to be a heavy smoker before I quit",
+        "My flat has a small balcony and one cat",
+        "I finished my studies with a diploma in accounting"
+      ]
+    },
+    {
+      "key": "events_time",
+      "label": "Things I did and when",
+      "anchors": [
+        "I went to Spain with my family for a week last year",
+        "It took me about a month to finish that course",
+        "I replaced the tyres on my car last Tuesday",
+        "Last weekend I ran my first 10k race",
+        "I started the new job two months ago"
+      ]
+    },
+    {
+      "key": "counts",
+      "label": "Counts and quantities about me",
+      "anchors": [
+        "I have completed six courses on that platform so far",
+        "I took a ten day break from the news",
+        "I have already driven 500 miles on this car",
+        "I have added five records to my collection",
+        "I usually sleep about six hours a night"
+      ]
+    },
+    {
+      "key": "preferences",
+      "label": "My preferences and how I like answers",
+      "anchors": [
+        "Skip the basics, I already work in this field",
+        "I prefer non-fiction over novels",
+        "I like short answers with concrete examples",
+        "I am vegetarian so no meat recipes please",
+        "I enjoy podcasts on my walk to work"
+      ]
+    },
+    {
+      "key": "request",
+      "label": "What I am asking the assistant to do",
+      "anchors": [
+        "Can you recommend some books on this topic?",
+        "What should I check before I set off?",
+        "Please suggest a few apps that could help with this",
+        "How do I set this device up correctly?",
+        "Give me an overview of recent developments in this area"
+      ]
+    }
+  ],
+  "m11": [
+    {
+      "key": "question",
+      "label": "Direct Question",
+      "anchors": [
+        "Can you give me some pros and cons of the Old Town Predator vs the Perception Spark?",
+        "How do game developers perform integration testing?",
+        "What are some good spices or seasonings that I can use?",
+        "What steps is Apple taking to improve their product sustainability?"
+      ]
+    },
+    {
+      "key": "task_request",
+      "label": "Task or Action Request",
+      "anchors": [
+        "Can you help me create a digital folder structure?",
+        "Can you recommend some of Inna's songs?",
+        "Can you help me track my expenses?",
+        "Write the dialogue of a long debate between Plato and Kant."
+      ]
+    },
+    {
+      "key": "personal_context",
+      "label": "Personal Context or Anecdote",
+      "anchors": [
+        "I've been thinking about taking my kayak to Lake Tahoe, where I went on a fishing trip with my friends a few weeks ago.",
+        "I've been cooking at home a lot lately, like last week when I made chicken parmesan.",
+        "I just attended a hunter's safety course recently, and it got me thinking about the importance of being prepared.",
+        "I just got back from a weekend trip and had some time to organize my collection."
+      ]
+    },
+    {
+      "key": "follow_up",
+      "label": "Follow-up or Clarification",
+      "anchors": [
+        "That's great to know. Have they also provided any accessibility training to their staff?",
+        "Oh, I see. So, have you heard any feedback from other people about local markets?",
+        "That's helpful, thanks. Can you suggest some natural remedies to help soothe my cough?",
+        "Wow, I had no idea photography had such a rich history. Who are some of the modern-day photographers?"
+      ]
+    },
+    {
+      "key": "planning_intent",
+      "label": "Planning or Future Intent",
+      "anchors": [
+        "I'm planning a fishing trip to a nearby stream and was wondering if you could recommend some good spots.",
+        "I'm planning a camping and fishing trip to Grayson Highlands State Park in June.",
+        "I'm planning a road trip to the Grand Canyon with my friends over the winter holidays.",
+        "I'm thinking of trying to adjust my morning routine to get some exercise before work."
+      ]
+    },
+    {
+      "key": "product_inquiry",
+      "label": "Product or Service Inquiry",
+      "anchors": [
+        "I'm looking into getting a new fishing kayak.",
+        "I'm looking for some new recipe ideas, specifically for a quick and easy dinner.",
+        "I'm looking for some book recommendations. I just finished a historical fiction novel.",
+        "I'm looking for some recommendations on car air fresheners."
+      ]
+    }
+  ],
+  "m13": [
+    {
+      "key": "topic",
+      "label": "Main Topic of Discussion",
+      "anchors": [
+        "What is the main subject of this conversation?",
+        "Can you summarize the core topic being discussed?",
+        "What is this user turn primarily about?",
+        "Identify the central theme of this message."
+      ]
+    },
+    {
+      "key": "question",
+      "label": "Direct Question Asked",
+      "anchors": [
+        "What question is the user asking?",
+        "Extract the explicit question from this turn.",
+        "Is there a direct question in this statement?",
+        "What information is the user requesting?"
+      ]
+    },
+    {
+      "key": "context",
+      "label": "Contextual Information Provided",
+      "anchors": [
+        "What background details did the user provide?",
+        "Are there any personal anecdotes or past events mentioned?",
+        "What additional information is given to set the scene?",
+        "Identify any relevant context for the current query."
+      ]
+    },
+    {
+      "key": "intent",
+      "label": "User's Underlying Goal or Intent",
+      "anchors": [
+        "What is the user trying to achieve with this turn?",
+        "What is the user's ultimate goal here?",
+        "What action does the user want me to take?",
+        "What is the purpose behind this user's message?"
+      ]
+    },
+    {
+      "key": "follow_up",
+      "label": "Follow-up or Clarification",
+      "anchors": [
+        "Is this a follow-up to a previous turn?",
+        "Is the user asking for more details on a prior topic?",
+        "Does this turn clarify or expand on something said before?",
+        "Is this message building on a previous interaction?"
+      ]
+    }
+  ],
+  "m17": [
+    {
+      "key": "task_request",
+      "label": "Direct Task Request",
+      "anchors": [
+        "Can you draw ascii art for a car?",
+        "Can you help me find the dates and venue for the event?",
+        "Can you recommend one?",
+        "Can you give me variations or different ways to say UI and UX?"
+      ]
+    },
+    {
+      "key": "follow_up_question",
+      "label": "Follow-up Question",
+      "anchors": [
+        "Can you show the car from the side?",
+        "Do you another potential solution?",
+        "What type of rice vinegar do you recommend using for this recipe?",
+        "How do you know the saturation temperature is 158.16 C"
+      ]
+    },
+    {
+      "key": "personal_context",
+      "label": "Personal Context/Anecdote",
+      "anchors": [
+        "By the way, I was prescribed Tamiflu when I had the flu last time, which really helped.",
+        "I've been with TechSavvy Inc. for a while now, and I think it's been around...",
+        "I've been using WhatsApp a lot lately, especially since I joined a WhatsApp group chat with my college friends on June 20th.",
+        "I just volunteered at the \"Paws for a Cause\" 5K run/walk on March 12th and had a great time helping out with registration and handing out water to the participants."
+      ]
+    },
+    {
+      "key": "problem_description",
+      "label": "Problem Description",
+      "anchors": [
+        "The main reason is that it also uses activex, which is unsafe.",
+        "My current problem is that the current way of working cross-functional team is not defined, people are not clear with role and responsibility.",
+        "I'm having trouble staying organized in the mornings.",
+        "I'm feeling a bit overwhelmed with my daily tasks and was wondering if you could help me organize my schedule better."
+      ]
+    },
+    {
+      "key": "preference_constraint",
+      "label": "Preference or Constraint",
+      "anchors": [
+        "I'm actually thinking of trying out a combination of BBQ sauce and hot sauce for a spicy kick.",
+        "I'm interested in a mix of genres, but I've been leaning towards fiction lately.",
+        "I prefer books that are engaging and easy to follow, not too complex or heavy.",
+        "I'm actually thinking of visiting some new neighborhoods on this trip, can you recommend any areas that are a bit off the beaten path but still have some good food options?"
+      ]
+    },
+    {
+      "key": "clarification_correction",
+      "label": "Clarification or Correction",
+      "anchors": [
+        "I see what you mean! Yeah, I must have gotten my wires crossed.",
+        "I'm not sure about switching to a new food just yet, but I'll definitely consider those options.",
+        "I like the idea of creating a routine and prioritizing sections. However, I'm not sure I want to focus solely on The New York Times.",
+        "I've already been to San Sebastian and the Guggenheim Museum, but the Rioja Wine Region sounds interesting."
+      ]
+    }
+  ],
+  "_log": {
+    "m11": {
+      "sample_turns": 77,
+      "ok": true
+    },
+    "m13": {
+      "sample_turns": 78,
+      "ok": true
+    },
+    "m17": {
+      "sample_turns": 76,
+      "ok": true
+    }
+  }
+}

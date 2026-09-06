@@ -1,0 +1,155 @@
+{
+  "experiment": "e5_longmemeval_qa",
+  "reader": "gemini-2.5-flash",
+  "judges": [
+    "azure:gpt-5.4",
+    "gemini-2.5-flash"
+  ],
+  "top_k": 10,
+  "n_questions": 500,
+  "summary": {
+    "bm25_turn": {
+      "n": 500,
+      "acc_azure_all": 0.66,
+      "acc_gemini_all": 0.668,
+      "acc_azure_answerable": 0.6382978723404256,
+      "acc_azure_abstention": 1.0,
+      "judge_agreement": 0.964,
+      "by_type_azure": {
+        "knowledge-update": 0.8333333333333334,
+        "multi-session": 0.49624060150375937,
+        "single-session-assistant": 0.875,
+        "single-session-preference": 0.3,
+        "single-session-user": 0.8428571428571429,
+        "temporal-reasoning": 0.6165413533834586
+      },
+      "mean_context_chars": 8582.518
+    },
+    "rrf_turn": {
+      "n": 500,
+      "acc_azure_all": 0.67,
+      "acc_gemini_all": 0.668,
+      "acc_azure_answerable": 0.648936170212766,
+      "acc_azure_abstention": 1.0,
+      "judge_agreement": 0.95,
+      "by_type_azure": {
+        "knowledge-update": 0.8974358974358975,
+        "multi-session": 0.48120300751879697,
+        "single-session-assistant": 0.9107142857142857,
+        "single-session-preference": 0.4666666666666667,
+        "single-session-user": 0.8428571428571429,
+        "temporal-reasoning": 0.5789473684210527
+      },
+      "mean_context_chars": 8994.46
+    },
+    "rrf_cards_hand": {
+      "n": 500,
+      "acc_azure_all": 0.658,
+      "acc_gemini_all": 0.682,
+      "acc_azure_answerable": 0.6382978723404256,
+      "acc_azure_abstention": 0.9666666666666667,
+      "judge_agreement": 0.952,
+      "by_type_azure": {
+        "knowledge-update": 0.8974358974358975,
+        "multi-session": 0.48120300751879697,
+        "single-session-assistant": 0.9107142857142857,
+        "single-session-preference": 0.26666666666666666,
+        "single-session-user": 0.8714285714285714,
+        "temporal-reasoning": 0.5639097744360902
+      },
+      "mean_context_chars": 10176.528
+    },
+    "rrf_cards_m13": {
+      "n": 500,
+      "acc_azure_all": 0.664,
+      "acc_gemini_all": 0.672,
+      "acc_azure_answerable": 0.6425531914893617,
+      "acc_azure_abstention": 1.0,
+      "judge_agreement": 0.944,
+      "by_type_azure": {
+        "knowledge-update": 0.8717948717948718,
+        "multi-session": 0.5037593984962406,
+        "single-session-assistant": 0.875,
+        "single-session-preference": 0.36666666666666664,
+        "single-session-user": 0.8428571428571429,
+        "temporal-reasoning": 0.5864661654135338
+      },
+      "mean_context_chars": 10233.024
+    },
+    "oracle_full": {
+      "n": 500,
+      "acc_azure_all": 0.748,
+      "acc_gemini_all": 0.75,
+      "acc_azure_answerable": 0.7340425531914894,
+      "acc_azure_abstention": 0.9666666666666667,
+      "judge_agreement": 0.95,
+      "by_type_azure": {
+        "knowledge-update": 0.9102564102564102,
+        "multi-session": 0.631578947368421,
+        "single-session-assistant": 0.9285714285714286,
+        "single-session-preference": 0.3,
+        "single-session-user": 0.9285714285714286,
+        "temporal-reasoning": 0.6992481203007519
+      },
+      "mean_context_chars": 21567.828
+    }
+  },
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 1.017868,
+    "total_calls": 4464,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 1159,
+        "tokens_in": 207660,
+        "tokens_out": 5795,
+        "usd": 0.317525
+      },
+      "vertex-flash": {
+        "calls": 3305,
+        "tokens_in": 6808946,
+        "tokens_out": 48620,
+        "usd": 0.700343
+      }
+    }
+  },
+  "elapsed_s": 1277.4532117843628
+}

@@ -45,6 +45,8 @@ REGISTRY = {
     "e_dyn2": ("multicard.experiments.e_dyn2", "run"),
     "e_dyn3": ("multicard.experiments.e_dyn3", "run"),
     "e_dyn4": ("multicard.experiments.e_dyn4", "run"),
+    "e5_longmemeval": ("multicard.experiments.e5_longmemeval", "run"),
+    "e5_longmemeval_qa": ("multicard.experiments.e5_longmemeval", "qa"),
 }
 
 

@@ -1,0 +1,1231 @@
+{
+  "diag": {
+    "sessions_mapped": 6000,
+    "topics": 79,
+    "unclustered_share": 0.273
+  },
+  "topics": [
+    {
+      "label": 23,
+      "size": 188,
+      "keywords": [
+        "music",
+        "like",
+        "artists",
+        "playlist",
+        "new",
+        "rock",
+        "musical",
+        "sound",
+        "often",
+        "tracks"
+      ]
+    },
+    {
+      "label": 69,
+      "size": 114,
+      "keywords": [
+        "trade",
+        "led",
+        "economic",
+        "significant",
+        "between",
+        "political",
+        "impact",
+        "religious",
+        "countries",
+        "during"
+      ]
+    },
+    {
+      "label": 71,
+      "size": 113,
+      "keywords": [
+        "marketing",
+        "business",
+        "help",
+        "content",
+        "like",
+        "data",
+        "customer",
+        "use",
+        "services",
+        "market"
+      ]
+    },
+    {
+      "label": 11,
+      "size": 112,
+      "keywords": [
+        "expenses",
+        "help",
+        "like",
+        "coupons",
+        "online",
+        "shopping",
+        "track",
+        "use",
+        "items",
+        "i'm"
+      ]
+    },
+    {
+      "label": 34,
+      "size": 111,
+      "keywords": [
+        "art",
+        "museum",
+        "city",
+        "history",
+        "like",
+        "museums",
+        "i'm",
+        "visit",
+        "trip",
+        "including"
+      ]
+    },
+    {
+      "label": 29,
+      "size": 94,
+      "keywords": [
+        "art",
+        "use",
+        "create",
+        "painting",
+        "techniques",
+        "artists",
+        "colors",
+        "color",
+        "like",
+        "paint"
+      ]
+    },
+    {
+      "label": 76,
+      "size": 92,
+      "keywords": [
+        "life",
+        "him",
+        "way",
+        "world",
+        "them",
+        "one",
+        "through",
+        "story",
+        "people",
+        "out"
+      ]
+    },
+    {
+      "label": 25,
+      "size": 90,
+      "keywords": [
+        "jewelry",
+        "vintage",
+        "like",
+        "antique",
+        "display",
+        "value",
+        "online",
+        "find",
+        "consider",
+        "including"
+      ]
+    },
+    {
+      "label": 19,
+      "size": 89,
+      "keywords": [
+        "battery",
+        "consider",
+        "like",
+        "use",
+        "features",
+        "great",
+        "i'm",
+        "new",
+        "help",
+        "power"
+      ]
+    },
+    {
+      "label": 41,
+      "size": 88,
+      "keywords": [
+        "trail",
+        "park",
+        "trails",
+        "views",
+        "i'm",
+        "national",
+        "scenic",
+        "bike",
+        "hike",
+        "route"
+      ]
+    },
+    {
+      "label": 64,
+      "size": 88,
+      "keywords": [
+        "novel",
+        "book",
+        "fiction",
+        "books",
+        "story",
+        "i'm",
+        "recommendations",
+        "historical",
+        "explores",
+        "during"
+      ]
+    },
+    {
+      "label": 43,
+      "size": 87,
+      "keywords": [
+        "data",
+        "learning",
+        "science",
+        "machine",
+        "analysis",
+        "including",
+        "python",
+        "university",
+        "courses",
+        "online"
+      ]
+    },
+    {
+      "label": 72,
+      "size": 86,
+      "keywords": [
+        "content",
+        "audience",
+        "engagement",
+        "use",
+        "instagram",
+        "social",
+        "help",
+        "hashtags",
+        "media",
+        "share"
+      ]
+    },
+    {
+      "label": 21,
+      "size": 72,
+      "keywords": [
+        "help",
+        "training",
+        "minutes",
+        "running",
+        "body",
+        "improve",
+        "practice",
+        "tips",
+        "exercises",
+        "make"
+      ]
+    },
+    {
+      "label": 45,
+      "size": 71,
+      "keywords": [
+        "rice",
+        "dishes",
+        "sauce",
+        "cuisine",
+        "like",
+        "pork",
+        "japanese",
+        "korean",
+        "chicken",
+        "dish"
+      ]
+    },
+    {
+      "label": 20,
+      "size": 70,
+      "keywords": [
+        "team",
+        "players",
+        "teams",
+        "league",
+        "sports",
+        "game",
+        "season",
+        "player",
+        "games",
+        "score"
+      ]
+    },
+    {
+      "label": 44,
+      "size": 69,
+      "keywords": [
+        "restaurant",
+        "like",
+        "i'm",
+        "food",
+        "restaurants",
+        "options",
+        "dishes",
+        "great",
+        "seafood",
+        "italian"
+      ]
+    },
+    {
+      "label": 50,
+      "size": 69,
+      "keywords": [
+        "name",
+        "data",
+        "new",
+        "file",
+        "image",
+        "update",
+        "set",
+        "need",
+        "use",
+        "system"
+      ]
+    },
+    {
+      "label": 22,
+      "size": 68,
+      "keywords": [
+        "yoga",
+        "back",
+        "exercises",
+        "body",
+        "help",
+        "seconds",
+        "practice",
+        "workout",
+        "exercise",
+        "classes"
+      ]
+    },
+    {
+      "label": 68,
+      "size": 68,
+      "keywords": [
+        "time",
+        "help",
+        "schedule",
+        "set",
+        "i'm",
+        "like",
+        "calendar",
+        "day",
+        "work",
+        "morning"
+      ]
+    },
+    {
+      "label": 38,
+      "size": 65,
+      "keywords": [
+        "news",
+        "political",
+        "media",
+        "social",
+        "government",
+        "party",
+        "issues",
+        "politics",
+        "new",
+        "content"
+      ]
+    },
+    {
+      "label": 5,
+      "size": 63,
+      "keywords": [
+        "skin",
+        "products",
+        "natural",
+        "help",
+        "skincare",
+        "hair",
+        "like",
+        "gentle",
+        "use",
+        "eco-friendly"
+      ]
+    },
+    {
+      "label": 7,
+      "size": 63,
+      "keywords": [
+        "help",
+        "pet",
+        "food",
+        "cat",
+        "toys",
+        "like",
+        "luna",
+        "consider",
+        "i'm",
+        "dog"
+      ]
+    },
+    {
+      "label": 8,
+      "size": 63,
+      "keywords": [
+        "room",
+        "table",
+        "space",
+        "create",
+        "like",
+        "add",
+        "light",
+        "consider",
+        "modern",
+        "living"
+      ]
+    },
+    {
+      "label": 3,
+      "size": 60,
+      "keywords": []
+    },
+    {
+      "label": 14,
+      "size": 58,
+      "keywords": [
+        "gift",
+        "like",
+        "personalized",
+        "customized",
+        "ideas",
+        "thoughtful",
+        "special",
+        "make",
+        "consider",
+        "i'm"
+      ]
+    },
+    {
+      "label": 59,
+      "size": 57,
+      "keywords": [
+        "help",
+        "like",
+        "spiritual",
+        "life",
+        "free",
+        "new",
+        "time",
+        "book",
+        "power",
+        "ideas"
+      ]
+    },
+    {
+      "label": 67,
+      "size": 57,
+      "keywords": [
+        "sleep",
+        "help",
+        "morning",
+        "time",
+        "routine",
+        "make",
+        "day",
+        "get",
+        "like",
+        "before"
+      ]
+    },
+    {
+      "label": 17,
+      "size": 56,
+      "keywords": [
+        "outfit",
+        "add",
+        "look",
+        "like",
+        "boots",
+        "denim",
+        "jeans",
+        "pair",
+        "style",
+        "color"
+      ]
+    },
+    {
+      "label": 73,
+      "size": 56,
+      "keywords": [
+        "energy",
+        "sustainable",
+        "waste",
+        "renewable",
+        "environmental",
+        "sustainability",
+        "reduce",
+        "development",
+        "materials",
+        "solar"
+      ]
+    },
+    {
+      "label": 4,
+      "size": 55,
+      "keywords": [
+        "plants",
+        "soil",
+        "water",
+        "plant",
+        "tank",
+        "fertilizer",
+        "like",
+        "help",
+        "fish",
+        "growth"
+      ]
+    },
+    {
+      "label": 46,
+      "size": 53,
+      "keywords": [
+        "security",
+        "information",
+        "data",
+        "entry",
+        "act",
+        "including",
+        "tax",
+        "training",
+        "ensure",
+        "response"
+      ]
+    },
+    {
+      "label": 6,
+      "size": 52,
+      "keywords": [
+        "game",
+        "games",
+        "players",
+        "great",
+        "new",
+        "world",
+        "i'm",
+        "like",
+        "combat",
+        "player"
+      ]
+    },
+    {
+      "label": 12,
+      "size": 52,
+      "keywords": [
+        "property",
+        "home",
+        "loan",
+        "help",
+        "consider",
+        "insurance",
+        "local",
+        "like",
+        "value",
+        "area"
+      ]
+    },
+    {
+      "label": 49,
+      "size": 52,
+      "keywords": [
+        "blockchain",
+        "new",
+        "technology",
+        "cryptocurrency",
+        "security",
+        "adani",
+        "dao",
+        "financial",
+        "use",
+        "company"
+      ]
+    },
+    {
+      "label": 2,
+      "size": 51,
+      "keywords": []
+    },
+    {
+      "label": 30,
+      "size": 51,
+      "keywords": [
+        "pack",
+        "bag",
+        "packing",
+        "items",
+        "like",
+        "trip",
+        "help",
+        "consider",
+        "i'm",
+        "water"
+      ]
+    },
+    {
+      "label": 55,
+      "size": 51,
+      "keywords": [
+        "skills",
+        "experience",
+        "work",
+        "data",
+        "business",
+        "management",
+        "help",
+        "job",
+        "team",
+        "provide"
+      ]
+    },
+    {
+      "label": 56,
+      "size": 51,
+      "keywords": [
+        "quinoa",
+        "chicken",
+        "add",
+        "like",
+        "veggies",
+        "vegetables",
+        "roasted",
+        "soup",
+        "ideas",
+        "carrots"
+      ]
+    },
+    {
+      "label": 61,
+      "size": 51,
+      "keywords": [
+        "communication",
+        "help",
+        "them",
+        "relationships",
+        "child",
+        "conflict",
+        "work",
+        "time",
+        "understand",
+        "practice"
+      ]
+    },
+    {
+      "label": 18,
+      "size": 50,
+      "keywords": [
+        "local",
+        "food",
+        "event",
+        "charity",
+        "community",
+        "events",
+        "help",
+        "volunteer",
+        "organizations",
+        "opportunities"
+      ]
+    },
+    {
+      "label": 63,
+      "size": 50,
+      "keywords": [
+        "help",
+        "meditation",
+        "stress",
+        "mindfulness",
+        "anxiety",
+        "time",
+        "focus",
+        "day",
+        "reduce",
+        "practice"
+      ]
+    },
+    {
+      "label": 75,
+      "size": 49,
+      "keywords": [
+        "species",
+        "climate",
+        "change",
+        "water",
+        "conservation",
+        "ecosystems",
+        "wildlife",
+        "impact",
+        "habitats",
+        "natural"
+      ]
+    },
+    {
+      "label": 35,
+      "size": 47,
+      "keywords": [
+        "festival",
+        "events",
+        "cultural",
+        "festivals",
+        "park",
+        "food",
+        "traditional",
+        "during",
+        "new",
+        "i'm"
+      ]
+    },
+    {
+      "label": 24,
+      "size": 45,
+      "keywords": [
+        "photography",
+        "photos",
+        "use",
+        "camera",
+        "help",
+        "tips",
+        "create",
+        "photo",
+        "like",
+        "i'm"
+      ]
+    },
+    {
+      "label": 1,
+      "size": 44,
+      "keywords": [
+        "acknowledged"
+      ]
+    },
+    {
+      "label": 70,
+      "size": 43,
+      "keywords": [
+        "women",
+        "gender",
+        "god",
+        "female",
+        "church",
+        "education",
+        "jesus",
+        "social",
+        "equality",
+        "while"
+      ]
+    },
+    {
+      "label": 78,
+      "size": 43,
+      "keywords": [
+        "writing",
+        "character",
+        "story",
+        "help",
+        "characters",
+        "write",
+        "world",
+        "like",
+        "make",
+        "grant"
+      ]
+    },
+    {
+      "label": 0,
+      "size": 42,
+      "keywords": []
+    },
+    {
+      "label": 36,
+      "size": 42,
+      "keywords": [
+        "tokyo",
+        "japan",
+        "travel",
+        "station",
+        "trip",
+        "i'm",
+        "take",
+        "japanese",
+        "around",
+        "shinjuku"
+      ]
+    },
+    {
+      "label": 40,
+      "size": 42,
+      "keywords": [
+        "flavor",
+        "juice",
+        "syrup",
+        "gin",
+        "lavender",
+        "add",
+        "cocktail",
+        "lime",
+        "sweet",
+        "like"
+      ]
+    },
+    {
+      "label": 51,
+      "size": 42,
+      "keywords": [
+        "sugar",
+        "flour",
+        "bread",
+        "flavor",
+        "cake",
+        "caramel",
+        "chocolate",
+        "cream",
+        "like",
+        "cookies"
+      ]
+    },
+    {
+      "label": 66,
+      "size": 42,
+      "keywords": [
+        "local",
+        "growth",
+        "economic",
+        "businesses",
+        "new",
+        "infrastructure",
+        "development",
+        "city",
+        "economy",
+        "significant"
+      ]
+    },
+    {
+      "label": 47,
+      "size": 41,
+      "keywords": [
+        "hotel",
+        "beach",
+        "like",
+        "trip",
+        "san",
+        "i'm",
+        "rooms",
+        "great",
+        "offers",
+        "options"
+      ]
+    },
+    {
+      "label": 32,
+      "size": 39,
+      "keywords": [
+        "language",
+        "learning",
+        "exchange",
+        "words",
+        "languages",
+        "practice",
+        "word",
+        "speakers",
+        "english",
+        "cultural"
+      ]
+    },
+    {
+      "label": 13,
+      "size": 38,
+      "keywords": [
+        "baby",
+        "create",
+        "party",
+        "like",
+        "gift",
+        "ideas",
+        "add",
+        "theme",
+        "set",
+        "use"
+      ]
+    },
+    {
+      "label": 27,
+      "size": 38,
+      "keywords": [
+        "film",
+        "films",
+        "movie",
+        "movies",
+        "similar",
+        "drama",
+        "explores",
+        "i'm",
+        "themes",
+        "recommendations"
+      ]
+    },
+    {
+      "label": 28,
+      "size": 37,
+      "keywords": [
+        "series",
+        "show",
+        "netflix",
+        "shows",
+        "similar",
+        "follows",
+        "drama",
+        "explores",
+        "i'm",
+        "new"
+      ]
+    },
+    {
+      "label": 39,
+      "size": 37,
+      "keywords": [
+        "performance",
+        "track",
+        "oil",
+        "tire",
+        "car",
+        "help",
+        "high-performance",
+        "fuel",
+        "driving",
+        "improve"
+      ]
+    },
+    {
+      "label": 48,
+      "size": 35,
+      "keywords": [
+        "beach",
+        "park",
+        "trip",
+        "offers",
+        "i'm",
+        "tour",
+        "like",
+        "hiking",
+        "national",
+        "activities"
+      ]
+    },
+    {
+      "label": 15,
+      "size": 34,
+      "keywords": [
+        "building",
+        "construction",
+        "contract",
+        "legal",
+        "project",
+        "work",
+        "time",
+        "builder",
+        "case",
+        "information"
+      ]
+    },
+    {
+      "label": 74,
+      "size": 34,
+      "keywords": [
+        "plastic",
+        "water",
+        "use",
+        "coastal",
+        "change",
+        "waste",
+        "ecosystems",
+        "soil",
+        "reduce",
+        "climate"
+      ]
+    },
+    {
+      "label": 33,
+      "size": 33,
+      "keywords": [
+        "diversity",
+        "language",
+        "groups",
+        "refugees",
+        "cultural",
+        "support",
+        "organizations",
+        "inclusion",
+        "diverse",
+        "provide"
+      ]
+    },
+    {
+      "label": 52,
+      "size": 33,
+      "keywords": [
+        "snack",
+        "butter",
+        "healthy",
+        "like",
+        "fruits",
+        "seeds",
+        "fruit",
+        "protein",
+        "nuts",
+        "cup"
+      ]
+    },
+    {
+      "label": 54,
+      "size": 33,
+      "keywords": [
+        "chicken",
+        "garlic",
+        "oil",
+        "sauce",
+        "until",
+        "serve",
+        "peppers",
+        "recipe",
+        "add",
+        "bell"
+      ]
+    },
+    {
+      "label": 57,
+      "size": 31,
+      "keywords": [
+        "breakfast",
+        "help",
+        "like",
+        "healthy",
+        "yogurt",
+        "eggs",
+        "seeds",
+        "nuts",
+        "add",
+        "avocado"
+      ]
+    },
+    {
+      "label": 60,
+      "size": 31,
+      "keywords": [
+        "management",
+        "tasks",
+        "tools",
+        "project",
+        "task",
+        "tool",
+        "help",
+        "like",
+        "app",
+        "time"
+      ]
+    },
+    {
+      "label": 62,
+      "size": 31,
+      "keywords": [
+        "design",
+        "brand",
+        "use",
+        "content",
+        "create",
+        "product",
+        "products",
+        "website",
+        "shopping",
+        "video"
+      ]
+    },
+    {
+      "label": 77,
+      "size": 30,
+      "keywords": [
+        "story",
+        "film",
+        "writing",
+        "create",
+        "style",
+        "use",
+        "audience",
+        "setting",
+        "characters",
+        "often"
+      ]
+    },
+    {
+      "label": 10,
+      "size": 29,
+      "keywords": [
+        "use",
+        "water",
+        "items",
+        "like",
+        "clean",
+        "cleaning",
+        "bathroom",
+        "sink",
+        "help",
+        "keep"
+      ]
+    },
+    {
+      "label": 16,
+      "size": 28,
+      "keywords": [
+        "shoes",
+        "comfortable",
+        "support",
+        "boots",
+        "fit",
+        "running",
+        "shoe",
+        "them",
+        "great",
+        "new"
+      ]
+    },
+    {
+      "label": 42,
+      "size": 28,
+      "keywords": [
+        "learning",
+        "medical",
+        "healthcare",
+        "pdf",
+        "data",
+        "research",
+        "https",
+        "chatbots",
+        "machine",
+        "ai-powered"
+      ]
+    },
+    {
+      "label": 9,
+      "size": 27,
+      "keywords": [
+        "closet",
+        "items",
+        "space",
+        "keep",
+        "storage",
+        "shoes",
+        "store",
+        "help",
+        "shelves",
+        "consider"
+      ]
+    },
+    {
+      "label": 26,
+      "size": 27,
+      "keywords": [
+        "cancer",
+        "gene",
+        "research",
+        "health",
+        "editing",
+        "diseases",
+        "researchers",
+        "new",
+        "used",
+        "genetic"
+      ]
+    },
+    {
+      "label": 31,
+      "size": 27,
+      "keywords": [
+        "traditional",
+        "cultural",
+        "culture",
+        "often",
+        "art",
+        "tamil",
+        "ancient",
+        "indian",
+        "during",
+        "used"
+      ]
+    },
+    {
+      "label": 53,
+      "size": 27,
+      "keywords": [
+        "sauce",
+        "pasta",
+        "cheese",
+        "garlic",
+        "italian",
+        "chicken",
+        "tomatoes",
+        "oil",
+        "spaghetti",
+        "add"
+      ]
+    },
+    {
+      "label": 37,
+      "size": 26,
+      "keywords": [
+        "virtual",
+        "technology",
+        "learning",
+        "reality",
+        "social",
+        "media",
+        "students",
+        "communication",
+        "used",
+        "language"
+      ]
+    },
+    {
+      "label": 58,
+      "size": 26,
+      "keywords": [
+        "healthcare",
+        "income",
+        "policies",
+        "inequality",
+        "access",
+        "health",
+        "social",
+        "system",
+        "impact",
+        "economic"
+      ]
+    },
+    {
+      "label": 65,
+      "size": 25,
+      "keywords": [
+        "tasks",
+        "help",
+        "time",
+        "week",
+        "important",
+        "need",
+        "task",
+        "schedule",
+        "prioritize",
+        "work"
+      ]
+    }
+  ]
+}

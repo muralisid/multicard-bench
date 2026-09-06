@@ -1,0 +1,105 @@
+{
+  "experiment": "e5_longmemeval_qa",
+  "reader": "gemini-2.5-flash",
+  "judges": [
+    "azure:gpt-5.4",
+    "gemini-2.5-flash"
+  ],
+  "top_k": 10,
+  "n_questions": 500,
+  "summary": {
+    "rrf_sentence": {
+      "n": 500,
+      "acc_azure_all": 0.686,
+      "acc_gemini_all": 0.684,
+      "acc_azure_answerable": 0.6659574468085107,
+      "acc_azure_abstention": 1.0,
+      "judge_agreement": 0.946,
+      "by_type_azure": {
+        "knowledge-update": 0.8974358974358975,
+        "multi-session": 0.5112781954887218,
+        "single-session-assistant": 0.8928571428571429,
+        "single-session-preference": 0.4,
+        "single-session-user": 0.8714285714285714,
+        "temporal-reasoning": 0.6165413533834586
+      },
+      "mean_context_chars": 9931.138
+    },
+    "rrf_turn_route": {
+      "n": 500,
+      "acc_azure_all": 0.69,
+      "acc_gemini_all": 0.684,
+      "acc_azure_answerable": 0.6702127659574468,
+      "acc_azure_abstention": 1.0,
+      "judge_agreement": 0.962,
+      "by_type_azure": {
+        "knowledge-update": 0.8717948717948718,
+        "multi-session": 0.5338345864661654,
+        "single-session-assistant": 0.8571428571428571,
+        "single-session-preference": 0.4,
+        "single-session-user": 0.8857142857142857,
+        "temporal-reasoning": 0.631578947368421
+      },
+      "mean_context_chars": 3734.406
+    }
+  },
+  "tag": "followup",
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0.315092,
+    "total_calls": 1907,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 498,
+        "tokens_in": 86536,
+        "tokens_out": 2490,
+        "usd": 0.13307
+      },
+      "vertex-flash": {
+        "calls": 1409,
+        "tokens_in": 1745705,
+        "tokens_out": 18628,
+        "usd": 0.182022
+      }
+    }
+  },
+  "elapsed_s": 721.5500340461731
+}
