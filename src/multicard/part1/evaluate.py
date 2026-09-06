@@ -17,6 +17,9 @@ standard prompt with the gold answer and the abstention prompt for null
 queries. JUDGE_AUDIT: both judges score the audit sample, pooled agreement at
 or above 0.90 makes the cheap model primary, else gpt-5.4. The second judge
 also scores every wrong answer of the head-to-head arms under both readers.
+Section 14 item 3: when the primary judge is the Reader B model, the cheap
+judge also scores every Reader B record, so the report can print a
+cross-family column beside the primary verdicts of the Reader B rows.
 
 Section 7 is the aggregation: every retrieval mean per arm, budget and type,
 answering accuracy per reader with the primary judge, the cost table.
@@ -43,6 +46,7 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -73,6 +77,7 @@ JUDGE_MAX_OUTPUT = 200           # e5 qa() judge limit; section 13 floor is 64
 MIN_OUTPUT_TOKENS = 64
 AGREEMENT_THRESHOLD = 0.90       # section 6
 JUDGE_STRONG_MODEL = "gpt-5.4"   # the Azure deployment name of the second judge
+READER_B_MODEL = JUDGE_STRONG_MODEL   # section 6: Reader B is the same Azure deployment as the second judge
 ALPHA = 0.05
 T7_MAX_NET_LOSSES = 3            # section 9: losses minus wins at most 3
 T5_TOLERANCE = 0.01              # section 9: the T5 branch tolerance
@@ -525,6 +530,37 @@ def second_judge_on_wrong(records: list[AnswerRecord], judge_fn, second: str,
     return n
 
 
+def cross_family_needed(primary: str | None, reader_b_model: str = READER_B_MODEL) -> bool:
+    """Section 14 item 3: the cross-family column exists when the primary
+    judge is the same model as Reader B (the audit made gpt-5.4 primary)."""
+    return primary is not None and primary == reader_b_model
+
+
+def cross_family_todo(records: list[AnswerRecord], judge: str, reader: str = READER_B) -> list[AnswerRecord]:
+    """The records of one reader that the named judge has not scored. A
+    record read back from answers.jsonl with the verdict is never in it."""
+    return [r for r in records if r.reader == reader and r.verdicts.get(judge) is None]
+
+
+def cross_family_judge(records: list[AnswerRecord], judge_fn, judge: str, reader: str = READER_B,
+                       workers: int = 1) -> int:
+    """Section 14 item 3: the named judge (the cheap model when gpt-5.4 is
+    primary) scores every Reader B record it has not scored yet, not only
+    the wrong ones, so the report can print accuracy under both judges and
+    their agreement for the Reader B rows. Runs after the audit, the
+    primary pass and the second judge on wrong answers, and changes none of
+    them: an existing verdict is kept, a missing record is False without a
+    call. Returns the count scored."""
+    todo = cross_family_todo(records, judge, reader)
+    if workers > 1 and todo:
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            list(ex.map(lambda r: judge_record(r, judge_fn, judge), todo))
+    else:
+        for r in todo:
+            judge_record(r, judge_fn, judge)
+    return len(todo)
+
+
 # ----------------------------------------------------------------------------
 # Answering accuracy (section 7)
 # ----------------------------------------------------------------------------
@@ -532,9 +568,29 @@ def _acc(rows: list[AnswerRecord]) -> float | None:
     return float(np.mean([bool(r.correct) for r in rows])) if rows else None
 
 
-def accuracy_cell(rows: list[AnswerRecord]) -> dict:
+def cross_family_cell(rows: list[AnswerRecord], judge: str) -> dict:
+    """Section 14 item 3, one Reader B cell: accuracy under the named judge
+    over the same records as the primary column, and the share of those
+    records where the two judges agree. A missing record is wrong under
+    both. complete is False until every record carries the verdict; the
+    report then prints the count scored instead of a number."""
+    scored = [r for r in rows if r.verdict(judge) is not None]
+    n_agree = sum(1 for r in scored if r.verdict(judge) == r.correct)
+    return {
+        "judge": judge,
+        "n": len(rows),
+        "n_scored": len(scored),
+        "complete": len(scored) == len(rows),
+        "acc_all": float(np.mean([bool(r.verdict(judge)) for r in scored])) if scored else None,
+        "n_agree": n_agree,
+        "agreement": (n_agree / len(scored)) if scored else None,
+    }
+
+
+def accuracy_cell(rows: list[AnswerRecord], cross_judge: str | None = None) -> dict:
     """One (reader, corpus, arm, budget) cell under the primary judge, with
-    the second judge as a separate column, never merged."""
+    the second judge as a separate column, never merged. cross_judge names
+    the judge of the section 14 item 3 column; None leaves it out."""
     ans = [r for r in rows if not r.abstention]
     abs_ = [r for r in rows if r.abstention]
     types = sorted({r.qtype for r in rows})
@@ -556,16 +612,21 @@ def accuracy_cell(rows: list[AnswerRecord]) -> dict:
             "acc_all": float(np.mean([bool(r.second_verdict()) for r in second_rows])) if second_rows else None,
             "n_disagree": sum(1 for r in second_rows if r.second_verdict() != r.correct),
         },
+        "cross_family": cross_family_cell(rows, cross_judge) if cross_judge else None,
     }
 
 
-def accuracy_tables(records: list[AnswerRecord]) -> dict:
-    """reader -> corpus -> arm -> budget (as text) -> accuracy_cell."""
+def accuracy_tables(records: list[AnswerRecord], cross_judge: str | None = None,
+                    cross_reader: str = READER_B) -> dict:
+    """reader -> corpus -> arm -> budget (as text) -> accuracy_cell. The
+    cells of cross_reader carry the section 14 item 3 column under
+    cross_judge when one is named; every other cell has it as None."""
     out: dict = {}
     keys = sorted({(r.reader, r.corpus, r.arm, r.budget) for r in records})
     for reader, corpus, arm, budget in keys:
         rows = [r for r in records if (r.reader, r.corpus, r.arm, r.budget) == (reader, corpus, arm, budget)]
-        out.setdefault(reader, {}).setdefault(corpus, {}).setdefault(arm, {})[str(budget)] = accuracy_cell(rows)
+        cell = accuracy_cell(rows, cross_judge if reader == cross_reader else None)
+        out.setdefault(reader, {}).setdefault(corpus, {}).setdefault(arm, {})[str(budget)] = cell
     return out
 
 
@@ -1770,11 +1831,17 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
     second post-graph-rag build (section 9): ran, root, first_build_usd; the
     T1 robustness row is added here when the arm is present. extra_summary
     carries per-arm counts from the retrieve stage into the retrieval tables
-    (arm_tables). The tests run on the primary budget.
+    (arm_tables). The tests run on the primary budget. The Reader B cells
+    of the answering tables carry the section 14 item 3 column when the
+    audit made the Reader B model primary.
     """
     refused = {a: set(v) for a, v in (refused or {}).items()}
     partial = dict(partial or {})
     models = models or (load_models() if MODELS_JSON.exists() else {})
+    audit_d = audit if isinstance(audit, dict) else audit.as_dict()
+    # Section 14 item 3: the primary judge is the Reader B model, so the
+    # other judge gives the Reader B rows their cross-family column.
+    cross_judge = audit_d.get("second") if cross_family_needed(audit_d.get("primary")) else None
     lme4k = {a: d.get(BUDGET_PRIMARY, {}) for a, d in lme.items()}
     mhr4k = {a: d.get(BUDGET_PRIMARY, {}) for a, d in mhr.items()}
     shares = ((setup or {}).get("stages") or {}).get("lme", {}).get("graph") or {}
@@ -1823,8 +1890,8 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
         "setup": setup,
         "arms": arms,
         "retrieval": arm_tables(lme, mhr, subsets, restrict, arm_populations, extra_summary),
-        "answering": accuracy_tables(records),
-        "judge_audit": audit if isinstance(audit, dict) else audit.as_dict(),
+        "answering": accuracy_tables(records, cross_judge),
+        "judge_audit": audit_d,
         "tests": tests,
         "predictions": tests.get("predictions") or [],
         "second_build": second,

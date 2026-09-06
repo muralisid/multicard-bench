@@ -5,7 +5,8 @@ arm at both budgets with its retrieval means, the by-type tables, the pass
 rule with each named quantity and the second-build row, every test with
 delta, CI, p, wins, ties, losses and the Holm-adjusted verdict, the T5
 branch, the section 10 predictions with their labels, the failure buckets
-per arm and type, the judge agreement and the primary judge decision, the cost
+per arm and type, the judge agreement and the primary judge decision, the
+cross-family column of the Reader B rows (section 14 item 3), the cost
 table with post-graph-rag's and Graphiti's metered spend and his build cost
 charged to the arms that read his tables, the disclosures of sections 12 and
 13, the published numbers of section 12, the subsets sha256 and the commit
@@ -488,13 +489,29 @@ def judges_section(m: dict) -> list[str]:
     return lines
 
 
+def cross_family_columns(c: dict) -> list[str]:
+    """The two section 14 item 3 columns of one Reader B row: accuracy
+    under the cheap judge over the same records, and the share of those
+    records where the two judges agree. A row the cheap judge has not
+    finished prints the count scored in place of both numbers."""
+    x = c.get("cross_family")
+    if not x:
+        return ["n/a", "n/a"]
+    if not x.get("complete"):
+        mark = f"incomplete ({fi(x.get('n_scored'))} of {fi(x.get('n'))})"
+        return [mark, mark]
+    return [f"{f3(x.get('acc_all'))} (n {fi(x.get('n'))})", f3(x.get("agreement"))]
+
+
 def answering_section(m: dict) -> list[str]:
     a = m.get("answering") or {}
     lines = ["## Answering accuracy, primary judge", "",
              "The second judge is a separate column and is never merged. A question with no output counts as wrong.", ""]
     for reader, per_corpus in a.items():
         for corpus, per_arm in per_corpus.items():
-            types = sorted({t for arm in per_arm.values() for cell in arm.values() for t in (cell.get("by_type") or {})})
+            cells = [c for arm in per_arm.values() for c in arm.values()]
+            types = sorted({t for c in cells for t in (c.get("by_type") or {})})
+            cross = [c["cross_family"] for c in cells if c.get("cross_family")]
             lines.append(f"### {reader}, {corpus}")
             lines.append("")
             rows = []
@@ -505,11 +522,20 @@ def answering_section(m: dict) -> list[str]:
                            f3(c.get("acc_answerable")), f3(c.get("acc_abstention"))]
                     row += [f3(((c.get("by_type") or {}).get(t) or {}).get("acc")) for t in types]
                     row += [f"{f3(sj.get('acc_all'))} (n {fi(sj.get('n'))}, disagree {fi(sj.get('n_disagree'))})"]
+                    if cross:
+                        row += cross_family_columns(c)
                     rows.append(row)
+            header = (["arm", "budget", "n", "missing", "all", "answerable", "abstention or null"] + types
+                      + ["second judge"] + (["cheap judge", "agreement"] if cross else []))
             for arm in absent_arms(m, corpus):
-                rows.append([arm] + ["absent"] * (6 + len(types) + 1))
-            lines += table(["arm", "budget", "n", "missing", "all", "answerable", "abstention or null"] + types
-                           + ["second judge"], rows)
+                rows.append([arm] + ["absent"] * (len(header) - 1))
+            lines += table(header, rows)
+            if cross:
+                primary = next((c.get("primary_judge") for c in cells if c.get("primary_judge")), None)
+                lines.append(f"Cheap judge column: {cross[0].get('judge') or 'n/a'} scored every Reader B record, "
+                             f"not only the wrong ones, because the primary judge {primary or 'n/a'} is the same "
+                             f"model as Reader B (design section 14 item 3).")
+                lines.append("")
     if not a:
         lines.append("No answering data in the metrics file.")
         lines.append("")

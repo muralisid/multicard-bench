@@ -3,7 +3,8 @@
 No model is called: judges are fake callables, rendered contexts are built
 from RenderedUnits directly, and scores are QuestionScore objects made by
 hand. Covered: the reader and judge prompts, the record format and the
-missing-output rule, the judge audit and the second-judge flow, the failure
+missing-output rule, the judge audit and the second-judge flow, the
+cross-family pass and column of section 14 item 3, the failure
 buckets in the stated order, the exact McNemar test against a hand
 computation, Holm within a family, the D1, D2, T5 and T7 readings, the pass
 rule, the refused-id rule, the metrics payload, and the report rendering with
@@ -211,6 +212,110 @@ def test_judge_audit_decides_primary_and_second_judge_scores_wrong_answers():
     assert c["n"] == 8 and c["acc_all"] == pytest.approx(7 / 8) and c["primary_judge"] == "cheap"
     assert c["second_judge"]["n"] == 5 and c["second_judge"]["n_disagree"] == 1
     assert "8000" in cells["reader_a"][E.LONGMEMEVAL]["S5_primary"]
+
+
+def cross_records():
+    """Reader A and Reader B answers under a gpt-5.4 primary (section 14 item 3).
+    Two Reader B answers already carry the cheap verdict, as the audit or the
+    second judge on wrong answers leaves them; one Reader B record is missing."""
+    cheap, strong = "gemini-2.5-flash-lite", "gpt-5.4"
+    recs = [record(f"q{i}", "S5_primary", "reader_a", verdicts={strong: i % 2 == 0}) for i in range(6)]
+    for i in range(6):
+        v = {strong: i % 2 == 0}
+        if i < 2:
+            v[cheap] = True
+        recs.append(record(f"q{i}", "S5_primary", "reader_b", verdicts=v))
+    recs.append(E.missing_answer(qid="q9", corpus=E.LONGMEMEVAL, arm="S5_primary", reader="reader_b", budget=4000,
+                                 qtype="multi-session", abstention=False, question="Q", gold="G", judges=(strong,)))
+    E.set_primary(recs, strong)
+    return cheap, strong, recs
+
+
+def test_cross_family_pass_scores_only_reader_b_records_without_the_cheap_verdict():
+    cheap, strong, recs = cross_records()
+    # the column exists when the primary judge is the Reader B model
+    assert E.READER_B_MODEL == E.JUDGE_STRONG_MODEL == "gpt-5.4"
+    assert E.cross_family_needed(strong) and not E.cross_family_needed(cheap) and not E.cross_family_needed(None)
+    todo = E.cross_family_todo(recs, cheap)
+    assert [r.qid for r in todo] == ["q2", "q3", "q4", "q5", "q9"] and all(r.reader == "reader_b" for r in todo)
+    judge = FakeJudge(lambda p: False)
+    n = E.cross_family_judge(recs, judge, cheap)
+    # five records scored, four calls: the missing record is False without a call
+    assert n == 5 and judge.calls == 4
+    reader_b = {r.qid: r for r in recs if r.reader == "reader_b"}
+    assert all(r.verdicts.get(cheap) is not None for r in reader_b.values())
+    assert reader_b["q9"].verdicts[cheap] is False and reader_b["q2"].verdicts[cheap] is False
+    # Reader A records are not touched
+    assert all(cheap not in r.verdicts for r in recs if r.reader == "reader_a")
+    # the primary verdicts are not touched
+    assert [reader_b[f"q{i}"].verdicts[strong] for i in range(6)] == [True, False] * 3
+    assert all(r.primary_judge == strong for r in recs)
+    # a second call finds nothing to score
+    assert E.cross_family_judge(recs, judge, cheap) == 0 and judge.calls == 4
+    assert E.cross_family_todo(recs, cheap) == []
+
+
+def test_cross_family_pass_keeps_existing_verdicts_and_resumes_from_disk(tmp_path):
+    cheap, strong, recs = cross_records()
+    judge = FakeJudge(lambda p: False)          # would call every answer wrong
+    assert E.cross_family_judge(recs, judge, cheap, workers=2) == 5 and judge.calls == 4
+    reader_b = {r.qid: r for r in recs if r.reader == "reader_b"}
+    # the two verdicts that were already there are kept, not overwritten
+    assert reader_b["q0"].verdicts[cheap] is True and reader_b["q1"].verdicts[cheap] is True
+    assert reader_b["q3"].verdicts[cheap] is False
+    # read back from answers.jsonl, the pass has nothing left to do
+    path = tmp_path / "answers.jsonl"
+    E.write_records(path, recs)
+    back = E.read_records(path)
+    again = FakeJudge(lambda p: True)
+    assert E.cross_family_judge(back, again, cheap, workers=2) == 0 and again.calls == 0
+    assert [r.to_dict() for r in back] == [r.to_dict() for r in recs]
+    # the accuracy cell: the cheap column over the same seven records, agreement with the primary.
+    # cheap: q0, q1 True, the rest False; primary: q0, q2, q4 True; the missing q9 is wrong under both
+    cells = E.accuracy_tables(recs, cross_judge=cheap)
+    x = cells["reader_b"][E.LONGMEMEVAL]["S5_primary"]["4000"]["cross_family"]
+    assert (x["judge"], x["n"], x["n_scored"], x["complete"], x["n_agree"]) == (cheap, 7, 7, True, 4)
+    assert x["acc_all"] == pytest.approx(2 / 7) and x["agreement"] == pytest.approx(4 / 7)
+    assert cells["reader_a"][E.LONGMEMEVAL]["S5_primary"]["4000"]["cross_family"] is None
+    # no judge named: no column anywhere
+    assert E.accuracy_tables(recs)["reader_b"][E.LONGMEMEVAL]["S5_primary"]["4000"]["cross_family"] is None
+
+
+def test_report_prints_the_cross_family_columns_for_the_reader_b_rows():
+    cheap, strong = "gemini-2.5-flash-lite", "gpt-5.4"
+    subsets, lme, mhr, records, payload = synthetic_run(primary_strong=True, incomplete_cross_arm="chandan_live")
+    a = payload["answering"]
+    # build_metrics reads the judge off the audit: gpt-5.4 primary makes the cheap model the column
+    assert payload["judge_audit"]["primary"] == strong
+    assert a["reader_a"][E.LONGMEMEVAL]["S5_primary"]["4000"]["cross_family"] is None
+    x = a["reader_b"][E.LONGMEMEVAL]["S5_primary"]["4000"]["cross_family"]
+    n_lme = len(subsets["ORDER"][E.LONGMEMEVAL])
+    assert x["judge"] == cheap and x["complete"] and x["n"] == x["n_scored"] == n_lme
+    rows = [r for r in records if (r.reader, r.arm, r.corpus) == ("reader_b", "S5_primary", E.LONGMEMEVAL)]
+    assert x["acc_all"] == pytest.approx(np.mean([r.verdicts[cheap] for r in rows]))
+    assert x["agreement"] == pytest.approx(np.mean([r.verdicts[cheap] == r.verdicts[strong] for r in rows]))
+    assert a["reader_b"][E.MULTIHOPRAG]["S5_primary"]["4000"]["cross_family"]["complete"]
+    y = a["reader_b"][E.LONGMEMEVAL]["chandan_live"]["4000"]["cross_family"]
+    assert not y["complete"] and 0 < y["n_scored"] < y["n"] == n_lme
+    text = RP.render_report(payload)
+    assert not BANNED.search(text)
+    prose = re.sub(r"```.*?```", "", text, flags=re.S)
+    assert "None" not in prose and "{" not in prose
+    block = text.split("## Answering accuracy")[1].split("## Cost and time")[0]
+    ra = block.split("### reader_a, longmemeval")[1].split("### ")[0]
+    rb = block.split("### reader_b, longmemeval")[1].split("### ")[0]
+    assert "cheap judge" not in ra and "agreement" not in ra
+    assert "| second judge | cheap judge | agreement |" in rb
+    s5 = next(l for l in rb.splitlines() if l.startswith("| S5_primary |"))
+    assert s5.endswith(f"| {x['acc_all']:.3f} (n {n_lme}) | {x['agreement']:.3f} |")
+    ch = next(l for l in rb.splitlines() if l.startswith("| chandan_live |"))
+    assert ch.endswith(f"| incomplete ({y['n_scored']} of {n_lme}) | incomplete ({y['n_scored']} of {n_lme}) |")
+    assert f"Cheap judge column: {cheap} scored every Reader B record" in rb
+    assert f"the primary judge {strong} is the same model as Reader B (design section 14 item 3)" in rb
+    assert "Primary judge decided before any test: **gpt-5.4**" in text
+    # the default run (cheap primary) has no such column
+    _, _, _, _, plain = synthetic_run()
+    assert "cheap judge" not in RP.render_report(plain)
 
 
 # ----------------------------------------------------------------------------
@@ -476,7 +581,11 @@ def test_pass_rule_is_one_boolean_over_named_quantities():
 # ----------------------------------------------------------------------------
 # End to end: synthetic scores, records, tests, payload and report
 # ----------------------------------------------------------------------------
-def synthetic_run():
+def synthetic_run(primary_strong=False, incomplete_cross_arm=None):
+    """primary_strong mimics the section 14 item 3 state: the audit made gpt-5.4
+    primary, the same model as Reader B. incomplete_cross_arm names a Reader B
+    arm whose LongMemEval records carry the cheap verdict on the wrong answers
+    only, the state before the cross-family pass has run."""
     subsets = synthetic_subsets()
     rng = np.random.default_rng(13)
     answerable = E.answerable_ids(subsets)
@@ -524,9 +633,15 @@ def synthetic_run():
     records.append(E.missing_answer(qid=lme_all[0], corpus=E.LONGMEMEVAL, arm="S4_static", reader="reader_a",
                                     budget=4000, qtype=types[E.LONGMEMEVAL][lme_all[0]], abstention=False,
                                     question="Q", gold="G", judges=(cheap, strong)))
-    E.set_primary(records, cheap)
-    audit = E.JudgeAudit(n=140, n_agree=130, agreement=130 / 140, threshold=0.9, cheap=cheap, strong=strong,
-                         primary=cheap, second=strong,
+    primary, second = (strong, cheap) if primary_strong else (cheap, strong)
+    if incomplete_cross_arm:
+        for r in records:
+            if (r.reader, r.arm, r.corpus) == ("reader_b", incomplete_cross_arm, E.LONGMEMEVAL) and r.verdicts.get(strong):
+                r.verdicts.pop(cheap, None)
+    E.set_primary(records, primary)
+    n_agree = 118 if primary_strong else 130
+    audit = E.JudgeAudit(n=140, n_agree=n_agree, agreement=n_agree / 140, threshold=0.9, cheap=cheap, strong=strong,
+                         primary=primary, second=second,
                          cells=[{"arm": "S5_primary", "corpus": E.LONGMEMEVAL, "reader": "reader_a", "n": 50,
                                  "n_agree": 47, "agreement": 0.94}])
     buckets = [E.assign_bucket(lme_case(arm="chandan_live")), E.assign_bucket(lme_case(verdict_second=True))]

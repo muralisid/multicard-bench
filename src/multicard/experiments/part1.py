@@ -17,7 +17,9 @@ keyword arguments (limit, corpus, arms, budget, tag, max_usd) as e5 has:
                   Outputs under results/part1/<corpus>/retrieve/.
   part1_qa        section 6: Reader A on every arm, Reader B on its arms at
                   4,000, the judge audit, the primary judge, the second
-                  judge on the wrong answers of the head-to-head arms.
+                  judge on the wrong answers of the head-to-head arms, and
+                  (section 14 item 3) the cheap judge on every Reader B
+                  record when the primary judge is the Reader B model.
                   Outputs under results/part1/<corpus>/qa/.
   part1_report    sections 7 to 9: the tests, the failure buckets, the pass
                   rule, metrics.json and REPORT.md under results/part1/.
@@ -930,7 +932,11 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
     primary judge on the pooled sample. population "all" answers every
     retrieved question instead of the design populations (the sample does).
     Reader A answers at every budget given (4,000 and 8,000 by default,
-    section 7 reports both); Reader B at 4,000 only (section 6)."""
+    section 7 reports both); Reader B at 4,000 only (section 6). After the
+    section 6 judging, when the primary judge is the Reader B model, the
+    cheap judge scores every Reader B record that lacks its verdict, for the
+    cross-family column of section 14 item 3. Every step reads answers.jsonl
+    back first, so a rerun scores only what is missing."""
     set_seed(seed)
     kinds = [LME, MHRAG] if corpus == "all" else [corpus_kind(corpus)[0]]
     kinds = [k for k in kinds if _retrieve_meta(k, tag) is not None]
@@ -1074,6 +1080,7 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
     # Judging runs under the whole stage cap (the answering pool kept the reserve).
     meter.max_usd = max_usd
     judging_stopped: str | None = None
+    n_cross = 0
     _log(f"judging {len(all_records)} records: audit first")
     try:
         audit = E.run_judge_audit(all_records, subsets, cheap_fn, strong_fn, cheap_name, strong_name)
@@ -1086,6 +1093,14 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
             list(ex.map(lambda r: E.judge_record(r, primary_fn, audit.primary), todo))
         n_second = E.second_judge_on_wrong(all_records, second_fn, audit.second)
         _log(f"  primary judged {len(todo)}, second judge on wrong answers {n_second}, USD {meter.total_usd():.3f}")
+        # Section 14 item 3: the primary judge is the Reader B model, so the
+        # cheap judge scores every Reader B record that lacks its verdict. An
+        # additional pass after every section 6 step; it changes none of them
+        # and never overwrites a verdict.
+        if E.cross_family_needed(audit.primary):
+            n_cross = E.cross_family_judge(all_records, second_fn, audit.second, workers=max(1, workers))
+            _log(f"  cross-family column: {audit.second} scored {n_cross} Reader B records, "
+                 f"USD {meter.total_usd():.3f}")
     except BudgetExceeded as e:
         judging_stopped = str(e)
         _log(f"  judging stopped at the cap: {judging_stopped}; the verdicts made so far are kept")
@@ -1093,15 +1108,17 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
         E.set_primary(all_records, audit.primary)
         for kind in kinds:
             partial.setdefault(kind, []).append("judging")
+    cross_judge = audit.second if E.cross_family_needed(audit.primary) else None
 
     result = {"design": DESIGN, "tag": tag, "sample": sample, "budgets": budgets, "readers": reader_names,
               "judge_audit": audit.as_dict(), "primary_judge": audit.primary, "second_judge": audit.second,
+              "cross_family_judge": cross_judge, "n_cross_family_scored": n_cross,
               "cost": meter.as_dict(), "max_usd": max_usd, "judging_reserve": JUDGING_RESERVE,
               "answering_cap_usd": max_usd * (1.0 - JUDGING_RESERVE), "judging_stopped": judging_stopped,
               "partial": partial, "corpora": {}}
     for kind, d in per_kind.items():
         E.write_records(d["out"] / "answers.jsonl", d["records"])
-        acc = E.accuracy_tables(d["records"])
+        acc = E.accuracy_tables(d["records"], cross_judge)
         payload = {**{k: v for k, v in result.items() if k != "corpora"}, "corpus": kind, "n_records": len(d["records"]),
                    "n_jobs": d["n_jobs"], "arms": d["arms"], "populations": d["populations"], "stopped": d["stopped"],
                    "answering": acc, "elapsed_s": time.time() - t_start}
@@ -1110,7 +1127,10 @@ def part1_qa(corpus: str = "all", limit: int = 0, arms: str = "", budget: str = 
         for reader, per_corpus in acc.items():
             for arm, per_budget in per_corpus.get(NAMES[kind], {}).items():
                 for b, cell in per_budget.items():
-                    _log(f"  {kind} {reader} {arm:22s} {b}: all {cell['acc_all']}  n {cell['n']}")
+                    x = cell.get("cross_family") or {}
+                    extra = (f"  cheap judge {x['acc_all']} agreement {x['agreement']} "
+                             f"({x['n_scored']} of {x['n']})" if x else "")
+                    _log(f"  {kind} {reader} {arm:22s} {b}: all {cell['acc_all']}  n {cell['n']}{extra}")
     _write_json(out_root(tag) / "qa_audit.json", {"judge_audit": audit.as_dict(), "primary_judge": audit.primary,
                                                   "second_judge": audit.second, "cost": meter.as_dict()})
     _log(f"qa done in {(time.time() - t_start) / 60:.1f} min, USD {meter.total_usd():.4f}")
