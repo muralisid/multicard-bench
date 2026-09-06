@@ -1,0 +1,64 @@
+{
+  "chat_model": "gemini-2.5-flash-lite",
+  "chandan_model": "gemini-3.6-flash",
+  "embed_model": "gemini-embedding-001",
+  "embed_dim": 3072,
+  "prices": {
+    "gemini-3.6-flash": {"in": 0.75, "out": 3.75},
+    "gemini-3.5-flash": {"in": 1.50, "out": 9.00},
+    "gemini-3.5-flash-lite": {"in": 0.30, "out": 2.50},
+    "gemini-2.5-flash": {"in": 0.30, "out": 2.50},
+    "gemini-2.5-flash-lite": {"in": 0.10, "out": 0.40},
+    "gemini-2.5-pro": {"in": 1.25, "out": 10.00},
+    "gemini-embedding-001": {"in": 0.15, "out": 0.0},
+    "text-embedding-005": {"in": 0.025, "out": 0.0}
+  },
+  "price_units": "USD per 1 million tokens, standard tier (not Priority, not Flex/Batch), text input and text output, as printed on https://cloud.google.com/vertex-ai/generative-ai/pricing. Embedding prices are per 1 million of the page's '1,000 count' unit, online requests.",
+  "price_page_date": "fetched 2026-09-06; the page shows no last-updated date; HTTP Last-Modified header: not sent by server; dated statements on the page: introductory pricing for Gemini 3.6 Flash runs through December 31, 2026 and standard pricing of 1.50 in and 7.50 out applies from January 1, 2027; non-global endpoint pricing for Gemini 3 and later families applies from July 1, 2026",
+  "price_notes": {
+    "gemini-3.6-flash": "Global endpoint price. Introductory through 2026-12-31. From 2027-01-01: 1.50 in, 7.50 out. Non-global endpoint: 0.825 in, 4.125 out.",
+    "gemini-3.5-flash": "Global endpoint price. Non-global: 1.65 in, 9.90 out.",
+    "gemini-3.5-flash-lite": "Global endpoint price. Non-global: 0.33 in, 2.75 out.",
+    "gemini-2.5-pro": "Prompts up to 200K input tokens. Above 200K: 2.50 in, 15.00 out.",
+    "gemini-2.5-flash": "Text, image, video input. Audio input is 1.00.",
+    "gemini-2.5-flash-lite": "Text, image, video input. Audio input is 0.30.",
+    "gemini-embedding-001": "Page row 'Gemini Embedding': 0.00015 USD per 1,000 count online, 0.00012 batch, output no charge.",
+    "text-embedding-005": "Page row 'Embeddings for Text (Excluding Gemini Embedding)': 0.000025 USD per 1,000 count online, 0.00002 batch, output no charge. The page prints 'count' as the unit; it does not say tokens or characters."
+  },
+  "working_models": [
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-pro",
+    "gemini-embedding-001",
+    "text-embedding-005"
+  ],
+  "failed_models": [
+    "gemini-3.6-flash-lite",
+    "gemini-3-flash",
+    "gemini-3-flash-lite"
+  ],
+  "locations": {
+    "gemini-3.6-flash": "global",
+    "gemini-3.5-flash": "global",
+    "gemini-3.5-flash-lite": "global",
+    "gemini-2.5-flash": "us-central1",
+    "gemini-2.5-flash-lite": "us-central1",
+    "gemini-2.5-pro": "us-central1",
+    "gemini-embedding-001": "us-central1",
+    "text-embedding-005": "us-central1"
+  },
+  "json_schema_ok": [
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite"
+  ],
+  "vertex_project": "scout7ai",
+  "proxy_base_url": "http://127.0.0.1:4000/v1",
+  "proxy_key_file": "/Users/muralisid/github_other/part1-tools/env/.proxy_key",
+  "probe_date": "2026-09-06"
+}

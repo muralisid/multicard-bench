@@ -26,6 +26,10 @@ dependencies = [
     "bertopic>=0.16,<0.18",
     "llvmlite==0.43.0",
     "numba==0.60.0",
+    "spacy>=3.8.16",
+    "python-igraph>=1.0.0",
+    "leidenalg>=0.12.0",
+    "en-core-web-sm",
 ]
 
 [project.scripts]
@@ -40,6 +44,9 @@ packages = ["src/multicard"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
 
 [dependency-groups]
 dev = [
