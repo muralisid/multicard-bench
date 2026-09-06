@@ -705,8 +705,13 @@ run or any test in section 9 was computed.
    is dropped by the section 5 rule and T2 is recorded as not run; the owner
    may decide otherwise later. Neither reading changed any other rule.
 3. 2026-09-06, the judge audit: pooled agreement between the cheap judge and
-   gpt-5.4 was 0.848 on 250 records, so gpt-5.4 became the primary judge by
-   the section 6 rule. Section 6 did not foresee that the primary judge would
+   gpt-5.4 was 0.848 on the first 250 audit records and 0.800 on the 450
+   records of every LongMemEval cell (the decision was the same at both
+   readings), so gpt-5.4 became the primary judge by the section 6 rule. The
+   decision was made on 450 pooled verdicts, not the "about 1,400" section 6
+   expected, because only the LongMemEval cells had answers at that point;
+   the MultiHop-RAG cells were judged under the decided primary afterwards.
+   Section 6 did not foresee that the primary judge would
    then be the same model as Reader B. No rule changes; the report adds a
    cross-family column for the Reader B rows (the cheap judge on every
    Reader B record, not only the wrong ones) beside the primary verdicts, so
