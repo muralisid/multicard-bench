@@ -704,3 +704,10 @@ run or any test in section 9 was computed.
    because neither evidence session was among the first 20 by date. The arm
    is dropped by the section 5 rule and T2 is recorded as not run; the owner
    may decide otherwise later. Neither reading changed any other rule.
+3. 2026-09-06, the judge audit: pooled agreement between the cheap judge and
+   gpt-5.4 was 0.848 on 250 records, so gpt-5.4 became the primary judge by
+   the section 6 rule. Section 6 did not foresee that the primary judge would
+   then be the same model as Reader B. No rule changes; the report adds a
+   cross-family column for the Reader B rows (the cheap judge on every
+   Reader B record, not only the wrong ones) beside the primary verdicts, so
+   the reader can see whether same-model judging moved those rows.
