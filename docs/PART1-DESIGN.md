@@ -679,3 +679,28 @@ the pilot fact to a dropped self-edge under per-session text episodes; that
 is why the ingestion unit is decided by the pilot (section 5) and not
 assumed. The proxy's thinking-capable models return no text at small output
 limits; every call in Part 1 sets an output limit of at least 64 tokens.
+
+## 14. Changes made after a number was read
+
+Listed here so the reader can weigh them. Each was made before any answering
+run or any test in section 9 was computed.
+
+1. 2026-09-06, after the first-pass LongMemEval retrieval on the arms that
+   use none of post-graph-rag's tables (ours_cheap and its no-rule rows,
+   S5_noPGR). The fused arms rendered 3,602 of 4,000 tokens and 4,369 of
+   8,000 on average: the fused list was cut at the logged top 100 and the
+   speaker rule then removed the assistant turns from it, so the rendering
+   rule's "until the budget B is full" was not met. Change: the fused arms
+   and S2_lazy fill the remaining budget from the fused list beyond the top
+   100 (depth 400, after the speaker rule), after the lazy expansion units.
+   The logged candidate list for bucket 2 stays the fused top 100. ours_cheap
+   is untouched (it is e5's function and fills 4,000). The numbers read
+   before the change, JointRecall@4k on 470 questions: ours_cheap 0.938,
+   S5_noPGR 0.940, ours_cheap without the rule 0.800, sentence fusion without
+   the rule 0.823; at 8,000: 0.957, 0.949, 0.868, 0.879. The report prints
+   the pass after the change beside these.
+2. 2026-09-06, the Graphiti pilot: no ingestion variant fitted the USD 60 cap
+   (projections 69 to 174) and none could be measured for evidence presence
+   because neither evidence session was among the first 20 by date. The arm
+   is dropped by the section 5 rule and T2 is recorded as not run; the owner
+   may decide otherwise later. Neither reading changed any other rule.

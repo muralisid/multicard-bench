@@ -149,3 +149,32 @@ The two smoke episodes and their entities were deleted with `smoke.py --cleanup-
 - /Users/muralisid/github_other/part1-tools/env/neo4j.log, neo4j.pid, neo4j-install.log, graphiti-install.log
 - /opt/homebrew/Cellar/neo4j/2026.07.1/libexec/conf/neo4j.conf (one line appended; three more lines set on 2026-09-06, see infra.md)
 - /Users/muralisid/github_other/part1-tools/neo4j/start.sh and stop.sh (added 2026-09-06)
+
+## Pilot
+
+Date: 2026-09-06. Question gpt4_2f584639 (temporal-reasoning): Which gift did I buy first, the necklace for my sister or the photo album for my mom? Gold answer: the photo album for my mom. Sessions: the first 20 haystack sessions in session-date order (18 ingested, 2 empty and skipped). Evidence sessions in the pilot set: 0 of 2.
+
+Chat model gemini-2.5-flash-lite through the proxy, json_schema output, temperature 1 and max_tokens 16384 (library defaults). Embeddings gemini-embedding-001 at 3072 dims. graphiti-core 0.30.1. Previous episodes per prompt: library default: add_episode retrieves the last 10 (RELEVANT_SCHEMA_LIMIT) episodes of the same source type in the group with valid_at at or before reference_time. reference_time is the session date at 00:00 UTC; the time of day in the raw file is dropped. Job tag graphiti-pilot-official.
+
+Variants: text_session is one text episode per session with the turns as "role: text" lines; message_session is one message episode per session with the same rendering; per_turn is one message episode per turn, Zep's own granularity. The first two are deviations from Zep's ingestion.
+
+| Variant | Sessions | Episodes | Chars | LLM calls | Tokens in | Tokens out | Embed calls | Embed tokens | Wall s | RPM mean | RPM peak | USD | Edges | Nodes | Evidence presence | Projected USD (150) | Fits 60 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| text_session | 18 | 18 | 190,713 | 601 | 1,318,635 | 119,400 | 625 | 19,551 | 682.0 | 107.8 | 258 | 0.1826 | 278 | 305 | 0/2 (0.00) | 70.98 | no |
+| message_session | 18 | 18 | 190,713 | 601 | 1,475,708 | 66,374 | 623 | 17,712 | 583.5 | 125.7 | 328 | 0.1768 | 277 | 223 | 0/2 (0.00) | 68.73 | no |
+| per_turn | 18 | 201 | 190,530 | 1,909 | 3,366,823 | 254,718 | 2,582 | 57,509 | 3,106.6 | 86.7 | 197 | 0.4472 | 932 | 497 | 0/2 (0.00) | 174.05 | no |
+
+Projection: USD per rendered character measured in the pilot, times the rendered characters of every haystack slot of GRAPHITI_150 read from subsets.json at pilot time: 7,581 slots (7,032 unique sessions) over 150 questions, 74,153,419 characters, 9,781.5 per slot. Wall time projected the same way, one group at a time: text_session 73.7 h; message_session 63.0 h; per_turn 335.9 h.
+
+Evidence presence per marked evidence turn (cited: an exported edge cites an episode of the turn's session; answer: some fact text contains the normalised gold answer):
+
+| Variant | Evidence turn | Session in pilot | Cited | Answer in a fact | Present |
+|---|---|---|---|---|---|
+| text_session | answer_11a8f823_1#0 | no | no | no | no |
+| text_session | answer_11a8f823_2#2 | no | no | no | no |
+| message_session | answer_11a8f823_1#0 | no | no | no | no |
+| message_session | answer_11a8f823_2#2 | no | no | no | no |
+| per_turn | answer_11a8f823_1#0 | no | no | no | no |
+| per_turn | answer_11a8f823_2#2 | no | no | no | no |
+
+Choice: none. no variant's projection fits USD 60; Graphiti is dropped unless the owner decides otherwise.

@@ -58,6 +58,11 @@ KINDS = (LME, MHRAG)
 
 CHANNEL_DEPTH = 100      # design gap: each channel contributes its top 100 owner units (e5 cuts at 100)
 CANDIDATES = 100         # section 8: the candidate list is the fused top 100
+FILL_DEPTH = 400         # the fused list beyond the logged top 100, used only to fill the budget
+                         # (section 5 rendering rule, "until the budget B is full"). Added
+                         # 2026-09-06 after the first-pass retrieval numbers showed the fused
+                         # arms rendering 3,602 of 4,000 tokens once the speaker rule had
+                         # emptied the top 100; disclosed in the design, section 14.
 E5_TOP = 100             # e5 cuts each list at 100 before rrf
 TOP_GROUPS = 3           # design gap: "the top topics" and "the top communities" are the best three with members in the set
 R3_MIN_CONFIDENCE = 0.7  # section 5: R3 keeps proposals with confidence at or above 0.7
@@ -838,7 +843,7 @@ class QueryRun:
 # Lazy expansion (section 5) and the S2_lazy pattern
 # ----------------------------------------------------------------------------
 def expand(run: QueryRun, kept: list[str], depth: int, budget: int, counter=None,
-           rule: bool = True) -> tuple[list[str], RenderedContext]:
+           rule: bool = True, tail: list[str] | None = None) -> tuple[list[str], RenderedContext]:
     """The top `depth` sessions or documents of the ranking have their
     remaining units re-scored by dense similarity (the owner vector) and
     appended until the budget is full, through the render module. Returns
@@ -846,8 +851,11 @@ def expand(run: QueryRun, kept: list[str], depth: int, budget: int, counter=None
     ranking before expansion. design gap: "dense similarity" is the cosine of
     the turn or chunk vector."""
     sp = run.space
+    tail = [u for u in (tail or []) if u not in set(kept)]
     if depth <= 0:
-        return [], render(list(kept), budget, sp.tables, counter=counter)
+        ctx = render(list(kept) + tail, budget, sp.tables, counter=counter)
+        taken = set(ctx.unit_ids)
+        return [u for u in tail if u in taken], replace(ctx, candidates=list(kept), n_candidates=len(kept))
     containers: list[str] = []
     for u in kept:
         c = container_of(u)
@@ -860,9 +868,14 @@ def expand(run: QueryRun, kept: list[str], depth: int, budget: int, counter=None
     if rule:
         remaining = speaker_rule(remaining, run.question.text, sp)
     remaining.sort(key=lambda o: (-run.owner_sims[sp.owner_index[o]], o))
-    ctx = render(list(kept) + remaining, budget, sp.tables, counter=counter)
+    # After the expansion units, the deeper fused list (FILL_DEPTH, after the
+    # speaker rule) fills whatever budget is left, so the rendered context
+    # reaches B whenever the channels found enough units.
+    seen = set(kept) | set(remaining)
+    filler = [u for u in tail if u not in seen]
+    ctx = render(list(kept) + remaining + filler, budget, sp.tables, counter=counter)
     taken = set(ctx.unit_ids)
-    expansion = [o for o in remaining if o in taken]
+    expansion = [o for o in remaining if o in taken] + [u for u in filler if u in taken]
     return expansion, replace(ctx, candidates=list(kept), n_candidates=len(kept))
 
 
@@ -1096,7 +1109,9 @@ def _run_fused(spec: ArmSpec, run: QueryRun, budget: int, llm: LLMPlanner | None
     ids = [c.unit_id for c in cands]
     rule = spec.speaker_rule and sp.kind == LME
     kept = _mark(cands, speaker_rule(ids, q.text, sp) if rule else ids)
-    expansion, ctx = expand(run, kept, depth, budget, counter, rule)
+    deep_ids = [c.unit_id for c in fuse(hits, weights, n=FILL_DEPTH)]
+    tail = speaker_rule(deep_ids, q.text, sp) if rule else deep_ids
+    expansion, ctx = expand(run, kept, depth, budget, counter, rule, tail)
     n_links = run.links_used.get(spec.overlay, 0) if ("topic" in hits or "community" in hits) else 0
     return ArmOutput(spec.name, q.qid, kept + expansion, cands, kept, expansion, decision.shape,
                      decision.planner, decision.reply, decision.off_list, weights, depth, spec.overlay,
@@ -1117,8 +1132,11 @@ def _run_lazy(spec: ArmSpec, run: QueryRun, budget: int, client, memo: dict, cou
     ids = owners + [c.unit_id for c in fused if c.unit_id not in set(owners)]
     rule = spec.speaker_rule and sp.kind == LME
     kept = _mark(fused, speaker_rule(ids, q.text, sp) if rule else ids)
-    ctx = render(list(kept), budget, sp.tables, counter=counter)
-    return ArmOutput(spec.name, q.qid, kept, fused, kept, [], "", "static", None, False,
+    deep_ids = [c.unit_id for c in fuse(run.channels(STATIC_WEIGHTS, True, "R0"), STATIC_WEIGHTS, n=FILL_DEPTH)]
+    tail = [u for u in (speaker_rule(deep_ids, q.text, sp) if rule else deep_ids) if u not in set(kept)]
+    ctx = render(list(kept) + tail, budget, sp.tables, counter=counter)
+    filled = [u for u in tail if u in set(ctx.unit_ids)]
+    return ArmOutput(spec.name, q.qid, kept + filled, fused, kept, filled, "", "static", None, False,
                      dict(STATIC_WEIGHTS), 0, "R0", 0, rule, calls.calls, calls.uncached, calls.tokens_in,
                      calls.tokens_out, ctx,
                      lazy={"accepted": accepted, "accepted_owners": owners, "tests": tests, "communities": log})
