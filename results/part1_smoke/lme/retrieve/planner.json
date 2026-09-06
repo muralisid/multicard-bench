@@ -1,0 +1,61 @@
+{
+  "decisions": {
+    "gpt4_2f584639": {
+      "qid": "gpt4_2f584639",
+      "shape": "temporal",
+      "planner": "llm",
+      "reply": "temporal",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 200,
+      "tokens_out": 1
+    },
+    "gpt4_a1b77f9c": {
+      "qid": "gpt4_a1b77f9c",
+      "shape": "temporal",
+      "planner": "llm",
+      "reply": "temporal",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 214,
+      "tokens_out": 1
+    },
+    "6b7dfb22": {
+      "qid": "6b7dfb22",
+      "shape": "thematic",
+      "planner": "llm",
+      "reply": "thematic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 206,
+      "tokens_out": 2
+    },
+    "eac54adc": {
+      "qid": "eac54adc",
+      "shape": "temporal",
+      "planner": "llm",
+      "reply": "temporal",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 199,
+      "tokens_out": 1
+    },
+    "2c63a862": {
+      "qid": "2c63a862",
+      "shape": "temporal",
+      "planner": "llm",
+      "reply": "temporal",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 201,
+      "tokens_out": 1
+    }
+  },
+  "off_list": [],
+  "prompt": "Label the question with exactly one shape from this list and reply with the label only.\nlocal: asks for one fact the user or assistant stated in one place.\nentity: asks about a named person, pet, object, place or organisation.\nthematic: asks for advice, ideas, plans or recommendations that fit what is known about the user.\ncross-topic: needs facts from two or more separate conversations or documents combined, counted or compared.\nmulti-hop: needs one fact to find a second fact, or asks which named thing did something.\ntemporal: asks when, how long, how long ago, what came first or last, or what is true now about something that changed.\nlexical: quotes exact words, a code, an id or a long number.\nunanswerable: asks for something the conversations or documents are unlikely to contain.\n"
+}

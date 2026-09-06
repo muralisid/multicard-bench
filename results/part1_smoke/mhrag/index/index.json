@@ -1,0 +1,331 @@
+{
+  "design": "docs/PART1-DESIGN.md version 4",
+  "corpus": "mhrag",
+  "corpus_name": "multihoprag",
+  "tag": "smoke",
+  "sample": true,
+  "seed": 13,
+  "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+  "subsets_sha256": "0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082",
+  "question_ids": [
+    "mhr_q2477",
+    "mhr_q1590",
+    "mhr_q2278",
+    "mhr_q0607",
+    "mhr_q2071"
+  ],
+  "n_questions": 5,
+  "containers": [
+    "mhr_db5597f8321e",
+    "mhr_8c2b0b3e9503",
+    "mhr_ed9a1c5a264e",
+    "mhr_93bbbf090f2b",
+    "mhr_3a8517d31fcc",
+    "mhr_32edd54abfd1",
+    "mhr_76b21a0481df",
+    "mhr_65ae210eadaa",
+    "mhr_16ea27d2db9b",
+    "mhr_989906880c91",
+    "mhr_89c62d19929d",
+    "mhr_8e5ed18cadc9",
+    "mhr_55b04150b7e6",
+    "mhr_95cdcb06e12d",
+    "mhr_1d4504942ad1",
+    "mhr_a3bce2e793fd",
+    "mhr_588a3de1ef36",
+    "mhr_03c70495296c",
+    "mhr_e40f846f7384",
+    "mhr_618b5d3c4734",
+    "mhr_df5a4ca22e4b",
+    "mhr_98c1ebef81d0",
+    "mhr_8270ea62a093",
+    "mhr_12fae3d58cea",
+    "mhr_49fc26764364",
+    "mhr_d8bccdaeb9b5",
+    "mhr_af1dc8ce038b",
+    "mhr_b19395ec1506",
+    "mhr_972d9bb3bc43",
+    "mhr_e4191ab29df3",
+    "mhr_e6668e39a8d5",
+    "mhr_312ee209e3e0",
+    "mhr_e8f297d37819",
+    "mhr_ce465d4958d7",
+    "mhr_8158ec8ac1dc",
+    "mhr_fef3442a5cd4",
+    "mhr_e02731888a81",
+    "mhr_e47085b2e388",
+    "mhr_5da80b88886d",
+    "mhr_760bc62600d1",
+    "mhr_98d74a60e104",
+    "mhr_585a2bb8fe2e",
+    "mhr_9078c8221b52",
+    "mhr_4d70b3b1c552",
+    "mhr_689a88cd135c",
+    "mhr_364fdbab4ca8",
+    "mhr_4828d6afa617",
+    "mhr_962860dd61c3",
+    "mhr_06b2b533d68a",
+    "mhr_e64ab463e74c",
+    "mhr_b7e07fead5c0",
+    "mhr_dc2a5e2d6e38",
+    "mhr_f7ede6c4fe80",
+    "mhr_cf0949d2b58a",
+    "mhr_1d0ef37ea63c"
+  ],
+  "n_containers": 55,
+  "n_owner_units": 325,
+  "n_sub_units": 5495,
+  "steps": {
+    "topics": "fitted",
+    "graph": "built",
+    "relation_vectors": "0 spaces encoded, 0 present, 1 wanted",
+    "overlay": "generated"
+  },
+  "seconds": {
+    "units": 2.9432449340820312,
+    "topics": 8.977314233779907,
+    "graph": 12.49566102027893,
+    "relation_vectors": 0.002309083938598633,
+    "overlay": 10.887273788452148
+  },
+  "topics": {
+    "n_units": 325,
+    "n_topics": 13,
+    "outlier_share": 0.11076923076923077,
+    "largest_topic_share": 0.15384615384615385,
+    "seconds": 8.969,
+    "seed": 13,
+    "top_k": 5,
+    "top_terms": 10,
+    "umap": {
+      "n_neighbors": 15,
+      "n_components": 5,
+      "min_dist": 0.0,
+      "metric": "cosine",
+      "random_state": 13
+    },
+    "hdbscan": {
+      "cluster_selection_method": "eom",
+      "metric": "euclidean",
+      "min_cluster_size": 10,
+      "min_samples": null,
+      "prediction_data": true
+    },
+    "calculate_probabilities": false
+  },
+  "topic_versions": {
+    "bertopic": "0.17.4",
+    "umap-learn": "0.5.12",
+    "hdbscan": "0.8.44",
+    "numba": "0.60.0",
+    "scikit-learn": "1.9.0",
+    "numpy": "1.26.4"
+  },
+  "graph": {
+    "graphrag_reference": "microsoft/graphrag 3.1.2, commit f40e9a26ce62ba0b3fef8837d24aafdcc6e6c704, packages/graphrag/graphrag/",
+    "spacy_model": "en_core_web_sm",
+    "seed": 13,
+    "n_process": 1,
+    "hub_share": 0.005,
+    "max_phrases_per_unit": 50,
+    "pronoun_rule": "a phrase is a pronoun when its chunk root is PRON in more than half of its occurrences (majority vote over occurrences)",
+    "hub_rule_order": "the hub rule runs before graphrag's counting and pruning: co-occurrence, PMI and the node and edge rules see the surviving phrases only, and graphrag's one ego node is the highest-degree content phrase left after the hub rule",
+    "article_rule": "every article token (a, an, the) stripped from the lemma",
+    "prune": {
+      "min_node_freq": 2,
+      "min_node_degree": 1,
+      "min_edge_weight_pct": 40.0,
+      "remove_ego_nodes": true,
+      "normalize_edge_weights": true
+    },
+    "n_units": 5495,
+    "n_occurrences": 27668,
+    "phrases_per_unit_mean": 5.035122838944495,
+    "units_at_phrase_cap": 0,
+    "phrase_throughput_per_s": 460.6620880348123,
+    "n_phrases": 12958,
+    "n_pronoun_phrases": 57,
+    "n_hub_phrases": 64,
+    "n_dropped_by_hub_rule": 105,
+    "n_nodes_after_hub_rule": 12853,
+    "n_pairs_raw": 47976,
+    "n_edges_before_pruning": 46568,
+    "ego_node": "founder",
+    "n_removed_by_degree": 426,
+    "n_removed_by_freq": 9861,
+    "n_nodes_after_node_rules": 2565,
+    "n_edges_removed_by_node_rules": 35382,
+    "min_edge_weight": 0.0001690675510806895,
+    "n_edges_removed_by_percentile": 4471,
+    "n_edges_removed_nonpositive": 0,
+    "n_nodes_after_pruning": 2493,
+    "n_edges_after_pruning": 6715,
+    "topics": {
+      "n_topics": 13,
+      "n_rows": 1424,
+      "n_rows_ignored_unknown_unit": 0,
+      "n_rows_ignored_unknown_topic": 0,
+      "n_units_with_topic_mass": 5495,
+      "n_nodes_with_topic_vector": 2493
+    },
+    "seconds": {
+      "phrases": 11.928483247756958,
+      "edges_and_pruning": 0.00691986083984375,
+      "topic_weights": 0.03349614143371582,
+      "leiden_plain": 0.3925352096557617,
+      "leiden_topic": 0.11028003692626953,
+      "total": 12.482255220413208
+    }
+  },
+  "graph_variants": {
+    "plain": {
+      "n_communities": 47,
+      "modularity": 0.7235438269862925,
+      "largest_community_share_nodes": 0.05174488567990373,
+      "largest_community_share_units": 0.07299787384833452,
+      "n_units_with_community": 4233,
+      "n_units_without_community": 1262,
+      "graph_density": 0.0021617511375350176,
+      "intra_community_edge_share": 0.7618763961280715,
+      "intra_community_weight_share": 0.8046650877429834,
+      "within_community_density_mean": 0.37711833170459297,
+      "community_size_mean_nodes": 53.04255319148936,
+      "community_members_mean_units": 90.06382978723404,
+      "topic_entropy": {
+        "mean_bits": 2.9357164956234167,
+        "member_weighted_bits": 3.1886011317847593,
+        "n_communities_with_topics": 47
+      }
+    },
+    "topic": {
+      "n_communities": 46,
+      "modularity": 0.725168023268385,
+      "largest_community_share_nodes": 0.07781789009225833,
+      "largest_community_share_units": 0.123789274746043,
+      "n_units_with_community": 4233,
+      "n_units_without_community": 1262,
+      "graph_density": 0.0021617511375350176,
+      "intra_community_edge_share": 0.7661950856291884,
+      "intra_community_weight_share": 0.8131214514523211,
+      "within_community_density_mean": 0.40110251766374555,
+      "community_size_mean_nodes": 54.19565217391305,
+      "community_members_mean_units": 92.02173913043478,
+      "topic_entropy": {
+        "mean_bits": 2.9012311572060177,
+        "member_weighted_bits": 3.1416010868580084,
+        "n_communities_with_topics": 46
+      }
+    }
+  },
+  "overlay": {
+    "corpus": "multihoprag",
+    "seed": 13,
+    "model": "gemini-2.5-flash-lite",
+    "tier": "vertex-flash",
+    "n_topics": 13,
+    "n_communities": 46,
+    "min_shared": 5,
+    "flag_share": 0.2,
+    "cap": 500,
+    "n_candidate_pairs": 151,
+    "n_top_share": 31,
+    "n_flagged": 31,
+    "n_calls": 31,
+    "n_cached": 0,
+    "n_new": 31,
+    "n_parse_ok": 31,
+    "n_parse_failed": 0,
+    "n_inconsistent": 0,
+    "tokens_in": 18632,
+    "tokens_out": 3006,
+    "confidence_histogram": {
+      "0.0-0.1": 0,
+      "0.1-0.2": 4,
+      "0.2-0.3": 2,
+      "0.3-0.4": 8,
+      "0.4-0.5": 0,
+      "0.5-0.6": 0,
+      "0.6-0.7": 0,
+      "0.7-0.8": 4,
+      "0.8-0.9": 0,
+      "0.9-1.0": 13
+    },
+    "links": {
+      "R0": 0,
+      "R2": 31,
+      "R3": 17,
+      "P0": 17
+    },
+    "placebo": {
+      "n": 17,
+      "seed": 13,
+      "passes": 1,
+      "swaps": 4,
+      "n_coincident": 0,
+      "n_duplicate": 0,
+      "method": "sorted by (topic, community); community targets permuted by rng(seed); bad positions repaired by pairwise swaps in rng order; weight stays with the topic endpoint",
+      "base_set": "R3"
+    },
+    "max_unit_tokens": 300,
+    "max_units": 8,
+    "n_terms": 10,
+    "max_output_tokens": 200,
+    "r3_threshold": 0.7
+  },
+  "relation_vector_dir": "data/cache/part1_smoke/mhrag/relvecs",
+  "pgr_spaces": [],
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0.003066,
+    "total_calls": 31,
+    "by_tier": {
+      "vertex-flash": {
+        "calls": 31,
+        "tokens_in": 18632,
+        "tokens_out": 3006,
+        "usd": 0.003066
+      }
+    }
+  },
+  "max_usd": 0.15,
+  "elapsed_s": 35.30594301223755,
+  "git": "b8c1e20"
+}

@@ -1,0 +1,33 @@
+{
+  "n_units": 325,
+  "n_topics": 13,
+  "outlier_share": 0.11076923076923077,
+  "largest_topic_share": 0.15384615384615385,
+  "seconds": 8.969,
+  "seed": 13,
+  "top_k": 5,
+  "top_terms": 10,
+  "umap": {
+    "n_neighbors": 15,
+    "n_components": 5,
+    "min_dist": 0.0,
+    "metric": "cosine",
+    "random_state": 13
+  },
+  "hdbscan": {
+    "cluster_selection_method": "eom",
+    "metric": "euclidean",
+    "min_cluster_size": 10,
+    "min_samples": null,
+    "prediction_data": true
+  },
+  "calculate_probabilities": false,
+  "versions": {
+    "bertopic": "0.17.4",
+    "umap-learn": "0.5.12",
+    "hdbscan": "0.8.44",
+    "numba": "0.60.0",
+    "scikit-learn": "1.9.0",
+    "numpy": "1.26.4"
+  }
+}

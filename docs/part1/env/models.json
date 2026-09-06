@@ -4,14 +4,46 @@
   "embed_model": "gemini-embedding-001",
   "embed_dim": 3072,
   "prices": {
-    "gemini-3.6-flash": {"in": 0.75, "out": 3.75},
-    "gemini-3.5-flash": {"in": 1.50, "out": 9.00},
-    "gemini-3.5-flash-lite": {"in": 0.30, "out": 2.50},
-    "gemini-2.5-flash": {"in": 0.30, "out": 2.50},
-    "gemini-2.5-flash-lite": {"in": 0.10, "out": 0.40},
-    "gemini-2.5-pro": {"in": 1.25, "out": 10.00},
-    "gemini-embedding-001": {"in": 0.15, "out": 0.0},
-    "text-embedding-005": {"in": 0.025, "out": 0.0}
+    "gemini-3.6-flash": {
+      "in": 0.75,
+      "out": 3.75
+    },
+    "gemini-3.7-flash": {
+      "in": 0.75,
+      "out": 3.75
+    },
+    "gemini-3.8-flash": {
+      "in": 0.75,
+      "out": 3.75
+    },
+    "gemini-3.5-flash": {
+      "in": 1.5,
+      "out": 9.0
+    },
+    "gemini-3.5-flash-lite": {
+      "in": 0.3,
+      "out": 2.5
+    },
+    "gemini-2.5-flash": {
+      "in": 0.3,
+      "out": 2.5
+    },
+    "gemini-2.5-flash-lite": {
+      "in": 0.1,
+      "out": 0.4
+    },
+    "gemini-2.5-pro": {
+      "in": 1.25,
+      "out": 10.0
+    },
+    "gemini-embedding-001": {
+      "in": 0.15,
+      "out": 0.0
+    },
+    "text-embedding-005": {
+      "in": 0.025,
+      "out": 0.0
+    }
   },
   "price_units": "USD per 1 million tokens, standard tier (not Priority, not Flex/Batch), text input and text output, as printed on https://cloud.google.com/vertex-ai/generative-ai/pricing. Embedding prices are per 1 million of the page's '1,000 count' unit, online requests.",
   "price_page_date": "fetched 2026-09-06; the page shows no last-updated date; HTTP Last-Modified header: not sent by server; dated statements on the page: introductory pricing for Gemini 3.6 Flash runs through December 31, 2026 and standard pricing of 1.50 in and 7.50 out applies from January 1, 2027; non-global endpoint pricing for Gemini 3 and later families applies from July 1, 2026",
@@ -23,10 +55,14 @@
     "gemini-2.5-flash": "Text, image, video input. Audio input is 1.00.",
     "gemini-2.5-flash-lite": "Text, image, video input. Audio input is 0.30.",
     "gemini-embedding-001": "Page row 'Gemini Embedding': 0.00015 USD per 1,000 count online, 0.00012 batch, output no charge.",
-    "text-embedding-005": "Page row 'Embeddings for Text (Excluding Gemini Embedding)': 0.000025 USD per 1,000 count online, 0.00002 batch, output no charge. The page prints 'count' as the unit; it does not say tokens or characters."
+    "text-embedding-005": "Page row 'Embeddings for Text (Excluding Gemini Embedding)': 0.000025 USD per 1,000 count online, 0.00002 batch, output no charge. The page prints 'count' as the unit; it does not say tokens or characters.",
+    "gemini-3.7-flash": "Global endpoint price. Introductory through 2026-12-31. From 2027-01-01: 1.50 in, 7.50 out. Read from the pricing page on 2026-09-06 during the proxy verification (proxy-verify.md).",
+    "gemini-3.8-flash": "Global endpoint price. Introductory through 2026-12-31. From 2027-01-01: 1.50 in, 7.50 out. Read from the pricing page on 2026-09-06 during the proxy verification (proxy-verify.md)."
   },
   "working_models": [
     "gemini-3.6-flash",
+    "gemini-3.7-flash",
+    "gemini-3.8-flash",
     "gemini-3.5-flash",
     "gemini-3.5-flash-lite",
     "gemini-2.5-flash",
@@ -38,10 +74,14 @@
   "failed_models": [
     "gemini-3.6-flash-lite",
     "gemini-3-flash",
-    "gemini-3-flash-lite"
+    "gemini-3-flash-lite",
+    "gemini-3.7-flash-lite",
+    "gemini-3.8-flash-lite"
   ],
   "locations": {
     "gemini-3.6-flash": "global",
+    "gemini-3.7-flash": "global",
+    "gemini-3.8-flash": "global",
     "gemini-3.5-flash": "global",
     "gemini-3.5-flash-lite": "global",
     "gemini-2.5-flash": "us-central1",
@@ -60,5 +100,15 @@
   "vertex_project": "scout7ai",
   "proxy_base_url": "http://127.0.0.1:4000/v1",
   "proxy_key_file": "/Users/muralisid/github_other/part1-tools/env/.proxy_key",
-  "probe_date": "2026-09-06"
+  "probe_date": "2026-09-06 (3.7 and 3.8 added 2026-09-06 after the proxy verification)",
+  "chandan_index_model": "gemini-3.7-flash",
+  "chandan_answer_model": "gemini-3.6-flash",
+  "chandan_model_note": "chandan_model is the survey choice kept for older callers. Design section 13 fixes the calibration row as indexed with gemini-3.7-flash and answered with gemini-3.6-flash (his result-file configuration); those are chandan_index_model and chandan_answer_model. The main chandan rows use chat_model.",
+  "thinking_defaults": {
+    "gemini-2.5-flash": "reasoning_effort none set in config.yaml (thinkingBudget 0). A request that sends reasoning_effort overrides it.",
+    "gemini-2.5-pro": "no default; thinks unless the request sends reasoning_effort",
+    "gemini-3.x": "cannot be turned off: Vertex rejects reasoning_effort none (thinking level minimal unsupported). Allow at least 64 output tokens for 3.6 and 3.7 and about 128 for 3.8 before any text appears."
+  },
+  "proxy_min_output_tokens_note": "Design section 13: every Part 1 call sets an output limit of at least 64 tokens. Measured 2026-09-06 for a one-word answer: 3.6 and 3.7 use 57 to 59 reasoning tokens, 3.8 uses 96 and returns an empty choices list at 64.",
+  "job_tag_note": "Send a job tag as the OpenAI user field (user= on the python client) or as extra_body={'metadata': {'tags': ['<tag>']}}. requests.jsonl records job_tag, tags and user per row. metadata.tags wins when both are sent."
 }

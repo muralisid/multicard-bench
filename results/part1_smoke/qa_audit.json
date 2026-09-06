@@ -1,0 +1,193 @@
+{
+  "judge_audit": {
+    "n": 13,
+    "n_agree": 12,
+    "agreement": 0.9230769230769231,
+    "threshold": 0.9,
+    "cheap": "gemini-2.5-flash-lite",
+    "strong": "gpt-5.4",
+    "primary": "gemini-2.5-flash-lite",
+    "second": "gpt-5.4",
+    "cells": [
+      {
+        "arm": "S2_lazy",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S4_static",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_overlay_P0",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 2,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_overlay_R2",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 2,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_planner_rules",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 1,
+        "agreement": 0.5
+      },
+      {
+        "arm": "chandan_full_uncut",
+        "corpus": "longmemeval",
+        "reader": "chandan_own",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "chandan_live",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      }
+    ]
+  },
+  "primary_judge": "gemini-2.5-flash-lite",
+  "second_judge": "gpt-5.4",
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "gemini-3.6-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.7-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.8-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.5-flash": {
+        "in": 1.5,
+        "out": 9.0
+      },
+      "gemini-3.5-flash-lite": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash-lite": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "gemini-2.5-pro": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "gemini-embedding-001": {
+        "in": 0.15,
+        "out": 0.0
+      },
+      "text-embedding-005": {
+        "in": 0.025,
+        "out": 0.0
+      }
+    },
+    "total_usd": 0.091364,
+    "total_calls": 205,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 9,
+        "tokens_in": 2629,
+        "tokens_out": 45,
+        "usd": 0.003736
+      },
+      "gemini-2.5-flash-lite": {
+        "calls": 196,
+        "tokens_in": 843255,
+        "tokens_out": 8256,
+        "usd": 0.087628
+      }
+    }
+  }
+}

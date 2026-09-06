@@ -7,6 +7,7 @@ reproduces the reported p-value exactly.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -94,4 +95,77 @@ def holm(p_values: dict[str, float], alpha: float = 0.05) -> dict[str, bool]:
         else:
             rejected_all = False
             out[name] = False
+    return out
+
+
+# ----------------------------------------------------------------------------
+# Part 1 additions (docs/PART1-DESIGN.md section 9): the exact McNemar test on
+# paired correctness and Holm-adjusted p-values for the report. The functions
+# above are unchanged.
+# ----------------------------------------------------------------------------
+@dataclass
+class McNemarResult:
+    n: int
+    n_discordant: int
+    a_only: int        # a correct, b wrong: wins for a
+    b_only: int        # b correct, a wrong: losses for a
+    both: int
+    neither: int
+    acc_a: float
+    acc_b: float
+    delta: float       # acc_a minus acc_b
+    p_value: float
+
+    def as_dict(self) -> dict:
+        return self.__dict__.copy()
+
+
+def mcnemar_exact(a, b) -> McNemarResult:
+    """Exact McNemar test on paired correctness flags.
+
+    The statistic is the smaller of the two discordant counts, a_only and
+    b_only, under Binomial(a_only + b_only, 0.5). The two-sided p-value is
+    twice the lower tail, capped at 1. With no discordant pair the p-value is
+    1. The concordant pairs carry no information about the difference and
+    are only counted.
+    """
+    a = np.asarray(a, dtype=bool)
+    b = np.asarray(b, dtype=bool)
+    if a.shape != b.shape:
+        raise ValueError(f"paired inputs must match: {a.shape} vs {b.shape}")
+    n = int(a.size)
+    a_only = int(np.sum(a & ~b))
+    b_only = int(np.sum(~a & b))
+    both = int(np.sum(a & b))
+    neither = int(np.sum(~a & ~b))
+    m = a_only + b_only
+    if m == 0:
+        p = 1.0
+    else:
+        k = min(a_only, b_only)
+        # Exact lower tail of Binomial(m, 0.5), summed in exact integer arithmetic.
+        tail = sum(math.comb(m, i) for i in range(k + 1)) / (2 ** m)
+        p = min(1.0, 2.0 * tail)
+    acc_a = float(a.mean()) if n else 0.0
+    acc_b = float(b.mean()) if n else 0.0
+    return McNemarResult(n=n, n_discordant=m, a_only=a_only, b_only=b_only, both=both,
+                         neither=neither, acc_a=acc_a, acc_b=acc_b, delta=acc_a - acc_b,
+                         p_value=float(p))
+
+
+def holm_adjusted(p_values: dict[str, float]) -> dict[str, float]:
+    """Holm step-down adjusted p-values, name -> adjusted p.
+
+    Sorted ascending, the i-th (0-based) raw p is multiplied by (m - i), the
+    running maximum is taken so the adjusted values never decrease along the
+    order, and each is capped at 1. A test is significant at alpha exactly
+    when its adjusted p is at or below alpha, which matches holm() above.
+    """
+    items = sorted(p_values.items(), key=lambda kv: kv[1])
+    m = len(items)
+    out: dict[str, float] = {}
+    running = 0.0
+    for i, (name, p) in enumerate(items):
+        running = max(running, min(1.0, (m - i) * p))
+        out[name] = float(running)
     return out

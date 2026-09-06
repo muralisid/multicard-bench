@@ -47,7 +47,16 @@ REGISTRY = {
     "e_dyn4": ("multicard.experiments.e_dyn4", "run"),
     "e5_longmemeval": ("multicard.experiments.e5_longmemeval", "run"),
     "e5_longmemeval_qa": ("multicard.experiments.e5_longmemeval", "qa"),
+    "part1_index": ("multicard.experiments.part1", "part1_index"),
+    "part1_retrieve": ("multicard.experiments.part1", "part1_retrieve"),
+    "part1_qa": ("multicard.experiments.part1", "part1_qa"),
+    "part1_report": ("multicard.experiments.part1", "part1_report"),
 }
+
+# Options the Part 1 stages take (docs/PART1-DESIGN.md); forwarded to the
+# part1_* entries only, since the older experiments do not accept them.
+PART1_OPTIONS = ("corpus", "limit", "arms", "budget", "tag", "max_usd", "sample", "readers", "workers",
+                 "population", "n_process", "graphiti_status")
 
 
 # experiment id -> BEIR collection name
@@ -74,6 +83,18 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--n-docs", type=int, default=500)
     r.add_argument("--queries-per-k", type=int, default=200)
     r.add_argument("--model", default="sentence-transformers/all-MiniLM-L6-v2")
+    r.add_argument("--corpus", default=None, help="part1: lme, mhrag, or all (qa and report)")
+    r.add_argument("--limit", type=int, default=None, help="part1: first N questions in ORDER")
+    r.add_argument("--arms", default=None, help="part1: comma-separated arm names")
+    r.add_argument("--budget", default=None, help="part1: comma-separated token budgets")
+    r.add_argument("--tag", default=None, help="part1: results directory suffix (results/part1_<tag>)")
+    r.add_argument("--max-usd", dest="max_usd", type=float, default=None, help="part1: CostMeter cap for the stage")
+    r.add_argument("--sample", action="store_true", default=None, help="part1: restrict the index to the sample")
+    r.add_argument("--readers", default=None, help="part1_qa: reader_a, reader_b")
+    r.add_argument("--workers", type=int, default=None, help="part1_qa: threads")
+    r.add_argument("--population", default=None, help="part1_qa: subsets (default) or all")
+    r.add_argument("--n-process", dest="n_process", type=int, default=None, help="part1_index: spaCy processes")
+    r.add_argument("--graphiti-status", dest="graphiti_status", default=None, help="part1_report: run, partial, dropped")
     a = p.parse_args(argv)
 
     mod_name, fn_name = REGISTRY[a.experiment]
@@ -98,6 +119,8 @@ def main(argv: list[str] | None = None) -> int:
     # prefix, which silently passed a bogus collection to any new e1 experiment.
     if a.experiment in BEIR_COLLECTIONS:
         kwargs["collection"] = BEIR_COLLECTIONS[a.experiment]
+    if a.experiment.startswith("part1_"):
+        kwargs.update({k: getattr(a, k) for k in PART1_OPTIONS if getattr(a, k) is not None})
     fn(**kwargs)
     return 0
 

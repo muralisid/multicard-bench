@@ -44,7 +44,16 @@ Stop:
     kill "$(cat /Users/muralisid/github_other/part1-tools/env/neo4j.pid)"
     rm -f /Users/muralisid/github_other/part1-tools/env/neo4j.pid
 
-Shutdown takes about 11 seconds. Check:
+Shutdown takes about 11 seconds.
+
+Update 2026-09-06 (infra stage, see infra.md): use the scripts instead of the raw commands above.
+
+    /Users/muralisid/github_other/part1-tools/neo4j/start.sh
+    /Users/muralisid/github_other/part1-tools/neo4j/stop.sh
+
+start.sh writes neo4j.pid with the server JVM (the process that listens on 7687) and neo4j-launcher.pid with the NeoBoot launcher; stop.sh sends SIGTERM to the server JVM and waits for both to exit and for port 7687 to free. neo4j.conf now also has dbms.usage_report.enabled=false and a 2 GB heap (server.memory.heap.initial_size and max_size 2g). The old raw commands still work; the only difference is which pid the file holds.
+
+Check:
 
     /opt/homebrew/bin/cypher-shell -a bolt://127.0.0.1:7687 -u neo4j -p graphiti "RETURN 1;"
 
@@ -138,4 +147,5 @@ The two smoke episodes and their entities were deleted with `smoke.py --cleanup-
 - /Users/muralisid/github_other/part1-tools/env/graphiti-smoke-flash-json_schema.json, .log, graphiti-smoke-llm-flash-json_schema.jsonl
 - /Users/muralisid/github_other/part1-tools/env/graphiti-smoke.json and graphiti-smoke.log (same content as the main run)
 - /Users/muralisid/github_other/part1-tools/env/neo4j.log, neo4j.pid, neo4j-install.log, graphiti-install.log
-- /opt/homebrew/Cellar/neo4j/2026.07.1/libexec/conf/neo4j.conf (one line appended)
+- /opt/homebrew/Cellar/neo4j/2026.07.1/libexec/conf/neo4j.conf (one line appended; three more lines set on 2026-09-06, see infra.md)
+- /Users/muralisid/github_other/part1-tools/neo4j/start.sh and stop.sh (added 2026-09-06)

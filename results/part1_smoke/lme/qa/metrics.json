@@ -1,0 +1,1179 @@
+{
+  "design": "docs/PART1-DESIGN.md version 4",
+  "tag": "smoke",
+  "sample": true,
+  "budgets": [
+    4000,
+    8000
+  ],
+  "readers": [
+    "reader_a"
+  ],
+  "judge_audit": {
+    "n": 13,
+    "n_agree": 12,
+    "agreement": 0.9230769230769231,
+    "threshold": 0.9,
+    "cheap": "gemini-2.5-flash-lite",
+    "strong": "gpt-5.4",
+    "primary": "gemini-2.5-flash-lite",
+    "second": "gpt-5.4",
+    "cells": [
+      {
+        "arm": "S2_lazy",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S4_static",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_overlay_P0",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 2,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_overlay_R2",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 2,
+        "agreement": 1.0
+      },
+      {
+        "arm": "S5_planner_rules",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 2,
+        "n_agree": 1,
+        "agreement": 0.5
+      },
+      {
+        "arm": "chandan_full_uncut",
+        "corpus": "longmemeval",
+        "reader": "chandan_own",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "chandan_live",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 1,
+        "n_agree": 1,
+        "agreement": 1.0
+      }
+    ]
+  },
+  "primary_judge": "gemini-2.5-flash-lite",
+  "second_judge": "gpt-5.4",
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "gemini-3.6-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.7-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.8-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.5-flash": {
+        "in": 1.5,
+        "out": 9.0
+      },
+      "gemini-3.5-flash-lite": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash-lite": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "gemini-2.5-pro": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "gemini-embedding-001": {
+        "in": 0.15,
+        "out": 0.0
+      },
+      "text-embedding-005": {
+        "in": 0.025,
+        "out": 0.0
+      }
+    },
+    "total_usd": 0.091364,
+    "total_calls": 205,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 9,
+        "tokens_in": 2629,
+        "tokens_out": 45,
+        "usd": 0.003736
+      },
+      "gemini-2.5-flash-lite": {
+        "calls": 196,
+        "tokens_in": 843255,
+        "tokens_out": 8256,
+        "usd": 0.087628
+      }
+    }
+  },
+  "max_usd": 0.4,
+  "judging_reserve": 0.15,
+  "answering_cap_usd": 0.34,
+  "judging_stopped": null,
+  "partial": {},
+  "corpus": "lme",
+  "n_records": 175,
+  "n_jobs": 170,
+  "arms": [
+    "S2_lazy",
+    "S4_static",
+    "S5_noPGR",
+    "S5_overlay_P0",
+    "S5_overlay_R0",
+    "S5_overlay_R2",
+    "S5_planner_oracle",
+    "S5_planner_rules",
+    "S5_primary",
+    "S5_primary_norule",
+    "chandan_full",
+    "chandan_live",
+    "closed_book",
+    "oracle_full",
+    "ours_cheap",
+    "ours_cheap_norule",
+    "ours_sentence_norule"
+  ],
+  "populations": {
+    "reader_a": 5,
+    "reader_b": 5,
+    "chandan_own": 5,
+    "chandan_subset": null,
+    "second_build_subset": null,
+    "per_arm": {
+      "S2_lazy": 5,
+      "S4_static": 5,
+      "S5_noPGR": 5,
+      "S5_overlay_P0": 5,
+      "S5_overlay_R0": 5,
+      "S5_overlay_R2": 5,
+      "S5_planner_oracle": 5,
+      "S5_planner_rules": 5,
+      "S5_primary": 5,
+      "S5_primary_norule": 5,
+      "chandan_full": 5,
+      "chandan_live": 5,
+      "closed_book": 5,
+      "oracle_full": 5,
+      "ours_cheap": 5,
+      "ours_cheap_norule": 5,
+      "ours_sentence_norule": 5
+    }
+  },
+  "stopped": null,
+  "answering": {
+    "chandan_own": {
+      "longmemeval": {
+        "chandan_full_uncut": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 1,
+              "acc_all": 1.0,
+              "n_disagree": 0
+            }
+          }
+        }
+      }
+    },
+    "reader_a": {
+      "longmemeval": {
+        "S2_lazy": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 1,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S4_static": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 1,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_noPGR": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_overlay_P0": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_overlay_R0": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.0,
+            "acc_answerable": 0.0,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.0
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_overlay_R2": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 1,
+              "acc_all": 1.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_planner_oracle": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.5,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_planner_rules": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.5,
+              "n_disagree": 1
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_primary": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          }
+        },
+        "S5_primary_norule": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "chandan_full": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 3,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.2,
+            "acc_answerable": 0.2,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 4,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          }
+        },
+        "chandan_live": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 3,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          }
+        },
+        "closed_book": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "oracle_full": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.2,
+            "acc_answerable": 0.2,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.2,
+            "acc_answerable": 0.2,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.25
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "ours_cheap": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 3,
+              "acc_all": 0.3333333333333333,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 2,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          }
+        },
+        "ours_cheap_norule": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 1,
+              "acc_all": 0.0,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        },
+        "ours_sentence_norule": {
+          "4000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.6,
+            "acc_answerable": 0.6,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 1.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          },
+          "8000": {
+            "n": 5,
+            "n_missing": 0,
+            "primary_judge": "gemini-2.5-flash-lite",
+            "acc_all": 0.4,
+            "acc_answerable": 0.4,
+            "acc_abstention": null,
+            "n_answerable": 5,
+            "n_abstention": 0,
+            "by_type": {
+              "single-session-preference": {
+                "n": 1,
+                "acc": 0.0
+              },
+              "temporal-reasoning": {
+                "n": 4,
+                "acc": 0.5
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_s": 79.56010699272156
+}

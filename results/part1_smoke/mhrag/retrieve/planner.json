@@ -1,0 +1,61 @@
+{
+  "decisions": {
+    "mhr_q2477": {
+      "qid": "mhr_q2477",
+      "shape": "cross-topic",
+      "planner": "llm",
+      "reply": "cross-topic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 245,
+      "tokens_out": 3
+    },
+    "mhr_q1590": {
+      "qid": "mhr_q1590",
+      "shape": "cross-topic",
+      "planner": "llm",
+      "reply": "cross-topic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 281,
+      "tokens_out": 3
+    },
+    "mhr_q2278": {
+      "qid": "mhr_q2278",
+      "shape": "cross-topic",
+      "planner": "llm",
+      "reply": "cross-topic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 237,
+      "tokens_out": 3
+    },
+    "mhr_q0607": {
+      "qid": "mhr_q0607",
+      "shape": "cross-topic",
+      "planner": "llm",
+      "reply": "cross-topic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 240,
+      "tokens_out": 3
+    },
+    "mhr_q2071": {
+      "qid": "mhr_q2071",
+      "shape": "cross-topic",
+      "planner": "llm",
+      "reply": "cross-topic",
+      "off_list": false,
+      "calls": 1,
+      "cached": true,
+      "tokens_in": 232,
+      "tokens_out": 3
+    }
+  },
+  "off_list": [],
+  "prompt": "Label the question with exactly one shape from this list and reply with the label only.\nlocal: asks for one fact the user or assistant stated in one place.\nentity: asks about a named person, pet, object, place or organisation.\nthematic: asks for advice, ideas, plans or recommendations that fit what is known about the user.\ncross-topic: needs facts from two or more separate conversations or documents combined, counted or compared.\nmulti-hop: needs one fact to find a second fact, or asks which named thing did something.\ntemporal: asks when, how long, how long ago, what came first or last, or what is true now about something that changed.\nlexical: quotes exact words, a code, an id or a long number.\nunanswerable: asks for something the conversations or documents are unlikely to contain.\n"
+}

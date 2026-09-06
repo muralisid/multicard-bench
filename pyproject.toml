@@ -23,13 +23,15 @@ dependencies = [
     "tqdm>=4.66",
     "datasets>=2.19",
     "google-genai>=1.0",
-    "bertopic>=0.16,<0.18",
+    "bertopic==0.17.4",
     "llvmlite==0.43.0",
     "numba==0.60.0",
     "spacy>=3.8.16",
     "python-igraph>=1.0.0",
     "leidenalg>=0.12.0",
     "en-core-web-sm",
+    "pyarrow>=25.0.1",
+    "psycopg[binary]>=3.3.5",
 ]
 
 [project.scripts]
