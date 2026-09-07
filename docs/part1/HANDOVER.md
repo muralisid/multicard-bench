@@ -89,6 +89,16 @@ before any push, cost caps). Part 1 commits, most recent first:
 - `logs/`, the stdout of every stage run, and the chain scripts that ran them.
 - `results/part1_smoke/`, the 5 plus 5 question smoke, labelled and not a
   study result.
+
+All of that is committed except three regenerable bulk files per corpus, which
+are gitignored because they run to hundreds of megabytes: `contexts_*.jsonl`
+(the exact text each reader saw), `candidates.json` (the fused top 100 with
+per-channel provenance) and `rankings.json`. `part1_retrieve` rebuilds them
+from the committed index artifacts, and every model reply it needs is cached,
+so the rebuild costs CPU time and no money. The committed 177 MB includes the
+frozen index artifacts (topics, the noun-phrase graph, both community variants,
+the overlay proposals and link sets), so the index does not have to be refitted
+either.
 - `results/e5_longmemeval*/`, the earlier experiment this builds on.
 
 **Data**, all gitignored: `data/raw/longmemeval_s.json` (265 MB),
@@ -107,23 +117,36 @@ the append-only diary of every session, including every number as it landed.
 `program/hypothesis-register.md` carries rows H-TG-1 to H-TG-5.
 `program/review-queue.md` holds the decisions he was asked for and gave.
 
-### The tools: /Users/muralisid/github_other/part1-tools
+### The competitor runners: committed at multicard-bench/tools/part1/
 
-Deliberately outside both repositories, because these are other people's
-systems and their virtual environments.
+The scripts that drive post-graph-rag, Graphiti, the Vertex proxy and Neo4j are
+committed in the bench at `tools/part1/`, with a README explaining each one:
+`pgr/run_spaces.py` and its smokes and question lists, `graphiti/run_groups.py`
+and its smoke, `litellm/` (the proxy config, its request-logging callback, the
+spend-by-tag script, start and stop), `neo4j/` (start and stop),
+`prompts/planner.txt`, and the raw dump of his Postgres schema. They hold no
+secret; the configs read credentials from the environment.
 
-- `pgr/run_spaces.py`, the post-graph-rag runner (74 KB), with its own venv,
-  the question lists it was run with in `lists/`, and its logs and pid files in
-  `out/logs/`.
-- `graphiti/run_groups.py`, the Graphiti runner (71 KB), same layout.
+They do not run inside the bench's virtual environment, because post-graph-rag
+and graphiti-core bring their own dependency trees.
+
+### The live tools directory: /Users/muralisid/github_other/part1-tools
+
+Outside every repository and not committed. About 34 GB, of which 33 GB is the
+Postgres cluster holding his extracted graph and 1 GB is the three virtual
+environments. It holds the working copies of the scripts above plus:
+
+- `pgr/.venv`, `graphiti/.venv`, `litellm/.venv`, the three environments.
+- `pgdata/`, the Postgres cluster (33 GB).
 - `post-graph-rag-src/`, his repository cloned at tag v1.12.0, read-only
   reference for his harness, prompts and configuration.
-- `litellm/`, the proxy: `config.yaml`, `start.sh`, `stop.sh`, the request
-  logging callback, and `tokens_by_model.py` which sums spend by job tag.
-- `neo4j/start.sh` and `stop.sh`; `pgdata/`, the Postgres cluster.
-- `env/`, the live copies of the environment records, the request log
-  `requests.jsonl` (every model call by job tag), and the pid files.
-- `prompts/planner.txt`.
+- `env/`, the live environment records (copies are committed at
+  `docs/part1/env/`), the request log `requests.jsonl` with every model call by
+  job tag, the pid files, and `.proxy_key`, which is never committed.
+- `pgr/out/logs/` and `graphiti/out/logs/`, the runner logs and pid files.
+
+Nothing here is needed to read the work. It is needed to rerun the competitor
+arms, and the scripts that do that are committed.
 
 ### Services and how to bring them up
 
