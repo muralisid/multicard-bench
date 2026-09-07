@@ -1,8 +1,14 @@
 # TG-VGRAG Part 1: everything done so far
 
-Written 2026-09-07 morning IST, for handover. Every number here is read from a
-file the experiment wrote. Where a run is still going, it says so. Nothing here
-is published anywhere.
+Written 2026-09-07, updated the same day when the gate tests, the mechanism
+analysis, the published comparison and the cost result landed. Every number
+here is read from a file the experiment wrote. Nothing here is published
+anywhere.
+
+The four companion documents, each with the detail behind a section below:
+docs/PART1-DESIGN.md (every rule, and section 14 for every change made after a
+number was read), docs/part1/COST-AND-RESULT.md, docs/part1/MECHANISM.md and
+docs/part1/PUBLISHED-COMPARISON.md.
 
 ## 0. Where everything is
 
@@ -482,16 +488,108 @@ plain communities and 1,685 topic-weighted, largest community share 11 percent;
 0.7 or above. MultiHop-RAG: 3,376 chunks, 57,073 sub-units, 95 topics, 105,540
 phrases, 251 and 256 communities, 291 flagged pairs, 84 links.
 
-## 10. What is still running
+## 10. What is finished and what is not
 
-- The full LongMemEval answering pass over every arm including his, then the
-  report with the gate tests T1, T3 to T7. About two hours from 08:00 IST.
-- His MultiHop-RAG index, restarted under an amended cap, then its query pass,
-  so T8a can be computed. About twelve hours.
-- A mechanism analysis of why the added layers gain on chat and lose on news,
-  from the per-query files, with every claim adversarially rechecked.
+Finished: the design and its three review rounds, the environment, the code
+with 322 passing tests, the frozen index on both corpora, every arm of ours
+through retrieval and answering on both corpora, post-graph-rag on
+LongMemEval through retrieval and answering, the calibration row on his own
+models, the report with the gate tests, the mechanism analysis, the published
+comparison and the cost result.
 
-## 11. The honest reading so far
+Not run, both by decision, and both recorded in design section 14: T2, the
+Graphiti comparison, because no ingestion variant fitted the cost cap; and
+T8a, post-graph-rag on MultiHop-RAG, which the owner stopped at 72 of 609
+articles. Part 1 therefore does not pass its own rule, which requires T8a.
+The report states that rather than working around it.
+
+Not yet done: an independent recomputation of the final report. The interim
+report was recomputed in full by three verifiers with their own code and every
+number matched; the report has been regenerated since and that check should be
+repeated before the work is quoted anywhere.
+
+## 11. The gate result
+
+T1, our system against post-graph-rag on LongMemEval, JointRecall at a
+4,000-token budget, 469 questions after one refusal: 0.947 against 0.576,
+delta plus 0.371, CI [+0.324, +0.420], 188 wins to 14 losses, significant
+after Holm. Shown under D1.
+
+On answers, same context budget, same reader, same judge, which is a
+controlled comparison: under gpt-5.4, 0.832 against 0.624, plus 0.208, 121
+wins to 17 losses, p below 0.0001. Under the cheap reader, 0.543 against
+0.467, plus 0.076, p 0.0005.
+
+T7, the non-inferiority control on the 120 local questions: two losses and no
+wins, inside the limit of three, so the system does not regress on easy
+lookups.
+
+T8b, our full system against our own cheap floor on MultiHop-RAG: minus 0.119
+fact-level joint recall, CI [-0.137, -0.101], 111 wins to 380 losses,
+significant.
+
+Family B, the mechanism tests, all flat: S5 against the cheap floor plus 0.009
+(p 0.52), S5 against the static fusion minus 0.011, the overlay against no
+overlay minus 0.002, the overlay against its placebo plus 0.009. T5 reads "no
+measurable effect". Only the static fusion against the floor reaches plus
+0.019, and it does not survive Holm.
+
+## 12. The cost result, which is the headline
+
+Index cost on LongMemEval_S, 500 questions, 61.2 million tokens of corpus:
+post-graph-rag 144,281 model calls and USD 66.87 on the cheapest model
+available, or USD 361 projected on his own published models; ours USD 0.28 for
+every layer, and USD 0.00 once the overlay is dropped, which raises the score.
+That is 238 times cheaper than his cheapest build and 1,283 times cheaper than
+his published one, at USD 1.09 against USD 0.006 per million corpus tokens.
+Our index is 112 minutes of laptop CPU; his was 13.3 hours across four
+parallel shards against a hosted API.
+
+The tightest single measurement of the thesis: his extracted tables are two of
+the six channels inside our own system, and switching them off moves joint
+recall by plus 0.002 on LongMemEval and by nothing at all on MultiHop-RAG,
+where they return zero hits. Full detail in docs/part1/COST-AND-RESULT.md.
+
+## 13. The measured mechanism
+
+Four lenses over the per-query files, 57 claims each rechecked by a second
+agent with its own code, 5 refuted and 47 corrected. The explanation offered
+first, that lazy expansion spends the budget within documents already found,
+is refuted: expansion renders zero units on MultiHop-RAG in every arm at both
+budgets.
+
+What survives: a 4,000-token budget renders about 50 units of a 55 to 62 unit
+candidate list on chat memory, and about 9 of 100 on news. The machinery does
+the same thing on both corpora, it reorders the top of the pool, and that
+reorder is nearly free when almost everything is rendered and decisive when a
+ninth of it is. The added channels move the last needed document from a median
+rank of 12 to 17 against a window of nine, because under reciprocal rank
+fusion a unit carrying a topic vote and a community vote outranks an evidence
+chunk carrying only keyword and dense votes.
+
+The MultiHop-RAG loss decomposes as topic and community minus 0.050, expansion
+depth minus 0.020, planner weights minus 0.032, overlay minus 0.017. The one
+planner row that sets the group channels to zero is the only row that beats
+the cheap floor there. Full detail in docs/part1/MECHANISM.md.
+
+## 14. Against published results
+
+On the MultiHop-RAG paper's own retrieval metrics, computed before any budget
+cut, our plain fusion of BM25 and a small local encoder reaches MRR@10 0.757,
+MAP@10 0.574, Hits@10 0.992 against the paper's best published baseline
+(voyage-02 with a bge-reranker-large cross-encoder) at 0.586, 0.480 and 0.747.
+Our chunk is twice theirs, which flatters Hits, so the claim is narrow: a free
+local fusion lands in the band of a commercial embedder with a reranker.
+
+Our answering ceiling matches theirs independently: their GPT-4 on gold
+evidence 0.89, our gpt-5.4 on the evidence documents 0.895.
+
+Accuracy is not compared across papers, because the reader and judge move
+these benchmarks more than any retrieval method does; post-graph-rag's own
+repository reports 0.940, 0.858 and 0.782 for one run depending on the judge.
+Full detail in docs/part1/PUBLISHED-COMPARISON.md.
+
+## 15. The honest reading
 
 1. On chat memory the layers help a little and the cheap parts do the work.
    Capacity and fusion earn their place. The speaker rule, two lines of
@@ -516,7 +614,7 @@ phrases, 251 and 256 communities, 291 flagged pairs, 84 links.
    index to win. The room that remains is in temporal and preference questions
    and in the reader itself.
 
-## 12. What this suggests for the next design step
+## 16. What this suggests for the next design step
 
 Stated as measurable changes, not a redesign:
 
@@ -532,7 +630,7 @@ Stated as measurable changes, not a redesign:
   rendered budget with an excellent index. Ours wins on the rendered budget
   with a cheaper index. That is the finding worth building on.
 
-## 13. Caveats and disclosures
+## 17. Caveats and disclosures
 
 - One study model does every job. His extraction ran on the cheap model, not
   the models his published run used; the 18-question calibration row is the
