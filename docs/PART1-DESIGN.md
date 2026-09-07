@@ -733,3 +733,18 @@ run or any test in section 9 was computed.
    restart), taken from the verification reserve and the section 11 slack;
    the section 11 sum becomes 465, the hard total stays 500. This is a runner
    defect and a spend consequence, not a change to any measurement rule.
+   Superseded on 2026-09-07 by the owner's decision below.
+5. 2026-09-07, the owner stopped the post-graph-rag MultiHop-RAG build at 72
+   of 609 articles: "actually stop it. Let's not do his system." His reason
+   was sequencing, TG-VGRAG first, and the build served only T8a. T8a is
+   therefore recorded as not run, with the reason, alongside T2. The pass rule
+   then rests on T1 and T7, both on LongMemEval, and the report says so. T8b,
+   our system against our own cheap floor on MultiHop-RAG, was already
+   computed and stands: minus 0.119 fact-level joint recall, CI [-0.137,
+   -0.101], p 0.0001, significant after Holm. What T8a would have measured,
+   and the reason it is not simply a missing number, is recorded here: at a
+   4,000-token budget about 1.5 whole MultiHop-RAG articles fit (mean article
+   10,340 characters), his harness never chunks, and every question needs 2 to
+   4 different articles, so his rendered recall on that corpus was expected to
+   be low for the same unit-size reason as his 0.574 on LongMemEval. That is a
+   prediction that was not tested.
