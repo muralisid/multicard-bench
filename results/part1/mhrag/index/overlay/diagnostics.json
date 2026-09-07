@@ -1,0 +1,106 @@
+{
+  "corpus": "multihoprag",
+  "seed": 13,
+  "model": "gemini-2.5-flash-lite",
+  "tier": "vertex-flash",
+  "n_topics": 95,
+  "n_communities": 256,
+  "min_shared": 5,
+  "flag_share": 0.2,
+  "cap": 500,
+  "n_candidate_pairs": 1454,
+  "n_top_share": 291,
+  "n_flagged": 291,
+  "n_calls": 291,
+  "n_cached": 0,
+  "n_new": 291,
+  "n_parse_ok": 289,
+  "n_parse_failed": 2,
+  "n_inconsistent": 11,
+  "tokens_in": 178695,
+  "tokens_out": 34947,
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      }
+    },
+    "total_usd": 0.031848,
+    "total_calls": 291,
+    "by_tier": {
+      "vertex-flash": {
+        "calls": 291,
+        "tokens_in": 178695,
+        "tokens_out": 34947,
+        "usd": 0.031848
+      }
+    }
+  },
+  "confidence_histogram": {
+    "0.0-0.1": 0,
+    "0.1-0.2": 168,
+    "0.2-0.3": 16,
+    "0.3-0.4": 20,
+    "0.4-0.5": 0,
+    "0.5-0.6": 0,
+    "0.6-0.7": 1,
+    "0.7-0.8": 15,
+    "0.8-0.9": 7,
+    "0.9-1.0": 62
+  },
+  "links": {
+    "R0": 0,
+    "R2": 289,
+    "R3": 84,
+    "P0": 84
+  },
+  "placebo": {
+    "n": 84,
+    "seed": 13,
+    "passes": 1,
+    "swaps": 4,
+    "n_coincident": 0,
+    "n_duplicate": 0,
+    "method": "sorted by (topic, community); community targets permuted by rng(seed); bad positions repaired by pairwise swaps in rng order; weight stays with the topic endpoint",
+    "base_set": "R3"
+  },
+  "max_unit_tokens": 300,
+  "max_units": 8,
+  "n_terms": 10,
+  "max_output_tokens": 200,
+  "r3_threshold": 0.7
+}

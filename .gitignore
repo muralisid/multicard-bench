@@ -39,3 +39,12 @@ FREEZE
 
 # uv lockfile is committed; the venv is not
 .venv/
+
+# Part 1: regenerable bulk outputs. The rendered contexts, the fused candidate
+# lists with their per-channel provenance, and the full rankings are hundreds
+# of megabytes per corpus and are rebuilt by part1_retrieve from the committed
+# index artifacts. The scores, metrics, per-query rows, planner decisions,
+# answers with both judges' verdicts and the failure buckets are committed.
+/results/part1*/**/contexts_*.jsonl
+/results/part1*/**/candidates.json
+/results/part1*/**/rankings.json

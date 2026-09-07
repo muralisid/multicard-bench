@@ -1,0 +1,2856 @@
+{
+  "set": "R3",
+  "n": 570,
+  "links": [
+    {
+      "topic_id": 0,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 11,
+      "community_id": 5,
+      "w": 0.8
+    },
+    {
+      "topic_id": 6,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 4,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 20,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 12,
+      "community_id": 23,
+      "w": 0.8
+    },
+    {
+      "topic_id": 5,
+      "community_id": 28,
+      "w": 0.8
+    },
+    {
+      "topic_id": 33,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 47,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1,
+      "community_id": 27,
+      "w": 0.9
+    },
+    {
+      "topic_id": 25,
+      "community_id": 4,
+      "w": 0.9
+    },
+    {
+      "topic_id": 13,
+      "community_id": 35,
+      "w": 0.9
+    },
+    {
+      "topic_id": 52,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 49,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 42,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 93,
+      "community_id": 0,
+      "w": 0.8
+    },
+    {
+      "topic_id": 69,
+      "community_id": 26,
+      "w": 0.7
+    },
+    {
+      "topic_id": 96,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 31,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 64,
+      "community_id": 21,
+      "w": 0.7
+    },
+    {
+      "topic_id": 56,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 67,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 46,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 232,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 108,
+      "community_id": 17,
+      "w": 0.9
+    },
+    {
+      "topic_id": 37,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 62,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 87,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 118,
+      "community_id": 15,
+      "w": 0.85
+    },
+    {
+      "topic_id": 142,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 116,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 117,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 88,
+      "community_id": 19,
+      "w": 0.8
+    },
+    {
+      "topic_id": 48,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 27,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 172,
+      "community_id": 15,
+      "w": 0.7
+    },
+    {
+      "topic_id": 71,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 140,
+      "community_id": 20,
+      "w": 0.85
+    },
+    {
+      "topic_id": 154,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 216,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 155,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 124,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 189,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 51,
+      "community_id": 2,
+      "w": 0.7
+    },
+    {
+      "topic_id": 152,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 205,
+      "community_id": 19,
+      "w": 0.9
+    },
+    {
+      "topic_id": 75,
+      "community_id": 10,
+      "w": 0.9
+    },
+    {
+      "topic_id": 228,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 38,
+      "community_id": 14,
+      "w": 0.8
+    },
+    {
+      "topic_id": 239,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 187,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 99,
+      "community_id": 18,
+      "w": 0.7
+    },
+    {
+      "topic_id": 166,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 197,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 206,
+      "community_id": 20,
+      "w": 0.7
+    },
+    {
+      "topic_id": 233,
+      "community_id": 16,
+      "w": 0.9
+    },
+    {
+      "topic_id": 316,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 339,
+      "community_id": 18,
+      "w": 0.8
+    },
+    {
+      "topic_id": 296,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 236,
+      "community_id": 4,
+      "w": 0.9
+    },
+    {
+      "topic_id": 182,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 151,
+      "community_id": 26,
+      "w": 0.7
+    },
+    {
+      "topic_id": 218,
+      "community_id": 0,
+      "w": 0.7
+    },
+    {
+      "topic_id": 279,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 199,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 143,
+      "community_id": 23,
+      "w": 0.8
+    },
+    {
+      "topic_id": 19,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 167,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 110,
+      "community_id": 34,
+      "w": 0.85
+    },
+    {
+      "topic_id": 77,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 281,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 251,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 457,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 394,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 111,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 32,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 275,
+      "community_id": 8,
+      "w": 0.7
+    },
+    {
+      "topic_id": 444,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 188,
+      "community_id": 8,
+      "w": 0.8
+    },
+    {
+      "topic_id": 229,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 220,
+      "community_id": 21,
+      "w": 0.9
+    },
+    {
+      "topic_id": 345,
+      "community_id": 31,
+      "w": 0.7
+    },
+    {
+      "topic_id": 472,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 249,
+      "community_id": 18,
+      "w": 0.8
+    },
+    {
+      "topic_id": 314,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 59,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 512,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 405,
+      "community_id": 15,
+      "w": 0.8
+    },
+    {
+      "topic_id": 149,
+      "community_id": 32,
+      "w": 0.9
+    },
+    {
+      "topic_id": 201,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 476,
+      "community_id": 21,
+      "w": 0.7
+    },
+    {
+      "topic_id": 139,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 328,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 244,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 878,
+      "community_id": 23,
+      "w": 0.8
+    },
+    {
+      "topic_id": 27,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 273,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 519,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 211,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 268,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 450,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1384,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 598,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 422,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 368,
+      "community_id": 15,
+      "w": 0.9
+    },
+    {
+      "topic_id": 0,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 463,
+      "community_id": 5,
+      "w": 0.7
+    },
+    {
+      "topic_id": 620,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 390,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 966,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 458,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 433,
+      "community_id": 9,
+      "w": 0.7
+    },
+    {
+      "topic_id": 385,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 344,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 72,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 299,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 157,
+      "community_id": 30,
+      "w": 0.9
+    },
+    {
+      "topic_id": 195,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 375,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 495,
+      "community_id": 0,
+      "w": 0.7
+    },
+    {
+      "topic_id": 469,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 533,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 669,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 703,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 871,
+      "community_id": 17,
+      "w": 0.7
+    },
+    {
+      "topic_id": 246,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 191,
+      "community_id": 34,
+      "w": 0.9
+    },
+    {
+      "topic_id": 372,
+      "community_id": 7,
+      "w": 0.85
+    },
+    {
+      "topic_id": 727,
+      "community_id": 17,
+      "w": 0.7
+    },
+    {
+      "topic_id": 488,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 353,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 319,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 306,
+      "community_id": 36,
+      "w": 0.7
+    },
+    {
+      "topic_id": 835,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 801,
+      "community_id": 20,
+      "w": 0.8
+    },
+    {
+      "topic_id": 9,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 607,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 678,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 120,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 958,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 377,
+      "community_id": 31,
+      "w": 0.8
+    },
+    {
+      "topic_id": 776,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1089,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 849,
+      "community_id": 20,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 103,
+      "community_id": 8,
+      "w": 0.8
+    },
+    {
+      "topic_id": 580,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 758,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1627,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 516,
+      "community_id": 14,
+      "w": 0.8
+    },
+    {
+      "topic_id": 734,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1279,
+      "community_id": 16,
+      "w": 0.8
+    },
+    {
+      "topic_id": 827,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 78,
+      "community_id": 24,
+      "w": 0.7
+    },
+    {
+      "topic_id": 510,
+      "community_id": 14,
+      "w": 0.8
+    },
+    {
+      "topic_id": 407,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 89,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 288,
+      "community_id": 4,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1632,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 62,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 276,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 652,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 83,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1259,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 650,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 550,
+      "community_id": 21,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1249,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1447,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1513,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1424,
+      "community_id": 0,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1087,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1141,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 972,
+      "community_id": 11,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1173,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 806,
+      "community_id": 17,
+      "w": 0.9
+    },
+    {
+      "topic_id": 685,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 890,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 310,
+      "community_id": 31,
+      "w": 0.9
+    },
+    {
+      "topic_id": 86,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1401,
+      "community_id": 7,
+      "w": 0.8
+    },
+    {
+      "topic_id": 770,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1332,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1061,
+      "community_id": 34,
+      "w": 0.9
+    },
+    {
+      "topic_id": 283,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1237,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1044,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1096,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 982,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1045,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 798,
+      "community_id": 12,
+      "w": 0.7
+    },
+    {
+      "topic_id": 969,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 660,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1428,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 908,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 478,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1153,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 718,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 267,
+      "community_id": 19,
+      "w": 0.7
+    },
+    {
+      "topic_id": 655,
+      "community_id": 22,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1194,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1054,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 609,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1331,
+      "community_id": 17,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1386,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 170,
+      "community_id": 34,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1562,
+      "community_id": 26,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1100,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2002,
+      "community_id": 31,
+      "w": 0.8
+    },
+    {
+      "topic_id": 227,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 754,
+      "community_id": 16,
+      "w": 0.8
+    },
+    {
+      "topic_id": 540,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1769,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 309,
+      "community_id": 30,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1606,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1019,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2033,
+      "community_id": 44,
+      "w": 0.9
+    },
+    {
+      "topic_id": 584,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 977,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 693,
+      "community_id": 23,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1349,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 991,
+      "community_id": 11,
+      "w": 0.7
+    },
+    {
+      "topic_id": 886,
+      "community_id": 17,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1515,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 558,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2798,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1200,
+      "community_id": 18,
+      "w": 0.7
+    },
+    {
+      "topic_id": 480,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 921,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1165,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 311,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1024,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1206,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 417,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 802,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1450,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 109,
+      "community_id": 13,
+      "w": 0.9
+    },
+    {
+      "topic_id": 55,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1868,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1989,
+      "community_id": 17,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2066,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1454,
+      "community_id": 16,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1819,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 514,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 706,
+      "community_id": 21,
+      "w": 0.9
+    },
+    {
+      "topic_id": 133,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2044,
+      "community_id": 17,
+      "w": 0.7
+    },
+    {
+      "topic_id": 743,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 49,
+      "community_id": 5,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1312,
+      "community_id": 7,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1675,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 55,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 630,
+      "community_id": 27,
+      "w": 0.9
+    },
+    {
+      "topic_id": 288,
+      "community_id": 36,
+      "w": 0.7
+    },
+    {
+      "topic_id": 378,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 41,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1025,
+      "community_id": 10,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2100,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1904,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1426,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2314,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 454,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 420,
+      "community_id": 7,
+      "w": 0.85
+    },
+    {
+      "topic_id": 1564,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1142,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 12,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1945,
+      "community_id": 3,
+      "w": 0.7
+    },
+    {
+      "topic_id": 696,
+      "community_id": 8,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1864,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1083,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 0,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 861,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2224,
+      "community_id": 36,
+      "w": 0.9
+    },
+    {
+      "topic_id": 742,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1446,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1042,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1023,
+      "community_id": 20,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1740,
+      "community_id": 20,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1509,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1167,
+      "community_id": 29,
+      "w": 0.85
+    },
+    {
+      "topic_id": 1657,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1551,
+      "community_id": 21,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1799,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1806,
+      "community_id": 15,
+      "w": 0.7
+    },
+    {
+      "topic_id": 775,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2401,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 466,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 866,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1144,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1467,
+      "community_id": 44,
+      "w": 0.9
+    },
+    {
+      "topic_id": 855,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 684,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 697,
+      "community_id": 40,
+      "w": 0.9
+    },
+    {
+      "topic_id": 864,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1845,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1612,
+      "community_id": 23,
+      "w": 0.8
+    },
+    {
+      "topic_id": 297,
+      "community_id": 40,
+      "w": 0.9
+    },
+    {
+      "topic_id": 67,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 549,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1247,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1111,
+      "community_id": 30,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1071,
+      "community_id": 19,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1367,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 36,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 166,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1218,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1887,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2052,
+      "community_id": 10,
+      "w": 0.7
+    },
+    {
+      "topic_id": 355,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1510,
+      "community_id": 23,
+      "w": 0.7
+    },
+    {
+      "topic_id": 681,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 71,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1086,
+      "community_id": 16,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1706,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 129,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1177,
+      "community_id": 8,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1781,
+      "community_id": 11,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1010,
+      "community_id": 17,
+      "w": 0.8
+    },
+    {
+      "topic_id": 663,
+      "community_id": 34,
+      "w": 0.9
+    },
+    {
+      "topic_id": 230,
+      "community_id": 31,
+      "w": 0.9
+    },
+    {
+      "topic_id": 109,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 179,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 446,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 14,
+      "community_id": 15,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1888,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2657,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 893,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2227,
+      "community_id": 8,
+      "w": 0.7
+    },
+    {
+      "topic_id": 754,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1222,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 902,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1325,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1171,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 797,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2276,
+      "community_id": 15,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2449,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2433,
+      "community_id": 23,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1354,
+      "community_id": 28,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1750,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 817,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 723,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1841,
+      "community_id": 22,
+      "w": 0.85
+    },
+    {
+      "topic_id": 126,
+      "community_id": 27,
+      "w": 0.7
+    },
+    {
+      "topic_id": 86,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1623,
+      "community_id": 5,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1431,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 570,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1126,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 994,
+      "community_id": 23,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1607,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 185,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 456,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1918,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2402,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2553,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1959,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1732,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2327,
+      "community_id": 19,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2841,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 892,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 64,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1285,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2361,
+      "community_id": 4,
+      "w": 0.8
+    },
+    {
+      "topic_id": 3368,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 875,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 475,
+      "community_id": 16,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2435,
+      "community_id": 16,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1379,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2484,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1525,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 5,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 670,
+      "community_id": 3,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2843,
+      "community_id": 12,
+      "w": 0.7
+    },
+    {
+      "topic_id": 437,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 122,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1034,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 365,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 516,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 79,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 550,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2612,
+      "community_id": 20,
+      "w": 0.8
+    },
+    {
+      "topic_id": 816,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1499,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 170,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 569,
+      "community_id": 16,
+      "w": 0.85
+    },
+    {
+      "topic_id": 2078,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 642,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 196,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1604,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 657,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1677,
+      "community_id": 8,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1572,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 826,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 946,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 85,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 326,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2968,
+      "community_id": 15,
+      "w": 0.7
+    },
+    {
+      "topic_id": 950,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1310,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3272,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 692,
+      "community_id": 19,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3239,
+      "community_id": 27,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2205,
+      "community_id": 30,
+      "w": 0.9
+    },
+    {
+      "topic_id": 502,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1955,
+      "community_id": 5,
+      "w": 0.7
+    },
+    {
+      "topic_id": 961,
+      "community_id": 8,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1155,
+      "community_id": 7,
+      "w": 0.8
+    },
+    {
+      "topic_id": 115,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 148,
+      "community_id": 10,
+      "w": 0.9
+    },
+    {
+      "topic_id": 3232,
+      "community_id": 35,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1786,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 76,
+      "community_id": 4,
+      "w": 0.9
+    },
+    {
+      "topic_id": 284,
+      "community_id": 5,
+      "w": 0.8
+    },
+    {
+      "topic_id": 643,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1800,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 22,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 0,
+      "community_id": 31,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1533,
+      "community_id": 5,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1761,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1950,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2109,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2504,
+      "community_id": 0,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1527,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1203,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2483,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1481,
+      "community_id": 13,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2016,
+      "community_id": 10,
+      "w": 0.9
+    },
+    {
+      "topic_id": 80,
+      "community_id": 27,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2780,
+      "community_id": 34,
+      "w": 0.8
+    },
+    {
+      "topic_id": 0,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2797,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1458,
+      "community_id": 3,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2228,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 191,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1737,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1557,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 235,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 10,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2914,
+      "community_id": 15,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1575,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1655,
+      "community_id": 17,
+      "w": 0.8
+    },
+    {
+      "topic_id": 818,
+      "community_id": 28,
+      "w": 0.8
+    },
+    {
+      "topic_id": 254,
+      "community_id": 29,
+      "w": 0.7
+    },
+    {
+      "topic_id": 175,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 225,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1566,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2585,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2146,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 3099,
+      "community_id": 20,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2579,
+      "community_id": 20,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3212,
+      "community_id": 20,
+      "w": 0.7
+    },
+    {
+      "topic_id": 838,
+      "community_id": 17,
+      "w": 0.8
+    },
+    {
+      "topic_id": 85,
+      "community_id": 31,
+      "w": 0.7
+    },
+    {
+      "topic_id": 219,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2910,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 671,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1622,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 283,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2648,
+      "community_id": 13,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1085,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1314,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2658,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 487,
+      "community_id": 5,
+      "w": 0.85
+    },
+    {
+      "topic_id": 1524,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1982,
+      "community_id": 19,
+      "w": 0.9
+    },
+    {
+      "topic_id": 59,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 66,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 134,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 482,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1372,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2101,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 667,
+      "community_id": 12,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1276,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2963,
+      "community_id": 26,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3325,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2381,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1440,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1962,
+      "community_id": 11,
+      "w": 0.9
+    },
+    {
+      "topic_id": 680,
+      "community_id": 14,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1975,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1479,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 215,
+      "community_id": 3,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1851,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1329,
+      "community_id": 18,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2948,
+      "community_id": 19,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2286,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2207,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1457,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 192,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2051,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 847,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 217,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 331,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2167,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2572,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 9,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1890,
+      "community_id": 5,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3318,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 914,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1780,
+      "community_id": 9,
+      "w": 0.7
+    },
+    {
+      "topic_id": 645,
+      "community_id": 20,
+      "w": 0.7
+    },
+    {
+      "topic_id": 3359,
+      "community_id": 19,
+      "w": 0.8
+    },
+    {
+      "topic_id": 646,
+      "community_id": 27,
+      "w": 0.7
+    },
+    {
+      "topic_id": 356,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1960,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 299,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 392,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2286,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 109,
+      "community_id": 6,
+      "w": 0.9
+    },
+    {
+      "topic_id": 21,
+      "community_id": 13,
+      "w": 0.9
+    },
+    {
+      "topic_id": 204,
+      "community_id": 13,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2284,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 857,
+      "community_id": 16,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2188,
+      "community_id": 17,
+      "w": 0.9
+    },
+    {
+      "topic_id": 296,
+      "community_id": 18,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2229,
+      "community_id": 18,
+      "w": 0.7
+    },
+    {
+      "topic_id": 854,
+      "community_id": 21,
+      "w": 0.85
+    },
+    {
+      "topic_id": 762,
+      "community_id": 37,
+      "w": 0.7
+    },
+    {
+      "topic_id": 22,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 60,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 284,
+      "community_id": 3,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2782,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2624,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2493,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 110,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2858,
+      "community_id": 6,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1865,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 774,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 0,
+      "community_id": 25,
+      "w": 0.9
+    },
+    {
+      "topic_id": 834,
+      "community_id": 28,
+      "w": 0.8
+    },
+    {
+      "topic_id": 2631,
+      "community_id": 30,
+      "w": 0.7
+    },
+    {
+      "topic_id": 49,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2924,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1710,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 651,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 492,
+      "community_id": 6,
+      "w": 0.8
+    },
+    {
+      "topic_id": 1861,
+      "community_id": 43,
+      "w": 0.9
+    },
+    {
+      "topic_id": 17,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 196,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1293,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 329,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1098,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 858,
+      "community_id": 5,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1172,
+      "community_id": 9,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1996,
+      "community_id": 14,
+      "w": 0.7
+    },
+    {
+      "topic_id": 491,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 585,
+      "community_id": 27,
+      "w": 0.8
+    },
+    {
+      "topic_id": 47,
+      "community_id": 31,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2515,
+      "community_id": 37,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1898,
+      "community_id": 0,
+      "w": 0.9
+    },
+    {
+      "topic_id": 486,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1811,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2983,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 284,
+      "community_id": 4,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2603,
+      "community_id": 8,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2692,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 1119,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 922,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 537,
+      "community_id": 27,
+      "w": 0.7
+    },
+    {
+      "topic_id": 987,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2260,
+      "community_id": 1,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1131,
+      "community_id": 2,
+      "w": 0.9
+    },
+    {
+      "topic_id": 407,
+      "community_id": 3,
+      "w": 0.9
+    },
+    {
+      "topic_id": 2275,
+      "community_id": 7,
+      "w": 0.7
+    },
+    {
+      "topic_id": 2138,
+      "community_id": 14,
+      "w": 0.9
+    },
+    {
+      "topic_id": 1891,
+      "community_id": 16,
+      "w": 0.85
+    },
+    {
+      "topic_id": 678,
+      "community_id": 21,
+      "w": 0.8
+    },
+    {
+      "topic_id": 3329,
+      "community_id": 30,
+      "w": 0.7
+    }
+  ]
+}

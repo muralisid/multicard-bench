@@ -1,0 +1,116 @@
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+[mcb] part1_qa at 066d194 seed=13 threads=1
+[part1]   lme: 100/4500 answered (27s, USD 0.043)
+[part1]   lme: 200/4500 answered (47s, USD 0.089)
+[part1]   lme: 300/4500 answered (69s, USD 0.134)
+[part1]   lme: 400/4500 answered (92s, USD 0.180)
+[part1]   lme: 500/4500 answered (117s, USD 0.225)
+[part1]   lme: 600/4500 answered (140s, USD 0.290)
+[part1]   lme: 700/4500 answered (163s, USD 0.357)
+[part1]   lme: 800/4500 answered (184s, USD 0.424)
+[part1]   lme: 900/4500 answered (207s, USD 0.492)
+[part1]   lme: 1000/4500 answered (229s, USD 0.563)
+[part1]   lme: 1100/4500 answered (250s, USD 0.608)
+[part1]   lme: 1200/4500 answered (270s, USD 0.653)
+[part1]   lme: 1300/4500 answered (291s, USD 0.700)
+[part1]   lme: 1400/4500 answered (310s, USD 0.743)
+[part1]   lme: 1500/4500 answered (331s, USD 0.788)
+[part1]   lme: 1600/4500 answered (346s, USD 0.822)
+[part1]   lme: 1700/4500 answered (364s, USD 0.860)
+[part1]   lme: 1800/4500 answered (380s, USD 0.896)
+[part1]   lme: 1900/4500 answered (398s, USD 0.933)
+[part1]   lme: 2000/4500 answered (415s, USD 0.969)
+[part1]   lme: 2100/4500 answered (432s, USD 1.009)
+[part1]   lme: 2200/4500 answered (453s, USD 1.052)
+[part1]   lme: 2300/4500 answered (473s, USD 1.094)
+[part1]   lme: 2400/4500 answered (493s, USD 1.136)
+[part1]   lme: 2500/4500 answered (511s, USD 1.177)
+[part1]   lme: 2600/4500 answered (533s, USD 1.252)
+[part1]   lme: 2700/4500 answered (555s, USD 1.327)
+[part1]   lme: 2800/4500 answered (576s, USD 1.401)
+[part1]   lme: 2900/4500 answered (597s, USD 1.474)
+[part1]   lme: 3000/4500 answered (618s, USD 1.549)
+[part1]   lme: 3100/4500 answered (636s, USD 1.615)
+[part1]   lme: 3200/4500 answered (656s, USD 1.690)
+[part1]   lme: 3300/4500 answered (675s, USD 1.761)
+[part1]   lme: 3400/4500 answered (693s, USD 1.830)
+[part1]   lme: 3500/4500 answered (712s, USD 1.900)
+[part1]   lme: 3600/4500 answered (733s, USD 1.979)
+[part1]   lme: 3700/4500 answered (755s, USD 2.060)
+[part1]   lme: 3800/4500 answered (777s, USD 2.143)
+[part1]   lme: 3900/4500 answered (800s, USD 2.225)
+[part1]   lme: 4000/4500 answered (822s, USD 2.308)
+[part1]   lme: 4100/4500 answered (891s, USD 2.837)
+[part1]   lme: 4200/4500 answered (955s, USD 3.367)
+[part1]   lme: 4300/4500 answered (1018s, USD 3.891)
+[part1]   lme: 4400/4500 answered (1084s, USD 4.421)
+[part1]   lme: 4500/4500 answered (1151s, USD 4.954)
+[part1] judging 4500 records: audit first
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/run.py", line 129, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/run.py", line 124, in main
+    fn(**kwargs)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/experiments/part1.py", line 1079, in part1_qa
+    audit = E.run_judge_audit(all_records, subsets, cheap_fn, strong_fn, cheap_name, strong_name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/part1/evaluate.py", line 453, in run_judge_audit
+    judge_record(r, judge_strong_fn, strong)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/part1/evaluate.py", line 378, in judge_record
+    v = verdict_from_text(judge_fn(prompt).text)
+                          ^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/part1/evaluate.py", line 229, in <lambda>
+    return lambda prompt: generate(client, prompt, max_output_tokens)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/part1/evaluate.py", line 224, in generate
+    return _retry(lambda: client.generate(prompt, max_output_tokens=n))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/experiments/e5_longmemeval.py", line 656, in _retry
+    return fn()
+           ^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/part1/evaluate.py", line 224, in <lambda>
+    return _retry(lambda: client.generate(prompt, max_output_tokens=n))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/llm/azure.py", line 90, in generate
+    with urllib.request.urlopen(req, timeout=self.timeout) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 1391, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/urllib/request.py", line 1352, in do_open
+    r = h.getresponse()
+        ^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/http/client.py", line 1443, in getresponse
+    response.begin()
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/http/client.py", line 337, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/http/client.py", line 298, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/ssl.py", line 1326, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/ssl.py", line 1178, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out

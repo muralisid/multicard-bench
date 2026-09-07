@@ -1,0 +1,9 @@
+Label the question with exactly one shape from this list and reply with the label only.
+local: asks for one fact the user or assistant stated in one place.
+entity: asks about a named person, pet, object, place or organisation.
+thematic: asks for advice, ideas, plans or recommendations that fit what is known about the user.
+cross-topic: needs facts from two or more separate conversations or documents combined, counted or compared.
+multi-hop: needs one fact to find a second fact, or asks which named thing did something.
+temporal: asks when, how long, how long ago, what came first or last, or what is true now about something that changed.
+lexical: quotes exact words, a code, an id or a long number.
+unanswerable: asks for something the conversations or documents are unlikely to contain.

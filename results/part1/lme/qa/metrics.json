@@ -1,0 +1,1097 @@
+{
+  "design": "docs/PART1-DESIGN.md version 4",
+  "tag": "",
+  "sample": false,
+  "budgets": [
+    4000,
+    8000
+  ],
+  "readers": [
+    "reader_a",
+    "reader_b"
+  ],
+  "judge_audit": {
+    "n": 1287,
+    "n_agree": 1136,
+    "agreement": 0.8826728826728827,
+    "threshold": 0.9,
+    "cheap": "gemini-2.5-flash-lite",
+    "strong": "gpt-5.4",
+    "primary": "gpt-5.4",
+    "second": "gemini-2.5-flash-lite",
+    "cells": [
+      {
+        "arm": "S2_lazy",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S4_static",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S5_overlay_P0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 55,
+        "agreement": 0.9166666666666666
+      },
+      {
+        "arm": "S5_overlay_R0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_overlay_R2",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 54,
+        "agreement": 0.9
+      },
+      {
+        "arm": "S5_planner_rules",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "chandan_full_uncut",
+        "corpus": "longmemeval",
+        "reader": "chandan_own",
+        "n": 37,
+        "n_agree": 35,
+        "agreement": 0.9459459459459459
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 30,
+        "agreement": 0.6
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 28,
+        "agreement": 0.56
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 18,
+        "agreement": 0.9
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 44,
+        "agreement": 0.88
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 46,
+        "agreement": 0.92
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 48,
+        "agreement": 0.96
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 57,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 19,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "ours_sentence_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 42,
+        "agreement": 0.84
+      }
+    ]
+  },
+  "primary_judge": "gpt-5.4",
+  "second_judge": "gemini-2.5-flash-lite",
+  "cross_family_judge": "gemini-2.5-flash-lite",
+  "n_cross_family_scored": 682,
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "gemini-3.6-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.7-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.8-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.5-flash": {
+        "in": 1.5,
+        "out": 9.0
+      },
+      "gemini-3.5-flash-lite": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash-lite": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "gemini-2.5-pro": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "gemini-embedding-001": {
+        "in": 0.15,
+        "out": 0.0
+      },
+      "text-embedding-005": {
+        "in": 0.025,
+        "out": 0.0
+      }
+    },
+    "total_usd": 10.9883,
+    "total_calls": 17533,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 7022,
+        "tokens_in": 3938730,
+        "tokens_out": 55025,
+        "usd": 5.473663
+      },
+      "gemini-2.5-flash-lite": {
+        "calls": 10511,
+        "tokens_in": 53624563,
+        "tokens_out": 380454,
+        "usd": 5.514638
+      }
+    }
+  },
+  "max_usd": 40.0,
+  "judging_reserve": 0.15,
+  "answering_cap_usd": 34.0,
+  "judging_stopped": null,
+  "partial": {},
+  "corpus": "lme",
+  "n_records": 7879,
+  "n_jobs": 7500,
+  "arms": [
+    "S5_noPGR",
+    "closed_book",
+    "oracle_full",
+    "ours_cheap",
+    "ours_cheap_norule",
+    "ours_sentence_norule"
+  ],
+  "populations": {
+    "reader_a": 500,
+    "reader_b": 500,
+    "chandan_own": 500,
+    "chandan_subset": null,
+    "second_build_subset": null,
+    "per_arm": {
+      "S5_noPGR": 500,
+      "closed_book": 500,
+      "oracle_full": 500,
+      "ours_cheap": 500,
+      "ours_cheap_norule": 500,
+      "ours_sentence_norule": 500
+    }
+  },
+  "stopped": null,
+  "answering": {
+    "chandan_own": {
+      "longmemeval": {
+        "chandan_full_uncut": {
+          "4000": {
+            "n": 379,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.6912928759894459,
+            "acc_answerable": 0.6713881019830028,
+            "acc_abstention": 0.9615384615384616,
+            "n_answerable": 353,
+            "n_abstention": 26,
+            "by_type": {
+              "knowledge-update": {
+                "n": 57,
+                "acc": 0.7543859649122807
+              },
+              "multi-session": {
+                "n": 101,
+                "acc": 0.594059405940594
+              },
+              "single-session-assistant": {
+                "n": 41,
+                "acc": 0.975609756097561
+              },
+              "single-session-preference": {
+                "n": 25,
+                "acc": 0.44
+              },
+              "single-session-user": {
+                "n": 52,
+                "acc": 0.8653846153846154
+              },
+              "temporal-reasoning": {
+                "n": 103,
+                "acc": 0.6116504854368932
+              }
+            },
+            "second_judge": {
+              "n": 37,
+              "acc_all": 0.7567567567567568,
+              "n_disagree": 2
+            },
+            "cross_family": null
+          }
+        }
+      }
+    },
+    "reader_a": {
+      "longmemeval": {
+        "S5_noPGR": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.55,
+            "acc_answerable": 0.5276595744680851,
+            "acc_abstention": 0.9,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.717948717948718
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.39097744360902253
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.8928571428571429
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.23333333333333334
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8857142857142857
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3609022556390977
+              }
+            },
+            "second_judge": {
+              "n": 50,
+              "acc_all": 0.7,
+              "n_disagree": 9
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.544,
+            "acc_answerable": 0.5191489361702127,
+            "acc_abstention": 0.9333333333333333,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.7307692307692307
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.38345864661654133
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.8928571428571429
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.3
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8428571428571429
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3458646616541353
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "closed_book": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.078,
+            "acc_answerable": 0.019148936170212766,
+            "acc_abstention": 1.0,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.08974358974358974
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.09022556390977443
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.05357142857142857
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.0
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.08571428571428572
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.08270676691729323
+              }
+            },
+            "second_judge": {
+              "n": 50,
+              "acc_all": 0.42,
+              "n_disagree": 20
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.078,
+            "acc_answerable": 0.019148936170212766,
+            "acc_abstention": 1.0,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.08974358974358974
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.09022556390977443
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.05357142857142857
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.0
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.08571428571428572
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.08270676691729323
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "oracle_full": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.62,
+            "acc_answerable": 0.6,
+            "acc_abstention": 0.9333333333333333,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.8461538461538461
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.42857142857142855
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9821428571428571
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.43333333333333335
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8714285714285714
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.43609022556390975
+              }
+            },
+            "second_judge": {
+              "n": 50,
+              "acc_all": 0.84,
+              "n_disagree": 6
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.62,
+            "acc_answerable": 0.6,
+            "acc_abstention": 0.9333333333333333,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.8461538461538461
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.42857142857142855
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9821428571428571
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.43333333333333335
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8714285714285714
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.43609022556390975
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "ours_cheap": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.558,
+            "acc_answerable": 0.5361702127659574,
+            "acc_abstention": 0.9,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.717948717948718
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.40601503759398494
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.8928571428571429
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.36666666666666664
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8714285714285714
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3533834586466165
+              }
+            },
+            "second_judge": {
+              "n": 245,
+              "acc_all": 0.4204081632653061,
+              "n_disagree": 80
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.55,
+            "acc_answerable": 0.5276595744680851,
+            "acc_abstention": 0.9,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.7435897435897436
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.41353383458646614
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9107142857142857
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.3
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8428571428571429
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3233082706766917
+              }
+            },
+            "second_judge": {
+              "n": 222,
+              "acc_all": 0.33783783783783783,
+              "n_disagree": 75
+            },
+            "cross_family": null
+          }
+        },
+        "ours_cheap_norule": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.532,
+            "acc_answerable": 0.5042553191489362,
+            "acc_abstention": 0.9666666666666667,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.7948717948717948
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.3458646616541353
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9285714285714286
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.26666666666666666
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8285714285714286
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3007518796992481
+              }
+            },
+            "second_judge": {
+              "n": 50,
+              "acc_all": 0.76,
+              "n_disagree": 9
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.542,
+            "acc_answerable": 0.5212765957446809,
+            "acc_abstention": 0.8666666666666667,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.7692307692307693
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.3684210526315789
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9464285714285714
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.3333333333333333
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8428571428571429
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3007518796992481
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "ours_sentence_norule": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.56,
+            "acc_answerable": 0.5361702127659574,
+            "acc_abstention": 0.9333333333333333,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.8205128205128205
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.39097744360902253
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9464285714285714
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.3333333333333333
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8285714285714286
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3233082706766917
+              }
+            },
+            "second_judge": {
+              "n": 50,
+              "acc_all": 0.62,
+              "n_disagree": 8
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.546,
+            "acc_answerable": 0.5234042553191489,
+            "acc_abstention": 0.9,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.8205128205128205
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.3383458646616541
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9642857142857143
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.26666666666666666
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.8428571428571429
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.3233082706766917
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        }
+      }
+    },
+    "reader_b": {
+      "longmemeval": {
+        "closed_book": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.074,
+            "acc_answerable": 0.01702127659574468,
+            "acc_abstention": 0.9666666666666667,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.07692307692307693
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.08270676691729323
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.0
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.1
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.08571428571428572
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.08270676691729323
+              }
+            },
+            "second_judge": {
+              "n": 500,
+              "acc_all": 0.486,
+              "n_disagree": 214
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 500,
+              "n_scored": 500,
+              "complete": true,
+              "acc_all": 0.486,
+              "n_agree": 286,
+              "agreement": 0.572
+            }
+          }
+        },
+        "oracle_full": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.858,
+            "acc_answerable": 0.8574468085106383,
+            "acc_abstention": 0.8666666666666667,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.9615384615384616
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.6917293233082706
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9821428571428571
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.9333333333333333
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.9571428571428572
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.8421052631578947
+              }
+            },
+            "second_judge": {
+              "n": 500,
+              "acc_all": 0.858,
+              "n_disagree": 18
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 500,
+              "n_scored": 500,
+              "complete": true,
+              "acc_all": 0.858,
+              "n_agree": 482,
+              "agreement": 0.964
+            }
+          }
+        },
+        "ours_cheap": {
+          "4000": {
+            "n": 500,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.844,
+            "acc_answerable": 0.8382978723404255,
+            "acc_abstention": 0.9333333333333333,
+            "n_answerable": 470,
+            "n_abstention": 30,
+            "by_type": {
+              "knowledge-update": {
+                "n": 78,
+                "acc": 0.9230769230769231
+              },
+              "multi-session": {
+                "n": 133,
+                "acc": 0.7593984962406015
+              },
+              "single-session-assistant": {
+                "n": 56,
+                "acc": 0.9464285714285714
+              },
+              "single-session-preference": {
+                "n": 30,
+                "acc": 0.8
+              },
+              "single-session-user": {
+                "n": 70,
+                "acc": 0.9428571428571428
+              },
+              "temporal-reasoning": {
+                "n": 133,
+                "acc": 0.7969924812030075
+              }
+            },
+            "second_judge": {
+              "n": 500,
+              "acc_all": 0.834,
+              "n_disagree": 23
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 500,
+              "n_scored": 500,
+              "complete": true,
+              "acc_all": 0.834,
+              "n_agree": 477,
+              "agreement": 0.954
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_s": 7113.518712043762
+}

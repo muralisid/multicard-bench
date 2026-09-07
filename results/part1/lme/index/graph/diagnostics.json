@@ -1,0 +1,96 @@
+{
+  "graphrag_reference": "microsoft/graphrag 3.1.2, commit f40e9a26ce62ba0b3fef8837d24aafdcc6e6c704, packages/graphrag/graphrag/",
+  "spacy_model": "en_core_web_sm",
+  "seed": 13,
+  "n_process": 4,
+  "hub_share": 0.005,
+  "max_phrases_per_unit": 50,
+  "pronoun_rule": "a phrase is a pronoun when its chunk root is PRON in more than half of its occurrences (majority vote over occurrences)",
+  "hub_rule_order": "the hub rule runs before graphrag's counting and pruning: co-occurrence, PMI and the node and edge rules see the surviving phrases only, and graphrag's one ego node is the highest-degree content phrase left after the hub rule",
+  "article_rule": "every article token (a, an, the) stripped from the lemma",
+  "prune": {
+    "min_node_freq": 2,
+    "min_node_degree": 1,
+    "min_edge_weight_pct": 40.0,
+    "remove_ego_nodes": true,
+    "normalize_edge_weights": true
+  },
+  "n_units": 998042,
+  "n_occurrences": 8325691,
+  "phrases_per_unit_mean": 8.342024684331921,
+  "units_at_phrase_cap": 325,
+  "phrase_throughput_per_s": 268.7558230359429,
+  "n_phrases": 1227422,
+  "n_pronoun_phrases": 972,
+  "n_hub_phrases": 6137,
+  "n_dropped_by_hub_rule": 7064,
+  "n_nodes_after_hub_rule": 1220358,
+  "n_pairs_raw": 9686138,
+  "n_edges_before_pruning": 8349698,
+  "ego_node": "another option",
+  "n_removed_by_degree": 39660,
+  "n_removed_by_freq": 764086,
+  "n_nodes_after_node_rules": 416611,
+  "n_edges_removed_by_node_rules": 3778525,
+  "min_edge_weight": 1.3271985443680784e-06,
+  "n_edges_removed_by_percentile": 1824215,
+  "n_edges_removed_nonpositive": 0,
+  "n_nodes_after_pruning": 414513,
+  "n_edges_after_pruning": 2746958,
+  "topics": {
+    "n_topics": 3421,
+    "n_rows": 997712,
+    "n_rows_ignored_unknown_unit": 0,
+    "n_rows_ignored_unknown_topic": 0,
+    "n_units_with_topic_mass": 998042,
+    "n_nodes_with_topic_vector": 414513
+  },
+  "variants": {
+    "plain": {
+      "n_communities": 1670,
+      "modularity": 0.6340656083923633,
+      "largest_community_share_nodes": 0.0913023234494455,
+      "largest_community_share_units": 0.10969859146646278,
+      "n_units_with_community": 850175,
+      "n_units_without_community": 147867,
+      "graph_density": 3.1974720116958864e-05,
+      "intra_community_edge_share": 0.6811694973130277,
+      "intra_community_weight_share": 0.746866186960745,
+      "within_community_density_mean": 0.9517568164821393,
+      "community_size_mean_nodes": 248.21137724550897,
+      "community_members_mean_units": 509.08682634730536,
+      "topic_entropy": {
+        "mean_bits": 2.771227610677477,
+        "member_weighted_bits": 9.271119151349733,
+        "n_communities_with_topics": 1670
+      }
+    },
+    "topic": {
+      "n_communities": 1685,
+      "modularity": 0.6374113346296011,
+      "largest_community_share_nodes": 0.0931261504464275,
+      "largest_community_share_units": 0.11148998735554444,
+      "n_units_with_community": 850175,
+      "n_units_without_community": 147867,
+      "graph_density": 3.1974720116958864e-05,
+      "intra_community_edge_share": 0.6840377610433068,
+      "intra_community_weight_share": 0.7714009552312522,
+      "within_community_density_mean": 0.9485474041038493,
+      "community_size_mean_nodes": 246.00178041543026,
+      "community_members_mean_units": 504.5548961424332,
+      "topic_entropy": {
+        "mean_bits": 2.7812383730601504,
+        "member_weighted_bits": 9.140311580761013,
+        "n_communities_with_topics": 1685
+      }
+    }
+  },
+  "seconds": {
+    "phrases": 3713.5641889572144,
+    "edges_and_pruning": 3.2829511165618896,
+    "topic_weights": 12.24150800704956,
+    "leiden_plain": 99.5392541885376,
+    "leiden_topic": 82.71732091903687,
+    "total": 3913.3993949890137
+  }
+}

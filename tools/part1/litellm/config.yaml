@@ -1,0 +1,85 @@
+# litellm proxy over Vertex AI Gemini for the part1 tools.
+# Credentials come from the login shell environment; nothing secret is stored here.
+# VERTEX_AI_SERVICE_ACCOUNT_JSON holds the service account JSON content (same variable
+# the bench's multicard/llm/vertex.py reads). LITELLM_MASTER_KEY is read from
+# part1-tools/env/.proxy_key by start.sh.
+# Locations were measured on 2026-09-06: the 3.x models answer only in "global",
+# the 2.5 models and the embedding models answer in "us-central1".
+# gemini-3.7-flash and gemini-3.8-flash were added on 2026-09-06 after the
+# proxy verification found both answering on the global endpoint.
+
+model_list:
+  - model_name: gemini-3.6-flash
+    litellm_params:
+      model: vertex_ai/gemini-3.6-flash
+      vertex_project: scout7ai
+      vertex_location: global
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-3.7-flash
+    litellm_params:
+      model: vertex_ai/gemini-3.7-flash
+      vertex_project: scout7ai
+      vertex_location: global
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-3.8-flash
+    litellm_params:
+      model: vertex_ai/gemini-3.8-flash
+      vertex_project: scout7ai
+      vertex_location: global
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-3.5-flash
+    litellm_params:
+      model: vertex_ai/gemini-3.5-flash
+      vertex_project: scout7ai
+      vertex_location: global
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-3.5-flash-lite
+    litellm_params:
+      model: vertex_ai/gemini-3.5-flash-lite
+      vertex_project: scout7ai
+      vertex_location: global
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: vertex_ai/gemini-2.5-flash
+      vertex_project: scout7ai
+      vertex_location: us-central1
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+      # Default: thinking off. litellm maps reasoning_effort "none" to
+      # thinkingConfig {thinkingBudget: 0, includeThoughts: false} for 2.5 models.
+      # A request that sends its own reasoning_effort overrides this.
+      reasoning_effort: none
+  - model_name: gemini-2.5-flash-lite
+    litellm_params:
+      model: vertex_ai/gemini-2.5-flash-lite
+      vertex_project: scout7ai
+      vertex_location: us-central1
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: vertex_ai/gemini-2.5-pro
+      vertex_project: scout7ai
+      vertex_location: us-central1
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: gemini-embedding-001
+    litellm_params:
+      model: vertex_ai/gemini-embedding-001
+      vertex_project: scout7ai
+      vertex_location: us-central1
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+  - model_name: text-embedding-005
+    litellm_params:
+      model: vertex_ai/text-embedding-005
+      vertex_project: scout7ai
+      vertex_location: us-central1
+      vertex_credentials: os.environ/VERTEX_AI_SERVICE_ACCOUNT_JSON
+
+litellm_settings:
+  # Appends one JSON line per request (model, token counts, cost, latency) to
+  # part1-tools/env/requests.jsonl. See request_log.py next to this file.
+  callbacks: request_log.proxy_handler_instance
+  drop_params: true
+  set_verbose: false
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

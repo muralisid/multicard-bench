@@ -1,0 +1,588 @@
+post-graph-rag 1.12.0 schema dump, database pgr_smoke, realm smoke (schema_per_realm=True), embedding_dim 1536, taken 2026-09-06 with psql before the database was dropped.
+
+      List of schemas
+  Name  |       Owner       
+--------+-------------------
+ public | pg_database_owner
+ smoke  | pgr
+(2 rows)
+
+                 List of relations
+ Schema |           Name           | Type  | Owner 
+--------+--------------------------+-------+-------
+ smoke  | communities              | table | pgr
+ smoke  | communities_audit        | table | pgr
+ smoke  | communities_data         | table | pgr
+ smoke  | community_children       | table | pgr
+ smoke  | community_children_audit | table | pgr
+ smoke  | community_children_data  | table | pgr
+ smoke  | community_members        | table | pgr
+ smoke  | community_members_audit  | table | pgr
+ smoke  | community_members_data   | table | pgr
+ smoke  | doc_mentions             | table | pgr
+ smoke  | doc_mentions_audit       | table | pgr
+ smoke  | doc_mentions_data        | table | pgr
+ smoke  | documents                | table | pgr
+ smoke  | documents_audit          | table | pgr
+ smoke  | documents_data           | table | pgr
+ smoke  | entities                 | table | pgr
+ smoke  | entities_audit           | table | pgr
+ smoke  | entities_data            | table | pgr
+ smoke  | relations                | table | pgr
+ smoke  | relations_audit          | table | pgr
+ smoke  | relations_data           | table | pgr
+(21 rows)
+
+                                    List of relations
+ Schema |                 Name                 | Type  | Owner |          Table           
+--------+--------------------------------------+-------+-------+--------------------------
+ smoke  | communities_audit_pkey               | index | pgr   | communities_audit
+ smoke  | communities_data_pkey                | index | pgr   | communities_data
+ smoke  | communities_pkey                     | index | pgr   | communities
+ smoke  | community_children_audit_pkey        | index | pgr   | community_children_audit
+ smoke  | community_children_data_pkey         | index | pgr   | community_children_data
+ smoke  | community_children_pkey              | index | pgr   | community_children
+ smoke  | community_members_audit_pkey         | index | pgr   | community_members_audit
+ smoke  | community_members_data_pkey          | index | pgr   | community_members_data
+ smoke  | community_members_pkey               | index | pgr   | community_members
+ smoke  | doc_mentions_audit_pkey              | index | pgr   | doc_mentions_audit
+ smoke  | doc_mentions_data_pkey               | index | pgr   | doc_mentions_data
+ smoke  | doc_mentions_pkey                    | index | pgr   | doc_mentions
+ smoke  | documents_audit_pkey                 | index | pgr   | documents_audit
+ smoke  | documents_data_pkey                  | index | pgr   | documents_data
+ smoke  | documents_pkey                       | index | pgr   | documents
+ smoke  | entities_audit_pkey                  | index | pgr   | entities_audit
+ smoke  | entities_data_pkey                   | index | pgr   | entities_data
+ smoke  | entities_pkey                        | index | pgr   | entities
+ smoke  | idx_communities_data_embedding       | index | pgr   | communities_data
+ smoke  | idx_communities_data_id              | index | pgr   | communities_data
+ smoke  | idx_communities_data_payload         | index | pgr   | communities_data
+ smoke  | idx_communities_data_space           | index | pgr   | communities_data
+ smoke  | idx_communities_embedding            | index | pgr   | communities
+ smoke  | idx_communities_payload              | index | pgr   | communities
+ smoke  | idx_communities_payload_level_num    | index | pgr   | communities
+ smoke  | idx_communities_pt_valid_from        | index | pgr   | communities
+ smoke  | idx_communities_pt_valid_to          | index | pgr   | communities
+ smoke  | idx_communities_space                | index | pgr   | communities
+ smoke  | idx_communities_uuid                 | index | pgr   | communities
+ smoke  | idx_community_children_data_id       | index | pgr   | community_children_data
+ smoke  | idx_community_children_data_payload  | index | pgr   | community_children_data
+ smoke  | idx_community_children_data_space    | index | pgr   | community_children_data
+ smoke  | idx_community_children_payload       | index | pgr   | community_children
+ smoke  | idx_community_children_pt_valid_from | index | pgr   | community_children
+ smoke  | idx_community_children_pt_valid_to   | index | pgr   | community_children
+ smoke  | idx_community_children_space         | index | pgr   | community_children
+ smoke  | idx_community_children_to            | index | pgr   | community_children
+ smoke  | idx_community_children_uuid          | index | pgr   | community_children
+ smoke  | idx_community_members_data_id        | index | pgr   | community_members_data
+ smoke  | idx_community_members_data_payload   | index | pgr   | community_members_data
+ smoke  | idx_community_members_data_space     | index | pgr   | community_members_data
+ smoke  | idx_community_members_payload        | index | pgr   | community_members
+ smoke  | idx_community_members_pt_valid_from  | index | pgr   | community_members
+ smoke  | idx_community_members_pt_valid_to    | index | pgr   | community_members
+ smoke  | idx_community_members_space          | index | pgr   | community_members
+ smoke  | idx_community_members_to             | index | pgr   | community_members
+ smoke  | idx_community_members_uuid           | index | pgr   | community_members
+ smoke  | idx_doc_mentions_data_id             | index | pgr   | doc_mentions_data
+ smoke  | idx_doc_mentions_data_payload        | index | pgr   | doc_mentions_data
+ smoke  | idx_doc_mentions_data_space          | index | pgr   | doc_mentions_data
+ smoke  | idx_doc_mentions_payload             | index | pgr   | doc_mentions
+ smoke  | idx_doc_mentions_pt_valid_from       | index | pgr   | doc_mentions
+ smoke  | idx_doc_mentions_pt_valid_to         | index | pgr   | doc_mentions
+ smoke  | idx_doc_mentions_space               | index | pgr   | doc_mentions
+ smoke  | idx_doc_mentions_to                  | index | pgr   | doc_mentions
+ smoke  | idx_doc_mentions_uuid                | index | pgr   | doc_mentions
+ smoke  | idx_documents_data_embedding         | index | pgr   | documents_data
+ smoke  | idx_documents_data_id                | index | pgr   | documents_data
+ smoke  | idx_documents_data_payload           | index | pgr   | documents_data
+ smoke  | idx_documents_data_space             | index | pgr   | documents_data
+ smoke  | idx_documents_embedding              | index | pgr   | documents
+ smoke  | idx_documents_payload                | index | pgr   | documents
+ smoke  | idx_documents_pt_valid_from          | index | pgr   | documents
+ smoke  | idx_documents_pt_valid_to            | index | pgr   | documents
+ smoke  | idx_documents_space                  | index | pgr   | documents
+ smoke  | idx_documents_uuid                   | index | pgr   | documents
+ smoke  | idx_entities_data_embedding          | index | pgr   | entities_data
+ smoke  | idx_entities_data_id                 | index | pgr   | entities_data
+ smoke  | idx_entities_data_payload            | index | pgr   | entities_data
+ smoke  | idx_entities_data_space              | index | pgr   | entities_data
+ smoke  | idx_entities_embedding               | index | pgr   | entities
+ smoke  | idx_entities_payload                 | index | pgr   | entities
+ smoke  | idx_entities_payload_dormant_since   | index | pgr   | entities
+ smoke  | idx_entities_pt_valid_from           | index | pgr   | entities
+ smoke  | idx_entities_pt_valid_to             | index | pgr   | entities
+ smoke  | idx_entities_space                   | index | pgr   | entities
+ smoke  | idx_entities_uuid                    | index | pgr   | entities
+ smoke  | idx_relations_data_embedding         | index | pgr   | relations_data
+ smoke  | idx_relations_data_id                | index | pgr   | relations_data
+ smoke  | idx_relations_data_payload           | index | pgr   | relations_data
+ smoke  | idx_relations_data_space             | index | pgr   | relations_data
+ smoke  | idx_relations_embedding              | index | pgr   | relations
+ smoke  | idx_relations_payload                | index | pgr   | relations
+ smoke  | idx_relations_payload_t_created      | index | pgr   | relations
+ smoke  | idx_relations_payload_t_expired      | index | pgr   | relations
+ smoke  | idx_relations_pt_valid_from          | index | pgr   | relations
+ smoke  | idx_relations_pt_valid_to            | index | pgr   | relations
+ smoke  | idx_relations_space                  | index | pgr   | relations
+ smoke  | idx_relations_to                     | index | pgr   | relations
+ smoke  | idx_relations_uuid                   | index | pgr   | relations
+ smoke  | relations_audit_pkey                 | index | pgr   | relations_audit
+ smoke  | relations_data_pkey                  | index | pgr   | relations_data
+ smoke  | relations_pkey                       | index | pgr   | relations
+ smoke  | smoke_entities_name_uniq             | index | pgr   | entities
+ smoke  | smoke_relations_fts                  | index | pgr   | relations
+(95 rows)
+
+                                                                                                                                                                           Table "smoke.documents"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.documents_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'documents'::text) || '/'::text) || id::text) stored
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+ embedding     | vector(1536)             |           |          | 
+Indexes:
+    "documents_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_documents_embedding" hnsw (embedding vector_cosine_ops)
+    "idx_documents_payload" gin (payload)
+    "idx_documents_pt_valid_from" btree (pt_valid_from)
+    "idx_documents_pt_valid_to" btree (pt_valid_to)
+    "idx_documents_space" btree (realm, space)
+    "idx_documents_uuid" UNIQUE, btree (uuid)
+Referenced by:
+    TABLE "smoke.doc_mentions" CONSTRAINT "doc_mentions_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.documents(realm, id) ON DELETE CASCADE
+    TABLE "smoke.documents_data" CONSTRAINT "documents_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.documents(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_documents_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.documents FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_documents_modtime BEFORE UPDATE ON smoke.documents FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                           Table "smoke.entities"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.entities_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'entities'::text) || '/'::text) || id::text) stored
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+ embedding     | vector(1536)             |           |          | 
+Indexes:
+    "entities_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_entities_embedding" hnsw (embedding vector_cosine_ops)
+    "idx_entities_payload" gin (payload)
+    "idx_entities_payload_dormant_since" btree ((payload ->> 'dormant_since'::text))
+    "idx_entities_pt_valid_from" btree (pt_valid_from)
+    "idx_entities_pt_valid_to" btree (pt_valid_to)
+    "idx_entities_space" btree (realm, space)
+    "idx_entities_uuid" UNIQUE, btree (uuid)
+    "smoke_entities_name_uniq" UNIQUE, btree (realm, space, lower(payload ->> 'name'::text))
+Referenced by:
+    TABLE "smoke.community_members" CONSTRAINT "community_members_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.doc_mentions" CONSTRAINT "doc_mentions_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.entities_data" CONSTRAINT "entities_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.relations" CONSTRAINT "relations_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.relations" CONSTRAINT "relations_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_entities_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.entities FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_entities_modtime BEFORE UPDATE ON smoke.entities FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                          Table "smoke.communities"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.communities_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'communities'::text) || '/'::text) || id::text) stored
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+ embedding     | vector(1536)             |           |          | 
+Indexes:
+    "communities_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_communities_embedding" hnsw (embedding vector_cosine_ops)
+    "idx_communities_payload" gin (payload)
+    "idx_communities_payload_level_num" btree (((payload ->> 'level'::text)::numeric))
+    "idx_communities_pt_valid_from" btree (pt_valid_from)
+    "idx_communities_pt_valid_to" btree (pt_valid_to)
+    "idx_communities_space" btree (realm, space)
+    "idx_communities_uuid" UNIQUE, btree (uuid)
+Referenced by:
+    TABLE "smoke.communities_data" CONSTRAINT "communities_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.community_children" CONSTRAINT "community_children_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.community_children" CONSTRAINT "community_children_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+    TABLE "smoke.community_members" CONSTRAINT "community_members_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_communities_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.communities FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_communities_modtime BEFORE UPDATE ON smoke.communities FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                           Table "smoke.relations"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.relations_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'entities-entities'::text) || '/'::text) || id::text) stored
+ from_id       | bigint                   |           | not null | 
+ to_id         | bigint                   |           | not null | 
+ relation_type | text                     |           | not null | 
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+ embedding     | vector(1536)             |           |          | 
+Indexes:
+    "relations_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_relations_embedding" hnsw (embedding vector_cosine_ops)
+    "idx_relations_payload" gin (payload)
+    "idx_relations_payload_t_created" btree ((payload ->> 't_created'::text))
+    "idx_relations_payload_t_expired" btree ((payload ->> 't_expired'::text))
+    "idx_relations_pt_valid_from" btree (pt_valid_from)
+    "idx_relations_pt_valid_to" btree (pt_valid_to)
+    "idx_relations_space" btree (realm, space)
+    "idx_relations_to" btree (realm, to_id)
+    "idx_relations_uuid" UNIQUE, btree (uuid)
+    "smoke_relations_fts" gin (to_tsvector('english'::regconfig, (COALESCE(relation_type, ''::text) || ' '::text) || COALESCE(payload ->> 'description'::text, ''::text)))
+Foreign-key constraints:
+    "relations_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+    "relations_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+Referenced by:
+    TABLE "smoke.relations_data" CONSTRAINT "relations_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.relations(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_relations_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.relations FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_relations_modtime BEFORE UPDATE ON smoke.relations FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                         Table "smoke.doc_mentions"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.doc_mentions_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'documents-entities'::text) || '/'::text) || id::text) stored
+ from_id       | bigint                   |           | not null | 
+ to_id         | bigint                   |           | not null | 
+ relation_type | text                     |           | not null | 
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+Indexes:
+    "doc_mentions_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_doc_mentions_payload" gin (payload)
+    "idx_doc_mentions_pt_valid_from" btree (pt_valid_from)
+    "idx_doc_mentions_pt_valid_to" btree (pt_valid_to)
+    "idx_doc_mentions_space" btree (realm, space)
+    "idx_doc_mentions_to" btree (realm, to_id)
+    "idx_doc_mentions_uuid" UNIQUE, btree (uuid)
+Foreign-key constraints:
+    "doc_mentions_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.documents(realm, id) ON DELETE CASCADE
+    "doc_mentions_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+Referenced by:
+    TABLE "smoke.doc_mentions_data" CONSTRAINT "doc_mentions_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.doc_mentions(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_doc_mentions_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.doc_mentions FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_doc_mentions_modtime BEFORE UPDATE ON smoke.doc_mentions FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                       Table "smoke.community_members"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.community_members_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'communities-entities'::text) || '/'::text) || id::text) stored
+ from_id       | bigint                   |           | not null | 
+ to_id         | bigint                   |           | not null | 
+ relation_type | text                     |           | not null | 
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+Indexes:
+    "community_members_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_community_members_payload" gin (payload)
+    "idx_community_members_pt_valid_from" btree (pt_valid_from)
+    "idx_community_members_pt_valid_to" btree (pt_valid_to)
+    "idx_community_members_space" btree (realm, space)
+    "idx_community_members_to" btree (realm, to_id)
+    "idx_community_members_uuid" UNIQUE, btree (uuid)
+Foreign-key constraints:
+    "community_members_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+    "community_members_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.entities(realm, id) ON DELETE CASCADE
+Referenced by:
+    TABLE "smoke.community_members_data" CONSTRAINT "community_members_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.community_members(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_community_members_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.community_members FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_community_members_modtime BEFORE UPDATE ON smoke.community_members FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                                                                                                                                                      Table "smoke.community_children"
+    Column     |           Type           | Collation | Nullable |                                                                                                                                                  Default                                                                                                                                                  
+---------------+--------------------------+-----------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ realm         | text                     |           | not null | 
+ id            | bigint                   |           | not null | nextval('smoke.community_children_id_seq'::regclass)
+ space         | character varying(255)   |           | not null | 'default'::character varying
+ uuid          | uuid                     |           | not null | gen_random_uuid()
+ fqid          | text                     |           | not null | generated always as ((((realm || '/'::text) || 'communities-communities'::text) || '/'::text) || id::text) stored
+ from_id       | bigint                   |           | not null | 
+ to_id         | bigint                   |           | not null | 
+ relation_type | text                     |           | not null | 
+ payload       | jsonb                    |           | not null | '{}'::jsonb
+ created_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ updated_at    | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ pt_valid_from | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_from'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                        +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_from'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_from'::text, '-'::text, 3), ''::text), '01'::text)+
+               |                          |           |          | END) stored
+ pt_valid_to   | text                     |           |          | generated always as (                                                                                                                                                                                                                                                                                    +
+               |                          |           |          | CASE                                                                                                                                                                                                                                                                                                     +
+               |                          |           |          |     WHEN (payload ->> 'valid_to'::text) IS NULL THEN NULL::text                                                                                                                                                                                                                                          +
+               |                          |           |          |     ELSE (((split_part(payload ->> 'valid_to'::text, '-'::text, 1) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 2), ''::text), '01'::text)) || '-'::text) || COALESCE(NULLIF(split_part(payload ->> 'valid_to'::text, '-'::text, 3), ''::text), '01'::text)      +
+               |                          |           |          | END) stored
+Indexes:
+    "community_children_pkey" PRIMARY KEY, btree (realm, id)
+    "idx_community_children_payload" gin (payload)
+    "idx_community_children_pt_valid_from" btree (pt_valid_from)
+    "idx_community_children_pt_valid_to" btree (pt_valid_to)
+    "idx_community_children_space" btree (realm, space)
+    "idx_community_children_to" btree (realm, to_id)
+    "idx_community_children_uuid" UNIQUE, btree (uuid)
+Foreign-key constraints:
+    "community_children_realm_from_id_fkey" FOREIGN KEY (realm, from_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+    "community_children_realm_to_id_fkey" FOREIGN KEY (realm, to_id) REFERENCES smoke.communities(realm, id) ON DELETE CASCADE
+Referenced by:
+    TABLE "smoke.community_children_data" CONSTRAINT "community_children_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.community_children(realm, id) ON DELETE CASCADE
+Triggers:
+    audit_community_children_trigger AFTER INSERT OR DELETE OR UPDATE ON smoke.community_children FOR EACH ROW EXECUTE FUNCTION smoke.audit_trigger_func()
+    update_community_children_modtime BEFORE UPDATE ON smoke.community_children FOR EACH ROW EXECUTE FUNCTION smoke.update_modified_column()
+
+                                            Table "smoke.documents_data"
+  Column   |           Type           | Collation | Nullable |                        Default                        
+-----------+--------------------------+-----------+----------+-------------------------------------------------------
+ data_id   | bigint                   |           | not null | nextval('smoke.documents_data_data_id_seq'::regclass)
+ realm     | text                     |           | not null | 
+ id        | bigint                   |           | not null | 
+ space     | character varying(255)   |           | not null | 'default'::character varying
+ payload   | jsonb                    |           | not null | '{}'::jsonb
+ timestamp | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ embedding | vector(1536)             |           |          | 
+Indexes:
+    "documents_data_pkey" PRIMARY KEY, btree (data_id)
+    "idx_documents_data_embedding" hnsw (embedding vector_cosine_ops)
+    "idx_documents_data_id" btree (realm, id)
+    "idx_documents_data_payload" gin (payload)
+    "idx_documents_data_space" btree (realm, space)
+Foreign-key constraints:
+    "documents_data_realm_id_fkey" FOREIGN KEY (realm, id) REFERENCES smoke.documents(realm, id) ON DELETE CASCADE
+
+                                             Table "smoke.documents_audit"
+   Column   |           Type           | Collation | Nullable |                         Default                         
+------------+--------------------------+-----------+----------+---------------------------------------------------------
+ audit_id   | bigint                   |           | not null | nextval('smoke.documents_audit_audit_id_seq'::regclass)
+ realm      | text                     |           | not null | 
+ space      | character varying(255)   |           |          | 'default'::character varying
+ action     | text                     |           | not null | 
+ changed_by | text                     |           |          | 
+ changed_at | timestamp with time zone |           |          | CURRENT_TIMESTAMP
+ old_row    | jsonb                    |           |          | 
+ new_row    | jsonb                    |           |          | 
+Indexes:
+    "documents_audit_pkey" PRIMARY KEY, btree (audit_id)
+
+                                List of functions
+ Schema |          Name          | Result data type | Argument data types | Type 
+--------+------------------------+------------------+---------------------+------
+ smoke  | audit_trigger_func     | trigger          |                     | func
+ smoke  | update_modified_column | trigger          |                     | func
+(2 rows)
+
+    tbl    |      k       | count 
+-----------+--------------+-------
+ documents | category     |     3
+ documents | content_hash |     3
+ documents | doc_key      |     3
+ documents | document     |     3
+ documents | report_date  |     3
+ documents | source       |     3
+ documents | text         |     3
+(7 rows)
+
+   tbl    |      k      | count 
+----------+-------------+-------
+ entities | aliases     |    18
+ entities | description |    18
+ entities | name        |    18
+ entities | type        |    18
+(4 rows)
+
+    tbl    |      k      | count 
+-----------+-------------+-------
+ relations | confidence  |    48
+ relations | description |    48
+ relations | negated     |    48
+ relations | sources     |    48
+ relations | t_created   |    48
+ relations | t_expired   |    48
+ relations | valid_from  |    48
+ relations | valid_to    |    48
+ relations | weight      |    48
+(9 rows)
+
+ id |         src          |            relation_type            |             tgt             |     vf     |     vt     | pt_valid_from | pt_valid_to |  sources   | w |  neg  | sup | t_expired 
+----+----------------------+-------------------------------------+-----------------------------+------------+------------+---------------+-------------+------------+---+-------+-----+-----------
+  1 | Harbourline Robotics | locate_in                           | Bristol                     |            |            |               |             | ["1"]      | 1 | false |     | 
+  2 | Bristol              | locate_in                           | England                     |            |            |               |             | ["1"]      | 1 | false |     | 
+  3 | Anika Rao            | found                               | Harbourline Robotics        | 2022-01    |            | 2022-01-01    |             | ["1"]      | 1 | false |     | 
+  4 | Anika Rao            | chief_executive_of                  | Harbourline Robotics        | 2022-01    |            | 2022-01-01    |             | ["1"]      | 1 | false |     | 
+  5 | Priya Menon          | chief_financial_officer_of          | Harbourline Robotics        | 2022-03    |            | 2022-03-01    |             | ["1"]      | 1 | false |     | 
+  6 | Priya Menon          | work_for                            | Severn Ventures             |            | 2022-03    |               | 2022-03-01  | ["1"]      | 1 | false |     | 
+  7 | Daniel Okafor        | chief_technology_officer_of         | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+  8 | Daniel Okafor        | work_for                            | Bristol Robotics Laboratory |            |            |               |             | ["1"]      | 1 | false |     | 
+  9 | Harbourline Robotics | produce                             | Kestrel version 2           |            |            |               |             | ["1", "3"] | 2 | false |     | 
+ 10 | Kestrel version 2    | test_at                             | Swindon depot               | 2022-11    | 2023-06    | 2022-11-01    | 2023-06-01  | ["1"]      | 1 | false |     | 
+ 11 | Northgate Logistics  | operate                             | Swindon depot               |            |            |               |             | ["1"]      | 1 | false |     | 
+ 12 | Northgate Logistics  | headquarter_in                      | Reading                     |            |            |               |             | ["1"]      | 1 | false |     | 
+ 13 | Northgate Logistics  | customer_of                         | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+ 14 | Sarah Whitcombe      | operations_director_of              | Northgate Logistics         |            |            |               |             | ["1"]      | 1 | false |     | 
+ 15 | Sarah Whitcombe      | oversee                             | Kestrel version 2           | 2022-11    | 2023-06    | 2022-11-01    | 2023-06-01  | ["1"]      | 1 | false |     | 
+ 16 | Anika Rao            | member_of_board_of                  | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+ 17 | Priya Menon          | member_of_board_of                  | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+ 18 | Margaret Lindqvist   | member_of_board_of                  | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+ 19 | Swindon depot        | locate_in                           | Swindon depot               |            |            |               |             | ["1"]      | 1 | false |     | 
+ 20 | Margaret Lindqvist   | chair_of                            | Harbourline Robotics        |            |            |               |             | ["1"]      | 1 | false |     | 
+ 21 | Harbourline Robotics | release_product                     | Kestrel version 2           | 2023-08    |            | 2023-08-01    |             | ["2"]      | 1 | false |     | 
+ 22 | Daniel Okafor        | lead_redesign_of                    | Kestrel version 2           |            |            |               |             | ["2"]      | 1 | false |     | 
+ 23 | Northgate Logistics  | sign_contract_with                  | Harbourline Robotics        | 2023-08-21 | 2026-08-21 | 2023-08-21    | 2026-08-21  | ["2"]      | 1 | false |     | 
+ 24 | Sarah Whitcombe      | sign_contract_for                   | Northgate Logistics         | 2023-08-21 |            | 2023-08-21    |             | ["2"]      | 1 | false |     | 
+ 25 | Northgate Logistics  | deploy_product                      | Kestrel version 2           | 2023-08-21 |            | 2023-08-21    |             | ["2", "3"] | 2 | false |     | 
+ 26 | Severn Ventures      | lead_funding_round_for              | Harbourline Robotics        |            |            |               |             | ["2"]      | 1 | false |     | 
+ 27 | Priya Menon          | serve_as_chief_financial_officer_of | Harbourline Robotics        |            |            |               |             | ["2"]      | 1 | false |     | 
+ 28 | Anika Rao            | serve_as_chief_executive_of         | Harbourline Robotics        |            |            |               |             | ["2"]      | 1 | false |     | 
+ 29 | James Achterberg     | work_as_partner_for                 | Severn Ventures             |            |            |               |             | ["2"]      | 1 | false |     | 
+ 30 | James Achterberg     | join_board_of                       | Harbourline Robotics        |            |            |               |             | ["2"]      | 1 | false |     | 
+ 31 | Harbourline Robotics | open_office_in                      | Cardiff                     | 2023-07    |            | 2023-07-01    |             | ["2"]      | 1 | false |     | 
+ 32 | Harbourline Robotics | headquarter_in                      | Bristol                     |            |            |               |             | ["2"]      | 1 | false |     | 
+ 33 | Harbourline Robotics | recruit_from                        | Cardiff University          |            |            |               |             | ["2"]      | 1 | false |     | 
+ 34 | Priya Menon          | lead_fundraising_for                | Harbourline Robotics        |            |            |               |             | ["2"]      | 1 | false |     | 
+ 35 | Northgate Logistics  | depot_in                            | Swindon depot               |            |            |               |             | ["2"]      | 1 | false |     | 
+ 36 | Northgate Logistics  | depot_in                            | Reading                     |            |            |               |             | ["2"]      | 1 | false |     | 
+ 37 | Priya Menon          | hold_position                       | Harbourline Robotics        |            | 2024-04-30 |               | 2024-04-30  | ["3"]      | 1 | false |     | 
+ 38 | Priya Menon          | serve_as_director_of                | Harbourline Robotics        |            |            |               |             | ["3"]      | 1 | false |     | 
+ 39 | Tomas Ekholm         | hold_position                       | Harbourline Robotics        | 2024-05-01 |            | 2024-05-01    |             | ["3"]      | 1 | false |     | 
+ 40 | Tomas Ekholm         | hold_position                       | Northgate Logistics         |            |            |               |             | ["3"]      | 1 | false |     | 
+ 41 | Anika Rao            | hold_position                       | Harbourline Robotics        |            |            |               |             | ["3"]      | 1 | false |     | 
+ 42 | Daniel Okafor        | hold_position                       | Harbourline Robotics        |            |            |               |             | ["3"]      | 1 | false |     | 
+ 43 | Margaret Lindqvist   | hold_position                       | Harbourline Robotics        |            |            |               |             | ["3"]      | 1 | false |     | 
+ 44 | Harbourline Robotics | locate_headquarters_in              | Bristol                     |            | 2024-03    |               | 2024-03-01  | ["3"]      | 1 | false |     | 
+ 45 | Harbourline Robotics | locate_headquarters_in              | Cardiff                     | 2024-03    |            | 2024-03-01    |             | ["3"]      | 1 | false |     | 
+ 46 | Harbourline Robotics | operate_facility_in                 | Bristol                     |            |            |               |             | ["3"]      | 1 | false |     | 
+ 47 | Sarah Whitcombe      | work_for                            | Northgate Logistics         |            |            |               |             | ["3"]      | 1 | false |     | 
+ 48 | Harbourline Robotics | customer                            | Northgate Logistics         |            |            |               |             | ["3"]      | 1 | false |     | 
+(48 rows)
+
+ id |            name             |     type     |              aliases               
+----+-----------------------------+--------------+------------------------------------
+  1 | Harbourline Robotics        | Organization | ["Harbourline", "the company"]
+  2 | Bristol                     | Location     | []
+  3 | England                     | Location     | []
+  4 | Anika Rao                   | Person       | ["Rao"]
+  5 | Priya Menon                 | Person       | ["Menon"]
+  6 | Severn Ventures             | Organization | []
+  7 | Daniel Okafor               | Person       | ["Okafor"]
+  8 | Bristol Robotics Laboratory | Organization | []
+  9 | Kestrel version 2           | Product      | ["Kestrel", "Kestrel picking arm"]
+ 10 | Swindon depot               | Location     | ["Swindon"]
+ 11 | Northgate Logistics         | Organization | ["Northgate"]
+ 12 | Reading                     | Location     | []
+ 13 | Sarah Whitcombe             | Person       | ["Whitcombe"]
+ 14 | Margaret Lindqvist          | Person       | ["Lindqvist"]
+ 15 | James Achterberg            | Person       | []
+ 16 | Cardiff                     | Location     | []
+ 17 | Cardiff University          | Organization | []
+ 18 | Tomas Ekholm                | Person       | ["Ekholm"]
+(18 rows)
+
+ chunk_id | entities_mentioned 
+----------+--------------------
+        1 |                 14
+        2 |                 14
+        3 |                 11
+(3 rows)
+
+ action | count 
+--------+-------
+ UPDATE |     2
+ INSERT |    48
+(2 rows)
+
+ action | count 
+--------+-------
+ UPDATE |    22
+ INSERT |    18
+(2 rows)
+

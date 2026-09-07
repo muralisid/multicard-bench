@@ -1,0 +1,321 @@
+{
+  "judge_audit": {
+    "n": 1287,
+    "n_agree": 1136,
+    "agreement": 0.8826728826728827,
+    "threshold": 0.9,
+    "cheap": "gemini-2.5-flash-lite",
+    "strong": "gpt-5.4",
+    "primary": "gpt-5.4",
+    "second": "gemini-2.5-flash-lite",
+    "cells": [
+      {
+        "arm": "S2_lazy",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S4_static",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S5_overlay_P0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 55,
+        "agreement": 0.9166666666666666
+      },
+      {
+        "arm": "S5_overlay_R0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_overlay_R2",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 54,
+        "agreement": 0.9
+      },
+      {
+        "arm": "S5_planner_rules",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "chandan_full_uncut",
+        "corpus": "longmemeval",
+        "reader": "chandan_own",
+        "n": 37,
+        "n_agree": 35,
+        "agreement": 0.9459459459459459
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 30,
+        "agreement": 0.6
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 28,
+        "agreement": 0.56
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 18,
+        "agreement": 0.9
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 44,
+        "agreement": 0.88
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 46,
+        "agreement": 0.92
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 48,
+        "agreement": 0.96
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 57,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 19,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "ours_sentence_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 42,
+        "agreement": 0.84
+      }
+    ]
+  },
+  "primary_judge": "gpt-5.4",
+  "second_judge": "gemini-2.5-flash-lite",
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "gemini-3.6-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.7-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.8-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.5-flash": {
+        "in": 1.5,
+        "out": 9.0
+      },
+      "gemini-3.5-flash-lite": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash-lite": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "gemini-2.5-pro": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "gemini-embedding-001": {
+        "in": 0.15,
+        "out": 0.0
+      },
+      "text-embedding-005": {
+        "in": 0.025,
+        "out": 0.0
+      }
+    },
+    "total_usd": 10.9883,
+    "total_calls": 17533,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 7022,
+        "tokens_in": 3938730,
+        "tokens_out": 55025,
+        "usd": 5.473663
+      },
+      "gemini-2.5-flash-lite": {
+        "calls": 10511,
+        "tokens_in": 53624563,
+        "tokens_out": 380454,
+        "usd": 5.514638
+      }
+    }
+  }
+}

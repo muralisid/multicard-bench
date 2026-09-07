@@ -1,0 +1,1405 @@
+{
+  "design": "docs/PART1-DESIGN.md version 4",
+  "tag": "",
+  "sample": false,
+  "budgets": [
+    4000,
+    8000
+  ],
+  "readers": [
+    "reader_a",
+    "reader_b"
+  ],
+  "judge_audit": {
+    "n": 1287,
+    "n_agree": 1136,
+    "agreement": 0.8826728826728827,
+    "threshold": 0.9,
+    "cheap": "gemini-2.5-flash-lite",
+    "strong": "gpt-5.4",
+    "primary": "gpt-5.4",
+    "second": "gemini-2.5-flash-lite",
+    "cells": [
+      {
+        "arm": "S2_lazy",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S4_static",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "S5_noPGR",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 56,
+        "agreement": 0.9333333333333333
+      },
+      {
+        "arm": "S5_overlay_P0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 55,
+        "agreement": 0.9166666666666666
+      },
+      {
+        "arm": "S5_overlay_R0",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_overlay_R2",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 54,
+        "agreement": 0.9
+      },
+      {
+        "arm": "S5_planner_rules",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "S5_primary",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "chandan_full_uncut",
+        "corpus": "longmemeval",
+        "reader": "chandan_own",
+        "n": 37,
+        "n_agree": 35,
+        "agreement": 0.9459459459459459
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 30,
+        "agreement": 0.6
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 28,
+        "agreement": 0.56
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 53,
+        "agreement": 0.8833333333333333
+      },
+      {
+        "arm": "closed_book",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 18,
+        "agreement": 0.9
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 44,
+        "agreement": 0.88
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 46,
+        "agreement": 0.92
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 58,
+        "agreement": 0.9666666666666667
+      },
+      {
+        "arm": "oracle_full",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 20,
+        "agreement": 1.0
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 48,
+        "agreement": 0.96
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_a",
+        "n": 60,
+        "n_agree": 57,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap",
+        "corpus": "multihoprag",
+        "reader": "reader_b",
+        "n": 20,
+        "n_agree": 19,
+        "agreement": 0.95
+      },
+      {
+        "arm": "ours_cheap_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "ours_sentence_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 42,
+        "agreement": 0.84
+      }
+    ]
+  },
+  "primary_judge": "gpt-5.4",
+  "second_judge": "gemini-2.5-flash-lite",
+  "cross_family_judge": "gemini-2.5-flash-lite",
+  "n_cross_family_scored": 682,
+  "cost": {
+    "prices_as_of": "2026-08-19",
+    "prices_usd_per_mtok": {
+      "encoder-local": {
+        "in": 0.0,
+        "out": 0.0
+      },
+      "vertex-flash": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "vertex-pro": {
+        "in": 1.25,
+        "out": 5.0
+      },
+      "vertex-partner-claude": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "vertex-partner-llama": {
+        "in": 0.25,
+        "out": 0.75
+      },
+      "azure-gpt54": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "generative-cheap": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "generative-mid": {
+        "in": 0.4,
+        "out": 1.6
+      },
+      "generative-frontier": {
+        "in": 3.0,
+        "out": 15.0
+      },
+      "gemini-3.6-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.7-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.8-flash": {
+        "in": 0.75,
+        "out": 3.75
+      },
+      "gemini-3.5-flash": {
+        "in": 1.5,
+        "out": 9.0
+      },
+      "gemini-3.5-flash-lite": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash": {
+        "in": 0.3,
+        "out": 2.5
+      },
+      "gemini-2.5-flash-lite": {
+        "in": 0.1,
+        "out": 0.4
+      },
+      "gemini-2.5-pro": {
+        "in": 1.25,
+        "out": 10.0
+      },
+      "gemini-embedding-001": {
+        "in": 0.15,
+        "out": 0.0
+      },
+      "text-embedding-005": {
+        "in": 0.025,
+        "out": 0.0
+      }
+    },
+    "total_usd": 10.9883,
+    "total_calls": 17533,
+    "by_tier": {
+      "azure-gpt54": {
+        "calls": 7022,
+        "tokens_in": 3938730,
+        "tokens_out": 55025,
+        "usd": 5.473663
+      },
+      "gemini-2.5-flash-lite": {
+        "calls": 10511,
+        "tokens_in": 53624563,
+        "tokens_out": 380454,
+        "usd": 5.514638
+      }
+    }
+  },
+  "max_usd": 40.0,
+  "judging_reserve": 0.15,
+  "answering_cap_usd": 34.0,
+  "judging_stopped": null,
+  "partial": {},
+  "corpus": "mhrag",
+  "n_records": 15200,
+  "n_jobs": 15200,
+  "arms": [
+    "S2_lazy",
+    "S4_static",
+    "S5_noPGR",
+    "S5_overlay_P0",
+    "S5_overlay_R0",
+    "S5_overlay_R2",
+    "S5_planner_oracle",
+    "S5_planner_rules",
+    "S5_primary",
+    "closed_book",
+    "oracle_full",
+    "ours_cheap"
+  ],
+  "populations": {
+    "reader_a": 600,
+    "reader_b": 200,
+    "chandan_own": 600,
+    "chandan_subset": null,
+    "second_build_subset": null,
+    "per_arm": {
+      "S2_lazy": 600,
+      "S4_static": 600,
+      "S5_noPGR": 600,
+      "S5_overlay_P0": 600,
+      "S5_overlay_R0": 600,
+      "S5_overlay_R2": 600,
+      "S5_planner_oracle": 600,
+      "S5_planner_rules": 600,
+      "S5_primary": 600,
+      "closed_book": 600,
+      "oracle_full": 600,
+      "ours_cheap": 600
+    }
+  },
+  "stopped": null,
+  "answering": {
+    "reader_a": {
+      "multihoprag": {
+        "S2_lazy": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.78,
+            "acc_answerable": 0.7222222222222222,
+            "acc_abstention": 0.9533333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6666666666666666
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.94
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9533333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.56
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.7833333333333333,
+              "n_disagree": 4
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8466666666666667,
+            "acc_answerable": 0.8044444444444444,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7666666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9666666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.68
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S4_static": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7716666666666666,
+            "acc_answerable": 0.7111111111111111,
+            "acc_abstention": 0.9533333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6666666666666666
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.92
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9533333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5466666666666666
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.7833333333333333,
+              "n_disagree": 7
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.85,
+            "acc_answerable": 0.8088888888888889,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7666666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6866666666666666
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_noPGR": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7716666666666666,
+            "acc_answerable": 0.7,
+            "acc_abstention": 0.9866666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6266666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9466666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9866666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5266666666666666
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.7166666666666667,
+              "n_disagree": 4
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8066666666666666,
+            "acc_answerable": 0.7555555555555555,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6733333333333333
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.62
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_overlay_P0": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7383333333333333,
+            "acc_answerable": 0.66,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.5266666666666666
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.92
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5333333333333333
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.7833333333333333,
+              "n_disagree": 5
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8016666666666666,
+            "acc_answerable": 0.7466666666666667,
+            "acc_abstention": 0.9666666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6666666666666666
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.94
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9666666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6333333333333333
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_overlay_R0": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7566666666666667,
+            "acc_answerable": 0.6888888888888889,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.56
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.92
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5866666666666667
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.7,
+              "n_disagree": 7
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8166666666666667,
+            "acc_answerable": 0.7688888888888888,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6933333333333334
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.64
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_overlay_R2": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7683333333333333,
+            "acc_answerable": 0.6955555555555556,
+            "acc_abstention": 0.9866666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.5933333333333334
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.98
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9866666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5133333333333333
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.85,
+              "n_disagree": 2
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8266666666666667,
+            "acc_answerable": 0.7777777777777778,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6933333333333334
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6666666666666666
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_planner_oracle": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7783333333333333,
+            "acc_answerable": 0.7177777777777777,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6266666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9466666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.58
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.75,
+              "n_disagree": 6
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8216666666666667,
+            "acc_answerable": 0.7755555555555556,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6733333333333333
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.68
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_planner_rules": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7966666666666666,
+            "acc_answerable": 0.7377777777777778,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.66
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9466666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6066666666666667
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.8,
+              "n_disagree": 2
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8366666666666667,
+            "acc_answerable": 0.7911111111111111,
+            "acc_abstention": 0.9733333333333334,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7066666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9666666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.7
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "S5_primary": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7716666666666666,
+            "acc_answerable": 0.7,
+            "acc_abstention": 0.9866666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6266666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9466666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9866666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5266666666666666
+              }
+            },
+            "second_judge": {
+              "n": 184,
+              "acc_all": 0.41847826086956524,
+              "n_disagree": 32
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8066666666666666,
+            "acc_answerable": 0.7555555555555555,
+            "acc_abstention": 0.96,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6733333333333333
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9733333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.96
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.62
+              }
+            },
+            "second_judge": {
+              "n": 110,
+              "acc_all": 0.2,
+              "n_disagree": 22
+            },
+            "cross_family": null
+          }
+        },
+        "closed_book": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7,
+            "acc_answerable": 0.6844444444444444,
+            "acc_abstention": 0.7466666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.62
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.8866666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.7466666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5466666666666666
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.8,
+              "n_disagree": 7
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7,
+            "acc_answerable": 0.6844444444444444,
+            "acc_abstention": 0.7466666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.62
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.8866666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.7466666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.5466666666666666
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "oracle_full": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7866666666666666,
+            "acc_answerable": 0.8,
+            "acc_abstention": 0.7466666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7266666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9866666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.7466666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6866666666666666
+              }
+            },
+            "second_judge": {
+              "n": 60,
+              "acc_all": 0.8333333333333334,
+              "n_disagree": 2
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7866666666666666,
+            "acc_answerable": 0.8,
+            "acc_abstention": 0.7466666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7266666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9866666666666667
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.7466666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6866666666666666
+              }
+            },
+            "second_judge": {
+              "n": 0,
+              "acc_all": null,
+              "n_disagree": 0
+            },
+            "cross_family": null
+          }
+        },
+        "ours_cheap": {
+          "4000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.7866666666666666,
+            "acc_answerable": 0.7266666666666667,
+            "acc_abstention": 0.9666666666666667,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.6066666666666667
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.9533333333333334
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.9666666666666667
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.62
+              }
+            },
+            "second_judge": {
+              "n": 172,
+              "acc_all": 0.4418604651162791,
+              "n_disagree": 30
+            },
+            "cross_family": null
+          },
+          "8000": {
+            "n": 600,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.8366666666666667,
+            "acc_answerable": 0.8022222222222222,
+            "acc_abstention": 0.94,
+            "n_answerable": 450,
+            "n_abstention": 150,
+            "by_type": {
+              "comparison_query": {
+                "n": 150,
+                "acc": 0.7333333333333333
+              },
+              "inference_query": {
+                "n": 150,
+                "acc": 0.98
+              },
+              "null_query": {
+                "n": 150,
+                "acc": 0.94
+              },
+              "temporal_query": {
+                "n": 150,
+                "acc": 0.6933333333333334
+              }
+            },
+            "second_judge": {
+              "n": 89,
+              "acc_all": 0.24719101123595505,
+              "n_disagree": 22
+            },
+            "cross_family": null
+          }
+        }
+      }
+    },
+    "reader_b": {
+      "multihoprag": {
+        "S5_primary": {
+          "4000": {
+            "n": 200,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.83,
+            "acc_answerable": 0.84,
+            "acc_abstention": 0.8,
+            "n_answerable": 150,
+            "n_abstention": 50,
+            "by_type": {
+              "comparison_query": {
+                "n": 50,
+                "acc": 0.78
+              },
+              "inference_query": {
+                "n": 50,
+                "acc": 1.0
+              },
+              "null_query": {
+                "n": 50,
+                "acc": 0.8
+              },
+              "temporal_query": {
+                "n": 50,
+                "acc": 0.74
+              }
+            },
+            "second_judge": {
+              "n": 200,
+              "acc_all": 0.85,
+              "n_disagree": 8
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 200,
+              "n_scored": 200,
+              "complete": true,
+              "acc_all": 0.85,
+              "n_agree": 192,
+              "agreement": 0.96
+            }
+          }
+        },
+        "closed_book": {
+          "4000": {
+            "n": 200,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.455,
+            "acc_answerable": 0.32,
+            "acc_abstention": 0.86,
+            "n_answerable": 150,
+            "n_abstention": 50,
+            "by_type": {
+              "comparison_query": {
+                "n": 50,
+                "acc": 0.08
+              },
+              "inference_query": {
+                "n": 50,
+                "acc": 0.56
+              },
+              "null_query": {
+                "n": 50,
+                "acc": 0.86
+              },
+              "temporal_query": {
+                "n": 50,
+                "acc": 0.32
+              }
+            },
+            "second_judge": {
+              "n": 200,
+              "acc_all": 0.59,
+              "n_disagree": 29
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 200,
+              "n_scored": 200,
+              "complete": true,
+              "acc_all": 0.59,
+              "n_agree": 171,
+              "agreement": 0.855
+            }
+          }
+        },
+        "oracle_full": {
+          "4000": {
+            "n": 200,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.895,
+            "acc_answerable": 0.9066666666666666,
+            "acc_abstention": 0.86,
+            "n_answerable": 150,
+            "n_abstention": 50,
+            "by_type": {
+              "comparison_query": {
+                "n": 50,
+                "acc": 0.9
+              },
+              "inference_query": {
+                "n": 50,
+                "acc": 1.0
+              },
+              "null_query": {
+                "n": 50,
+                "acc": 0.86
+              },
+              "temporal_query": {
+                "n": 50,
+                "acc": 0.82
+              }
+            },
+            "second_judge": {
+              "n": 200,
+              "acc_all": 0.875,
+              "n_disagree": 6
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 200,
+              "n_scored": 200,
+              "complete": true,
+              "acc_all": 0.875,
+              "n_agree": 194,
+              "agreement": 0.97
+            }
+          }
+        },
+        "ours_cheap": {
+          "4000": {
+            "n": 200,
+            "n_missing": 0,
+            "primary_judge": "gpt-5.4",
+            "acc_all": 0.845,
+            "acc_answerable": 0.88,
+            "acc_abstention": 0.74,
+            "n_answerable": 150,
+            "n_abstention": 50,
+            "by_type": {
+              "comparison_query": {
+                "n": 50,
+                "acc": 0.84
+              },
+              "inference_query": {
+                "n": 50,
+                "acc": 0.98
+              },
+              "null_query": {
+                "n": 50,
+                "acc": 0.74
+              },
+              "temporal_query": {
+                "n": 50,
+                "acc": 0.82
+              }
+            },
+            "second_judge": {
+              "n": 200,
+              "acc_all": 0.855,
+              "n_disagree": 6
+            },
+            "cross_family": {
+              "judge": "gemini-2.5-flash-lite",
+              "n": 200,
+              "n_scored": 200,
+              "complete": true,
+              "acc_all": 0.855,
+              "n_agree": 194,
+              "agreement": 0.97
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_s": 7113.941518783569
+}
