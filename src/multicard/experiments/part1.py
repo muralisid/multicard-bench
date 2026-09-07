@@ -149,6 +149,11 @@ STATUS_NO_EXPORT = "no export"
 STATUS_NOT_RUN = "not run in the retrieve pass"
 NOTE_WITHOUT_PGR = "run without post-graph-rag tables"
 _RELVEC_STEP = re.compile(r"(\d+) spaces encoded, (\d+) present, (\d+) wanted")
+# the line a stage prints when it finishes: the pass total and nothing per
+# invocation. "index"/"retrieve" name their corpus in the output path, "qa"
+# does not (one qa invocation can cover both corpora).
+_LOG_PASS = re.compile(r"\[part1\] (?P<stage>index|retrieve|qa) (?:written to \S*?/(?P<corpus>lme|mhrag)/\S+|done)"
+                       r" in [\d.]+ min, USD (?P<usd>[\d.]+)")
 
 
 def _log(msg: str) -> None:
@@ -357,11 +362,65 @@ def read_cost_ledgers(tag: str, kinds) -> dict[str, dict[str, list[dict]]]:
     return out
 
 
-def ledger_summary(ledgers: dict[str, dict[str, list[dict]]]) -> dict:
+def stage_totals_from_metrics(stage_cost: dict[str, dict[str, dict]]) -> dict:
+    """stage -> the spend the stage's own metrics files hold, summed over the
+    corpora, from stage_cost (stage -> corpus name -> that file's cost block).
+
+    The ledger was added part way through the study, so most invocations were
+    never itemised. Each stage's metrics file still carries the CostMeter of
+    the last invocation of that stage on that corpus, whether or not the
+    ledger existed when it ran, so the sum over corpora is the stage total the
+    ledger sum is read against."""
+    out: dict = {}
+    for stage, per_corpus in stage_cost.items():
+        by_corpus = {name: {"usd": round(float(c.get("total_usd") or 0.0), 6),
+                            "calls": int(c.get("total_calls") or 0)}
+                     for name, c in per_corpus.items() if c}
+        out[stage] = {"usd": round(sum(v["usd"] for v in by_corpus.values()), 6),
+                      "calls": sum(v["calls"] for v in by_corpus.values()),
+                      "by_corpus": by_corpus}
+    return out
+
+
+def stage_log_passes(root: Path) -> dict[str, list[dict]]:
+    """stage -> one row per pass recorded in the run logs under root/logs.
+
+    A stage's metrics file is overwritten by its next invocation, so a pass
+    before the ledger existed and before the last pass on its corpus survives
+    only as the line the runner printed when it finished. Those lines carry
+    the pass total and nothing per invocation, so they are reported as a sum
+    and never itemised as ledger rows."""
+    out: dict[str, list[dict]] = {}
+    d = Path(root) / "logs"
+    for p in sorted(d.glob("*.log")) if d.exists() else []:
+        try:
+            text = p.read_text(errors="replace")
+        except OSError:
+            continue
+        for m in _LOG_PASS.finditer(text):
+            stage, corpus, usd = m.group("stage"), m.group("corpus") or "", m.group("usd")
+            if stage not in STAGE_CAPS_USD:
+                continue
+            out.setdefault(stage, []).append({"log": p.name, "corpus": corpus, "usd": float(usd)})
+    return out
+
+
+def ledger_summary(ledgers: dict[str, dict[str, list[dict]]], metrics_totals: dict | None = None,
+                   log_passes: dict | None = None) -> dict:
     """The ledger summed per stage and corpus against the section 11 cap of
     the stage. A row written to two corpora by one invocation (part1_qa with
     corpus all) is counted in each corpus sum and once in the stage total,
-    matched by its invocation_id."""
+    matched by its invocation_id.
+
+    metrics_totals (from stage_totals_from_metrics) backfills the stage total
+    for the invocations that ran before the ledger existed: the ledger sum
+    counts only the invocations it recorded, the stage total counts every
+    invocation the stage's metrics files hold. log_passes (from
+    stage_log_passes) adds the passes that neither the ledger nor a metrics
+    file kept, as a sum only. The cap is read against the largest of the
+    three."""
+    metrics_totals = metrics_totals or {}
+    log_passes = log_passes or {}
     stages: dict = {}
     for stage, cap in STAGE_CAPS_USD.items():
         per = ledgers.get(stage) or {}
@@ -374,9 +433,21 @@ def ledger_summary(ledgers: dict[str, dict[str, list[dict]]]) -> dict:
                 seen.setdefault(str(r.get("invocation_id") or f"{name}-{r.get('timestamp')}"), r)
         invocations = sorted(seen.values(), key=lambda r: str(r.get("timestamp") or ""))
         total = round(sum(float(r.get("usd") or 0.0) for r in invocations), 6)
+        mt = metrics_totals.get(stage) or {}
+        passes = log_passes.get(stage) or []
+        log_usd = round(sum(float(p.get("usd") or 0.0) for p in passes), 6)
+        # a pass whose metrics file was overwritten by a later pass on the same
+        # corpus survives only in the run log; that difference is reported, not
+        # itemised, because the log line carries a pass total and nothing else
+        lost = round(max(0.0, log_usd - float(mt.get("usd") or 0.0)), 6) if passes else 0.0
         stages[stage] = {
             "cap_usd": cap["cap_usd"], "cap_components": cap["components"], "total_usd": total,
-            "over_cap": total > cap["cap_usd"], "n_invocations": len(invocations), "by_corpus": by_corpus,
+            "metrics_total_usd": mt.get("usd"), "metrics_total_calls": mt.get("calls"),
+            "metrics_by_corpus": mt.get("by_corpus") or {},
+            "log_passes": passes, "log_passes_usd": log_usd if passes else None,
+            "not_in_any_metrics_file_usd": lost if passes else None,
+            "over_cap": max(total, float(mt.get("usd") or 0.0) + lost) > cap["cap_usd"],
+            "n_invocations": len(invocations), "by_corpus": by_corpus,
             "invocations": [{**{k: r.get(k) for k in ("timestamp", "corpora", "job_tag", "tag", "arms", "readers",
                                                         "budgets", "max_usd", "stopped", "usd", "calls", "git",
                                                         "n_questions")},
@@ -422,11 +493,18 @@ def _pgr_build_state(kind: str, subsets: dict, root: Path | str = C.PGR_ROOT) ->
     counted against the population the build covers (the ORDER ids, or the
     subset the build was restricted to; one corpus space on MultiHop-RAG).
     The runner meters of the logs are summed as a cross-check beside the
-    per-space index meters the cost table uses."""
+    per-space index meters the cost table uses.
+
+    Every attempt is listed, not only the last: one row per run log, plus the
+    attempts recorded in <corpus>/attempts.json that the runner never logged
+    (an attempt killed from outside writes no log) and the per-attempt
+    progress no log carries. An attempts.json entry whose job tag matches a
+    run log is merged onto it."""
     name = NAMES[kind]
     logs = C.pgr_run_logs(kind, root)
     running = [str(l.get("job_tag") or "") for l in logs if l.get("ended") is None]
-    stopped = [{"job_tag": l.get("job_tag"), "stopped": l.get("stopped")} for l in logs if l.get("stopped")]
+    attempts = _pgr_attempts(kind, logs, root)
+    stopped = [{"job_tag": a.get("job_tag"), "stopped": a.get("stopped")} for a in attempts if a.get("stopped")]
     subset = C.pgr_build_subset(kind, subsets, root)
     if kind == LME:
         wanted = list(subsets[subset]) if subset else list(subsets["ORDER"][name])
@@ -439,11 +517,54 @@ def _pgr_build_state(kind: str, subsets: dict, root: Path | str = C.PGR_ROOT) ->
     if running:
         label += ", build in progress"
     elif not complete and stopped:
-        label += ", build stopped at its cap"
+        reasons = [str(s.get("stopped") or "") for s in stopped]
+        if all(r.lower().startswith("cap") for r in reasons):
+            label += ", build stopped at its cap"
+        else:
+            label += f", {len(attempts)} attempts, the last {reasons[-1]}"
     return {"complete": complete, "in_progress": bool(running), "running_job_tags": running, "stopped": stopped,
             "n_spaces": n, "n_wanted": m, "subset": subset, "label": label,
+            "attempts": attempts, "n_attempts": len(attempts),
             "run_log_usd": round(sum(float((l.get("meter") or {}).get("usd") or 0.0) for l in logs), 6),
-            "job_tags": [str(l.get("job_tag") or "") for l in logs]}
+            "job_tags": [str(a.get("job_tag") or "") for a in attempts]}
+
+
+def _pgr_attempts(kind: str, logs: list[dict], root: Path | str = C.PGR_ROOT) -> list[dict]:
+    """One row per build attempt on the corpus, oldest first.
+
+    A run log gives the times, the stop reason and the runner meter. The
+    attempts.json entry of the same job tag adds what no log carries (how far
+    the build got, in its own units) and its source. An entry with no run log
+    is an attempt of its own: the runner was killed before it wrote one, so
+    its times and spend come from the proxy request log, and the row says
+    so."""
+    rows: dict[str, dict] = {}
+    for l in logs:
+        tag = str(l.get("job_tag") or "")
+        rows[tag] = {"job_tag": tag, "started": l.get("started"), "ended": l.get("ended"),
+                     "stopped": l.get("stopped"), "run_log": True,
+                     "usd": float((l.get("meter") or {}).get("usd") or 0.0), "usd_source": "runner meter"}
+    for a in C.pgr_recorded_attempts(kind, root):
+        tag = str(a.get("job_tag") or "")
+        row = rows.setdefault(tag, {"job_tag": tag, "run_log": False})
+        for key in ("started", "ended", "stopped", "n_indexed", "n_wanted", "unit", "source", "proxy_log_requests"):
+            if a.get(key) is not None and (key not in row or row.get(key) in (None, "")):
+                row[key] = a[key]
+        if not row.get("run_log") and a.get("proxy_log_usd") is not None:
+            row["usd"] = float(a["proxy_log_usd"])
+            row["usd_source"] = "proxy request log (no run log: the runner was stopped before it wrote one)"
+    out = sorted(rows.values(), key=lambda r: str(r.get("started") or ""))
+    for r in out:
+        if r.get("n_indexed") is not None and r.get("n_wanted") is not None:
+            r["progress"] = f"{fi_plain(r['n_indexed'])} of {fi_plain(r['n_wanted'])} {r.get('unit') or 'units'}"
+        else:
+            r["progress"] = "not recorded"
+    return out
+
+
+def fi_plain(x) -> str:
+    """An integer with thousands separators, for a progress string."""
+    return f"{int(x):,}"
 
 
 def _arm_status(kind: str, ids: list[str], present: set[str], root: Path | str = C.PGR_ROOT,
@@ -489,6 +610,36 @@ def _pgr_tables_at_retrieve(rmeta: dict) -> dict:
         return {"present": int(m.group(1)) + int(m.group(2)), "wanted": int(m.group(3)),
                 "source": "index steps relation_vectors (the spaces present when the index was built)"}
     return {"present": None, "wanted": None, "source": "unknown"}
+
+
+_RANKING_KEY = re.compile(r'^ {4}"([^"]+)": \{$')
+_RANKING_BUDGET = re.compile(r'^ {2}"([^"]+)": \{$')
+
+
+def ranking_arms(rmeta: dict, path: Path) -> dict[str, list[str]]:
+    """budget (as text) -> the arms with a ranking in the retrieve stage's
+    rankings.json. The pass records the list; a pass that ran before it did
+    is read off the file itself. The file reaches 155 MB on MultiHop-RAG, so
+    it is scanned line by line for the keys of the first two levels (it is
+    written by json.dumps at indent 2) and never parsed into memory."""
+    recorded = rmeta.get("ranking_arms")
+    if isinstance(recorded, dict) and recorded:
+        return {str(b): sorted(v) for b, v in recorded.items()}
+    out: dict[str, list[str]] = {}
+    if not path.exists():
+        return out
+    budget = ""
+    with path.open() as fh:
+        for line in fh:
+            m = _RANKING_BUDGET.match(line.rstrip("\n"))
+            if m:
+                budget = m.group(1)
+                out.setdefault(budget, [])
+                continue
+            m = _RANKING_KEY.match(line.rstrip("\n"))
+            if m and budget:
+                out[budget].append(m.group(1))
+    return {b: sorted(v) for b, v in out.items()}
 
 
 def _planner_attribution(rmeta: dict, ledger_rows: list[dict], price_in: float, price_out: float) -> dict | None:
@@ -1115,6 +1266,7 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
     primary_metric = "joint_recall" if kind == LME else "fact_joint_recall"
 
     _write_json(out / "rankings.json", {str(b): dict(d) for b, d in rankings.items()})
+    ranking_arms = {str(b): sorted(d) for b, d in rankings.items()}
     _write_json(out / "candidates.json", dict(candidates))
     _write_json(out / "planner.json", {"decisions": {q: asdict(d) for q, d in llm.decisions.items()},
                                        "off_list": llm.off_list_log, "prompt": llm.prompt_text})
@@ -1136,6 +1288,7 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
         "design": DESIGN, "corpus": kind, "corpus_name": name, "tag": tag, "sample": sample, "budgets": budgets,
         "n_questions": len(questions), "question_ids": [x.qid for x in questions], "containers": len(containers),
         "arms_run": sorted(arms_seen), "arms_skipped": skipped, "arm_specs": {a: asdict(R.ARM_SPECS[a]) for a in ours},
+        "ranking_arms": ranking_arms,
         "competitor_exports_present": n_present, "chosen_variant": chosen, "summary": summary,
         "pgr_tables": {"present": n_pgr_tables, "wanted": len(questions) if kind == LME else 1,
                        "unit": "questions with a post-graph-rag space" if kind == LME else "corpus space"},
@@ -1696,8 +1849,12 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
     # Section 11: the ledger of every invocation, summed against the caps; the
     # last-pass meters stay beside it under "meters".
     ledgers = read_cost_ledgers(tag, kinds)
+    # stage -> corpus -> the cost block of that stage's own metrics file; the
+    # ledger sum is read against it, because the ledger was added part way
+    # through and the invocations before it are only in these files.
+    stage_cost: dict[str, dict[str, dict]] = {}
     costs: dict = {"index": {}, "query": {}, "answering": {}, "judging": {}, "meters": {}, "caps": {}, "proxy": {},
-                   "ledger": ledger_summary(ledgers), "builds": {}, "planner": {}}
+                   "ledger": {}, "builds": {}, "planner": {}}
     models = E.load_models()
     price_in, price_out = _chunk_price(models)
     refused: dict[str, set[str]] = defaultdict(set)
@@ -1719,6 +1876,7 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
     arm_populations_label = ""
     second_build: dict = {"ran": False, "root": str(PGR_SECOND_ROOT)}
     extra_summary: dict = {}
+    ranking_files: dict = {}
 
     for kind in kinds:
         name = NAMES[kind]
@@ -1796,6 +1954,10 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
             if second_subset:
                 arm_populations[SECOND_ARM] = list(subsets[second_subset])
             second_build["subset"] = second_subset
+        # which arms have a ranking of their own on this corpus (section 7):
+        # an arm whose ranking file row is missing cannot have its ranking
+        # metrics audited, and the report says which arms those are
+        ranking_files[name] = ranking_arms(rmeta, stage_dir(tag, kind, "retrieve") / "rankings.json")
         # context hashes at the primary budget for the T5 count
         for row in _iter_jsonl(stage_dir(tag, kind, "retrieve") / f"contexts_{E.BUDGET_PRIMARY}.jsonl"):
             if not row.get("variants"):
@@ -1831,12 +1993,15 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
             costs["query"][PLANNER_PSEUDO_ARM][name]["usd"] = pa["usd_at_study_price"]
         costs["meters"][f"index_{kind}"] = idx_cost
         costs["meters"][f"retrieve_{kind}"] = rmeta.get("cost")
+        stage_cost.setdefault("index", {})[name] = idx_cost
+        stage_cost.setdefault("retrieve", {})[name] = rmeta.get("cost") or {}
         costs["caps"][f"index_{kind}"] = idx_meta.get("max_usd")
         costs["caps"][f"retrieve_{kind}"] = rmeta.get("max_usd")
         qa_meta_path = stage_dir(tag, kind, "qa") / "metrics.json"
         if qa_meta_path.exists():
             qa_meta = json.loads(qa_meta_path.read_text())
             costs["meters"][f"qa_{kind}"] = qa_meta.get("cost")
+            stage_cost.setdefault("qa", {})[name] = qa_meta.get("cost") or {}
             costs["caps"][f"qa_{kind}"] = qa_meta.get("max_usd")
             costs["answering"][name] = {"readers": qa_meta.get("readers"), "populations": qa_meta.get("populations"),
                                         "n_records": qa_meta.get("n_records"), "partial": qa_meta.get("partial"),
@@ -1920,6 +2085,29 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         if recs:
             buckets.extend(_bucket_cases(kind, tag, recs, chosen, tables, questions, docs_by_id, session_ts))
 
+    # Section 11: the ledger read against what the stages' own metrics files
+    # and run logs hold, so the invocations before the ledger existed are in
+    # the stage total even though no row itemises them.
+    costs["ledger"] = ledger_summary(ledgers, stage_totals_from_metrics(stage_cost), stage_log_passes(root))
+    # Why a competitor arm has no output: an absent chandan arm on a corpus
+    # whose post-graph-rag build never finished carries the build's own stop
+    # reasons, so a test recorded as not run says what stopped it.
+    absent_reasons: dict[str, dict[str, str]] = {}
+    for name, b in costs["builds"].items():
+        stops = [a for a in (b.get("attempts") or []) if a.get("stopped")]
+        if b.get("complete") or not stops:
+            continue
+        def one(a: dict) -> str:
+            # the stop reason often already names how far the build got
+            progress = str(a.get("progress") or "")
+            extra = f" ({progress})" if progress and progress not in str(a.get("stopped") or "") else ""
+            return f"{a['job_tag']} {a['stopped']}{extra}"
+
+        why = ("the post-graph-rag build on that corpus never finished: " + "; ".join(one(a) for a in stops)
+               + ". No query was ever run over it")
+        for arm in C.CHANDAN_ARMS:
+            if arm in (absent.get(name) or []):
+                absent_reasons.setdefault(name, {})[arm] = why
     if not g_status:
         g_status = "dropped"
     cheap, strong = models["chat_model"], E.JUDGE_STRONG_MODEL
@@ -1962,9 +2150,10 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
         partial_answering={r: sorted(a) for r, a in partial_answering.items()}, overrides=overrides,
         arm_populations=arm_populations, arm_populations_label=arm_populations_label,
         second_build=second_build, extra_summary=extra_summary, arm_notes=arm_notes, arm_status=arm_status,
-        qa_audit_record=qa_audit_record)
+        qa_audit_record=qa_audit_record, absent_reasons=absent_reasons)
     payload["absent_arms"] = absent
     payload["chosen_variant"] = chosen_all
+    payload["ranking_files"] = ranking_files
     E.write_metrics(payload, root / "metrics.json")
     E.write_buckets(buckets, root / "buckets.jsonl")
     RP.write_report(root / "metrics.json", root / "REPORT.md")

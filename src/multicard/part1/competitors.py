@@ -294,6 +294,26 @@ def pgr_run_logs(corpus: str, root: Path | str = PGR_ROOT) -> list[dict]:
     return sorted(logs, key=lambda x: str(x.get("started") or ""))
 
 
+def pgr_recorded_attempts(corpus: str, root: Path | str = PGR_ROOT) -> list[dict]:
+    """Build attempts recorded in <corpus>/attempts.json beside the run logs.
+
+    The runner writes run_<job_tag>.json when it finishes or stops itself, so
+    an attempt killed from outside leaves no log, and no log carries how far
+    the build got in its own units (articles, documents). attempts.json holds
+    those facts, one entry per job tag, each with its own source field. An
+    entry whose job_tag matches a run log is merged onto that log by the
+    caller; an entry with no run log is an attempt of its own.
+    """
+    p = Path(root) / corpus / "attempts.json"
+    if not p.exists():
+        return []
+    try:
+        payload = json.loads(p.read_text())
+    except (OSError, ValueError):
+        return []
+    return [a for a in (payload.get("attempts") or []) if isinstance(a, dict) and a.get("job_tag")]
+
+
 def pgr_build_subset(corpus: str, subsets: dict, root: Path | str = PGR_ROOT) -> str | None:
     """The subsets.json key the post-graph-rag build was restricted to, when
     the runner was launched with --subset (section 13: after the first shard

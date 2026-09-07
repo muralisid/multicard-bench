@@ -753,9 +753,14 @@ def test_report_prints_ledger_planner_states_notes_and_reader_tables():
     # the build state and the ledger against the section 11 caps, the last-pass meter beside it
     assert "| multihoprag | partial build snapshot, 0 of 1 spaces, build stopped at its cap | no | none | pgr-mhrag-full: cap | 0 | 1 | ORDER | 10.01 |" in cost
     assert "Spend ledger (section 11)" in cost
-    assert "| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.01 | no | 2 | longmemeval 0.01 (2 invocations) |" in cost
-    assert "| qa | 100.00 |" in cost and "| 9.50 | no | 1 | longmemeval 9.50 (1 invocations), multihoprag 9.50 (1 invocations) |" in cost
-    assert "| index | 15.00 | overlay generation 15 | 0.00 | no | 0 | none |" in cost
+    # the ledger column is what the ledger itself recorded; the stage total beside
+    # it is what the stage's own metrics file holds (none in this payload)
+    assert "| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.01 | 2 | longmemeval 0.01 (2 invocations) " \
+           "| n/a | n/a | none | no |" in cost
+    assert "| qa | 100.00 |" in cost and "| 9.50 | 1 | longmemeval 9.50 (1 invocations), multihoprag 9.50 " \
+           "(1 invocations) | n/a | n/a | none | no |" in cost
+    assert "| index | 15.00 | overlay generation 15 | 0.00 | 0 | none | n/a | n/a | none | no |" in cost
+    assert "The ledger was added part way through the study" in cost
     assert "| retrieve | lme | 2026-09-06T14:10:00+00:00 | retrieve_lme_pass1 | none | S5_noPGR | none | 4,000, 8,000 | 35.00 | 0.01 | 500 | vertex-flash 0.01 | no | 09925ad |" in cost
     assert "| qa | lme, mhrag | 2026-09-06T20:00:00+00:00 | chain_qa_all |" in cost
     assert "Last-pass meter totals" in cost
@@ -783,3 +788,116 @@ def test_report_prints_ledger_planner_states_notes_and_reader_tables():
     assert "No bucket data" in old_text and "Decision as recorded" not in old_text
     assert "| chandan_live | longmemeval | absent |" in old_text
     assert not BANNED.search(old_text)
+
+
+# ----------------------------------------------------------------------------
+# The report defects found by the independent recomputation of REPORT.md
+# ----------------------------------------------------------------------------
+def test_the_build_state_carries_every_attempt_and_names_the_owner_stop(tmp_path):
+    """Defect 1: the MultiHop-RAG build was tried twice. The first attempt
+    stopped at its USD 10 cap, the second was stopped by the owner and left no
+    run log at all, so it is recorded in attempts.json beside the log. Both
+    attempts appear, with their stop reasons and how far each got, and a test
+    that could not run says the build was stopped rather than never tried."""
+    subsets = eval_subsets()
+    root = tmp_path / "pgr"
+    (root / "mhrag").mkdir(parents=True)
+    (root / "mhrag" / "run_pgr-mhrag-full.json").write_text(
+        _run_log("pgr-mhrag-full", "2026-09-06T16:05:38+05:30", "2026-09-07T00:24:38+05:30", 10.007077,
+                 stopped="cap: spend 10.0071 USD exceeds the cap of 10.00"))
+    (root / "mhrag" / "attempts.json").write_text(json.dumps({"attempts": [
+        {"job_tag": "pgr-mhrag-full", "n_indexed": 592, "n_wanted": 609, "unit": "articles", "source": "design"},
+        {"job_tag": "pgr-mhrag-full3", "started": "2026-09-07T07:30:00+05:30",
+         "ended": "2026-09-07T08:17:21+05:30", "n_indexed": 72, "n_wanted": 609, "unit": "articles",
+         "stopped": "stopped by the owner on 2026-09-07 at 72 of 609 articles",
+         "no_run_log": True, "proxy_log_requests": 467, "proxy_log_usd": 1.699976, "source": "proxy log"}]}))
+    b = PT._pgr_build_state("mhrag", subsets, root)
+    assert b["n_attempts"] == 2 and not b["complete"]
+    first, second = b["attempts"]
+    assert first["job_tag"] == "pgr-mhrag-full" and first["run_log"] and first["progress"] == "592 of 609 articles"
+    assert first["usd"] == pytest.approx(10.007077) and first["usd_source"] == "runner meter"
+    assert second["job_tag"] == "pgr-mhrag-full3" and second["run_log"] is False
+    assert second["progress"] == "72 of 609 articles" and second["usd"] == pytest.approx(1.699976)
+    assert second["usd_source"].startswith("proxy request log")
+    assert [s["job_tag"] for s in b["stopped"]] == ["pgr-mhrag-full", "pgr-mhrag-full3"]
+    assert b["label"] == ("partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on "
+                          "2026-09-07 at 72 of 609 articles")
+    # a build with one cap stop and no attempts file keeps the old wording
+    plain = tmp_path / "plain"
+    (plain / "mhrag").mkdir(parents=True)
+    (plain / "mhrag" / "run_pgr-mhrag-full.json").write_text(
+        _run_log("pgr-mhrag-full", "2026-09-06T16:05:38+05:30", "2026-09-07T00:24:38+05:30", 10.0, stopped="cap: x"))
+    assert PT._pgr_build_state("mhrag", subsets, plain)["label"].endswith("build stopped at its cap")
+    # the not-run reason of a test on the absent arm names the stop
+    why = ("the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds "
+           "the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of "
+           "609 articles. No query was ever run over it")
+    tests = E.run_tests({}, {}, [], subsets, absent={E.MULTIHOPRAG: ["chandan_live"]},
+                        absent_reasons={E.MULTIHOPRAG: {"chandan_live": why}})
+    t8a = next(t for t in tests["family_A"] if t["name"] == "T8a")
+    assert t8a["ran"] is False and "stopped by the owner" in t8a["reason"] and "592 of 609" in t8a["reason"]
+    text = RP.render_report({"tests": tests, "cost": {"builds": {"multihoprag": b}}})
+    assert "stopped by the owner on 2026-09-07 at 72 of 609 articles" in text
+    assert "| multihoprag | pgr-mhrag-full3 |" in text and "| multihoprag | pgr-mhrag-full |" in text
+    assert not BANNED.search(text)
+
+
+def test_the_ledger_is_read_against_the_stage_totals_of_the_metrics_files(tmp_path, monkeypatch):
+    """Defect 2: the ledger was added part way through, so its sums cover a
+    fraction of the invocations. The stage total comes from each stage's own
+    metrics file, and the passes that neither the ledger nor a metrics file
+    kept are reported from the run logs as a sum only."""
+    monkeypatch.setattr(PT, "OUT", tmp_path / "results" / "part1")
+    meter = CostMeter(max_usd=5.0)
+    meter.record("vertex-flash", 100000, 10000)          # 0.014 USD
+    PT.append_cost_ledger("", "lme", "qa", meter, corpora=["lme"], invocation_id="qa-1")
+    stage_cost = {"index": {"longmemeval": {"total_usd": 0.281447, "total_calls": 2566},
+                            "multihoprag": {"total_usd": 0.031848, "total_calls": 291}},
+                  "qa": {"longmemeval": {"total_usd": 0.019596, "total_calls": 1002},
+                         "multihoprag": {"total_usd": 10.9883, "total_calls": 17533}}}
+    totals = PT.stage_totals_from_metrics(stage_cost)
+    assert totals["index"]["usd"] == pytest.approx(0.313295) and totals["index"]["calls"] == 2857
+    assert totals["qa"]["usd"] == pytest.approx(11.007896) and totals["qa"]["calls"] == 18535
+    logs = tmp_path / "results" / "part1" / "logs"
+    logs.mkdir(parents=True)
+    (logs / "index_lme.log").write_text("[part1] index written to results/part1/lme/index in 111.6 min, USD 0.2814\n")
+    (logs / "chain_qa.log").write_text("[part1] qa done in 118.6 min, USD 10.9883\n"
+                                       "[part1] qa done in 35.6 min, USD 4.1136\n"
+                                       "[part1] qa done in 6.1 min, USD 0.0196\n"
+                                       "[part1] retrieve written to results/part1/mhrag/retrieve in 5 min, USD 0.4892\n")
+    passes = PT.stage_log_passes(tmp_path / "results" / "part1")
+    assert [p["usd"] for p in passes["qa"]] == [10.9883, 4.1136, 0.0196]
+    assert passes["index"] == [{"log": "index_lme.log", "corpus": "lme", "usd": 0.2814}]
+    assert passes["retrieve"][0]["corpus"] == "mhrag"
+    s = PT.ledger_summary(PT.read_cost_ledgers("", ["lme", "mhrag"]), totals, passes)["stages"]
+    assert s["qa"]["total_usd"] == pytest.approx(0.014) and s["qa"]["n_invocations"] == 1
+    assert s["qa"]["metrics_total_usd"] == pytest.approx(11.007896) and s["qa"]["metrics_total_calls"] == 18535
+    # the passes the metrics files lost: 15.1215 logged minus 11.0079 kept
+    assert s["qa"]["not_in_any_metrics_file_usd"] == pytest.approx(4.1136, abs=1e-4)
+    assert s["index"]["n_invocations"] == 0 and s["index"]["not_in_any_metrics_file_usd"] == pytest.approx(0.0)
+    assert not s["qa"]["over_cap"]
+    text = RP.render_report({"cost": {"ledger": {"stages": s, "note": "n"}}})
+    cost = text.split("## Cost and time")[1]
+    assert "| stage | section 11 cap USD | cap covers | recorded invocations USD | recorded invocations | " \
+           "recorded per corpus | stage total from the metrics files USD | calls in that total | " \
+           "stage total per corpus | over cap |" in cost
+    assert "| qa | 100.00 |" in cost and "| 0.01 | 1 | longmemeval 0.01 (1 invocations) | 11.01 | 18,535 |" in cost
+    assert "The ledger was added part way through the study, so most invocations were never itemised: they are " \
+           "counted in the stage total" in cost
+    assert "which puts the stage at USD 15.12 in total" in cost
+    assert not BANNED.search(text)
+    # over the cap is read against the fuller number, not the ledger sum alone
+    big = PT.ledger_summary({}, {"qa": {"usd": 120.0, "calls": 1, "by_corpus": {}}}, {})["stages"]["qa"]
+    assert big["over_cap"] and big["total_usd"] == 0.0
+
+
+def test_the_ranking_arms_are_read_without_parsing_the_whole_file(tmp_path):
+    """Defect 8: rankings.json reaches 155 MB, so the report reads the arm
+    names off the file instead of loading it; a pass that recorded them uses
+    the record."""
+    p = tmp_path / "rankings.json"
+    p.write_text(json.dumps({"4000": {"ours_cheap": {"q1": ["u1"]}, "chandan_live": {"q1": ["u2"]}},
+                             "8000": {"ours_cheap": {"q1": ["u1"]}}}, indent=2) + "\n")
+    assert PT.ranking_arms({}, p) == {"4000": ["chandan_live", "ours_cheap"], "8000": ["ours_cheap"]}
+    assert PT.ranking_arms({"ranking_arms": {"4000": ["S5_primary"]}}, p) == {"4000": ["S5_primary"]}
+    assert PT.ranking_arms({}, tmp_path / "missing.json") == {}

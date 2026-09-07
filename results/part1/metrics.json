@@ -1,9 +1,9 @@
 {
   "design": "docs/PART1-DESIGN.md version 4",
-  "generated": "2026-09-07T03:21:25+00:00",
+  "generated": "2026-09-07T05:27:47+00:00",
   "subsets_sha256": "0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082",
   "commits": {
-    "head": "13e1ed8",
+    "head": "d0c6c80",
     "subsets_sha256_file": "0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082"
   },
   "setup": {
@@ -4838,6 +4838,18 @@
       }
     }
   },
+  "retrieval_mirrors": {
+    "longmemeval": {
+      "chandan_full": {
+        "same_as": "chandan_live",
+        "n": 470,
+        "budgets": [
+          4000,
+          8000
+        ]
+      }
+    }
+  },
   "answering": {
     "chandan_own": {
       "longmemeval": {
@@ -4880,7 +4892,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.76,
-              "n_disagree": 3
+              "n_disagree": 3,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 151,
+              "n_wrong_scored": 13,
+              "n_audit_scored": 50
             },
             "cross_family": null
           }
@@ -4928,7 +4945,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.62,
-              "n_disagree": 8
+              "n_disagree": 8,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 215,
+              "n_wrong_scored": 21,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -4970,7 +4992,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 234,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5014,7 +5041,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.66,
-              "n_disagree": 10
+              "n_disagree": 10,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 215,
+              "n_wrong_scored": 22,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5056,7 +5088,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 233,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5100,7 +5137,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.7,
-              "n_disagree": 9
+              "n_disagree": 9,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 222,
+              "n_wrong_scored": 24,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5142,7 +5184,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 226,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5186,7 +5233,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.68,
-              "n_disagree": 10
+              "n_disagree": 10,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 230,
+              "n_wrong_scored": 22,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5228,7 +5280,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 225,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5272,7 +5329,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.7,
-              "n_disagree": 5
+              "n_disagree": 5,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 219,
+              "n_wrong_scored": 18,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5314,7 +5376,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 232,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5358,7 +5425,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.66,
-              "n_disagree": 10
+              "n_disagree": 10,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 230,
+              "n_wrong_scored": 26,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5400,7 +5472,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 229,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5444,7 +5521,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.64,
-              "n_disagree": 7
+              "n_disagree": 7,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 223,
+              "n_wrong_scored": 25,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5486,7 +5568,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 233,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5530,7 +5617,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.66,
-              "n_disagree": 4
+              "n_disagree": 4,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 221,
+              "n_wrong_scored": 21,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5572,7 +5664,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 239,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5616,7 +5713,12 @@
             "second_judge": {
               "n": 260,
               "acc_all": 0.3769230769230769,
-              "n_disagree": 69
+              "n_disagree": 69,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 227,
+              "n_wrong_scored": 227,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5658,7 +5760,12 @@
             "second_judge": {
               "n": 235,
               "acc_all": 0.3021276595744681,
-              "n_disagree": 71
+              "n_disagree": 71,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 500,
+              "n_wrong_answerable": 235,
+              "n_wrong_scored": 235,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5702,7 +5809,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.7,
-              "n_disagree": 8
+              "n_disagree": 8,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 223,
+              "n_wrong_scored": 21,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5744,7 +5856,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 211,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5788,7 +5905,12 @@
             "second_judge": {
               "n": 298,
               "acc_all": 0.4161073825503356,
-              "n_disagree": 101
+              "n_disagree": 101,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 273,
+              "n_wrong_scored": 273,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5830,7 +5952,12 @@
             "second_judge": {
               "n": 242,
               "acc_all": 0.35537190082644626,
-              "n_disagree": 86
+              "n_disagree": 86,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 500,
+              "n_wrong_answerable": 242,
+              "n_wrong_scored": 242,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5874,7 +6001,12 @@
             "second_judge": {
               "n": 285,
               "acc_all": 0.4105263157894737,
-              "n_disagree": 99
+              "n_disagree": 99,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 265,
+              "n_wrong_scored": 265,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -5916,7 +6048,12 @@
             "second_judge": {
               "n": 231,
               "acc_all": 0.3593073593073593,
-              "n_disagree": 83
+              "n_disagree": 83,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 500,
+              "n_wrong_answerable": 231,
+              "n_wrong_scored": 231,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -5960,7 +6097,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 18,
+              "n_wrong_answerable": 11,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           },
@@ -6002,7 +6144,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 18,
+              "n_wrong_answerable": 8,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6046,7 +6193,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.42,
-              "n_disagree": 20
+              "n_disagree": 20,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 461,
+              "n_wrong_scored": 47,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -6088,7 +6240,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 461,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6132,7 +6289,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.84,
-              "n_disagree": 6
+              "n_disagree": 6,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 188,
+              "n_wrong_scored": 12,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -6174,7 +6336,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 188,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6218,7 +6385,12 @@
             "second_judge": {
               "n": 245,
               "acc_all": 0.4204081632653061,
-              "n_disagree": 80
+              "n_disagree": 80,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 218,
+              "n_wrong_scored": 218,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -6260,7 +6432,12 @@
             "second_judge": {
               "n": 222,
               "acc_all": 0.33783783783783783,
-              "n_disagree": 75
+              "n_disagree": 75,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 500,
+              "n_wrong_answerable": 222,
+              "n_wrong_scored": 222,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6304,7 +6481,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.76,
-              "n_disagree": 9
+              "n_disagree": 9,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 233,
+              "n_wrong_scored": 19,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -6346,7 +6528,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 225,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6390,7 +6577,12 @@
             "second_judge": {
               "n": 50,
               "acc_all": 0.62,
-              "n_disagree": 8
+              "n_disagree": 8,
+              "population": "the audit sample",
+              "n_records": 500,
+              "n_wrong_answerable": 218,
+              "n_wrong_scored": 25,
+              "n_audit_scored": 50
             },
             "cross_family": null
           },
@@ -6432,7 +6624,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 500,
+              "n_wrong_answerable": 224,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6470,7 +6667,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.7833333333333333,
-              "n_disagree": 4
+              "n_disagree": 4,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 125,
+              "n_wrong_scored": 17,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6504,7 +6706,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 88,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6540,7 +6747,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.7833333333333333,
-              "n_disagree": 7
+              "n_disagree": 7,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 130,
+              "n_wrong_scored": 15,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6574,7 +6786,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 86,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6610,7 +6827,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.7166666666666667,
-              "n_disagree": 4
+              "n_disagree": 4,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 135,
+              "n_wrong_scored": 15,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6644,7 +6866,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 110,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6680,7 +6907,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.7833333333333333,
-              "n_disagree": 5
+              "n_disagree": 5,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 153,
+              "n_wrong_scored": 14,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6714,7 +6946,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 114,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6750,7 +6987,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.7,
-              "n_disagree": 7
+              "n_disagree": 7,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 140,
+              "n_wrong_scored": 13,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6784,7 +7026,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 104,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6820,7 +7067,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.85,
-              "n_disagree": 2
+              "n_disagree": 2,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 137,
+              "n_wrong_scored": 10,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6854,7 +7106,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 100,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6890,7 +7147,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.75,
-              "n_disagree": 6
+              "n_disagree": 6,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 127,
+              "n_wrong_scored": 17,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6924,7 +7186,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 101,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -6960,7 +7227,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.8,
-              "n_disagree": 2
+              "n_disagree": 2,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 118,
+              "n_wrong_scored": 12,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -6994,7 +7266,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 94,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -7030,7 +7307,12 @@
             "second_judge": {
               "n": 184,
               "acc_all": 0.41847826086956524,
-              "n_disagree": 32
+              "n_disagree": 32,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 135,
+              "n_wrong_scored": 135,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -7064,7 +7346,12 @@
             "second_judge": {
               "n": 110,
               "acc_all": 0.2,
-              "n_disagree": 22
+              "n_disagree": 22,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 600,
+              "n_wrong_answerable": 110,
+              "n_wrong_scored": 110,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -7100,7 +7387,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.8,
-              "n_disagree": 7
+              "n_disagree": 7,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 142,
+              "n_wrong_scored": 13,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -7134,7 +7426,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 142,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -7170,7 +7467,12 @@
             "second_judge": {
               "n": 60,
               "acc_all": 0.8333333333333334,
-              "n_disagree": 2
+              "n_disagree": 2,
+              "population": "the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 90,
+              "n_wrong_scored": 7,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -7204,7 +7506,12 @@
             "second_judge": {
               "n": 0,
               "acc_all": null,
-              "n_disagree": 0
+              "n_disagree": 0,
+              "population": "not scored",
+              "n_records": 600,
+              "n_wrong_answerable": 90,
+              "n_wrong_scored": 0,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -7240,7 +7547,12 @@
             "second_judge": {
               "n": 172,
               "acc_all": 0.4418604651162791,
-              "n_disagree": 30
+              "n_disagree": 30,
+              "population": "every primary-wrong answerable answer, and the audit sample",
+              "n_records": 600,
+              "n_wrong_answerable": 123,
+              "n_wrong_scored": 123,
+              "n_audit_scored": 60
             },
             "cross_family": null
           },
@@ -7274,7 +7586,12 @@
             "second_judge": {
               "n": 89,
               "acc_all": 0.24719101123595505,
-              "n_disagree": 22
+              "n_disagree": 22,
+              "population": "every primary-wrong answerable answer",
+              "n_records": 600,
+              "n_wrong_answerable": 89,
+              "n_wrong_scored": 89,
+              "n_audit_scored": 0
             },
             "cross_family": null
           }
@@ -7322,7 +7639,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.828,
-              "n_disagree": 20
+              "n_disagree": 20,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 81,
+              "n_wrong_scored": 81,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7374,7 +7696,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.66,
-              "n_disagree": 33
+              "n_disagree": 33,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 188,
+              "n_wrong_scored": 188,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7426,7 +7753,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.666,
-              "n_disagree": 33
+              "n_disagree": 33,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 185,
+              "n_wrong_scored": 185,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7478,7 +7810,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.486,
-              "n_disagree": 214
+              "n_disagree": 214,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 462,
+              "n_wrong_scored": 462,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7530,7 +7867,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.858,
-              "n_disagree": 18
+              "n_disagree": 18,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 67,
+              "n_wrong_scored": 67,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7582,7 +7924,12 @@
             "second_judge": {
               "n": 500,
               "acc_all": 0.834,
-              "n_disagree": 23
+              "n_disagree": 23,
+              "population": "every record of the cell",
+              "n_records": 500,
+              "n_wrong_answerable": 76,
+              "n_wrong_scored": 76,
+              "n_audit_scored": 50
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7628,7 +7975,12 @@
             "second_judge": {
               "n": 200,
               "acc_all": 0.85,
-              "n_disagree": 8
+              "n_disagree": 8,
+              "population": "every record of the cell",
+              "n_records": 200,
+              "n_wrong_answerable": 24,
+              "n_wrong_scored": 24,
+              "n_audit_scored": 20
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7672,7 +8024,12 @@
             "second_judge": {
               "n": 200,
               "acc_all": 0.59,
-              "n_disagree": 29
+              "n_disagree": 29,
+              "population": "every record of the cell",
+              "n_records": 200,
+              "n_wrong_answerable": 102,
+              "n_wrong_scored": 102,
+              "n_audit_scored": 20
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7716,7 +8073,12 @@
             "second_judge": {
               "n": 200,
               "acc_all": 0.875,
-              "n_disagree": 6
+              "n_disagree": 6,
+              "population": "every record of the cell",
+              "n_records": 200,
+              "n_wrong_answerable": 14,
+              "n_wrong_scored": 14,
+              "n_audit_scored": 20
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -7760,7 +8122,12 @@
             "second_judge": {
               "n": 200,
               "acc_all": 0.855,
-              "n_disagree": 6
+              "n_disagree": 6,
+              "population": "every record of the cell",
+              "n_records": 200,
+              "n_wrong_answerable": 18,
+              "n_wrong_scored": 18,
+              "n_audit_scored": 20
             },
             "cross_family": {
               "judge": "gemini-2.5-flash-lite",
@@ -8186,7 +8553,7 @@
         "population": "MultiHop-RAG non-null, all facts located",
         "budget": 4000,
         "ran": false,
-        "reason": "no output from chandan_live on multihoprag",
+        "reason": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)",
         "partial": false,
         "n": 0,
         "n_refused": 0,
@@ -8557,7 +8924,7 @@
         "population": "MHRAG_ANSWER",
         "budget": 4000,
         "ran": false,
-        "reason": "no output from chandan_live on multihoprag",
+        "reason": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)",
         "partial": false,
         "n": 0,
         "n_refused": 0,
@@ -8589,7 +8956,7 @@
         "population": "READER_B_MHRAG",
         "budget": 4000,
         "ran": false,
-        "reason": "no output from chandan_live on multihoprag",
+        "reason": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)",
         "partial": false,
         "n": 0,
         "n_refused": 0,
@@ -8800,6 +9167,16 @@
         "C1": true
       }
     },
+    "holm_m": {
+      "A": 2,
+      "B": 5,
+      "C": 2
+    },
+    "holm_declared_m": {
+      "A": 4,
+      "B": 5,
+      "C": 6
+    },
     "D1": "shown",
     "D2": {
       "not_run": true,
@@ -8843,7 +9220,7 @@
       "first_build_usd": 64.96576099999999,
       "evaluated": false,
       "rule": "not evaluated, build incomplete",
-      "build_label": "multihoprag: partial build snapshot, 0 of 1 spaces, build stopped at its cap"
+      "build_label": "multihoprag: partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)"
     },
     "arm_notes": {
       "multihoprag": {
@@ -9034,7 +9411,7 @@
         "ci": null,
         "n": null,
         "label": "untested",
-        "note": "no output from chandan_live on multihoprag"
+        "note": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)"
       },
       {
         "name": "mhrag_inference",
@@ -9048,7 +9425,7 @@
         "ci": null,
         "n": null,
         "label": "untested",
-        "note": "no output from chandan_live on multihoprag"
+        "note": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)"
       },
       {
         "name": "closed_book_floor_comparison_query",
@@ -9287,7 +9664,7 @@
       "ci": null,
       "n": null,
       "label": "untested",
-      "note": "no output from chandan_live on multihoprag"
+      "note": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)"
     },
     {
       "name": "mhrag_inference",
@@ -9301,7 +9678,7 @@
       "ci": null,
       "n": null,
       "label": "untested",
-      "note": "no output from chandan_live on multihoprag"
+      "note": "no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it)"
     },
     {
       "name": "closed_book_floor_comparison_query",
@@ -9378,7 +9755,7 @@
     "first_build_usd": 64.96576099999999,
     "evaluated": false,
     "rule": "not evaluated, build incomplete",
-    "build_label": "multihoprag: partial build snapshot, 0 of 1 spaces, build stopped at its cap"
+    "build_label": "multihoprag: partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)"
   },
   "buckets": {
     "S2_lazy": {
@@ -15208,6 +15585,32 @@
           "cap_usd": 15.0,
           "cap_components": "overlay generation 15",
           "total_usd": 0,
+          "metrics_total_usd": 0.313295,
+          "metrics_total_calls": 2857,
+          "metrics_by_corpus": {
+            "longmemeval": {
+              "usd": 0.281447,
+              "calls": 2566
+            },
+            "multihoprag": {
+              "usd": 0.031848,
+              "calls": 291
+            }
+          },
+          "log_passes": [
+            {
+              "log": "index_lme.log",
+              "corpus": "lme",
+              "usd": 0.2814
+            },
+            {
+              "log": "index_mhrag.log",
+              "corpus": "mhrag",
+              "usd": 0.0318
+            }
+          ],
+          "log_passes_usd": 0.3132,
+          "not_in_any_metrics_file_usd": 0.0,
           "over_cap": false,
           "n_invocations": 0,
           "by_corpus": {},
@@ -15217,6 +15620,47 @@
           "cap_usd": 35.0,
           "cap_components": "planner 10 and S2 relevance tests 25",
           "total_usd": 0.081224,
+          "metrics_total_usd": 0.5704,
+          "metrics_total_calls": 43181,
+          "metrics_by_corpus": {
+            "longmemeval": {
+              "usd": 0.081224,
+              "calls": 8312
+            },
+            "multihoprag": {
+              "usd": 0.489176,
+              "calls": 34869
+            }
+          },
+          "log_passes": [
+            {
+              "log": "chain_lme_full.log",
+              "corpus": "lme",
+              "usd": 0.0812
+            },
+            {
+              "log": "chain_lme_pass1c.log",
+              "corpus": "lme",
+              "usd": 0.0
+            },
+            {
+              "log": "retrieve_lme_pass1.log",
+              "corpus": "lme",
+              "usd": 0.0101
+            },
+            {
+              "log": "retrieve_lme_pass1b.log",
+              "corpus": "lme",
+              "usd": 0.0
+            },
+            {
+              "log": "retrieve_mhrag.log",
+              "corpus": "mhrag",
+              "usd": 0.4892
+            }
+          ],
+          "log_passes_usd": 0.5805,
+          "not_in_any_metrics_file_usd": 0.0101,
           "over_cap": false,
           "n_invocations": 1,
           "by_corpus": {
@@ -15279,6 +15723,47 @@
           "cap_usd": 100.0,
           "cap_components": "answering and judging 100 across both corpora, both readers and the chandan_full_uncut reader",
           "total_usd": 0.019596,
+          "metrics_total_usd": 11.007896,
+          "metrics_total_calls": 18535,
+          "metrics_by_corpus": {
+            "longmemeval": {
+              "usd": 0.019596,
+              "calls": 1002
+            },
+            "multihoprag": {
+              "usd": 10.9883,
+              "calls": 17533
+            }
+          },
+          "log_passes": [
+            {
+              "log": "chain_finish.log",
+              "corpus": "",
+              "usd": 0.0196
+            },
+            {
+              "log": "chain_lme_pass1c.log",
+              "corpus": "",
+              "usd": 4.1136
+            },
+            {
+              "log": "chain_lme_pass1d.log",
+              "corpus": "",
+              "usd": 0.0213
+            },
+            {
+              "log": "chain_qa_all.log",
+              "corpus": "",
+              "usd": 10.9883
+            },
+            {
+              "log": "qa_lme_pass1b.log",
+              "corpus": "",
+              "usd": 0.4511
+            }
+          ],
+          "log_passes_usd": 15.5939,
+          "not_in_any_metrics_file_usd": 4.586004,
           "over_cap": false,
           "n_invocations": 1,
           "by_corpus": {
@@ -15353,6 +15838,49 @@
         "n_wanted": 500,
         "subset": null,
         "label": "complete build, 500 of 500 spaces",
+        "attempts": [
+          {
+            "job_tag": "pgr-lme-full-s0",
+            "started": "2026-09-06T16:04:05+05:30",
+            "ended": "2026-09-07T03:45:30+05:30",
+            "stopped": null,
+            "run_log": true,
+            "usd": 16.551159,
+            "usd_source": "runner meter",
+            "progress": "not recorded"
+          },
+          {
+            "job_tag": "pgr-lme-full-s1",
+            "started": "2026-09-06T16:04:15+05:30",
+            "ended": "2026-09-07T05:02:02+05:30",
+            "stopped": null,
+            "run_log": true,
+            "usd": 16.492885,
+            "usd_source": "runner meter",
+            "progress": "not recorded"
+          },
+          {
+            "job_tag": "pgr-lme-full-s2",
+            "started": "2026-09-06T16:04:25+05:30",
+            "ended": "2026-09-07T04:30:10+05:30",
+            "stopped": null,
+            "run_log": true,
+            "usd": 16.791367,
+            "usd_source": "runner meter",
+            "progress": "not recorded"
+          },
+          {
+            "job_tag": "pgr-lme-full-s3",
+            "started": "2026-09-06T16:04:35+05:30",
+            "ended": "2026-09-07T05:25:23+05:30",
+            "stopped": null,
+            "run_log": true,
+            "usd": 17.030761,
+            "usd_source": "runner meter",
+            "progress": "not recorded"
+          }
+        ],
+        "n_attempts": 4,
         "run_log_usd": 66.866172,
         "job_tags": [
           "pgr-lme-full-s0",
@@ -15369,15 +15897,52 @@
           {
             "job_tag": "pgr-mhrag-full",
             "stopped": "cap: spend 10.0071 USD exceeds the cap of 10.00"
+          },
+          {
+            "job_tag": "pgr-mhrag-full3",
+            "stopped": "stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)"
           }
         ],
         "n_spaces": 0,
         "n_wanted": 1,
         "subset": null,
-        "label": "partial build snapshot, 0 of 1 spaces, build stopped at its cap",
+        "label": "partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)",
+        "attempts": [
+          {
+            "job_tag": "pgr-mhrag-full",
+            "started": "2026-09-06T16:05:38+05:30",
+            "ended": "2026-09-07T00:24:38+05:30",
+            "stopped": "cap: spend 10.0071 USD exceeds the cap of 10.00",
+            "run_log": true,
+            "usd": 10.007077,
+            "usd_source": "runner meter",
+            "n_indexed": 592,
+            "n_wanted": 609,
+            "unit": "articles",
+            "source": "docs/PART1-DESIGN.md section 14 item 4: the build stopped at its USD 10 cap with 592 of 609 articles indexed and no query run. The stop reason, the times and the meter come from run_pgr-mhrag-full.json.",
+            "progress": "592 of 609 articles"
+          },
+          {
+            "job_tag": "pgr-mhrag-full3",
+            "run_log": false,
+            "started": "2026-09-07T07:30:00+05:30",
+            "ended": "2026-09-07T08:17:21+05:30",
+            "stopped": "stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)",
+            "n_indexed": 72,
+            "n_wanted": 609,
+            "unit": "articles",
+            "source": "The owner's stop and the 72 of 609 articles are docs/PART1-DESIGN.md section 14 item 5. The job tag, the first and last request times, the request count and the USD estimate are the rows tagged pgr-mhrag-full3 in the proxy request log part1-tools/env/requests.jsonl (litellm's own response_cost, not the runner meter: the runner was killed before it wrote a run log or a meter).",
+            "proxy_log_requests": 467,
+            "usd": 1.699976,
+            "usd_source": "proxy request log (no run log: the runner was stopped before it wrote one)",
+            "progress": "72 of 609 articles"
+          }
+        ],
+        "n_attempts": 2,
         "run_log_usd": 10.007077,
         "job_tags": [
-          "pgr-mhrag-full"
+          "pgr-mhrag-full",
+          "pgr-mhrag-full3"
         ]
       }
     },
@@ -15685,6 +16250,12 @@
       "S2_lazy": "run without post-graph-rag tables"
     }
   },
+  "absent_reasons": {
+    "multihoprag": {
+      "chandan_live": "the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it",
+      "chandan_full": "the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it"
+    }
+  },
   "qa_audit_record": {
     "n": 1200,
     "n_agree": 1012,
@@ -15727,5 +16298,67 @@
       }
     },
     "multihoprag": {}
+  },
+  "ranking_files": {
+    "longmemeval": {
+      "4000": [
+        "S2_lazy",
+        "S4_static",
+        "S5_noPGR",
+        "S5_overlay_P0",
+        "S5_overlay_R0",
+        "S5_overlay_R2",
+        "S5_planner_oracle",
+        "S5_planner_rules",
+        "S5_primary",
+        "S5_primary_norule",
+        "chandan_live",
+        "ours_cheap",
+        "ours_cheap_norule",
+        "ours_sentence_norule"
+      ],
+      "8000": [
+        "S2_lazy",
+        "S4_static",
+        "S5_noPGR",
+        "S5_overlay_P0",
+        "S5_overlay_R0",
+        "S5_overlay_R2",
+        "S5_planner_oracle",
+        "S5_planner_rules",
+        "S5_primary",
+        "S5_primary_norule",
+        "chandan_live",
+        "ours_cheap",
+        "ours_cheap_norule",
+        "ours_sentence_norule"
+      ]
+    },
+    "multihoprag": {
+      "4000": [
+        "S2_lazy",
+        "S4_static",
+        "S5_noPGR",
+        "S5_overlay_P0",
+        "S5_overlay_R0",
+        "S5_overlay_R2",
+        "S5_planner_oracle",
+        "S5_planner_rules",
+        "S5_primary",
+        "ours_cheap"
+      ],
+      "8000": [
+        "S2_lazy",
+        "S4_static",
+        "S5_noPGR",
+        "S5_overlay_P0",
+        "S5_overlay_R0",
+        "S5_overlay_R2",
+        "S5_planner_oracle",
+        "S5_planner_rules",
+        "S5_primary",
+        "ours_cheap"
+      ]
+    }
   }
 }

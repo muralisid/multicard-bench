@@ -94,6 +94,9 @@ HEAD_TO_HEAD_ARMS = ("S5_primary", "ours_cheap", "chandan_live", "chandan_full",
 CHANDAN_ARMS = ("chandan_live", "chandan_full", "chandan_full_uncut")
 ARMS_READING_PGR_TABLES = tuple(n for n, s in ARM_SPECS.items() if s.pgr) + CHANDAN_ARMS
 SESSION_LEVEL_ARMS = ("graphiti",)   # section 3: Graphiti is scored at session level only
+# Section 5 declares these "Answering only": they exist to put a competitor's
+# own block order in front of the readers, not to be scored at retrieval.
+ANSWERING_ONLY_ARMS = ("chandan_full",)
 SECOND_BUILD_ARM = "chandan_live_second"   # section 9: chandan_live over the second post-graph-rag build
 LOCAL_TYPES = ("single-session-user", "single-session-assistant")
 NULL_TYPE = "null_query"
@@ -587,10 +590,43 @@ def cross_family_cell(rows: list[AnswerRecord], judge: str) -> dict:
     }
 
 
-def accuracy_cell(rows: list[AnswerRecord], cross_judge: str | None = None) -> dict:
+def second_judge_population(rows: list[AnswerRecord], scored: list[AnswerRecord],
+                            audit_ids: set[str] | None = None) -> dict:
+    """Which records the second judge scored in one cell, named.
+
+    Section 6 gives the second judge two jobs, and the cell mixes them: it
+    scores the JUDGE_AUDIT sample of every cell, and it scores every answer
+    the primary judge called wrong on an answerable question for the
+    head-to-head arms under both readers. A 50-record audit column and a
+    column over every wrong answer are different quantities, so the cell says
+    which one it holds and never leaves the reader to compare them."""
+    audit_ids = audit_ids or set()
+    n_wrong = sum(1 for r in rows if not r.abstention and r.correct is False)
+    n_wrong_scored = sum(1 for r in scored if not r.abstention and r.correct is False)
+    n_audit_scored = sum(1 for r in scored if r.qid in audit_ids)
+    if not scored:
+        population = "not scored"
+    elif len(scored) == len(rows):
+        population = "every record of the cell"
+    elif n_wrong and n_wrong_scored >= n_wrong:
+        population = ("every primary-wrong answerable answer, and the audit sample"
+                      if n_audit_scored and n_audit_scored < len(scored) else "every primary-wrong answerable answer")
+    elif n_audit_scored >= len(scored):
+        population = "the audit sample"
+    else:
+        population = "part of the primary-wrong answers, and the audit sample" if n_audit_scored else \
+            "part of the primary-wrong answers"
+    return {"population": population, "n_records": len(rows), "n_wrong_answerable": n_wrong,
+            "n_wrong_scored": n_wrong_scored, "n_audit_scored": n_audit_scored}
+
+
+def accuracy_cell(rows: list[AnswerRecord], cross_judge: str | None = None,
+                  audit_ids: set[str] | None = None) -> dict:
     """One (reader, corpus, arm, budget) cell under the primary judge, with
     the second judge as a separate column, never merged. cross_judge names
-    the judge of the section 14 item 3 column; None leaves it out."""
+    the judge of the section 14 item 3 column; None leaves it out.
+    audit_ids are the JUDGE_AUDIT ids of this cell, used to name the second
+    judge's population."""
     ans = [r for r in rows if not r.abstention]
     abs_ = [r for r in rows if r.abstention]
     types = sorted({r.qtype for r in rows})
@@ -611,21 +647,28 @@ def accuracy_cell(rows: list[AnswerRecord], cross_judge: str | None = None) -> d
             "n": len(second_rows),
             "acc_all": float(np.mean([bool(r.second_verdict()) for r in second_rows])) if second_rows else None,
             "n_disagree": sum(1 for r in second_rows if r.second_verdict() != r.correct),
+            **second_judge_population(rows, second_rows, audit_ids),
         },
         "cross_family": cross_family_cell(rows, cross_judge) if cross_judge else None,
     }
 
 
 def accuracy_tables(records: list[AnswerRecord], cross_judge: str | None = None,
-                    cross_reader: str = READER_B) -> dict:
+                    cross_reader: str = READER_B, audit_ids: dict | None = None) -> dict:
     """reader -> corpus -> arm -> budget (as text) -> accuracy_cell. The
     cells of cross_reader carry the section 14 item 3 column under
-    cross_judge when one is named; every other cell has it as None."""
+    cross_judge when one is named; every other cell has it as None.
+    audit_ids ((arm, corpus, reader) -> ids, from audit_index) names the
+    second judge's population in every cell."""
     out: dict = {}
+    audit_ids = audit_ids or {}
     keys = sorted({(r.reader, r.corpus, r.arm, r.budget) for r in records})
     for reader, corpus, arm, budget in keys:
         rows = [r for r in records if (r.reader, r.corpus, r.arm, r.budget) == (reader, corpus, arm, budget)]
-        cell = accuracy_cell(rows, cross_judge if reader == cross_reader else None)
+        # the audit cells carry no budget and are drawn at the primary one
+        # (audit_records), so only that budget's cell counts audit records
+        cell = accuracy_cell(rows, cross_judge if reader == cross_reader else None,
+                             audit_ids.get((arm, corpus, reader)) if budget == BUDGET_PRIMARY else None)
         out.setdefault(reader, {}).setdefault(corpus, {}).setdefault(arm, {})[str(budget)] = cell
     return out
 
@@ -1399,7 +1442,8 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
               restrict: dict[str, set[str]] | None = None,
               partial_answering: dict[str, set[str]] | None = None,
               arm_ids: dict[str, list[str]] | None = None, arm_ids_label: str = "",
-              graph_shares: dict | None = None, arm_notes: dict[str, dict[str, str]] | None = None) -> dict:
+              graph_shares: dict | None = None, arm_notes: dict[str, dict[str, str]] | None = None,
+              absent_reasons: dict[str, dict[str, str]] | None = None) -> dict:
     """Every test of section 9 as data, at B equals 4,000, and the section 10
     predictions read against them.
 
@@ -1430,12 +1474,16 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
     arm on that corpus, for example the S4 and S5 arms on MultiHop-RAG when
     they ran without post-graph-rag's tables; the pass rule prints the notes
     of its gate tests beside the rule and is not changed by them.
+    absent_reasons (corpus -> arm -> why) says why an absent arm has no
+    output, so a test recorded as not run names the cause (a build stopped by
+    the owner, say) instead of only the empty result.
     """
     refused = refused or {}
     partial = partial or {}
     overrides = overrides or {}
     context_hashes = context_hashes or {}
     arm_notes = {k: dict(v) for k, v in (arm_notes or {}).items()}
+    absent_reasons = {k: dict(v) for k, v in (absent_reasons or {}).items()}
     absent = {k: set(v) for k, v in (absent or {}).items()}
     restrict = {k: set(v) for k, v in (restrict or {}).items()}
     partial_answering = {k: set(v) for k, v in (partial_answering or {}).items()}
@@ -1462,7 +1510,11 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
 
     def gone(corpus: str, *arms) -> str:
         missing = [a for a in arms if a in absent.get(corpus, set())]
-        return f"no output from {', '.join(missing)} on {corpus}" if missing else ""
+        if not missing:
+            return ""
+        why = "; ".join(f"{a}: {(absent_reasons.get(corpus) or {}).get(a)}" for a in missing
+                        if (absent_reasons.get(corpus) or {}).get(a))
+        return f"no output from {', '.join(missing)} on {corpus}" + (f" ({why})" if why else "")
 
     def ids_for(name: str, default: list[str]) -> tuple[list[str], str]:
         o = overrides.get(name)
@@ -1644,6 +1696,10 @@ def run_tests(lme: dict[str, dict[str, QuestionScore]], mhr: dict[str, dict[str,
         "T5": t5,
         "T7": {**t7.as_dict(), **{"rule": t7r}},
         "holm": {"A": holm_a, "B": holm_b, "C": holm_c},
+        # Holm inside a family runs over the tests that ran on a complete run,
+        # so m is the count below, not the count the design names.
+        "holm_m": {"A": len(holm_a), "B": len(holm_b), "C": len(holm_c)},
+        "holm_declared_m": {"A": len(family_a), "B": len(family_b), "C": len(family_c)},
         "D1": d1_label(t1),
         "D2": d2,
         "pass_rule": pass_rule(t1, t2, t8a, t7, graphiti_status, gate_notes),
@@ -1786,6 +1842,41 @@ def arm_tables(lme: dict[str, dict[int, dict[str, QuestionScore]]],
     return out
 
 
+def _score_digest(scores: dict) -> str:
+    """A digest of one arm's per-question scores at one budget."""
+    rows = {q: asdict(s) for q, s in sorted(scores.items())}
+    return hashlib.sha256(json.dumps(rows, sort_keys=True, default=str).encode()).hexdigest()
+
+
+def retrieval_mirrors(lme: dict, mhr: dict) -> dict:
+    """corpus -> arm -> the arm it mirrors at retrieval, when an arm section 5
+    declares answering only scores identically to another arm on every
+    question at every budget.
+
+    chandan_full is his assembled context in his native block order: it
+    renders the same unit set as chandan_live and every retrieval metric here
+    is order independent, so its retrieval rows repeat chandan_live's. The
+    identity is measured here, not assumed: an arm is only called a mirror
+    when the two score tables are identical question by question.
+    """
+    out: dict = {}
+    for corpus, table in ((LONGMEMEVAL, lme), (MULTIHOPRAG, mhr)):
+        digests = {arm: {b: _score_digest(s) for b, s in per_budget.items()} for arm, per_budget in table.items()}
+        for arm in ANSWERING_ONLY_ARMS:
+            mine = digests.get(arm)
+            if not mine:
+                continue
+            for other, theirs in digests.items():
+                if other == arm or other in ANSWERING_ONLY_ARMS or theirs != mine:
+                    continue
+                budgets = sorted(mine)
+                n = len(table[arm].get(budgets[0], {})) if budgets else 0
+                out.setdefault(corpus, {})[arm] = {"same_as": other, "n": n,
+                                                   "budgets": [int(b) for b in budgets]}
+                break
+    return out
+
+
 # ----------------------------------------------------------------------------
 # Cost table (section 7 and 11)
 # ----------------------------------------------------------------------------
@@ -1883,7 +1974,8 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
                   arm_populations: dict | None = None, arm_populations_label: str = "",
                   second_build: dict | None = None, extra_summary: dict | None = None,
                   arm_notes: dict | None = None, arm_status: dict | None = None,
-                  qa_audit_record: dict | None = None) -> dict:
+                  qa_audit_record: dict | None = None,
+                  absent_reasons: dict[str, dict[str, str]] | None = None) -> dict:
     """Assemble results/part1/metrics.json.
 
     lme and mhr map arm -> budget -> qid -> score (part1.score objects).
@@ -1924,7 +2016,7 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
                     for v, d in shares.items()} if shares else {}
     tests = run_tests(lme4k, mhr4k, records, subsets, refused, partial, graphiti_status, context_hashes, overrides,
                       absent, restrict, partial_answering, arm_populations, arm_populations_label, graph_shares,
-                      arm_notes)
+                      arm_notes, absent_reasons)
     second = dict(second_build or {})
     second.update(tests.get("second_build") or {})
     second.setdefault("ran", False)
@@ -1977,7 +2069,8 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
         "setup": setup,
         "arms": arms,
         "retrieval": arm_tables(lme, mhr, subsets, restrict, arm_populations, extra_summary),
-        "answering": accuracy_tables(records, cross_judge),
+        "retrieval_mirrors": retrieval_mirrors(lme, mhr),
+        "answering": accuracy_tables(records, cross_judge, audit_ids=audit_index(subsets)),
         "judge_audit": audit_d,
         "tests": tests,
         "predictions": tests.get("predictions") or [],
@@ -1997,6 +2090,7 @@ def build_metrics(*, lme: dict, mhr: dict, records: list[AnswerRecord], audit: J
         "absent_arms": {k: sorted(v) for k, v in (absent or {}).items()},
         "arm_status": {k: dict(v) for k, v in (arm_status or {}).items()},
         "arm_notes": {k: dict(v) for k, v in (arm_notes or {}).items()},
+        "absent_reasons": {k: dict(v) for k, v in (absent_reasons or {}).items()},
         "qa_audit_record": dict(qa_audit_record or {}),
         "restricted_to": {k: len(v) for k, v in (restrict or {}).items()},
     }

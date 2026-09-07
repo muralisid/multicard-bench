@@ -74,7 +74,7 @@ revised several times since and the table is not kept in step.
   `src/multicard/run.py`, which registers them as `part1_index`,
   `part1_retrieve`, `part1_qa`, `part1_report`.
 - `scripts/part1_subsets.py`, which produced the subsets file.
-- `tests/test_part1_*.py`, eleven files; the whole suite is 335 tests.
+- `tests/test_part1_*.py`, eleven files; the whole suite is 345 tests.
 - Reused from the earlier work: `src/multicard/experiments/e5_longmemeval.py`
   (the speaker rule, the reader rules, the official judge prompts, the unit
   split), `src/multicard/metrics/` (ranking, paired statistics),
@@ -283,7 +283,7 @@ extractor.
 ## 5. What was built
 
 Code under src/multicard/part1/ in the bench, plus two runners outside it.
-Committed; 335 tests pass.
+Committed; 345 tests pass.
 
 - units.py, render.py, score.py: the unit tables (turns, sub-units, chunks,
   sentences), the rendering rule (rank order until the budget is full, then
@@ -500,7 +500,7 @@ phrases, 251 and 256 communities, 291 flagged pairs, 84 links.
 ## 10. What is finished and what is not
 
 Finished: the design and its three review rounds, the environment, the code
-with 335 passing tests, the frozen index on both corpora, every arm of ours
+with 345 passing tests, the frozen index on both corpora, every arm of ours
 through retrieval and answering on both corpora, post-graph-rag on
 LongMemEval through retrieval and answering, the calibration row on his own
 models, the report with the gate tests, the mechanism analysis, the published

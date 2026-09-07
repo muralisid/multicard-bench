@@ -1050,3 +1050,176 @@ def test_second_build_rule_is_not_evaluated_on_an_incomplete_build():
     assert "Second post-graph-rag build (section 9): first build cost USD 28.50; second build ran: no." in RP.render_report(m)
     # no build state at all (an older payload): evaluated as before
     assert _metrics_with_costs({"index": {}})["second_build"]["evaluated"] is True
+
+
+# ----------------------------------------------------------------------------
+# The report defects found by the independent recomputation of REPORT.md
+# ----------------------------------------------------------------------------
+def _payload_with(lme, mhr=None, records=(), audit=None, subsets=None, **kw):
+    subsets = subsets or synthetic_subsets()
+    audit = audit or {"n": 0, "n_agree": 0, "agreement": 0.0, "threshold": 0.9, "cheap": "c", "strong": "s",
+                      "primary": "s", "second": "c", "cells": []}
+    return E.build_metrics(lme=lme, mhr=mhr or {}, records=list(records), audit=audit, buckets=[], subsets=subsets,
+                           subsets_sha256="abc", commits={"head": "x"}, graphiti_status="dropped", **kw)
+
+
+def test_an_answering_only_arm_identical_at_retrieval_leaves_the_retrieval_tables():
+    """Defect 3: chandan_full is answering only (section 5) and renders the
+    same unit set as chandan_live, so its retrieval, truncated-evidence and
+    by-type rows repeat his. They are dropped and one sentence says why. The
+    identity is measured, not assumed: a chandan_full that scores differently
+    keeps every row."""
+    subsets = synthetic_subsets()
+    answerable = E.answerable_ids(subsets)
+    same = {b: {q: qs(q, 1.0 if i % 2 else 0.0) for i, q in enumerate(answerable)} for b in (4000, 8000)}
+    lme = {"chandan_live": same,
+           "chandan_full": {b: {q: qs(q, 1.0 if i % 2 else 0.0) for i, q in enumerate(answerable)}
+                            for b in (4000, 8000)},
+           "S5_primary": {b: {q: qs(q, 1.0) for q in answerable} for b in (4000, 8000)}}
+    m = _payload_with(lme)
+    mir = m["retrieval_mirrors"][E.LONGMEMEVAL]
+    assert mir["chandan_full"]["same_as"] == "chandan_live"
+    assert mir["chandan_full"]["n"] == len(answerable) and mir["chandan_full"]["budgets"] == [4000, 8000]
+    assert "S5_primary" not in mir and "chandan_live" not in mir
+    text = RP.render_report(m)
+    retrieval = text.split("## Retrieval")[1].split("## Pre-declared tests")[0]
+    assert "| chandan_full |" not in retrieval and "| chandan_live |" in retrieval
+    assert "the same rendered units as chandan_live in a different block order" in retrieval
+    assert f"identical to chandan_live on all {len(answerable)} questions at 4,000 and 8,000 tokens" in retrieval
+    assert not BANNED.search(text)
+    # one question scored differently and the arm is no longer a mirror
+    lme["chandan_full"][4000][answerable[0]] = qs(answerable[0], 0.5)
+    m2 = _payload_with(lme)
+    assert not (m2["retrieval_mirrors"].get(E.LONGMEMEVAL) or {})
+    assert "| chandan_full |" in RP.render_report(m2).split("## Retrieval")[1].split("## Pre-declared tests")[0]
+
+
+def test_by_type_gives_an_arm_on_its_own_population_its_own_n():
+    """Defect 4: chandan_live_cal is scored on CHANDAN_CAL_18, so the shared n
+    column is not its denominator. Its cells carry their own n."""
+    subsets = synthetic_subsets()
+    answerable = E.answerable_ids(subsets)
+    cal = list(subsets["CHANDAN_CAL_18"])
+    lme = {"S5_primary": {4000: {q: qs(q, 1.0) for q in answerable}},
+           "chandan_live_cal": {4000: {q: qs(q, 0.5) for q in cal}}}
+    m = _payload_with(lme, arm_populations={"chandan_live_cal": cal})
+    text = RP.render_report(m)
+    block = text.split("## By question type")[1].split("## Pre-declared tests")[0]
+    assert "chandan_live_cal is scored on its own population" in block
+    rows = [l for l in block.splitlines() if l.startswith("| ") and " | " in l]
+    typed = [l for l in rows if l.split(" | ")[0].strip("| ") in LME_TYPES]
+    assert typed and all("(n " in l.split(" | ")[-1] for l in typed)
+    # the shared n column is still the population every other arm uses
+    for line in typed:
+        qtype = line.split(" | ")[0].strip("| ")
+        shared = int(line.split(" | ")[1])
+        assert shared == sum(1 for q in answerable if subsets["types"][E.LONGMEMEVAL][q] == qtype)
+    assert not BANNED.search(text)
+
+
+def test_the_second_judge_column_names_the_records_it_covers():
+    """Defect 5: the second judge scores a 50-record audit sample in most
+    cells and every primary-wrong answer in the head-to-head cells at the
+    primary budget. Each cell says which."""
+    subsets = synthetic_subsets()
+    cell = next(c for c in subsets["JUDGE_AUDIT"]["cells"]
+                if (c["arm"], c["corpus"], c["reader"]) == ("S5_primary", E.LONGMEMEVAL, "reader_a"))
+    audit_ids = set(cell["ids"])
+    lme_all = subsets["ORDER"][E.LONGMEMEVAL]
+    cheap, strong = "gemini-2.5-flash-lite", "gpt-5.4"
+    audit_only, wrong_pass = [], []
+    for i, q in enumerate(lme_all):
+        ok = i % 3 != 0
+        v = {cheap: ok}
+        if q in audit_ids:
+            v[strong] = ok
+        audit_only.append(record(q, "ours_cheap", "reader_a", verdicts=dict(v)))
+        w = {cheap: ok}
+        if not ok or q in audit_ids:                 # every wrong answer, plus the audit sample
+            w[strong] = True
+        wrong_pass.append(record(q, "S5_primary", "reader_a", verdicts=dict(w)))
+    E.set_primary(audit_only + wrong_pass, cheap)
+    m = _payload_with({}, records=audit_only + wrong_pass)
+    a = m["answering"]["reader_a"][E.LONGMEMEVAL]
+    assert a["ours_cheap"]["4000"]["second_judge"]["population"] == "the audit sample"
+    sj = a["S5_primary"]["4000"]["second_judge"]
+    assert sj["population"] == "every primary-wrong answerable answer, and the audit sample"
+    assert sj["n_wrong_scored"] == sj["n_wrong_answerable"] and sj["n_audit_scored"] == len(audit_ids)
+    text = RP.render_report(m)
+    assert "disagree" in text and "; the audit sample)" in text
+    assert "; every primary-wrong answerable answer, and the audit sample)" in text
+    assert "a 50-record audit sample and a column over every primary-wrong answer are different quantities" in text
+    assert not BANNED.search(text)
+
+
+def test_the_report_says_the_m_holm_ran_over():
+    """Defect 6: section 9 names six tests in Family C and gives the
+    shrink-to-what-ran rule for Family A only. The report states the m used."""
+    subsets, lme, mhr, records, payload = synthetic_run()
+    assert payload["tests"]["holm_declared_m"] == {"A": 4, "B": 5, "C": 6}
+    assert payload["tests"]["holm_m"]["A"] == len(payload["tests"]["holm"]["A"])
+    text = RP.render_report(payload)
+    assert "Holm inside a family runs over the tests of that family that ran on a complete run" in text
+    m = payload["tests"]["holm_m"]
+    assert f"Family A m {m['A']} of 4 tests, Family B m {m['B']} of 5 tests, Family C m {m['C']} of 6 tests" in text
+    # every gate arm absent: Family A shrinks to nothing and the sentence follows
+    dropped = _payload_with({"S5_primary": {4000: {q: qs(q, 1.0) for q in E.answerable_ids(subsets)}}},
+                            absent={E.LONGMEMEVAL: ["chandan_live", "graphiti", "ours_cheap"],
+                                    E.MULTIHOPRAG: ["chandan_live", "ours_cheap", "S5_primary"]})
+    assert dropped["tests"]["holm_m"]["A"] == 0 and dropped["tests"]["holm_declared_m"]["A"] == 4
+    assert "Family A m 0 of 4 tests" in RP.render_report(dropped)
+
+
+def test_a_value_on_the_half_prints_four_decimals_and_pooled_says_it_is_a_union():
+    """Defect 7: 1753 of 2000 is exactly 0.8765, which three decimals hide;
+    the pooled figure is the union of the audit cells, not one draw."""
+    assert RP.f3(1753 / 2000) == "0.8765" and RP.f3(0.1235) == "0.1235"
+    assert RP.f3(0.12345) == "0.123" and RP.f3(0.0) == "0.000" and RP.f3(1.0) == "1.000"
+    assert RP.f3(None) == "n/a" and RP.f3("x") == "x"
+    audit = {"n": 2000, "n_agree": 1753, "agreement": 1753 / 2000, "threshold": 0.9, "cheap": "c", "strong": "s",
+             "primary": "s", "second": "c",
+             "cells": [{"arm": "S5_primary", "corpus": E.LONGMEMEVAL, "reader": "reader_a", "n": 1000,
+                        "n_agree": 900, "agreement": 0.9},
+                       {"arm": "S5_primary", "corpus": E.MULTIHOPRAG, "reader": "reader_a", "n": 1000,
+                        "n_agree": 853, "agreement": 0.853}]}
+    m = _payload_with({}, audit=audit)
+    text = RP.render_report(m)
+    assert "1,753 of 2,000 verdicts, 0.8765" in text
+    assert "It is the union of the audit passes, one qa pass per corpus, deduplicated on (arm, corpus, reader): " \
+           "the 2 cells below are its parts and they sum to the pooled n above." in text
+    assert not BANNED.search(text)
+
+
+def test_the_duplicate_share_column_says_it_is_zero_by_construction():
+    """Defect 7: the column is 0.000 on every row because rendered units are
+    whole turns or chunks deduplicated by id."""
+    subsets = synthetic_subsets()
+    answerable = E.answerable_ids(subsets)
+    zero = qs(answerable[0], 1.0)
+    zero.duplicate_share = 0.0
+    lme = {"S5_primary": {4000: {q: qs(q, 1.0) for q in answerable}}}
+    for s in lme["S5_primary"][4000].values():
+        s.duplicate_share = 0.0
+    m = _payload_with(lme)
+    assert "The duplicate share column is 0.000 on every row by construction" in RP.render_report(m)
+    # an arm with a duplicate share of its own keeps the column unexplained
+    lme["S5_primary"][4000][answerable[0]].duplicate_share = 0.2
+    assert "0.000 on every row by construction" not in RP.render_report(_payload_with(lme))
+
+
+def test_the_report_names_the_arms_with_a_ranking_file():
+    """Defect 8: rankings.json omits chandan_full and chandan_live_cal, so a
+    reader auditing their ranking metrics finds nothing. The report says which
+    arms have a ranking of their own."""
+    subsets = synthetic_subsets()
+    answerable = E.answerable_ids(subsets)
+    lme = {"S5_primary": {4000: {q: qs(q, 1.0) for q in answerable}},
+           "chandan_live_cal": {4000: {q: qs(q, 0.5) for q in answerable}}}
+    m = _payload_with(lme)
+    m["ranking_files"] = {E.LONGMEMEVAL: {"4000": ["S5_primary"]}}
+    text = RP.render_report(m)
+    assert "Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: S5_primary." in text
+    assert "cannot be recomputed from it: chandan_live_cal." in text
+    # a payload that never recorded the file says nothing at all
+    m.pop("ranking_files")
+    assert "rankings.json" not in RP.render_report(m)

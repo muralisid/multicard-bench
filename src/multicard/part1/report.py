@@ -57,13 +57,19 @@ INT_COLUMNS = {"rendered_tokens", "n_candidates"}
 # Formatting
 # ----------------------------------------------------------------------------
 def f3(x) -> str:
-    """A ratio to three decimals; n/a when absent."""
+    """A ratio to three decimals, four when the third decimal is a tie.
+
+    1753/2000 is exactly 0.8765, and three decimals turn it into 0.876 or
+    0.877 depending on the rounding rule. A value that lands on the half
+    prints its fourth decimal instead, so the reader sees the exact figure.
+    n/a when absent."""
     if x is None:
         return "n/a"
     try:
-        return f"{float(x):.3f}"
+        v = float(x)
     except (TypeError, ValueError):
         return str(x)
+    return f"{v:.4f}" if abs(abs(v) * 10000 % 10 - 5) < 1e-6 else f"{v:.3f}"
 
 
 def fs(x) -> str:
@@ -277,6 +283,48 @@ def arm_note(m: dict, corpus: str, arm: str) -> str:
     return str(((m.get("arm_notes") or {}).get(corpus) or {}).get(arm) or "")
 
 
+def mirrors(m: dict, corpus: str) -> dict:
+    """arm -> the arm it repeats at retrieval (design section 5 "Answering
+    only"), measured identical question by question in build_metrics. Those
+    arms are left out of the retrieval, truncated-evidence and by-type
+    tables; their answering rows stay, where the block order does change the
+    answer."""
+    return dict((m.get("retrieval_mirrors") or {}).get(corpus) or {})
+
+
+def mirror_line(m: dict, corpus: str) -> str:
+    """One sentence naming the retrieval rows left out of a table family."""
+    mir = mirrors(m, corpus)
+    if not mir:
+        return ""
+    parts = []
+    for arm, d in mir.items():
+        parts.append(f"{arm} (design section 5: answering only; the same rendered units as {d.get('same_as')} in a "
+                     f"different block order, and every retrieval metric here is order independent, so its scores "
+                     f"were identical to {d.get('same_as')} on all {fi(d.get('n'))} questions at "
+                     f"{' and '.join(fi(b) for b in (d.get('budgets') or []))} tokens)")
+    return ("Not shown at retrieval, because the row would repeat another arm: " + "; ".join(parts)
+            + ". The answering rows of those arms are kept.")
+
+
+def ranking_file_lines(m: dict, corpus: str, budget: str, scored_arms: list[str]) -> list[str]:
+    """Which arms have a ranking of their own in the retrieve stage's
+    rankings.json at this budget. An arm with a row in the retrieval table but
+    none in that file cannot have its ranking metrics recomputed from it, so
+    the report says which arms those are."""
+    per_budget = (m.get("ranking_files") or {}).get(corpus) or {}
+    have = per_budget.get(str(budget))
+    if have is None:
+        return []
+    without = [a for a in scored_arms if a not in have]
+    text = (f"Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: "
+            f"{', '.join(have) if have else 'none'}.")
+    if without:
+        text += (f" No ranking file row, so the ranking metrics of these rows cannot be recomputed from it: "
+                 f"{', '.join(without)}.")
+    return [text, ""]
+
+
 def retrieval_section(m: dict) -> list[str]:
     r = m.get("retrieval") or {}
     missing = m.get("missing_output") or {}
@@ -285,9 +333,11 @@ def retrieval_section(m: dict) -> list[str]:
              "missing. Graphiti is scored at session level, so its turn columns are n/a.", ""]
     for corpus, columns, title in ((LONGMEMEVAL, LME_COLUMNS, "LongMemEval, answerable questions"),
                                    (MULTIHOPRAG, MHR_COLUMNS, "MultiHop-RAG, non-null queries")):
-        arms = r.get(corpus) or {}
+        arms = {a: d for a, d in (r.get(corpus) or {}).items() if a not in mirrors(m, corpus)}
         budgets = sorted({b for a in arms.values() for b in a}, key=int)
         notes = (m.get("arm_notes") or {}).get(corpus) or {}
+        dup_zero = all(float(s.get("duplicate_share") or 0.0) == 0.0
+                       for per_budget in arms.values() for s in per_budget.values())
         for budget in budgets:
             lines.append(f"### {title}, budget {fi(budget)} tokens")
             lines.append("")
@@ -315,6 +365,15 @@ def retrieval_section(m: dict) -> list[str]:
             if states:
                 lines.append(states)
                 lines.append("")
+            mline = mirror_line(m, corpus)
+            if mline:
+                lines.append(mline)
+                lines.append("")
+            if dup_zero:
+                lines.append("The duplicate share column is 0.000 on every row by construction: a rendered unit is a "
+                             "whole turn or chunk and the units are deduplicated by unit id, so no rendered token is "
+                             "covered twice by an earlier unit of the same turn.")
+                lines.append("")
             if corpus == LONGMEMEVAL:
                 trunc = [[arm, fi(per_budget.get(budget, {}).get("truncated_evidence")),
                           fi(per_budget.get(budget, {}).get("cut_evidence"))]
@@ -323,6 +382,7 @@ def retrieval_section(m: dict) -> list[str]:
                              "fit the budget or cut at the 2,000-character limit, and the cut ones alone:")
                 lines.append("")
                 lines += table(["arm", "truncated evidence turns", "of which cut at 2,000 characters"], trunc)
+            lines += ranking_file_lines(m, corpus, budget, list(r.get(corpus) or {}))
             not_reached = [[arm, fi(per_budget[budget].get("n_raised_not_reached")),
                             fi(per_budget[budget].get("n_raised"))]
                            for arm, per_budget in arms.items()
@@ -336,11 +396,15 @@ def retrieval_section(m: dict) -> list[str]:
 
 
 def by_type_section(m: dict) -> list[str]:
+    """One table per corpus and budget. The n column is the shared
+    denominator; an arm scored on its own population (chandan_live_cal runs on
+    CHANDAN_CAL_18, three questions per type) prints its own n inside the
+    cell, so no cell sits under a denominator that is not its own."""
     r = m.get("retrieval") or {}
     lines = ["## By question type", ""]
     for corpus, metric, label in ((LONGMEMEVAL, "joint_recall", "JointRecall"),
                                   (MULTIHOPRAG, "fact_joint_recall_all_located", "fact JR (all located)")):
-        arms = r.get(corpus) or {}
+        arms = {a: d for a, d in (r.get(corpus) or {}).items() if a not in mirrors(m, corpus)}
         budgets = sorted({b for a in arms.values() for b in a}, key=int)
         for budget in budgets:
             types = sorted({t for a in arms.values() for t in (a.get(budget) or {}).get("by_type", {})})
@@ -349,16 +413,34 @@ def by_type_section(m: dict) -> list[str]:
             lines.append(f"### {corpus}, {label} by type, budget {fi(budget)} tokens")
             lines.append("")
             arm_names = [a for a in arms if budget in arms[a]]
+            # the shared n of a type: the denominator most of the arms use
+            shared = {}
+            own_n = set()
+            for t in types:
+                counts = [((arms[a][budget].get("by_type") or {}).get(t) or {}).get("n") for a in arm_names]
+                counts = [c for c in counts if c is not None]
+                # the denominator most of the arms use; a tie goes to the larger
+                shared[t] = max(set(counts), key=lambda c: (counts.count(c), c)) if counts else None
             rows = []
             for t in types:
-                row = [t]
-                n = None
+                row = [t, fi(shared[t])]
                 for a in arm_names:
                     cell = (arms[a][budget].get("by_type") or {}).get(t) or {}
-                    n = n or cell.get("n")
-                    row.append(f3(cell.get(metric)))
-                rows.append([row[0], fi(n)] + row[1:])
+                    text = f3(cell.get(metric))
+                    if cell.get("n") is not None and cell.get("n") != shared[t]:
+                        text += f" (n {fi(cell.get('n'))})"
+                        own_n.add(a)
+                    row.append(text)
+                rows.append(row)
             lines += table(["type", "n"] + arm_names, rows)
+            if own_n:
+                lines.append("The n column is the shared denominator. " + ", ".join(sorted(own_n))
+                             + " is scored on its own population, so every one of its cells carries its own n.")
+                lines.append("")
+            mline = mirror_line(m, corpus)
+            if mline:
+                lines.append(mline)
+                lines.append("")
     return lines
 
 
@@ -391,6 +473,16 @@ def tests_section(m: dict) -> list[str]:
              f"alpha {t.get('alpha', 'n/a')}, budget {fi(t.get('budget'))} tokens. Holm within each family. "
              f"Families B and C never feed the pass rule. A test on a partial run is labelled and left out "
              f"of the pass rule.", ""]
+    # Section 9 names six tests in Family C and gives the shrink-to-what-ran
+    # rule for Family A only. Holm needs an m, so the m used is said here.
+    hm = t.get("holm_m") or {}
+    dm = t.get("holm_declared_m") or {}
+    if hm:
+        lines.append("Holm inside a family runs over the tests of that family that ran on a complete run, so its m is "
+                     "the number of tests with a result, not the number the design names: "
+                     + ", ".join(f"Family {k} m {fi(v)} of {fi(dm.get(k))} tests" for k, v in hm.items())
+                     + ". A test recorded as not run, and a test on a partial run, is outside its family's Holm.")
+        lines.append("")
     pops = t.get("populations") or {}
     if pops:
         lines.append("Populations: " + ", ".join(f"{k} {fi(v)}" for k, v in pops.items()) + ".")
@@ -567,6 +659,12 @@ def judges_section(m: dict) -> list[str]:
     lines.append("")
     cells = a.get("cells") or []
     if cells:
+        total = sum(int(c.get("n") or 0) for c in cells)
+        sums = " and they sum to the pooled n above" if total == (a.get("n") or -1) else \
+            f" and they sum to {fi(total)} verdicts"
+        lines.append(f"Pooled is not one draw. It is the union of the audit passes, one qa pass per corpus, "
+                     f"deduplicated on (arm, corpus, reader): the {fi(len(cells))} cells below are its parts{sums}.")
+        lines.append("")
         lines += table(["arm", "corpus", "reader", "n", "agree", "agreement"],
                        [[c.get("arm"), c.get("corpus"), c.get("reader"), fi(c.get("n")), fi(c.get("n_agree")),
                          f3(c.get("agreement"))] for c in cells])
@@ -610,10 +708,25 @@ def cross_family_columns(c: dict) -> list[str]:
     return [f"{f3(x.get('acc_all'))} (n {fi(x.get('n'))})", f3(x.get("agreement"))]
 
 
+def second_judge_cell(sj: dict) -> str:
+    """The second judge column of one cell, with the records it covers named.
+
+    Section 6 gives the second judge two jobs: the audit sample of every cell,
+    and every primary-wrong answer on an answerable question for the
+    head-to-head arms. Those are different populations, so each cell says
+    which one its number is over."""
+    if not sj or not sj.get("n"):
+        return "not scored"
+    return (f"{f3(sj.get('acc_all'))} (n {fi(sj.get('n'))}, disagree {fi(sj.get('n_disagree'))}; "
+            f"{sj.get('population') or 'population not recorded'})")
+
+
 def answering_section(m: dict) -> list[str]:
     a = m.get("answering") or {}
     lines = ["## Answering accuracy, primary judge", "",
-             "The second judge is a separate column and is never merged. A question with no output counts as wrong.", ""]
+             "The second judge is a separate column and is never merged. A question with no output counts as wrong. "
+             "The second judge column names the records it covers in every cell: a 50-record audit sample and a column "
+             "over every primary-wrong answer are different quantities and must not be read against each other.", ""]
     for reader, per_corpus in a.items():
         for corpus, per_arm in per_corpus.items():
             cells = [c for arm in per_arm.values() for c in arm.values()]
@@ -628,7 +741,7 @@ def answering_section(m: dict) -> list[str]:
                     row = [arm, fi(budget), fi(c.get("n")), fi(c.get("n_missing")), f3(c.get("acc_all")),
                            f3(c.get("acc_answerable")), f3(c.get("acc_abstention"))]
                     row += [f3(((c.get("by_type") or {}).get(t) or {}).get("acc")) for t in types]
-                    row += [f"{f3(sj.get('acc_all'))} (n {fi(sj.get('n'))}, disagree {fi(sj.get('n_disagree'))})"]
+                    row += [second_judge_cell(sj)]
                     if cross:
                         row += cross_family_columns(c)
                     rows.append(row)
@@ -756,19 +869,36 @@ def planner_lines(c: dict) -> list[str]:
 
 
 def builds_lines(builds: dict) -> list[str]:
-    """The post-graph-rag build state per corpus: in progress, stopped, spaces exported against the population."""
+    """The post-graph-rag build state per corpus: in progress, stopped, spaces
+    exported against the population, and every attempt with its own stop
+    reason. A corpus whose build was tried more than once carries every
+    attempt, not the last one alone."""
     if not builds:
         return []
     out = ["Post-graph-rag builds (the runner's run logs under data/part1/pgr; a log with no end time is a "
            "runner still writing spaces; the runner meter covers index and query calls together):", ""]
+    attempts = [(corpus, a) for corpus, b in builds.items() for a in (b.get("attempts") or [])]
     rows = []
     for corpus, b in builds.items():
         stopped = "; ".join(f"{s.get('job_tag')}: {s.get('stopped')}" for s in (b.get("stopped") or [])) or "none"
-        rows.append([corpus, b.get("label") or "n/a", yes_no(b.get("in_progress")),
-                     ", ".join(b.get("running_job_tags") or []) or "none", stopped, fi(b.get("n_spaces")),
-                     fi(b.get("n_wanted")), b.get("subset") or "ORDER", fusd(b.get("run_log_usd"))])
-    out += table(["corpus", "state", "in progress", "running job tags", "stopped", "spaces exported",
-                  "spaces wanted", "population", "runner meter USD so far"], rows)
+        row = [corpus, b.get("label") or "n/a", yes_no(b.get("in_progress")),
+               ", ".join(b.get("running_job_tags") or []) or "none", stopped]
+        if attempts:
+            row.append(fi(b.get("n_attempts")))
+        row += [fi(b.get("n_spaces")), fi(b.get("n_wanted")), b.get("subset") or "ORDER", fusd(b.get("run_log_usd"))]
+        rows.append(row)
+    out += table(["corpus", "state", "in progress", "running job tags", "stopped"] + (["attempts"] if attempts else [])
+                 + ["spaces exported", "spaces wanted", "population", "runner meter USD so far"], rows)
+    if attempts:
+        out.append("Every build attempt, oldest first. An attempt the runner never logged (it was stopped from "
+                   "outside before it could write one) is read from the proxy request log and its row says so; how "
+                   "far an attempt got is recorded beside the log, since no run log carries it.")
+        out.append("")
+        out += table(["corpus", "job tag", "started", "ended", "stopped", "progress at stop", "USD",
+                      "USD source", "runner run log"],
+                     [[corpus, a.get("job_tag") or "n/a", a.get("started") or "n/a", a.get("ended") or "not recorded",
+                       a.get("stopped") or "not stopped", a.get("progress") or "not recorded", fusd(a.get("usd")),
+                       a.get("usd_source") or "n/a", yes_no(a.get("run_log"))] for corpus, a in attempts])
     return out
 
 
@@ -778,20 +908,43 @@ def ledger_lines(c: dict) -> list[str]:
     stages = ledger.get("stages") or {}
     out = ["Spend ledger (section 11): every invocation of each stage, appended at the end of the invocation, "
            "a capped one included; the sum per stage is read against the cap of that stage.", ""]
-    if not stages or not any(s.get("n_invocations") for s in stages.values()):
+    if not stages:
         out.append("No ledger rows yet: the ledger starts with the first invocation of a stage after it was "
                    "added, so the passes before it are known only from their last-pass meters below and the "
                    "run logs.")
         out.append("")
         return out
+    out.append("The ledger was added part way through the study, so most invocations were never itemised: they are "
+               "counted in the stage total, which is read from the cost block of each stage's own metrics file, and "
+               "no row below itemises them.")
+    out.append("")
     rows = []
     for stage, s in stages.items():
         per = ", ".join(f"{k} {fusd(v.get('usd'))} ({fi(v.get('n_invocations'))} invocations)"
                         for k, v in (s.get("by_corpus") or {}).items()) or "none"
+        mper = ", ".join(f"{k} {fusd(v.get('usd'))} ({fi(v.get('calls'))} calls)"
+                         for k, v in (s.get("metrics_by_corpus") or {}).items()) or "none"
         rows.append([stage, fusd(s.get("cap_usd")), s.get("cap_components") or "", fusd(s.get("total_usd")),
-                     yes_no(s.get("over_cap")), fi(s.get("n_invocations")), per])
-    out += table(["stage", "section 11 cap USD", "cap covers", "ledger sum USD", "over cap", "invocations",
-                  "per corpus"], rows)
+                     fi(s.get("n_invocations")), per, fusd(s.get("metrics_total_usd")),
+                     fi(s.get("metrics_total_calls")), mper, yes_no(s.get("over_cap"))])
+    out += table(["stage", "section 11 cap USD", "cap covers", "recorded invocations USD", "recorded invocations",
+                  "recorded per corpus", "stage total from the metrics files USD", "calls in that total",
+                  "stage total per corpus", "over cap"], rows)
+    lost = [(stage, s) for stage, s in stages.items() if s.get("not_in_any_metrics_file_usd")]
+    if lost:
+        out.append("A stage run more than once on a corpus keeps only its last pass in the metrics file, so the "
+                   "earlier passes are neither itemised nor in the stage total. Their totals survive as the line "
+                   "each pass printed in results/part1/logs, and nothing per invocation survives at all: "
+                   + "; ".join(f"{stage} USD {fusd(s['not_in_any_metrics_file_usd'])} over "
+                               f"{fi(len(s.get('log_passes') or []))} logged passes, which puts the stage at USD "
+                               f"{fusd(float(s.get('metrics_total_usd') or 0.0) + float(s['not_in_any_metrics_file_usd']))} "
+                               f"in total" for stage, s in lost) + ".")
+        out.append("")
+    if not any(s.get("n_invocations") for s in stages.values()):
+        out.append("No ledger rows: every invocation ran before the ledger was added, so the stage totals above "
+                   "carry them and no row below itemises them.")
+        out.append("")
+        return out
     out.append(str(ledger.get("note") or ""))
     out.append("")
     rows = []

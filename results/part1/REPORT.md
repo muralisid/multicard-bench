@@ -1,12 +1,12 @@
 # Part 1: the head-to-head on LongMemEval_S and MultiHop-RAG
 
-Generated 2026-09-07T03:21:25+00:00 from results/part1/metrics.json. Design: docs/PART1-DESIGN.md version 4. Every number below is read from that file.
+Generated 2026-09-07T05:27:47+00:00 from results/part1/metrics.json. Design: docs/PART1-DESIGN.md version 4. Every number below is read from that file.
 
 Subsets file sha256: 0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082.
 
 Commits recorded in the report:
 
-- head: 13e1ed8
+- head: d0c6c80
 - subsets_sha256_file: 0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082
 
 Graphiti status: dropped. T2 is recorded as not run.
@@ -39,7 +39,9 @@ The rule: T1 shown under D1, T8a positive and significant after Holm within Fami
 
 D2 reading of T2: not run (Graphiti status dropped).
 
-Second post-graph-rag build (section 9): first build cost so far USD 64.97 (multihoprag: partial build snapshot, 0 of 1 spaces, build stopped at its cap); second-build rule: not evaluated, build incomplete; second build ran: no.
+The owner accepted the two absent tests on 2026-09-07 ("T2 and T8 not run is fine"). The rule above is not rewritten, because it was fixed before any result. His disposition, which must be quoted beside the verdict and never instead of it: the study is read on what was run. On that reading T1 is shown, T7 holds, T8b is negative and significant against our own cheap floor, and T2 and T8a are absent by decision rather than by failure. Design section 14 item 6 carries the same wording.
+
+Second post-graph-rag build (section 9): first build cost so far USD 64.97 (multihoprag: partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first)); second-build rule: not evaluated, build incomplete; second build ran: no.
 
 ## Setup
 
@@ -117,11 +119,14 @@ Means over the arm's population. A question with no output scores 0 and is count
 | S5_overlay_P0 | 0.938 | 0.957 | 0.972 | 0.846 | 0.668 | 0.944 | 3,996.3 | 0.000 | 55.3 | 470 | 0 |
 | S2_lazy | 0.955 | 0.983 | 0.985 | 0.888 | 0.717 | 0.973 | 3,999.2 | 0.000 | 138.6 | 470 | 0 |
 | chandan_live | 0.574 | 0.998 | 0.655 | 0.556 | 0.423 | 0.937 | 4,000 | 0.000 | 247.7 | 470 | 0 |
-| chandan_full | 0.574 | 0.998 | 0.655 | 0.556 | 0.423 | 0.937 | 4,000 | 0.000 | 247.7 | 470 | 0 |
 | chandan_live_cal | 0.611 | 1.000 | 0.833 | 0.611 | 0.443 | 0.931 | 4,000 | 0.000 | 221.1 | 18 | 0 |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 Absent rows: graphiti (no export).
+
+Not shown at retrieval, because the row would repeat another arm: chandan_full (design section 5: answering only; the same rendered units as chandan_live in a different block order, and every retrieval metric here is order independent, so its scores were identical to chandan_live on all 470 questions at 4,000 and 8,000 tokens). The answering rows of those arms are kept.
+
+The duplicate share column is 0.000 on every row by construction: a rendered unit is a whole turn or chunk and the units are deduplicated by unit id, so no rendered token is covered twice by an earlier unit of the same turn.
 
 Evidence turns rendered truncated, summed over questions (section 3): truncated to fit the budget or cut at the 2,000-character limit, and the cut ones alone:
 
@@ -141,8 +146,9 @@ Evidence turns rendered truncated, summed over questions (section 3): truncated 
 | S5_overlay_P0 | 9 | 8 |
 | S2_lazy | 8 | 8 |
 | chandan_live | 232 | 0 |
-| chandan_full | 232 | 0 |
 | chandan_live_cal | 7 | 0 |
+
+Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, S5_primary_norule, chandan_live, ours_cheap, ours_cheap_norule, ours_sentence_norule. No ranking file row, so the ranking metrics of these rows cannot be recomputed from it: chandan_full, chandan_live_cal.
 
 Raised variant (section 5, the result limit raised until the rendered context reaches B): questions where the runner's top step did not reach B, of the questions with a raised run:
 
@@ -168,11 +174,14 @@ Raised variant (section 5, the result limit raised until the rendered context re
 | S5_overlay_P0 | 0.962 | 0.957 | 0.994 | 0.846 | 0.668 | 0.944 | 7,393.6 | 0.000 | 55.3 | 470 | 0 |
 | S2_lazy | 0.970 | 0.983 | 0.994 | 0.888 | 0.717 | 0.973 | 7,453.8 | 0.000 | 138.6 | 470 | 0 |
 | chandan_live | 0.804 | 0.998 | 0.806 | 0.556 | 0.423 | 0.937 | 8,000 | 0.000 | 247.7 | 470 | 0 |
-| chandan_full | 0.804 | 0.998 | 0.806 | 0.556 | 0.423 | 0.937 | 8,000 | 0.000 | 247.7 | 470 | 0 |
 | chandan_live_cal | 0.889 | 1.000 | 0.833 | 0.611 | 0.443 | 0.931 | 8,000 | 0.000 | 221.1 | 18 | 0 |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 Absent rows: graphiti (no export).
+
+Not shown at retrieval, because the row would repeat another arm: chandan_full (design section 5: answering only; the same rendered units as chandan_live in a different block order, and every retrieval metric here is order independent, so its scores were identical to chandan_live on all 470 questions at 4,000 and 8,000 tokens). The answering rows of those arms are kept.
+
+The duplicate share column is 0.000 on every row by construction: a rendered unit is a whole turn or chunk and the units are deduplicated by unit id, so no rendered token is covered twice by an earlier unit of the same turn.
 
 Evidence turns rendered truncated, summed over questions (section 3): truncated to fit the budget or cut at the 2,000-character limit, and the cut ones alone:
 
@@ -192,8 +201,9 @@ Evidence turns rendered truncated, summed over questions (section 3): truncated 
 | S5_overlay_P0 | 8 | 8 |
 | S2_lazy | 8 | 8 |
 | chandan_live | 89 | 0 |
-| chandan_full | 89 | 0 |
 | chandan_live_cal | 2 | 0 |
+
+Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, S5_primary_norule, chandan_live, ours_cheap, ours_cheap_norule, ours_sentence_norule. No ranking file row, so the ranking metrics of these rows cannot be recomputed from it: chandan_full, chandan_live_cal.
 
 Raised variant (section 5, the result limit raised until the rendered context reaches B): questions where the runner's top step did not reach B, of the questions with a raised run:
 
@@ -220,6 +230,10 @@ Raised variant (section 5, the result limit raised until the rendered context re
 
 Absent rows: chandan_live (no export); chandan_full (no export).
 
+The duplicate share column is 0.000 on every row by construction: a rendered unit is a whole turn or chunk and the units are deduplicated by unit id, so no rendered token is covered twice by an earlier unit of the same turn.
+
+Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, ours_cheap.
+
 ### MultiHop-RAG, non-null queries, budget 8,000 tokens
 
 | arm | fact JR (all located) | fact JR (all non-null) | document JR | candidate fact JR | candidate document JR | rendered tokens | duplicate share | candidate list size | n | missing | n all located | note |
@@ -239,29 +253,41 @@ Absent rows: chandan_live (no export); chandan_full (no export).
 
 Absent rows: chandan_live (no export); chandan_full (no export).
 
+The duplicate share column is 0.000 on every row by construction: a rendered unit is a whole turn or chunk and the units are deduplicated by unit id, so no rendered token is covered twice by an earlier unit of the same turn.
+
+Arms with a ranking of their own in the retrieve stage's rankings.json at this budget: S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, ours_cheap.
+
 ## By question type
 
 ### longmemeval, JointRecall by type, budget 4,000 tokens
 
-| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_full | chandan_live_cal |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| knowledge-update | 72 | 1.000 | 0.958 | 0.958 | 1.000 | 1.000 | 0.917 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.486 | 0.486 | 0.000 |
-| multi-session | 121 | 0.926 | 0.579 | 0.645 | 0.975 | 0.950 | 0.545 | 0.934 | 0.975 | 0.967 | 0.959 | 0.959 | 0.950 | 0.975 | 0.322 | 0.322 | 0.333 |
-| single-session-assistant | 56 | 0.929 | 0.982 | 0.982 | 0.911 | 0.893 | 0.946 | 0.911 | 0.911 | 0.929 | 0.911 | 0.893 | 0.839 | 0.911 | 1.000 | 1.000 | 1.000 |
-| single-session-preference | 30 | 0.800 | 0.700 | 0.733 | 0.833 | 0.800 | 0.600 | 0.800 | 0.800 | 0.800 | 0.767 | 0.800 | 0.767 | 0.833 | 0.833 | 0.833 | 1.000 |
-| single-session-user | 64 | 0.969 | 0.984 | 0.984 | 0.969 | 0.969 | 0.938 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.875 | 0.875 | 0.667 |
-| temporal-reasoning | 127 | 0.937 | 0.772 | 0.787 | 0.961 | 0.961 | 0.764 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.953 | 0.465 | 0.465 | 0.667 |
+| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_live_cal |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| knowledge-update | 72 | 1.000 | 0.958 | 0.958 | 1.000 | 1.000 | 0.917 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.486 | 0.000 (n 3) |
+| multi-session | 121 | 0.926 | 0.579 | 0.645 | 0.975 | 0.950 | 0.545 | 0.934 | 0.975 | 0.967 | 0.959 | 0.959 | 0.950 | 0.975 | 0.322 | 0.333 (n 3) |
+| single-session-assistant | 56 | 0.929 | 0.982 | 0.982 | 0.911 | 0.893 | 0.946 | 0.911 | 0.911 | 0.929 | 0.911 | 0.893 | 0.839 | 0.911 | 1.000 | 1.000 (n 3) |
+| single-session-preference | 30 | 0.800 | 0.700 | 0.733 | 0.833 | 0.800 | 0.600 | 0.800 | 0.800 | 0.800 | 0.767 | 0.800 | 0.767 | 0.833 | 0.833 | 1.000 (n 3) |
+| single-session-user | 64 | 0.969 | 0.984 | 0.984 | 0.969 | 0.969 | 0.9375 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.875 | 0.667 (n 3) |
+| temporal-reasoning | 127 | 0.937 | 0.772 | 0.787 | 0.961 | 0.961 | 0.764 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.953 | 0.465 | 0.667 (n 3) |
+
+The n column is the shared denominator. chandan_live_cal is scored on its own population, so every one of its cells carries its own n.
+
+Not shown at retrieval, because the row would repeat another arm: chandan_full (design section 5: answering only; the same rendered units as chandan_live in a different block order, and every retrieval metric here is order independent, so its scores were identical to chandan_live on all 470 questions at 4,000 and 8,000 tokens). The answering rows of those arms are kept.
 
 ### longmemeval, JointRecall by type, budget 8,000 tokens
 
-| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_full | chandan_live_cal |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| knowledge-update | 72 | 1.000 | 0.986 | 0.972 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.903 | 0.903 | 1.000 |
-| multi-session | 121 | 0.959 | 0.702 | 0.719 | 0.983 | 0.975 | 0.719 | 0.975 | 0.983 | 0.983 | 0.975 | 0.975 | 0.975 | 0.983 | 0.587 | 0.587 | 0.667 |
-| single-session-assistant | 56 | 0.946 | 1.000 | 1.000 | 0.946 | 0.911 | 0.964 | 0.929 | 0.911 | 0.929 | 0.929 | 0.911 | 0.893 | 0.946 | 1.000 | 1.000 | 1.000 |
-| single-session-preference | 30 | 0.867 | 0.833 | 0.867 | 0.933 | 0.900 | 0.733 | 0.867 | 0.900 | 0.900 | 0.900 | 0.900 | 0.867 | 0.933 | 0.967 | 0.967 | 1.000 |
-| single-session-user | 64 | 0.969 | 1.000 | 1.000 | 0.969 | 0.969 | 0.984 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.938 | 0.938 | 0.667 |
-| temporal-reasoning | 127 | 0.953 | 0.843 | 0.866 | 0.961 | 0.969 | 0.874 | 0.969 | 0.969 | 0.969 | 0.969 | 0.976 | 0.976 | 0.961 | 0.764 | 0.764 | 1.000 |
+| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_live_cal |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| knowledge-update | 72 | 1.000 | 0.986 | 0.972 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.903 | 1.000 (n 3) |
+| multi-session | 121 | 0.959 | 0.702 | 0.719 | 0.983 | 0.975 | 0.719 | 0.975 | 0.983 | 0.983 | 0.975 | 0.975 | 0.975 | 0.983 | 0.587 | 0.667 (n 3) |
+| single-session-assistant | 56 | 0.946 | 1.000 | 1.000 | 0.946 | 0.911 | 0.964 | 0.929 | 0.911 | 0.929 | 0.929 | 0.911 | 0.893 | 0.946 | 1.000 | 1.000 (n 3) |
+| single-session-preference | 30 | 0.867 | 0.833 | 0.867 | 0.933 | 0.900 | 0.733 | 0.867 | 0.900 | 0.900 | 0.900 | 0.900 | 0.867 | 0.933 | 0.967 | 1.000 (n 3) |
+| single-session-user | 64 | 0.969 | 1.000 | 1.000 | 0.969 | 0.969 | 0.984 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.9375 | 0.667 (n 3) |
+| temporal-reasoning | 127 | 0.953 | 0.843 | 0.866 | 0.961 | 0.969 | 0.874 | 0.969 | 0.969 | 0.969 | 0.969 | 0.976 | 0.976 | 0.961 | 0.764 | 1.000 (n 3) |
+
+The n column is the shared denominator. chandan_live_cal is scored on its own population, so every one of its cells carries its own n.
+
+Not shown at retrieval, because the row would repeat another arm: chandan_full (design section 5: answering only; the same rendered units as chandan_live in a different block order, and every retrieval metric here is order independent, so its scores were identical to chandan_live on all 470 questions at 4,000 and 8,000 tokens). The answering rows of those arms are kept.
 
 ### multihoprag, fact JR (all located) by type, budget 4,000 tokens
 
@@ -283,6 +309,8 @@ Absent rows: chandan_live (no export); chandan_full (no export).
 
 Paired at the question level, the bench compare (10,000 permutations, percentile bootstrap CI), alpha 0.05, budget 4,000 tokens. Holm within each family. Families B and C never feed the pass rule. A test on a partial run is labelled and left out of the pass rule.
 
+Holm inside a family runs over the tests of that family that ran on a complete run, so its m is the number of tests with a result, not the number the design names: Family A m 2 of 4 tests, Family B m 5 of 5 tests, Family C m 2 of 6 tests. A test recorded as not run, and a test on a partial run, is outside its family's Holm.
+
 Populations: LongMemEval answerable 470, GRAPHITI_150 150, MultiHop-RAG all located 2,255, LOCAL_120 120, LongMemEval all 500.
 
 ### Family A, the gate
@@ -291,7 +319,7 @@ Populations: LongMemEval answerable 470, GRAPHITI_150 150, MultiHop-RAG all loca
 |---|---|---|---|---|---|---|---|---|---|---|
 | T1 | S5_primary vs chandan_live | joint_recall | 469 (refused 1, missing 0/0) | 0.947 vs 0.576 | +0.371 | [+0.324, +0.420] | 0.0001 | 188/267/14 | 0.0002, significant | D1: shown |
 | T2 | S5_primary vs graphiti | session_joint_recall | not run: no output from graphiti on longmemeval |  |  |  |  |  |  |  |
-| T8a | S5_primary vs chandan_live | fact_joint_recall | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |  |
+| T8a | S5_primary vs chandan_live | fact_joint_recall | not run: no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it) |  |  |  |  |  |  |  |
 | T8b | S5_primary vs ours_cheap | fact_joint_recall | 2,255 (refused 0, missing 0/0) | 0.136 vs 0.255 | -0.119 | [-0.137, -0.101] | 0.0001 | 111/1,764/380 | 0.0002, significant | S5_primary run without post-graph-rag tables |
 
 D1 reading of T1: shown.
@@ -330,8 +358,8 @@ Questions whose rendered context differs at all between R0, R3 and P0: 383. Tole
 | C2 | S5_primary vs chandan_live | reader_b | LongMemEval all | 499 (refused 1, missing 0/0) | 0.832 vs 0.623 | +0.208 | 121/17 of 138 discordant | 0.0000 | 0.0000, significant |  |
 | C3 | S5_primary vs graphiti | reader_a | GRAPHITI_150 | not run: graphiti dropped: recorded as not run |  |  |  |  |  |  |
 | C4 | S5_primary vs graphiti | reader_b | GRAPHITI_150 | not run: graphiti dropped: recorded as not run |  |  |  |  |  |  |
-| C5 | S5_primary vs chandan_live | reader_a | MHRAG_ANSWER | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |
-| C6 | S5_primary vs chandan_live | reader_b | READER_B_MHRAG | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |
+| C5 | S5_primary vs chandan_live | reader_a | MHRAG_ANSWER | not run: no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it) |  |  |  |  |  |  |
+| C6 | S5_primary vs chandan_live | reader_b | READER_B_MHRAG | not run: no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it) |  |  |  |  |  |  |
 
 Robustness table: the wrong answers the second judge called right are flipped and the test is rerun. This never changes the primary judge.
 
@@ -363,8 +391,8 @@ Each prediction with its fixed number and band, the measured value or paired del
 | T5_branch | T5 lands in the adds material branch | adds material | n/a | no measurable effect | n/a | n/a | **contradicted** | the T5 four-branch reading of section 9 |
 | largest_community_share | The largest community share is above 50 percent without topic weighting and drops under it | plain above 0.50, topic-weighted below plain | n/a | plain_nodes +0.091, topic_nodes +0.093, plain_units +0.110, topic_units +0.111 | n/a | n/a | **contradicted** | share over the phrases of the pruned graph (nodes); the share over sub-units is beside it (design gap: the design does not say which share) |
 | graphiti_gap | graphiti session-level JointRecall@4k is below S5_primary on GRAPHITI_150 by 0.02 to 0.06 (half-width about 0.04) | +0.02 to +0.06, half-width 0.04 (band [-0.02, +0.10]) | [-0.020, +0.100] | n/a | n/a | n/a | **untested** | Graphiti dropped or partial: recorded as untested |
-| mhrag_comparison | MultiHop-RAG: S5_primary beats chandan_live on fact-level joint recall for comparison queries by at least 0.05 | at least +0.05 | [+0.050, open] | n/a | n/a | n/a | **untested** | no output from chandan_live on multihoprag |
-| mhrag_inference | MultiHop-RAG: S5_primary beats chandan_live on fact-level joint recall for inference queries by at least 0.05 | at least +0.05 | [+0.050, open] | n/a | n/a | n/a | **untested** | no output from chandan_live on multihoprag |
+| mhrag_comparison | MultiHop-RAG: S5_primary beats chandan_live on fact-level joint recall for comparison queries by at least 0.05 | at least +0.05 | [+0.050, open] | n/a | n/a | n/a | **untested** | no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it) |
+| mhrag_inference | MultiHop-RAG: S5_primary beats chandan_live on fact-level joint recall for inference queries by at least 0.05 | at least +0.05 | [+0.050, open] | n/a | n/a | n/a | **untested** | no output from chandan_live on multihoprag (chandan_live: the post-graph-rag build on that corpus never finished: pgr-mhrag-full cap: spend 10.0071 USD exceeds the cap of 10.00 (592 of 609 articles); pgr-mhrag-full3 stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first). No query was ever run over it) |
 | closed_book_floor_comparison_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (comparison_query) | at least +0.10 | [+0.100, open] | +0.087 | n/a | 150 | **not confirmed** | accuracy 0.620, majority-class rate 0.533 (commonest gold answer 'yes') |
 | closed_book_floor_inference_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (inference_query) | at least +0.10 | [+0.100, open] | +0.527 | n/a | 150 | **consistent with, not confirmed** | accuracy 0.887, majority-class rate 0.360 (commonest gold answer 'sam bankman-fried') |
 | closed_book_floor_temporal_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (temporal_query) | at least +0.10 | [+0.100, open] | +0.093 | n/a | 150 | **not confirmed** | accuracy 0.547, majority-class rate 0.453 (commonest gold answer 'no') |
@@ -774,7 +802,9 @@ Knowledge-update bucket 3 cases where the gold turn is the earlier of the two by
 
 ## Judges
 
-Candidate primary judge: gemini-2.5-flash-lite. Second judge: gpt-5.4. Pooled agreement on the audit sample: 1,753 of 2,000 verdicts, 0.876. Threshold 0.900. Primary judge decided before any test: **gpt-5.4**. Second judge column: gemini-2.5-flash-lite.
+Candidate primary judge: gemini-2.5-flash-lite. Second judge: gpt-5.4. Pooled agreement on the audit sample: 1,753 of 2,000 verdicts, 0.8765. Threshold 0.900. Primary judge decided before any test: **gpt-5.4**. Second judge column: gemini-2.5-flash-lite.
+
+Pooled is not one draw. It is the union of the audit passes, one qa pass per corpus, deduplicated on (arm, corpus, reader): the 40 cells below are its parts and they sum to the pooled n above.
 
 | arm | corpus | reader | n | agree | agreement |
 |---|---|---|---|---|---|
@@ -830,85 +860,85 @@ First pass: 1,287 pooled verdicts, agreement 0.883, primary gpt-5.4 (2026-09-06T
 
 ## Answering accuracy, primary judge
 
-The second judge is a separate column and is never merged. A question with no output counts as wrong.
+The second judge is a separate column and is never merged. A question with no output counts as wrong. The second judge column names the records it covers in every cell: a 50-record audit sample and a column over every primary-wrong answer are different quantities and must not be read against each other.
 
 ### chandan_own, longmemeval
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| chandan_full_uncut | 4,000 | 500 | 0 | 0.692 | 0.679 | 0.900 | 0.756 | 0.579 | 0.982 | 0.433 | 0.886 | 0.602 | 0.760 (n 50, disagree 3) |
+| chandan_full_uncut | 4,000 | 500 | 0 | 0.692 | 0.679 | 0.900 | 0.756 | 0.579 | 0.982 | 0.433 | 0.886 | 0.602 | 0.760 (n 50, disagree 3; the audit sample) |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 ### reader_a, longmemeval
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S2_lazy | 4,000 | 500 | 0 | 0.566 | 0.543 | 0.933 | 0.705 | 0.451 | 0.911 | 0.433 | 0.871 | 0.323 | 0.620 (n 50, disagree 8) |
-| S2_lazy | 8,000 | 500 | 0 | 0.522 | 0.502 | 0.833 | 0.654 | 0.376 | 0.911 | 0.233 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
-| S4_static | 4,000 | 500 | 0 | 0.564 | 0.543 | 0.900 | 0.679 | 0.444 | 0.911 | 0.467 | 0.871 | 0.331 | 0.660 (n 50, disagree 10) |
-| S4_static | 8,000 | 500 | 0 | 0.524 | 0.504 | 0.833 | 0.654 | 0.376 | 0.911 | 0.267 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
-| S5_noPGR | 4,000 | 500 | 0 | 0.550 | 0.528 | 0.900 | 0.718 | 0.391 | 0.893 | 0.233 | 0.886 | 0.361 | 0.700 (n 50, disagree 9) |
-| S5_noPGR | 8,000 | 500 | 0 | 0.544 | 0.519 | 0.933 | 0.731 | 0.383 | 0.893 | 0.300 | 0.843 | 0.346 | n/a (n 0, disagree 0) |
-| S5_overlay_P0 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.705 | 0.421 | 0.804 | 0.300 | 0.886 | 0.308 | 0.680 (n 50, disagree 10) |
-| S5_overlay_P0 | 8,000 | 500 | 0 | 0.544 | 0.521 | 0.900 | 0.667 | 0.398 | 0.875 | 0.300 | 0.871 | 0.361 | n/a (n 0, disagree 0) |
-| S5_overlay_R0 | 4,000 | 500 | 0 | 0.558 | 0.534 | 0.933 | 0.731 | 0.451 | 0.911 | 0.367 | 0.871 | 0.293 | 0.700 (n 50, disagree 5) |
-| S5_overlay_R0 | 8,000 | 500 | 0 | 0.524 | 0.506 | 0.800 | 0.667 | 0.353 | 0.911 | 0.200 | 0.857 | 0.346 | n/a (n 0, disagree 0) |
-| S5_overlay_R2 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.718 | 0.398 | 0.875 | 0.300 | 0.900 | 0.286 | 0.660 (n 50, disagree 10) |
-| S5_overlay_R2 | 8,000 | 500 | 0 | 0.534 | 0.513 | 0.867 | 0.667 | 0.368 | 0.893 | 0.500 | 0.871 | 0.301 | n/a (n 0, disagree 0) |
-| S5_planner_oracle | 4,000 | 500 | 0 | 0.546 | 0.526 | 0.867 | 0.705 | 0.421 | 0.911 | 0.233 | 0.900 | 0.308 | 0.640 (n 50, disagree 7) |
-| S5_planner_oracle | 8,000 | 500 | 0 | 0.526 | 0.504 | 0.867 | 0.628 | 0.368 | 0.911 | 0.400 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
-| S5_planner_rules | 4,000 | 500 | 0 | 0.556 | 0.530 | 0.967 | 0.705 | 0.451 | 0.893 | 0.267 | 0.900 | 0.316 | 0.660 (n 50, disagree 4) |
-| S5_planner_rules | 8,000 | 500 | 0 | 0.518 | 0.491 | 0.933 | 0.667 | 0.346 | 0.893 | 0.333 | 0.814 | 0.331 | n/a (n 0, disagree 0) |
-| S5_primary | 4,000 | 500 | 0 | 0.542 | 0.517 | 0.933 | 0.718 | 0.414 | 0.875 | 0.233 | 0.914 | 0.301 | 0.377 (n 260, disagree 69) |
-| S5_primary | 8,000 | 500 | 0 | 0.526 | 0.500 | 0.933 | 0.641 | 0.361 | 0.875 | 0.400 | 0.871 | 0.323 | 0.302 (n 235, disagree 71) |
-| S5_primary_norule | 4,000 | 500 | 0 | 0.550 | 0.526 | 0.933 | 0.808 | 0.368 | 0.911 | 0.300 | 0.814 | 0.346 | 0.700 (n 50, disagree 8) |
-| S5_primary_norule | 8,000 | 500 | 0 | 0.574 | 0.551 | 0.933 | 0.833 | 0.376 | 0.911 | 0.533 | 0.871 | 0.331 | n/a (n 0, disagree 0) |
-| chandan_full | 4,000 | 500 | 0 | 0.448 | 0.419 | 0.900 | 0.603 | 0.233 | 0.982 | 0.433 | 0.729 | 0.203 | 0.416 (n 298, disagree 101) |
-| chandan_full | 8,000 | 500 | 0 | 0.512 | 0.485 | 0.933 | 0.641 | 0.316 | 0.982 | 0.433 | 0.814 | 0.293 | 0.355 (n 242, disagree 86) |
-| chandan_live | 4,000 | 500 | 0 | 0.466 | 0.436 | 0.933 | 0.641 | 0.256 | 0.964 | 0.500 | 0.757 | 0.203 | 0.411 (n 285, disagree 99) |
-| chandan_live | 8,000 | 500 | 0 | 0.536 | 0.509 | 0.967 | 0.718 | 0.353 | 0.982 | 0.400 | 0.857 | 0.286 | 0.359 (n 231, disagree 83) |
-| chandan_live_cal | 4,000 | 18 | 0 | 0.389 | 0.389 | n/a | 0.000 | 0.333 | 1.000 | 0.000 | 0.667 | 0.333 | n/a (n 0, disagree 0) |
-| chandan_live_cal | 8,000 | 18 | 0 | 0.556 | 0.556 | n/a | 0.667 | 0.333 | 1.000 | 0.000 | 0.667 | 0.667 | n/a (n 0, disagree 0) |
-| closed_book | 4,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | 0.420 (n 50, disagree 20) |
-| closed_book | 8,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | n/a (n 0, disagree 0) |
-| oracle_full | 4,000 | 500 | 0 | 0.620 | 0.600 | 0.933 | 0.846 | 0.429 | 0.982 | 0.433 | 0.871 | 0.436 | 0.840 (n 50, disagree 6) |
-| oracle_full | 8,000 | 500 | 0 | 0.620 | 0.600 | 0.933 | 0.846 | 0.429 | 0.982 | 0.433 | 0.871 | 0.436 | n/a (n 0, disagree 0) |
-| ours_cheap | 4,000 | 500 | 0 | 0.558 | 0.536 | 0.900 | 0.718 | 0.406 | 0.893 | 0.367 | 0.871 | 0.353 | 0.420 (n 245, disagree 80) |
-| ours_cheap | 8,000 | 500 | 0 | 0.550 | 0.528 | 0.900 | 0.744 | 0.414 | 0.911 | 0.300 | 0.843 | 0.323 | 0.338 (n 222, disagree 75) |
-| ours_cheap_norule | 4,000 | 500 | 0 | 0.532 | 0.504 | 0.967 | 0.795 | 0.346 | 0.929 | 0.267 | 0.829 | 0.301 | 0.760 (n 50, disagree 9) |
-| ours_cheap_norule | 8,000 | 500 | 0 | 0.542 | 0.521 | 0.867 | 0.769 | 0.368 | 0.946 | 0.333 | 0.843 | 0.301 | n/a (n 0, disagree 0) |
-| ours_sentence_norule | 4,000 | 500 | 0 | 0.560 | 0.536 | 0.933 | 0.821 | 0.391 | 0.946 | 0.333 | 0.829 | 0.323 | 0.620 (n 50, disagree 8) |
-| ours_sentence_norule | 8,000 | 500 | 0 | 0.546 | 0.523 | 0.900 | 0.821 | 0.338 | 0.964 | 0.267 | 0.843 | 0.323 | n/a (n 0, disagree 0) |
+| S2_lazy | 4,000 | 500 | 0 | 0.566 | 0.543 | 0.933 | 0.705 | 0.451 | 0.911 | 0.433 | 0.871 | 0.323 | 0.620 (n 50, disagree 8; the audit sample) |
+| S2_lazy | 8,000 | 500 | 0 | 0.522 | 0.502 | 0.833 | 0.654 | 0.376 | 0.911 | 0.233 | 0.829 | 0.331 | not scored |
+| S4_static | 4,000 | 500 | 0 | 0.564 | 0.543 | 0.900 | 0.679 | 0.444 | 0.911 | 0.467 | 0.871 | 0.331 | 0.660 (n 50, disagree 10; the audit sample) |
+| S4_static | 8,000 | 500 | 0 | 0.524 | 0.504 | 0.833 | 0.654 | 0.376 | 0.911 | 0.267 | 0.829 | 0.331 | not scored |
+| S5_noPGR | 4,000 | 500 | 0 | 0.550 | 0.528 | 0.900 | 0.718 | 0.391 | 0.893 | 0.233 | 0.886 | 0.361 | 0.700 (n 50, disagree 9; the audit sample) |
+| S5_noPGR | 8,000 | 500 | 0 | 0.544 | 0.519 | 0.933 | 0.731 | 0.383 | 0.893 | 0.300 | 0.843 | 0.346 | not scored |
+| S5_overlay_P0 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.705 | 0.421 | 0.804 | 0.300 | 0.886 | 0.308 | 0.680 (n 50, disagree 10; the audit sample) |
+| S5_overlay_P0 | 8,000 | 500 | 0 | 0.544 | 0.521 | 0.900 | 0.667 | 0.398 | 0.875 | 0.300 | 0.871 | 0.361 | not scored |
+| S5_overlay_R0 | 4,000 | 500 | 0 | 0.558 | 0.534 | 0.933 | 0.731 | 0.451 | 0.911 | 0.367 | 0.871 | 0.293 | 0.700 (n 50, disagree 5; the audit sample) |
+| S5_overlay_R0 | 8,000 | 500 | 0 | 0.524 | 0.506 | 0.800 | 0.667 | 0.353 | 0.911 | 0.200 | 0.857 | 0.346 | not scored |
+| S5_overlay_R2 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.718 | 0.398 | 0.875 | 0.300 | 0.900 | 0.286 | 0.660 (n 50, disagree 10; the audit sample) |
+| S5_overlay_R2 | 8,000 | 500 | 0 | 0.534 | 0.513 | 0.867 | 0.667 | 0.368 | 0.893 | 0.500 | 0.871 | 0.301 | not scored |
+| S5_planner_oracle | 4,000 | 500 | 0 | 0.546 | 0.526 | 0.867 | 0.705 | 0.421 | 0.911 | 0.233 | 0.900 | 0.308 | 0.640 (n 50, disagree 7; the audit sample) |
+| S5_planner_oracle | 8,000 | 500 | 0 | 0.526 | 0.504 | 0.867 | 0.628 | 0.368 | 0.911 | 0.400 | 0.829 | 0.331 | not scored |
+| S5_planner_rules | 4,000 | 500 | 0 | 0.556 | 0.530 | 0.967 | 0.705 | 0.451 | 0.893 | 0.267 | 0.900 | 0.316 | 0.660 (n 50, disagree 4; the audit sample) |
+| S5_planner_rules | 8,000 | 500 | 0 | 0.518 | 0.491 | 0.933 | 0.667 | 0.346 | 0.893 | 0.333 | 0.814 | 0.331 | not scored |
+| S5_primary | 4,000 | 500 | 0 | 0.542 | 0.517 | 0.933 | 0.718 | 0.414 | 0.875 | 0.233 | 0.914 | 0.301 | 0.377 (n 260, disagree 69; every primary-wrong answerable answer, and the audit sample) |
+| S5_primary | 8,000 | 500 | 0 | 0.526 | 0.500 | 0.933 | 0.641 | 0.361 | 0.875 | 0.400 | 0.871 | 0.323 | 0.302 (n 235, disagree 71; every primary-wrong answerable answer) |
+| S5_primary_norule | 4,000 | 500 | 0 | 0.550 | 0.526 | 0.933 | 0.808 | 0.368 | 0.911 | 0.300 | 0.814 | 0.346 | 0.700 (n 50, disagree 8; the audit sample) |
+| S5_primary_norule | 8,000 | 500 | 0 | 0.574 | 0.551 | 0.933 | 0.833 | 0.376 | 0.911 | 0.533 | 0.871 | 0.331 | not scored |
+| chandan_full | 4,000 | 500 | 0 | 0.448 | 0.419 | 0.900 | 0.603 | 0.233 | 0.982 | 0.433 | 0.729 | 0.203 | 0.416 (n 298, disagree 101; every primary-wrong answerable answer, and the audit sample) |
+| chandan_full | 8,000 | 500 | 0 | 0.512 | 0.485 | 0.933 | 0.641 | 0.316 | 0.982 | 0.433 | 0.814 | 0.293 | 0.355 (n 242, disagree 86; every primary-wrong answerable answer) |
+| chandan_live | 4,000 | 500 | 0 | 0.466 | 0.436 | 0.933 | 0.641 | 0.256 | 0.964 | 0.500 | 0.757 | 0.203 | 0.411 (n 285, disagree 99; every primary-wrong answerable answer, and the audit sample) |
+| chandan_live | 8,000 | 500 | 0 | 0.536 | 0.509 | 0.967 | 0.718 | 0.353 | 0.982 | 0.400 | 0.857 | 0.286 | 0.359 (n 231, disagree 83; every primary-wrong answerable answer) |
+| chandan_live_cal | 4,000 | 18 | 0 | 0.389 | 0.389 | n/a | 0.000 | 0.333 | 1.000 | 0.000 | 0.667 | 0.333 | not scored |
+| chandan_live_cal | 8,000 | 18 | 0 | 0.556 | 0.556 | n/a | 0.667 | 0.333 | 1.000 | 0.000 | 0.667 | 0.667 | not scored |
+| closed_book | 4,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | 0.420 (n 50, disagree 20; the audit sample) |
+| closed_book | 8,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | not scored |
+| oracle_full | 4,000 | 500 | 0 | 0.620 | 0.600 | 0.933 | 0.846 | 0.429 | 0.982 | 0.433 | 0.871 | 0.436 | 0.840 (n 50, disagree 6; the audit sample) |
+| oracle_full | 8,000 | 500 | 0 | 0.620 | 0.600 | 0.933 | 0.846 | 0.429 | 0.982 | 0.433 | 0.871 | 0.436 | not scored |
+| ours_cheap | 4,000 | 500 | 0 | 0.558 | 0.536 | 0.900 | 0.718 | 0.406 | 0.893 | 0.367 | 0.871 | 0.353 | 0.420 (n 245, disagree 80; every primary-wrong answerable answer, and the audit sample) |
+| ours_cheap | 8,000 | 500 | 0 | 0.550 | 0.528 | 0.900 | 0.744 | 0.414 | 0.911 | 0.300 | 0.843 | 0.323 | 0.338 (n 222, disagree 75; every primary-wrong answerable answer) |
+| ours_cheap_norule | 4,000 | 500 | 0 | 0.532 | 0.504 | 0.967 | 0.795 | 0.346 | 0.929 | 0.267 | 0.829 | 0.301 | 0.760 (n 50, disagree 9; the audit sample) |
+| ours_cheap_norule | 8,000 | 500 | 0 | 0.542 | 0.521 | 0.867 | 0.769 | 0.368 | 0.946 | 0.333 | 0.843 | 0.301 | not scored |
+| ours_sentence_norule | 4,000 | 500 | 0 | 0.560 | 0.536 | 0.933 | 0.821 | 0.391 | 0.946 | 0.333 | 0.829 | 0.323 | 0.620 (n 50, disagree 8; the audit sample) |
+| ours_sentence_norule | 8,000 | 500 | 0 | 0.546 | 0.523 | 0.900 | 0.821 | 0.338 | 0.964 | 0.267 | 0.843 | 0.323 | not scored |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 ### reader_a, multihoprag
 
 | arm | budget | n | missing | all | answerable | abstention or null | comparison_query | inference_query | null_query | temporal_query | second judge |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| S2_lazy | 4,000 | 600 | 0 | 0.780 | 0.722 | 0.953 | 0.667 | 0.940 | 0.953 | 0.560 | 0.783 (n 60, disagree 4) |
-| S2_lazy | 8,000 | 600 | 0 | 0.847 | 0.804 | 0.973 | 0.767 | 0.967 | 0.973 | 0.680 | n/a (n 0, disagree 0) |
-| S4_static | 4,000 | 600 | 0 | 0.772 | 0.711 | 0.953 | 0.667 | 0.920 | 0.953 | 0.547 | 0.783 (n 60, disagree 7) |
-| S4_static | 8,000 | 600 | 0 | 0.850 | 0.809 | 0.973 | 0.767 | 0.973 | 0.973 | 0.687 | n/a (n 0, disagree 0) |
-| S5_noPGR | 4,000 | 600 | 0 | 0.772 | 0.700 | 0.987 | 0.627 | 0.947 | 0.987 | 0.527 | 0.717 (n 60, disagree 4) |
-| S5_noPGR | 8,000 | 600 | 0 | 0.807 | 0.756 | 0.960 | 0.673 | 0.973 | 0.960 | 0.620 | n/a (n 0, disagree 0) |
-| S5_overlay_P0 | 4,000 | 600 | 0 | 0.738 | 0.660 | 0.973 | 0.527 | 0.920 | 0.973 | 0.533 | 0.783 (n 60, disagree 5) |
-| S5_overlay_P0 | 8,000 | 600 | 0 | 0.802 | 0.747 | 0.967 | 0.667 | 0.940 | 0.967 | 0.633 | n/a (n 0, disagree 0) |
-| S5_overlay_R0 | 4,000 | 600 | 0 | 0.757 | 0.689 | 0.960 | 0.560 | 0.920 | 0.960 | 0.587 | 0.700 (n 60, disagree 7) |
-| S5_overlay_R0 | 8,000 | 600 | 0 | 0.817 | 0.769 | 0.960 | 0.693 | 0.973 | 0.960 | 0.640 | n/a (n 0, disagree 0) |
-| S5_overlay_R2 | 4,000 | 600 | 0 | 0.768 | 0.696 | 0.987 | 0.593 | 0.980 | 0.987 | 0.513 | 0.850 (n 60, disagree 2) |
-| S5_overlay_R2 | 8,000 | 600 | 0 | 0.827 | 0.778 | 0.973 | 0.693 | 0.973 | 0.973 | 0.667 | n/a (n 0, disagree 0) |
-| S5_planner_oracle | 4,000 | 600 | 0 | 0.778 | 0.718 | 0.960 | 0.627 | 0.947 | 0.960 | 0.580 | 0.750 (n 60, disagree 6) |
-| S5_planner_oracle | 8,000 | 600 | 0 | 0.822 | 0.776 | 0.960 | 0.673 | 0.973 | 0.960 | 0.680 | n/a (n 0, disagree 0) |
-| S5_planner_rules | 4,000 | 600 | 0 | 0.797 | 0.738 | 0.973 | 0.660 | 0.947 | 0.973 | 0.607 | 0.800 (n 60, disagree 2) |
-| S5_planner_rules | 8,000 | 600 | 0 | 0.837 | 0.791 | 0.973 | 0.707 | 0.967 | 0.973 | 0.700 | n/a (n 0, disagree 0) |
-| S5_primary | 4,000 | 600 | 0 | 0.772 | 0.700 | 0.987 | 0.627 | 0.947 | 0.987 | 0.527 | 0.418 (n 184, disagree 32) |
-| S5_primary | 8,000 | 600 | 0 | 0.807 | 0.756 | 0.960 | 0.673 | 0.973 | 0.960 | 0.620 | 0.200 (n 110, disagree 22) |
-| closed_book | 4,000 | 600 | 0 | 0.700 | 0.684 | 0.747 | 0.620 | 0.887 | 0.747 | 0.547 | 0.800 (n 60, disagree 7) |
-| closed_book | 8,000 | 600 | 0 | 0.700 | 0.684 | 0.747 | 0.620 | 0.887 | 0.747 | 0.547 | n/a (n 0, disagree 0) |
-| oracle_full | 4,000 | 600 | 0 | 0.787 | 0.800 | 0.747 | 0.727 | 0.987 | 0.747 | 0.687 | 0.833 (n 60, disagree 2) |
-| oracle_full | 8,000 | 600 | 0 | 0.787 | 0.800 | 0.747 | 0.727 | 0.987 | 0.747 | 0.687 | n/a (n 0, disagree 0) |
-| ours_cheap | 4,000 | 600 | 0 | 0.787 | 0.727 | 0.967 | 0.607 | 0.953 | 0.967 | 0.620 | 0.442 (n 172, disagree 30) |
-| ours_cheap | 8,000 | 600 | 0 | 0.837 | 0.802 | 0.940 | 0.733 | 0.980 | 0.940 | 0.693 | 0.247 (n 89, disagree 22) |
+| S2_lazy | 4,000 | 600 | 0 | 0.780 | 0.722 | 0.953 | 0.667 | 0.940 | 0.953 | 0.560 | 0.783 (n 60, disagree 4; the audit sample) |
+| S2_lazy | 8,000 | 600 | 0 | 0.847 | 0.804 | 0.973 | 0.767 | 0.967 | 0.973 | 0.680 | not scored |
+| S4_static | 4,000 | 600 | 0 | 0.772 | 0.711 | 0.953 | 0.667 | 0.920 | 0.953 | 0.547 | 0.783 (n 60, disagree 7; the audit sample) |
+| S4_static | 8,000 | 600 | 0 | 0.850 | 0.809 | 0.973 | 0.767 | 0.973 | 0.973 | 0.687 | not scored |
+| S5_noPGR | 4,000 | 600 | 0 | 0.772 | 0.700 | 0.987 | 0.627 | 0.947 | 0.987 | 0.527 | 0.717 (n 60, disagree 4; the audit sample) |
+| S5_noPGR | 8,000 | 600 | 0 | 0.807 | 0.756 | 0.960 | 0.673 | 0.973 | 0.960 | 0.620 | not scored |
+| S5_overlay_P0 | 4,000 | 600 | 0 | 0.738 | 0.660 | 0.973 | 0.527 | 0.920 | 0.973 | 0.533 | 0.783 (n 60, disagree 5; the audit sample) |
+| S5_overlay_P0 | 8,000 | 600 | 0 | 0.802 | 0.747 | 0.967 | 0.667 | 0.940 | 0.967 | 0.633 | not scored |
+| S5_overlay_R0 | 4,000 | 600 | 0 | 0.757 | 0.689 | 0.960 | 0.560 | 0.920 | 0.960 | 0.587 | 0.700 (n 60, disagree 7; the audit sample) |
+| S5_overlay_R0 | 8,000 | 600 | 0 | 0.817 | 0.769 | 0.960 | 0.693 | 0.973 | 0.960 | 0.640 | not scored |
+| S5_overlay_R2 | 4,000 | 600 | 0 | 0.768 | 0.696 | 0.987 | 0.593 | 0.980 | 0.987 | 0.513 | 0.850 (n 60, disagree 2; the audit sample) |
+| S5_overlay_R2 | 8,000 | 600 | 0 | 0.827 | 0.778 | 0.973 | 0.693 | 0.973 | 0.973 | 0.667 | not scored |
+| S5_planner_oracle | 4,000 | 600 | 0 | 0.778 | 0.718 | 0.960 | 0.627 | 0.947 | 0.960 | 0.580 | 0.750 (n 60, disagree 6; the audit sample) |
+| S5_planner_oracle | 8,000 | 600 | 0 | 0.822 | 0.776 | 0.960 | 0.673 | 0.973 | 0.960 | 0.680 | not scored |
+| S5_planner_rules | 4,000 | 600 | 0 | 0.797 | 0.738 | 0.973 | 0.660 | 0.947 | 0.973 | 0.607 | 0.800 (n 60, disagree 2; the audit sample) |
+| S5_planner_rules | 8,000 | 600 | 0 | 0.837 | 0.791 | 0.973 | 0.707 | 0.967 | 0.973 | 0.700 | not scored |
+| S5_primary | 4,000 | 600 | 0 | 0.772 | 0.700 | 0.987 | 0.627 | 0.947 | 0.987 | 0.527 | 0.418 (n 184, disagree 32; every primary-wrong answerable answer, and the audit sample) |
+| S5_primary | 8,000 | 600 | 0 | 0.807 | 0.756 | 0.960 | 0.673 | 0.973 | 0.960 | 0.620 | 0.200 (n 110, disagree 22; every primary-wrong answerable answer) |
+| closed_book | 4,000 | 600 | 0 | 0.700 | 0.684 | 0.747 | 0.620 | 0.887 | 0.747 | 0.547 | 0.800 (n 60, disagree 7; the audit sample) |
+| closed_book | 8,000 | 600 | 0 | 0.700 | 0.684 | 0.747 | 0.620 | 0.887 | 0.747 | 0.547 | not scored |
+| oracle_full | 4,000 | 600 | 0 | 0.787 | 0.800 | 0.747 | 0.727 | 0.987 | 0.747 | 0.687 | 0.833 (n 60, disagree 2; the audit sample) |
+| oracle_full | 8,000 | 600 | 0 | 0.787 | 0.800 | 0.747 | 0.727 | 0.987 | 0.747 | 0.687 | not scored |
+| ours_cheap | 4,000 | 600 | 0 | 0.787 | 0.727 | 0.967 | 0.607 | 0.953 | 0.967 | 0.620 | 0.442 (n 172, disagree 30; every primary-wrong answerable answer, and the audit sample) |
+| ours_cheap | 8,000 | 600 | 0 | 0.837 | 0.802 | 0.940 | 0.733 | 0.980 | 0.940 | 0.693 | 0.247 (n 89, disagree 22; every primary-wrong answerable answer) |
 | chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 | chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
@@ -916,12 +946,12 @@ The second judge is a separate column and is never merged. A question with no ou
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge | cheap judge | agreement |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S5_primary | 4,000 | 500 | 0 | 0.832 | 0.828 | 0.900 | 0.936 | 0.714 | 0.911 | 0.800 | 0.943 | 0.805 | 0.828 (n 500, disagree 20) | 0.828 (n 500) | 0.960 |
-| chandan_full | 4,000 | 500 | 0 | 0.618 | 0.600 | 0.900 | 0.769 | 0.338 | 1.000 | 0.900 | 0.857 | 0.459 | 0.660 (n 500, disagree 33) | 0.660 (n 500) | 0.934 |
-| chandan_live | 4,000 | 500 | 0 | 0.624 | 0.606 | 0.900 | 0.782 | 0.353 | 1.000 | 0.900 | 0.857 | 0.459 | 0.666 (n 500, disagree 33) | 0.666 (n 500) | 0.934 |
-| closed_book | 4,000 | 500 | 0 | 0.074 | 0.017 | 0.967 | 0.077 | 0.083 | 0.000 | 0.100 | 0.086 | 0.083 | 0.486 (n 500, disagree 214) | 0.486 (n 500) | 0.572 |
-| oracle_full | 4,000 | 500 | 0 | 0.858 | 0.857 | 0.867 | 0.962 | 0.692 | 0.982 | 0.933 | 0.957 | 0.842 | 0.858 (n 500, disagree 18) | 0.858 (n 500) | 0.964 |
-| ours_cheap | 4,000 | 500 | 0 | 0.844 | 0.838 | 0.933 | 0.923 | 0.759 | 0.946 | 0.800 | 0.943 | 0.797 | 0.834 (n 500, disagree 23) | 0.834 (n 500) | 0.954 |
+| S5_primary | 4,000 | 500 | 0 | 0.832 | 0.828 | 0.900 | 0.936 | 0.714 | 0.911 | 0.800 | 0.943 | 0.805 | 0.828 (n 500, disagree 20; every record of the cell) | 0.828 (n 500) | 0.960 |
+| chandan_full | 4,000 | 500 | 0 | 0.618 | 0.600 | 0.900 | 0.769 | 0.338 | 1.000 | 0.900 | 0.857 | 0.459 | 0.660 (n 500, disagree 33; every record of the cell) | 0.660 (n 500) | 0.934 |
+| chandan_live | 4,000 | 500 | 0 | 0.624 | 0.606 | 0.900 | 0.782 | 0.353 | 1.000 | 0.900 | 0.857 | 0.459 | 0.666 (n 500, disagree 33; every record of the cell) | 0.666 (n 500) | 0.934 |
+| closed_book | 4,000 | 500 | 0 | 0.074 | 0.017 | 0.967 | 0.077 | 0.083 | 0.000 | 0.100 | 0.086 | 0.083 | 0.486 (n 500, disagree 214; every record of the cell) | 0.486 (n 500) | 0.572 |
+| oracle_full | 4,000 | 500 | 0 | 0.858 | 0.857 | 0.867 | 0.962 | 0.692 | 0.982 | 0.933 | 0.957 | 0.842 | 0.858 (n 500, disagree 18; every record of the cell) | 0.858 (n 500) | 0.964 |
+| ours_cheap | 4,000 | 500 | 0 | 0.844 | 0.838 | 0.933 | 0.923 | 0.759 | 0.946 | 0.800 | 0.943 | 0.797 | 0.834 (n 500, disagree 23; every record of the cell) | 0.834 (n 500) | 0.954 |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 Cheap judge column: gemini-2.5-flash-lite scored every Reader B record, not only the wrong ones, because the primary judge gpt-5.4 is the same model as Reader B (design section 14 item 3).
@@ -930,10 +960,10 @@ Cheap judge column: gemini-2.5-flash-lite scored every Reader B record, not only
 
 | arm | budget | n | missing | all | answerable | abstention or null | comparison_query | inference_query | null_query | temporal_query | second judge | cheap judge | agreement |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S5_primary | 4,000 | 200 | 0 | 0.830 | 0.840 | 0.800 | 0.780 | 1.000 | 0.800 | 0.740 | 0.850 (n 200, disagree 8) | 0.850 (n 200) | 0.960 |
-| closed_book | 4,000 | 200 | 0 | 0.455 | 0.320 | 0.860 | 0.080 | 0.560 | 0.860 | 0.320 | 0.590 (n 200, disagree 29) | 0.590 (n 200) | 0.855 |
-| oracle_full | 4,000 | 200 | 0 | 0.895 | 0.907 | 0.860 | 0.900 | 1.000 | 0.860 | 0.820 | 0.875 (n 200, disagree 6) | 0.875 (n 200) | 0.970 |
-| ours_cheap | 4,000 | 200 | 0 | 0.845 | 0.880 | 0.740 | 0.840 | 0.980 | 0.740 | 0.820 | 0.855 (n 200, disagree 6) | 0.855 (n 200) | 0.970 |
+| S5_primary | 4,000 | 200 | 0 | 0.830 | 0.840 | 0.800 | 0.780 | 1.000 | 0.800 | 0.740 | 0.850 (n 200, disagree 8; every record of the cell) | 0.850 (n 200) | 0.960 |
+| closed_book | 4,000 | 200 | 0 | 0.455 | 0.320 | 0.860 | 0.080 | 0.560 | 0.860 | 0.320 | 0.590 (n 200, disagree 29; every record of the cell) | 0.590 (n 200) | 0.855 |
+| oracle_full | 4,000 | 200 | 0 | 0.895 | 0.907 | 0.860 | 0.900 | 1.000 | 0.860 | 0.820 | 0.875 (n 200, disagree 6; every record of the cell) | 0.875 (n 200) | 0.970 |
+| ours_cheap | 4,000 | 200 | 0 | 0.845 | 0.880 | 0.740 | 0.840 | 0.980 | 0.740 | 0.820 | 0.855 (n 200, disagree 6; every record of the cell) | 0.855 (n 200) | 0.970 |
 | chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 | chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
@@ -998,18 +1028,33 @@ Index-time builds as metered:
 
 Post-graph-rag builds (the runner's run logs under data/part1/pgr; a log with no end time is a runner still writing spaces; the runner meter covers index and query calls together):
 
-| corpus | state | in progress | running job tags | stopped | spaces exported | spaces wanted | population | runner meter USD so far |
+| corpus | state | in progress | running job tags | stopped | attempts | spaces exported | spaces wanted | population | runner meter USD so far |
+|---|---|---|---|---|---|---|---|---|---|
+| longmemeval | complete build, 500 of 500 spaces | no | none | none | 4 | 500 | 500 | ORDER | 66.87 |
+| multihoprag | partial build snapshot, 0 of 1 spaces, 2 attempts, the last stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first) | no | none | pgr-mhrag-full: cap: spend 10.0071 USD exceeds the cap of 10.00; pgr-mhrag-full3: stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first) | 2 | 0 | 1 | ORDER | 10.01 |
+
+Every build attempt, oldest first. An attempt the runner never logged (it was stopped from outside before it could write one) is read from the proxy request log and its row says so; how far an attempt got is recorded beside the log, since no run log carries it.
+
+| corpus | job tag | started | ended | stopped | progress at stop | USD | USD source | runner run log |
 |---|---|---|---|---|---|---|---|---|
-| longmemeval | complete build, 500 of 500 spaces | no | none | none | 500 | 500 | ORDER | 66.87 |
-| multihoprag | partial build snapshot, 0 of 1 spaces, build stopped at its cap | no | none | pgr-mhrag-full: cap: spend 10.0071 USD exceeds the cap of 10.00 | 0 | 1 | ORDER | 10.01 |
+| longmemeval | pgr-lme-full-s0 | 2026-09-06T16:04:05+05:30 | 2026-09-07T03:45:30+05:30 | not stopped | not recorded | 16.55 | runner meter | yes |
+| longmemeval | pgr-lme-full-s1 | 2026-09-06T16:04:15+05:30 | 2026-09-07T05:02:02+05:30 | not stopped | not recorded | 16.49 | runner meter | yes |
+| longmemeval | pgr-lme-full-s2 | 2026-09-06T16:04:25+05:30 | 2026-09-07T04:30:10+05:30 | not stopped | not recorded | 16.79 | runner meter | yes |
+| longmemeval | pgr-lme-full-s3 | 2026-09-06T16:04:35+05:30 | 2026-09-07T05:25:23+05:30 | not stopped | not recorded | 17.03 | runner meter | yes |
+| multihoprag | pgr-mhrag-full | 2026-09-06T16:05:38+05:30 | 2026-09-07T00:24:38+05:30 | cap: spend 10.0071 USD exceeds the cap of 10.00 | 592 of 609 articles | 10.01 | runner meter | yes |
+| multihoprag | pgr-mhrag-full3 | 2026-09-07T07:30:00+05:30 | 2026-09-07T08:17:21+05:30 | stopped by the owner on 2026-09-07 at 72 of 609 articles, for sequencing (TG-VGRAG first) | 72 of 609 articles | 1.70 | proxy request log (no run log: the runner was stopped before it wrote one) | no |
 
 Spend ledger (section 11): every invocation of each stage, appended at the end of the invocation, a capped one included; the sum per stage is read against the cap of that stage.
 
-| stage | section 11 cap USD | cap covers | ledger sum USD | over cap | invocations | per corpus |
-|---|---|---|---|---|---|---|
-| index | 15.00 | overlay generation 15 | 0.00 | no | 0 | none |
-| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.08 | no | 1 | longmemeval 0.08 (1 invocations) |
-| qa | 100.00 | answering and judging 100 across both corpora, both readers and the chandan_full_uncut reader | 0.02 | no | 1 | longmemeval 0.02 (1 invocations) |
+The ledger was added part way through the study, so most invocations were never itemised: they are counted in the stage total, which is read from the cost block of each stage's own metrics file, and no row below itemises them.
+
+| stage | section 11 cap USD | cap covers | recorded invocations USD | recorded invocations | recorded per corpus | stage total from the metrics files USD | calls in that total | stage total per corpus | over cap |
+|---|---|---|---|---|---|---|---|---|---|
+| index | 15.00 | overlay generation 15 | 0.00 | 0 | none | 0.31 | 2,857 | longmemeval 0.28 (2,566 calls), multihoprag 0.03 (291 calls) | no |
+| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.08 | 1 | longmemeval 0.08 (1 invocations) | 0.57 | 43,181 | longmemeval 0.08 (8,312 calls), multihoprag 0.49 (34,869 calls) | no |
+| qa | 100.00 | answering and judging 100 across both corpora, both readers and the chandan_full_uncut reader | 0.02 | 1 | longmemeval 0.02 (1 invocations) | 11.01 | 18,535 | longmemeval 0.02 (1,002 calls), multihoprag 10.99 (17,533 calls) | no |
+
+A stage run more than once on a corpus keeps only its last pass in the metrics file, so the earlier passes are neither itemised nor in the stage total. Their totals survive as the line each pass printed in results/part1/logs, and nothing per invocation survives at all: retrieve USD 0.01 over 5 logged passes, which puts the stage at USD 0.58 in total; qa USD 4.59 over 5 logged passes, which puts the stage at USD 15.59 in total.
 
 one row per invocation of a stage on a corpus, appended at the end of every invocation including a capped one; an invocation over both corpora is written to each corpus ledger, counted in each corpus sum and once in the stage total
 
