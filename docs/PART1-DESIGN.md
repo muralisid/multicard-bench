@@ -748,3 +748,14 @@ run or any test in section 9 was computed.
    4 different articles, so his rendered recall on that corpus was expected to
    be low for the same unit-size reason as his 0.574 on LongMemEval. That is a
    prediction that was not tested.
+6. 2026-09-07, the owner accepted the two missing tests: "T2 and T8 not run is
+   fine." The pass rule in section 9 is not rewritten, because it was fixed
+   before any result and rewriting it after the numbers are in would make it
+   worthless. The report therefore continues to print "Part 1 passed: no",
+   with T8a as the only unmet clause, and this amendment records the owner's
+   disposition beside it: the study is read on what was run. On that reading
+   T1 is shown (plus 0.371, CI [+0.324, +0.420], significant after Holm), T7
+   holds (two losses, no wins, inside the limit of three), T8b is negative and
+   significant on MultiHop-RAG against our own floor, and T2 and T8a are
+   absent by decision rather than by failure. Anyone quoting the study must
+   quote both the rule's verdict and this disposition, never one alone.

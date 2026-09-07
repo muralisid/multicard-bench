@@ -500,8 +500,18 @@ comparison and the cost result.
 Not run, both by decision, and both recorded in design section 14: T2, the
 Graphiti comparison, because no ingestion variant fitted the cost cap; and
 T8a, post-graph-rag on MultiHop-RAG, which the owner stopped at 72 of 609
-articles. Part 1 therefore does not pass its own rule, which requires T8a.
-The report states that rather than working around it.
+articles. Part 1 therefore does not pass its own rule, which requires T8a, and
+the report states that rather than working around it.
+
+The owner accepted both absences on 2026-09-07 ("T2 and T8 not run is fine").
+The pass rule was not rewritten, because it was fixed before any result and
+rewriting it afterwards would make it worthless. So the study carries two
+statements that must always travel together: the rule's verdict, which is that
+Part 1 does not pass because T8a is missing, and the owner's disposition,
+which is that the study is read on what was run. On that reading T1 is shown,
+T7 holds, T8b is negative and significant against our own floor, and the two
+absent tests are absent by decision rather than by failure. Design section 14
+item 6 carries the same wording.
 
 Not yet done: an independent recomputation of the final report. The interim
 report was recomputed in full by three verifiers with their own code and every
