@@ -1,8 +1,8 @@
 {
   "judge_audit": {
-    "n": 1287,
-    "n_agree": 1136,
-    "agreement": 0.8826728826728827,
+    "n": 1200,
+    "n_agree": 1012,
+    "agreement": 0.8433333333333334,
     "threshold": 0.9,
     "cheap": "gemini-2.5-flash-lite",
     "strong": "gpt-5.4",
@@ -11,19 +11,19 @@
     "cells": [
       {
         "arm": "S2_lazy",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 56,
-        "agreement": 0.9333333333333333
+        "n": 50,
+        "n_agree": 42,
+        "agreement": 0.84
       },
       {
         "arm": "S4_static",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 53,
-        "agreement": 0.8833333333333333
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
       },
       {
         "arm": "S5_noPGR",
@@ -34,76 +34,108 @@
         "agreement": 0.82
       },
       {
-        "arm": "S5_noPGR",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 56,
-        "agreement": 0.9333333333333333
-      },
-      {
         "arm": "S5_overlay_P0",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 55,
-        "agreement": 0.9166666666666666
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
       },
       {
         "arm": "S5_overlay_R0",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 53,
-        "agreement": 0.8833333333333333
-      },
-      {
-        "arm": "S5_overlay_R2",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 58,
-        "agreement": 0.9666666666666667
-      },
-      {
-        "arm": "S5_planner_oracle",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 54,
+        "n": 50,
+        "n_agree": 45,
         "agreement": 0.9
       },
       {
+        "arm": "S5_overlay_R2",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
+      },
+      {
+        "arm": "S5_planner_oracle",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 43,
+        "agreement": 0.86
+      },
+      {
         "arm": "S5_planner_rules",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 58,
-        "agreement": 0.9666666666666667
+        "n": 50,
+        "n_agree": 46,
+        "agreement": 0.92
       },
       {
         "arm": "S5_primary",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_a",
-        "n": 60,
-        "n_agree": 53,
-        "agreement": 0.8833333333333333
+        "n": 50,
+        "n_agree": 45,
+        "agreement": 0.9
       },
       {
         "arm": "S5_primary",
-        "corpus": "multihoprag",
+        "corpus": "longmemeval",
         "reader": "reader_b",
-        "n": 20,
-        "n_agree": 20,
-        "agreement": 1.0
+        "n": 50,
+        "n_agree": 47,
+        "agreement": 0.94
+      },
+      {
+        "arm": "S5_primary_norule",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 42,
+        "agreement": 0.84
+      },
+      {
+        "arm": "chandan_full",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 41,
+        "agreement": 0.82
+      },
+      {
+        "arm": "chandan_full",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 48,
+        "agreement": 0.96
       },
       {
         "arm": "chandan_full_uncut",
         "corpus": "longmemeval",
         "reader": "chandan_own",
-        "n": 37,
-        "n_agree": 35,
-        "agreement": 0.9459459459459459
+        "n": 50,
+        "n_agree": 47,
+        "agreement": 0.94
+      },
+      {
+        "arm": "chandan_live",
+        "corpus": "longmemeval",
+        "reader": "reader_a",
+        "n": 50,
+        "n_agree": 40,
+        "agreement": 0.8
+      },
+      {
+        "arm": "chandan_live",
+        "corpus": "longmemeval",
+        "reader": "reader_b",
+        "n": 50,
+        "n_agree": 46,
+        "agreement": 0.92
       },
       {
         "arm": "closed_book",
@@ -122,22 +154,6 @@
         "agreement": 0.56
       },
       {
-        "arm": "closed_book",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 53,
-        "agreement": 0.8833333333333333
-      },
-      {
-        "arm": "closed_book",
-        "corpus": "multihoprag",
-        "reader": "reader_b",
-        "n": 20,
-        "n_agree": 18,
-        "agreement": 0.9
-      },
-      {
         "arm": "oracle_full",
         "corpus": "longmemeval",
         "reader": "reader_a",
@@ -154,22 +170,6 @@
         "agreement": 0.92
       },
       {
-        "arm": "oracle_full",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 58,
-        "agreement": 0.9666666666666667
-      },
-      {
-        "arm": "oracle_full",
-        "corpus": "multihoprag",
-        "reader": "reader_b",
-        "n": 20,
-        "n_agree": 20,
-        "agreement": 1.0
-      },
-      {
         "arm": "ours_cheap",
         "corpus": "longmemeval",
         "reader": "reader_a",
@@ -184,22 +184,6 @@
         "n": 50,
         "n_agree": 48,
         "agreement": 0.96
-      },
-      {
-        "arm": "ours_cheap",
-        "corpus": "multihoprag",
-        "reader": "reader_a",
-        "n": 60,
-        "n_agree": 57,
-        "agreement": 0.95
-      },
-      {
-        "arm": "ours_cheap",
-        "corpus": "multihoprag",
-        "reader": "reader_b",
-        "n": 20,
-        "n_agree": 19,
-        "agreement": 0.95
       },
       {
         "arm": "ours_cheap_norule",
@@ -301,21 +285,39 @@
         "out": 0.0
       }
     },
-    "total_usd": 10.9883,
-    "total_calls": 17533,
+    "total_usd": 0.019596,
+    "total_calls": 1002,
     "by_tier": {
-      "azure-gpt54": {
-        "calls": 7022,
-        "tokens_in": 3938730,
-        "tokens_out": 55025,
-        "usd": 5.473663
-      },
       "gemini-2.5-flash-lite": {
-        "calls": 10511,
-        "tokens_in": 53624563,
-        "tokens_out": 380454,
-        "usd": 5.514638
+        "calls": 1002,
+        "tokens_in": 191946,
+        "tokens_out": 1003,
+        "usd": 0.019596
       }
     }
-  }
+  },
+  "timestamp": "2026-09-07T03:04:23+00:00",
+  "history": [
+    {
+      "timestamp": "2026-09-06T22:24:41+00:00",
+      "n": 1287,
+      "agreement": 0.8826728826728827,
+      "primary": "gpt-5.4",
+      "note": "seeded from the qa_audit.json written before the history was kept; the timestamp is that file's modification time"
+    },
+    {
+      "timestamp": "2026-09-07T03:04:23+00:00",
+      "n": 1200,
+      "agreement": 0.8433333333333334,
+      "primary": "gpt-5.4",
+      "corpora": [
+        "lme"
+      ],
+      "readers": [
+        "reader_a",
+        "reader_b"
+      ],
+      "judging_stopped": null
+    }
+  ]
 }

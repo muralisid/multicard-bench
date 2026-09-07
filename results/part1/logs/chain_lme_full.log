@@ -503,3 +503,15 @@ Direct use of automatic function calling (AFC) in Models.generate_content is not
 [part1]   mhrag: 15100/15200 answered (0s, USD 11.105)
 [part1]   mhrag: 15200/15200 answered (0s, USD 11.105)
 [part1] judging 35736 records: audit first
+[part1]   audit n 2000, agreement 0.876, primary gpt-5.4
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/run.py", line 129, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/run.py", line 124, in main
+    fn(**kwargs)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/experiments/part1.py", line 1367, in part1_qa
+
+[chain] qa FAILED

@@ -44,7 +44,7 @@ import subprocess
 import sys
 import time
 import uuid
-from collections import defaultdict
+from collections import OrderedDict, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
 from datetime import datetime, timezone
@@ -292,6 +292,19 @@ def _read_jsonl(path: Path) -> list[dict]:
         return []
     with path.open() as fh:
         return [json.loads(line) for line in fh if line.strip()]
+
+
+def _iter_jsonl(path: Path):
+    """One row at a time, so a caller that keeps only some rows never holds the
+    whole file. The MultiHop-RAG context file is 688 MB of rendered text at the
+    primary budget; reading it into a list took the report past 10 GB and the
+    kernel killed it on 2026-09-07."""
+    if not path.exists():
+        return
+    with path.open() as fh:
+        for line in fh:
+            if line.strip():
+                yield json.loads(line)
 
 
 # ----------------------------------------------------------------------------
@@ -1154,18 +1167,27 @@ def part1_retrieve(corpus: str = LME, limit: int = 0, arms: str = "", budget: st
 # ----------------------------------------------------------------------------
 # Stage 3: readers and judges (section 6)
 # ----------------------------------------------------------------------------
-def load_contexts(kind: str, tag: str, budget: int, chosen: dict[str, str]) -> dict[tuple[str, str], dict]:
-    """(arm, qid) -> contexts row at one budget, competitor rows of the chosen variant only."""
+def load_contexts(kind: str, tag: str, budget: int, chosen: dict[str, str],
+                  keep: set[tuple[str, str]] | None = None) -> dict[tuple[str, str], dict]:
+    """(arm, qid) -> contexts row at one budget, competitor rows of the chosen
+    variant only. keep, when given, is the set of (arm, qid) pairs the caller
+    needs; every other row is streamed past and dropped. The MultiHop-RAG
+    context file holds 688 MB of rendered text at the primary budget, so
+    loading all of it killed the report stage with SIGKILL on 2026-09-07;
+    the bucket stage needs only the wrong answers it buckets."""
     out: dict[tuple[str, str], dict] = {}
     raised = C.RAISED_FOR_BUDGET.get(budget, "raised_4k")
-    for row in _read_jsonl(stage_dir(tag, kind, "retrieve") / f"contexts_{budget}.jsonl"):
+    for row in _iter_jsonl(stage_dir(tag, kind, "retrieve") / f"contexts_{budget}.jsonl"):
         arm = row["arm"]
+        key = (arm, row["qid"])
+        if keep is not None and key not in keep:
+            continue
         if row.get("variants"):
             pick = chosen.get(arm, "shipped")
             pick = pick if pick == "shipped" else raised
             if pick not in row["variants"]:
                 continue
-        out[(arm, row["qid"])] = row
+        out[key] = row
     return out
 
 
@@ -1479,17 +1501,33 @@ def _bucket_cases(kind: str, tag: str, records: list[E.AnswerRecord], chosen: di
     id -> a time string that sorts, the session date and time of day) lets
     the knowledge-update clause record whether the gold turn is the earlier
     of the two; without it the session order of the haystack stands in."""
-    rows = load_contexts(kind, tag, E.BUDGET_PRIMARY, chosen)
+    wanted = {(r.arm, r.qid) for r in records
+              if r.reader in (E.READER_A, E.READER_B) and r.budget == E.BUDGET_PRIMARY
+              and r.arm in BUCKET_ARMS and not r.abstention and r.correct is False}
+    rows = load_contexts(kind, tag, E.BUDGET_PRIMARY, chosen, keep=wanted)
     timestamps = timestamps or {}
     results: list[E.BucketResult] = []
-    pgr_cache: dict[str, tuple] = {}
-    graphiti_cache: dict[str, tuple] = {}
+    # Both caches are bounded. Each post-graph-rag entry holds one question's
+    # exported tables, relation embeddings included, so an unbounded cache over
+    # every bucketed question took the report past 10 GB and the kernel killed
+    # it on 2026-09-07. The bucketed records are processed grouped by question
+    # so a small cache still hits on every arm and reader of the same question.
+    PGR_CACHE_MAX, GRAPHITI_CACHE_MAX = 2, 2
+    pgr_cache: "OrderedDict[str, tuple]" = OrderedDict()
+    graphiti_cache: "OrderedDict[str, tuple]" = OrderedDict()
+
+    def _cache_put(cache, key, value, cap):
+        cache[key] = value
+        while len(cache) > cap:
+            cache.popitem(last=False)
+        return value
+
     counts = defaultdict(int)
-    for r in records:
-        if r.reader not in (E.READER_A, E.READER_B) or r.budget != E.BUDGET_PRIMARY or r.arm not in BUCKET_ARMS:
-            continue
-        if r.abstention or r.correct is not False:
-            continue
+    todo = [r for r in records
+            if r.reader in (E.READER_A, E.READER_B) and r.budget == E.BUDGET_PRIMARY
+            and r.arm in BUCKET_ARMS and not r.abstention and r.correct is False]
+    todo.sort(key=lambda r: (r.qid, r.arm, r.reader))
+    for r in todo:
         x = questions.get(r.qid)
         row = rows.get((r.arm, r.qid))
         if x is None or row is None:
@@ -1503,18 +1541,27 @@ def _bucket_cases(kind: str, tag: str, records: list[E.AnswerRecord], chosen: di
             space_id = r.qid if kind == LME else "corpus"
             root = PGR_CAL_ROOT if r.arm == CAL_ARM else C.PGR_ROOT
             key = f"{root}/{space_id}"
-            if key not in pgr_cache:
+            if key in pgr_cache:
+                pgr_cache.move_to_end(key)
+            else:
                 pgr = C.load_pgr_space(kind, space_id, root)
-                pgr_cache[key] = (pgr, C.relation_index(pgr), C.chandan_index_units(pgr, qt if kind == LME else tables, kind)
-                                  if kind == MHRAG else None)
+                _cache_put(pgr_cache, key,
+                           (pgr, C.relation_index(pgr),
+                            C.chandan_index_units(pgr, qt if kind == LME else tables, kind)
+                            if kind == MHRAG else None),
+                           PGR_CACHE_MAX)
             pgr, rel_index, idx_units = pgr_cache[key]
             variant = chosen.get("chandan_live", "shipped") if r.arm == "chandan_live" else "shipped"
             q = C.load_query(kind, space_id, r.qid, variant, root)
             cand_units = RD.full_native_units(C.chandan_units(q, pgr, qt, kind, rel_index)) if q else []
             index_units = idx_units if kind == MHRAG else C.chandan_index_units(pgr, qt, kind)
         elif r.arm == "graphiti":
-            if r.qid not in graphiti_cache:
-                graphiti_cache[r.qid] = (C.graphiti_episodes(r.qid), C.graphiti_index_units(r.qid))
+            if r.qid in graphiti_cache:
+                graphiti_cache.move_to_end(r.qid)
+            else:
+                _cache_put(graphiti_cache, r.qid,
+                           (C.graphiti_episodes(r.qid), C.graphiti_index_units(r.qid)),
+                           GRAPHITI_CACHE_MAX)
             episodes, index_units = graphiti_cache[r.qid]
             s = C.load_search(r.qid, chosen.get("graphiti", "shipped"))
             cand_units = RD.full_native_units(C.graphiti_units(s, episodes)) if s else []
@@ -1750,7 +1797,7 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
                 arm_populations[SECOND_ARM] = list(subsets[second_subset])
             second_build["subset"] = second_subset
         # context hashes at the primary budget for the T5 count
-        for row in _read_jsonl(stage_dir(tag, kind, "retrieve") / f"contexts_{E.BUDGET_PRIMARY}.jsonl"):
+        for row in _iter_jsonl(stage_dir(tag, kind, "retrieve") / f"contexts_{E.BUDGET_PRIMARY}.jsonl"):
             if not row.get("variants"):
                 context_hashes[row["arm"]][row["qid"]] = E.context_sha256(row.get("text") or "")
         # costs
@@ -1830,10 +1877,19 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
                 disclosures.append(f"graphrag's ego-node rule removed one content phrase after the hub rule: "
                                    f"{gd['ego_node']!r}.")
         session_ts: dict[str, str] = {}
+        # The bucket stage reads unit tables only for the questions that carry a
+        # wrong answer it will bucket, so the report builds the tables for those
+        # containers alone. Building them for all 19,829 LongMemEval sessions
+        # took the report past 9 GB and the kernel killed it on 2026-09-07.
+        bucket_qids = {r.qid for r in recs
+                       if r.reader in (E.READER_A, E.READER_B) and r.budget == E.BUDGET_PRIMARY
+                       and r.arm in BUCKET_ARMS and not r.abstention and r.correct is False}
         if kind == LME:
             instances, sessions = lme_data()
             questions = {q: instances[q] for q in ids if q in instances}
-            tables = lme_tables(sessions, list(idx_meta["containers"]), None)
+            bucket_containers = sorted({sid for q in bucket_qids if q in instances
+                                        for sid in instances[q].session_ids})
+            tables = lme_tables(sessions, bucket_containers or list(idx_meta["containers"]), None)
             setup["long_evidence_turns"] = _long_evidence_turns(instances, sessions)
             session_ts = {sid: str(s.get("datetime") or s.get("date") or "") for sid, s in sessions.items()}
             docs_by_id = None
@@ -1860,6 +1916,7 @@ def part1_report(tag: str = "", corpus: str = "all", limit: int = 0, arms: str =
             questions = {q: queries[q] for q in ids if q in queries}
             tables = mhr_tables(docs, list(idx_meta["containers"]), None)
             docs_by_id = {d.doc_id: d for d in docs}
+            del bucket_qids
         if recs:
             buckets.extend(_bucket_cases(kind, tag, recs, chosen, tables, questions, docs_by_id, session_ts))
 

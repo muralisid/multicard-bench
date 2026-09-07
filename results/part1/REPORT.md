@@ -1,12 +1,12 @@
 # Part 1: the head-to-head on LongMemEval_S and MultiHop-RAG
 
-Generated 2026-09-06T22:25:06+00:00 from results/part1/metrics.json. Design: docs/PART1-DESIGN.md version 4. Every number below is read from that file.
+Generated 2026-09-07T03:21:25+00:00 from results/part1/metrics.json. Design: docs/PART1-DESIGN.md version 4. Every number below is read from that file.
 
 Subsets file sha256: 0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082.
 
 Commits recorded in the report:
 
-- head: 9e454cc
+- head: 13e1ed8
 - subsets_sha256_file: 0e2440828ec0e2f2568bb90742b21c684b73b2cc4db85738879703a5311f5082
 
 Graphiti status: dropped. T2 is recorded as not run.
@@ -19,11 +19,11 @@ The rule: T1 shown under D1, T8a positive and significant after Holm within Fami
 
 | quantity | value |
 |---|---|
-| T1 label (D1) | not run |
-| T1 delta | n/a |
-| T1 95 percent CI | n/a |
-| T1 significant after Holm | n/a |
-| T1 shown | no |
+| T1 label (D1) | shown |
+| T1 delta | +0.371 |
+| T1 95 percent CI | [+0.324, +0.420] |
+| T1 significant after Holm | yes |
+| T1 shown | yes |
 | T8a delta | n/a |
 | T8a 95 percent CI | n/a |
 | T8a significant after Holm | n/a |
@@ -32,21 +32,21 @@ The rule: T1 shown under D1, T8a positive and significant after Holm within Fami
 | T2 passes (D2, point estimate positive) | no |
 | T2 strict reading (positive and significant after Holm) | no |
 | T2 satisfied (passes or not run) | yes |
-| T7 losses minus wins | n/a |
-| T7 holds | no |
+| T7 losses minus wins | 2 |
+| T7 holds | yes |
 | T8a note | S5_primary run without post-graph-rag tables |
 | T8b note | S5_primary run without post-graph-rag tables |
 
 D2 reading of T2: not run (Graphiti status dropped).
 
-Second post-graph-rag build (section 9): first build cost so far USD 60.63 (longmemeval: partial build snapshot, 467 of 500 spaces, build in progress; multihoprag: partial build snapshot, 0 of 1 spaces, build stopped at its cap); second-build rule: not evaluated, build incomplete; second build ran: no.
+Second post-graph-rag build (section 9): first build cost so far USD 64.97 (multihoprag: partial build snapshot, 0 of 1 spaces, build stopped at its cap); second-build rule: not evaluated, build incomplete; second build ran: no.
 
 ## Setup
 
 - tag: 
 - encoder: sentence-transformers/all-MiniLM-L6-v2
 - stages:
-  - lme: index topics fitted, graph built, relation_vectors 116 spaces encoded, 0 present, 500 wanted, overlay generated, sample False, n_questions 500, containers 19829, arms_skipped , chosen_variant , exports_present chandan 0, graphiti 0, cal 0, second 0, topics n_units 199641, n_topics 3421, outlier_share 0.3795613125560381, largest_topic_share 0.005029027103651054, graph plain n_communities 1670, largest_community_share_nodes 0.0913023234494455, largest_community_share_units 0.10969859146646278, graph_density 3.1974720116958864e-05, topic_entropy mean_bits 2.771227610677477, member_weighted_bits 9.271119151349733, n_communities_with_topics 1670, topic n_communities 1685, largest_community_share_nodes 0.0931261504464275, largest_community_share_units 0.11148998735554444, graph_density 3.1974720116958864e-05, topic_entropy mean_bits 2.7812383730601504, member_weighted_bits 9.140311580761013, n_communities_with_topics 1685, overlay n_candidate_pairs 12830, n_flagged 2566, n_parse_ok 2566, links R0 0, R2 2566, R3 570, P0 570
+  - lme: index topics fitted, graph built, relation_vectors 116 spaces encoded, 0 present, 500 wanted, overlay generated, sample False, n_questions 500, containers 19829, arms_skipped , chosen_variant chandan_live shipped, chandan_live_means shipped 0.574468085106383, raised_4k 0.574468085106383, metric joint_recall, n 470, exports_present chandan 500, graphiti 0, cal 18, second 0, topics n_units 199641, n_topics 3421, outlier_share 0.3795613125560381, largest_topic_share 0.005029027103651054, graph plain n_communities 1670, largest_community_share_nodes 0.0913023234494455, largest_community_share_units 0.10969859146646278, graph_density 3.1974720116958864e-05, topic_entropy mean_bits 2.771227610677477, member_weighted_bits 9.271119151349733, n_communities_with_topics 1670, topic n_communities 1685, largest_community_share_nodes 0.0931261504464275, largest_community_share_units 0.11148998735554444, graph_density 3.1974720116958864e-05, topic_entropy mean_bits 2.7812383730601504, member_weighted_bits 9.140311580761013, n_communities_with_topics 1685, overlay n_candidate_pairs 12830, n_flagged 2566, n_parse_ok 2566, links R0 0, R2 2566, R3 570, P0 570
   - mhrag: index topics fitted, graph built, relation_vectors 0 spaces encoded, 0 present, 1 wanted, overlay generated, sample False, n_questions 2556, containers 609, arms_skipped , chosen_variant , exports_present chandan 0, graphiti 0, cal 0, second 0, topics n_units 3376, n_topics 95, outlier_share 0.15136255924170616, largest_topic_share 0.07316350710900474, graph plain n_communities 251, largest_community_share_nodes 0.08065564635958396, largest_community_share_units 0.11705352698972897, graph_density 0.0002940287606719218, topic_entropy mean_bits 3.4369701333111, member_weighted_bits 5.551516258641589, n_communities_with_topics 251, topic n_communities 256, largest_community_share_nodes 0.09040676077265973, largest_community_share_units 0.1301977286095652, graph_density 0.0002940287606719218, topic_entropy mean_bits 3.4140820354158494, member_weighted_bits 5.454004704366372, n_communities_with_topics 256, overlay n_candidate_pairs 1454, n_flagged 291, n_parse_ok 289, links R0 0, R2 289, R3 84, P0 84
 - long_evidence_turns:
   - n_over_2000: 11
@@ -106,21 +106,22 @@ Means over the arm's population. A question with no output scores 0 and is count
 | ours_cheap | 0.938 | 0.949 | 0.987 | 0.863 | 0.708 | 0.938 | 3,996.3 | 0.000 | 62.2 | 470 | 0 |
 | ours_cheap_norule | 0.800 | 0.962 | 0.934 | 0.825 | 0.632 | 0.945 | 3,999.8 | 0.000 | 100 | 470 | 0 |
 | ours_sentence_norule | 0.823 | 0.966 | 0.945 | 0.848 | 0.689 | 0.959 | 3,999.8 | 0.000 | 100 | 470 | 0 |
+| S4_static | 0.957 | 0.970 | 0.983 | 0.884 | 0.678 | 0.970 | 3,999.2 | 0.000 | 55.9 | 470 | 0 |
+| S5_primary | 0.947 | 0.962 | 0.977 | 0.869 | 0.676 | 0.956 | 3,996.3 | 0.000 | 55.7 | 470 | 0 |
+| S5_primary_norule | 0.766 | 0.974 | 0.904 | 0.760 | 0.545 | 0.961 | 3,999.8 | 0.000 | 100 | 470 | 0 |
 | S5_noPGR | 0.945 | 0.953 | 0.983 | 0.858 | 0.645 | 0.944 | 3,996.3 | 0.000 | 55.0 | 470 | 0 |
-| S4_static | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary_norule | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_rules | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_oracle | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R2 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_P0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S2_lazy | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
+| S5_planner_rules | 0.955 | 0.974 | 0.983 | 0.871 | 0.652 | 0.960 | 3,999.2 | 0.000 | 55.6 | 470 | 0 |
+| S5_planner_oracle | 0.955 | 0.968 | 0.983 | 0.865 | 0.670 | 0.952 | 3,999.2 | 0.000 | 54.6 | 470 | 0 |
+| S5_overlay_R0 | 0.949 | 0.970 | 0.979 | 0.863 | 0.679 | 0.958 | 3,996.3 | 0.000 | 56.1 | 470 | 0 |
+| S5_overlay_R2 | 0.949 | 0.966 | 0.974 | 0.867 | 0.678 | 0.959 | 3,996.3 | 0.000 | 55.6 | 470 | 0 |
+| S5_overlay_P0 | 0.938 | 0.957 | 0.972 | 0.846 | 0.668 | 0.944 | 3,996.3 | 0.000 | 55.3 | 470 | 0 |
+| S2_lazy | 0.955 | 0.983 | 0.985 | 0.888 | 0.717 | 0.973 | 3,999.2 | 0.000 | 138.6 | 470 | 0 |
+| chandan_live | 0.574 | 0.998 | 0.655 | 0.556 | 0.423 | 0.937 | 4,000 | 0.000 | 247.7 | 470 | 0 |
+| chandan_full | 0.574 | 0.998 | 0.655 | 0.556 | 0.423 | 0.937 | 4,000 | 0.000 | 247.7 | 470 | 0 |
+| chandan_live_cal | 0.611 | 1.000 | 0.833 | 0.611 | 0.443 | 0.931 | 4,000 | 0.000 | 221.1 | 18 | 0 |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
-Absent rows: S4_static (not run in the retrieve pass); S5_primary (not run in the retrieve pass); S5_primary_norule (not run in the retrieve pass); S5_planner_rules (not run in the retrieve pass); S5_planner_oracle (not run in the retrieve pass); S5_overlay_R0 (not run in the retrieve pass); S5_overlay_R2 (not run in the retrieve pass); S5_overlay_P0 (not run in the retrieve pass); S2_lazy (not run in the retrieve pass); chandan_live (export present, not run in the retrieve pass); chandan_full (export present, not run in the retrieve pass); graphiti (no export).
+Absent rows: graphiti (no export).
 
 Evidence turns rendered truncated, summed over questions (section 3): truncated to fit the budget or cut at the 2,000-character limit, and the cut ones alone:
 
@@ -129,7 +130,25 @@ Evidence turns rendered truncated, summed over questions (section 3): truncated 
 | ours_cheap | 8 | 8 |
 | ours_cheap_norule | 11 | 11 |
 | ours_sentence_norule | 11 | 11 |
+| S4_static | 8 | 8 |
+| S5_primary | 8 | 8 |
+| S5_primary_norule | 12 | 11 |
 | S5_noPGR | 8 | 8 |
+| S5_planner_rules | 9 | 8 |
+| S5_planner_oracle | 8 | 8 |
+| S5_overlay_R0 | 8 | 8 |
+| S5_overlay_R2 | 8 | 8 |
+| S5_overlay_P0 | 9 | 8 |
+| S2_lazy | 8 | 8 |
+| chandan_live | 232 | 0 |
+| chandan_full | 232 | 0 |
+| chandan_live_cal | 7 | 0 |
+
+Raised variant (section 5, the result limit raised until the rendered context reaches B): questions where the runner's top step did not reach B, of the questions with a raised run:
+
+| arm | did not reach B | questions with a raised run |
+|---|---|---|
+| chandan_live | 0 | 500 |
 
 ### LongMemEval, answerable questions, budget 8,000 tokens
 
@@ -138,21 +157,22 @@ Evidence turns rendered truncated, summed over questions (section 3): truncated 
 | ours_cheap | 0.957 | 0.949 | 0.994 | 0.863 | 0.708 | 0.938 | 6,199.9 | 0.000 | 62.2 | 470 | 0 |
 | ours_cheap_norule | 0.868 | 0.962 | 0.970 | 0.825 | 0.632 | 0.945 | 7,999.7 | 0.000 | 100 | 470 | 0 |
 | ours_sentence_norule | 0.879 | 0.966 | 0.977 | 0.848 | 0.689 | 0.959 | 7,999.9 | 0.000 | 100 | 470 | 0 |
+| S4_static | 0.970 | 0.970 | 0.994 | 0.884 | 0.678 | 0.970 | 7,457.6 | 0.000 | 55.9 | 470 | 0 |
+| S5_primary | 0.964 | 0.962 | 0.991 | 0.869 | 0.676 | 0.956 | 7,297.9 | 0.000 | 55.7 | 470 | 0 |
+| S5_primary_norule | 0.870 | 0.974 | 0.968 | 0.760 | 0.545 | 0.961 | 7,999.7 | 0.000 | 100 | 470 | 0 |
 | S5_noPGR | 0.964 | 0.953 | 0.996 | 0.858 | 0.645 | 0.944 | 6,800.9 | 0.000 | 55.0 | 470 | 0 |
-| S4_static | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary_norule | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_rules | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_oracle | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R2 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_P0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S2_lazy | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
+| S5_planner_rules | 0.966 | 0.974 | 0.994 | 0.871 | 0.652 | 0.960 | 7,541.7 | 0.000 | 55.6 | 470 | 0 |
+| S5_planner_oracle | 0.968 | 0.968 | 0.996 | 0.865 | 0.670 | 0.952 | 7,586.3 | 0.000 | 54.6 | 470 | 0 |
+| S5_overlay_R0 | 0.966 | 0.970 | 0.994 | 0.863 | 0.679 | 0.958 | 7,190.1 | 0.000 | 56.1 | 470 | 0 |
+| S5_overlay_R2 | 0.966 | 0.966 | 0.989 | 0.867 | 0.678 | 0.959 | 7,289.8 | 0.000 | 55.6 | 470 | 0 |
+| S5_overlay_P0 | 0.962 | 0.957 | 0.994 | 0.846 | 0.668 | 0.944 | 7,393.6 | 0.000 | 55.3 | 470 | 0 |
+| S2_lazy | 0.970 | 0.983 | 0.994 | 0.888 | 0.717 | 0.973 | 7,453.8 | 0.000 | 138.6 | 470 | 0 |
+| chandan_live | 0.804 | 0.998 | 0.806 | 0.556 | 0.423 | 0.937 | 8,000 | 0.000 | 247.7 | 470 | 0 |
+| chandan_full | 0.804 | 0.998 | 0.806 | 0.556 | 0.423 | 0.937 | 8,000 | 0.000 | 247.7 | 470 | 0 |
+| chandan_live_cal | 0.889 | 1.000 | 0.833 | 0.611 | 0.443 | 0.931 | 8,000 | 0.000 | 221.1 | 18 | 0 |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
-Absent rows: S4_static (not run in the retrieve pass); S5_primary (not run in the retrieve pass); S5_primary_norule (not run in the retrieve pass); S5_planner_rules (not run in the retrieve pass); S5_planner_oracle (not run in the retrieve pass); S5_overlay_R0 (not run in the retrieve pass); S5_overlay_R2 (not run in the retrieve pass); S5_overlay_P0 (not run in the retrieve pass); S2_lazy (not run in the retrieve pass); chandan_live (export present, not run in the retrieve pass); chandan_full (export present, not run in the retrieve pass); graphiti (no export).
+Absent rows: graphiti (no export).
 
 Evidence turns rendered truncated, summed over questions (section 3): truncated to fit the budget or cut at the 2,000-character limit, and the cut ones alone:
 
@@ -161,7 +181,25 @@ Evidence turns rendered truncated, summed over questions (section 3): truncated 
 | ours_cheap | 8 | 8 |
 | ours_cheap_norule | 11 | 11 |
 | ours_sentence_norule | 11 | 11 |
+| S4_static | 8 | 8 |
+| S5_primary | 8 | 8 |
+| S5_primary_norule | 12 | 11 |
 | S5_noPGR | 8 | 8 |
+| S5_planner_rules | 8 | 8 |
+| S5_planner_oracle | 8 | 8 |
+| S5_overlay_R0 | 8 | 8 |
+| S5_overlay_R2 | 8 | 8 |
+| S5_overlay_P0 | 8 | 8 |
+| S2_lazy | 8 | 8 |
+| chandan_live | 89 | 0 |
+| chandan_full | 89 | 0 |
+| chandan_live_cal | 2 | 0 |
+
+Raised variant (section 5, the result limit raised until the rendered context reaches B): questions where the runner's top step did not reach B, of the questions with a raised run:
+
+| arm | did not reach B | questions with a raised run |
+|---|---|---|
+| chandan_live | 0 | 500 |
 
 ### MultiHop-RAG, non-null queries, budget 4,000 tokens
 
@@ -205,25 +243,25 @@ Absent rows: chandan_live (no export); chandan_full (no export).
 
 ### longmemeval, JointRecall by type, budget 4,000 tokens
 
-| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S5_noPGR |
-|---|---|---|---|---|---|
-| knowledge-update | 72 | 1.000 | 0.958 | 0.958 | 1.000 |
-| multi-session | 121 | 0.926 | 0.579 | 0.645 | 0.934 |
-| single-session-assistant | 56 | 0.929 | 0.982 | 0.982 | 0.911 |
-| single-session-preference | 30 | 0.800 | 0.700 | 0.733 | 0.800 |
-| single-session-user | 64 | 0.969 | 0.984 | 0.984 | 0.969 |
-| temporal-reasoning | 127 | 0.937 | 0.772 | 0.787 | 0.961 |
+| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_full | chandan_live_cal |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| knowledge-update | 72 | 1.000 | 0.958 | 0.958 | 1.000 | 1.000 | 0.917 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.486 | 0.486 | 0.000 |
+| multi-session | 121 | 0.926 | 0.579 | 0.645 | 0.975 | 0.950 | 0.545 | 0.934 | 0.975 | 0.967 | 0.959 | 0.959 | 0.950 | 0.975 | 0.322 | 0.322 | 0.333 |
+| single-session-assistant | 56 | 0.929 | 0.982 | 0.982 | 0.911 | 0.893 | 0.946 | 0.911 | 0.911 | 0.929 | 0.911 | 0.893 | 0.839 | 0.911 | 1.000 | 1.000 | 1.000 |
+| single-session-preference | 30 | 0.800 | 0.700 | 0.733 | 0.833 | 0.800 | 0.600 | 0.800 | 0.800 | 0.800 | 0.767 | 0.800 | 0.767 | 0.833 | 0.833 | 0.833 | 1.000 |
+| single-session-user | 64 | 0.969 | 0.984 | 0.984 | 0.969 | 0.969 | 0.938 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.875 | 0.875 | 0.667 |
+| temporal-reasoning | 127 | 0.937 | 0.772 | 0.787 | 0.961 | 0.961 | 0.764 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.961 | 0.953 | 0.465 | 0.465 | 0.667 |
 
 ### longmemeval, JointRecall by type, budget 8,000 tokens
 
-| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S5_noPGR |
-|---|---|---|---|---|---|
-| knowledge-update | 72 | 1.000 | 0.986 | 0.972 | 1.000 |
-| multi-session | 121 | 0.959 | 0.702 | 0.719 | 0.975 |
-| single-session-assistant | 56 | 0.946 | 1.000 | 1.000 | 0.929 |
-| single-session-preference | 30 | 0.867 | 0.833 | 0.867 | 0.867 |
-| single-session-user | 64 | 0.969 | 1.000 | 1.000 | 0.969 |
-| temporal-reasoning | 127 | 0.953 | 0.843 | 0.866 | 0.969 |
+| type | n | ours_cheap | ours_cheap_norule | ours_sentence_norule | S4_static | S5_primary | S5_primary_norule | S5_noPGR | S5_planner_rules | S5_planner_oracle | S5_overlay_R0 | S5_overlay_R2 | S5_overlay_P0 | S2_lazy | chandan_live | chandan_full | chandan_live_cal |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| knowledge-update | 72 | 1.000 | 0.986 | 0.972 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 0.903 | 0.903 | 1.000 |
+| multi-session | 121 | 0.959 | 0.702 | 0.719 | 0.983 | 0.975 | 0.719 | 0.975 | 0.983 | 0.983 | 0.975 | 0.975 | 0.975 | 0.983 | 0.587 | 0.587 | 0.667 |
+| single-session-assistant | 56 | 0.946 | 1.000 | 1.000 | 0.946 | 0.911 | 0.964 | 0.929 | 0.911 | 0.929 | 0.929 | 0.911 | 0.893 | 0.946 | 1.000 | 1.000 | 1.000 |
+| single-session-preference | 30 | 0.867 | 0.833 | 0.867 | 0.933 | 0.900 | 0.733 | 0.867 | 0.900 | 0.900 | 0.900 | 0.900 | 0.867 | 0.933 | 0.967 | 0.967 | 1.000 |
+| single-session-user | 64 | 0.969 | 1.000 | 1.000 | 0.969 | 0.969 | 0.984 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.969 | 0.938 | 0.938 | 0.667 |
+| temporal-reasoning | 127 | 0.953 | 0.843 | 0.866 | 0.961 | 0.969 | 0.874 | 0.969 | 0.969 | 0.969 | 0.969 | 0.976 | 0.976 | 0.961 | 0.764 | 0.764 | 1.000 |
 
 ### multihoprag, fact JR (all located) by type, budget 4,000 tokens
 
@@ -251,57 +289,64 @@ Populations: LongMemEval answerable 470, GRAPHITI_150 150, MultiHop-RAG all loca
 
 | test | arms (a vs b) | metric | n | means a vs b | delta | 95 percent CI | p | wins/ties/losses | Holm adjusted p, verdict | label |
 |---|---|---|---|---|---|---|---|---|---|---|
-| T1 | S5_primary vs chandan_live | joint_recall | not run: no output from S5_primary, chandan_live on longmemeval |  |  |  |  |  |  |  |
-| T2 | S5_primary vs graphiti | session_joint_recall | not run: no output from S5_primary, graphiti on longmemeval |  |  |  |  |  |  |  |
+| T1 | S5_primary vs chandan_live | joint_recall | 469 (refused 1, missing 0/0) | 0.947 vs 0.576 | +0.371 | [+0.324, +0.420] | 0.0001 | 188/267/14 | 0.0002, significant | D1: shown |
+| T2 | S5_primary vs graphiti | session_joint_recall | not run: no output from graphiti on longmemeval |  |  |  |  |  |  |  |
 | T8a | S5_primary vs chandan_live | fact_joint_recall | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |  |
-| T8b | S5_primary vs ours_cheap | fact_joint_recall | 2,255 (refused 0, missing 0/0) | 0.136 vs 0.255 | -0.119 | [-0.137, -0.101] | 0.0001 | 111/1,764/380 | 0.0001, significant | S5_primary run without post-graph-rag tables |
+| T8b | S5_primary vs ours_cheap | fact_joint_recall | 2,255 (refused 0, missing 0/0) | 0.136 vs 0.255 | -0.119 | [-0.137, -0.101] | 0.0001 | 111/1,764/380 | 0.0002, significant | S5_primary run without post-graph-rag tables |
 
-D1 reading of T1: not run.
+D1 reading of T1: shown.
 
 ### Family B, the mechanism
 
 | test | arms (a vs b) | metric | n | means a vs b | delta | 95 percent CI | p | wins/ties/losses | Holm adjusted p, verdict | label |
 |---|---|---|---|---|---|---|---|---|---|---|
-| T3 | S5_primary vs ours_cheap | joint_recall | not run: no output from S5_primary on longmemeval |  |  |  |  |  |  |  |
-| T4 | S5_primary vs S4_static | joint_recall | not run: no output from S5_primary, S4_static on longmemeval |  |  |  |  |  |  |  |
-| T5a | S5_primary vs S5_overlay_R0 | joint_recall | not run: no output from S5_primary, S5_overlay_R0 on longmemeval |  |  |  |  |  |  |  |
-| T5b | S5_primary vs S5_overlay_P0 | joint_recall | not run: no output from S5_primary, S5_overlay_P0 on longmemeval |  |  |  |  |  |  |  |
-| T6 | S4_static vs ours_cheap | joint_recall | not run: no output from S4_static on longmemeval |  |  |  |  |  |  |  |
+| T3 | S5_primary vs ours_cheap | joint_recall | 470 (refused 0, missing 0/0) | 0.947 vs 0.938 | +0.009 | [-0.011, +0.030] | 0.5201 | 13/448/9 | 1.0000, not significant |  |
+| T4 | S5_primary vs S4_static | joint_recall | 470 (refused 0, missing 0/0) | 0.947 vs 0.957 | -0.011 | [-0.026, +0.002] | 0.2200 | 3/459/8 | 0.8575, not significant |  |
+| T5a | S5_primary vs S5_overlay_R0 | joint_recall | 470 (refused 0, missing 0/0) | 0.947 vs 0.949 | -0.002 | [-0.013, +0.009] | 1.0000 | 3/463/4 | 1.0000, not significant |  |
+| T5b | S5_primary vs S5_overlay_P0 | joint_recall | 470 (refused 0, missing 0/0) | 0.947 vs 0.938 | +0.009 | [+0.000, +0.019] | 0.2144 | 5/464/1 | 0.8575, not significant |  |
+| T6 | S4_static vs ours_cheap | joint_recall | 470 (refused 0, missing 0/0) | 0.957 vs 0.938 | +0.019 | [+0.004, +0.036] | 0.0363 | 12/455/3 | 0.1815, not significant |  |
 
 Reported for the T5 reading, not under Holm:
 
 | test | arms (a vs b) | metric | n | means a vs b | delta | 95 percent CI | p | wins/ties/losses | Holm adjusted p, verdict | label |
 |---|---|---|---|---|---|---|---|---|---|---|
-| T5_P0_minus_R0 | S5_overlay_P0 vs S5_overlay_R0 | joint_recall | not run: no output from S5_overlay_P0, S5_overlay_R0 on longmemeval |  |  |  |  |  |  |  |
+| T5_P0_minus_R0 | S5_overlay_P0 vs S5_overlay_R0 | joint_recall | 470 (refused 0, missing 0/0) | 0.938 vs 0.949 | -0.011 | [-0.023, +0.002] | 0.1758 | 2/461/7 | not in Holm |  |
 
-T5 branch: **not run**.
+T5 branch: **no measurable effect**.
 
 | pair | delta | 95 percent CI |
 |---|---|---|
-| R3 minus R0 | n/a | n/a |
-| R3 minus P0 | n/a | n/a |
-| P0 minus R0 | n/a | n/a |
+| R3 minus R0 | -0.002 | [-0.013, +0.009] |
+| R3 minus P0 | +0.009 | [+0.000, +0.019] |
+| P0 minus R0 | -0.011 | [-0.023, +0.002] |
 
-Questions whose rendered context differs at all between R0, R3 and P0: 0. Tolerance 0.01.
+Questions whose rendered context differs at all between R0, R3 and P0: 383. Tolerance 0.01.
 
 ### Family C, answers (exact McNemar on the discordant pairs, primary judge)
 
 | test | arms (a vs b) | reader | population | n | accuracy a vs b | delta | wins/losses | p | Holm adjusted p, verdict | label |
 |---|---|---|---|---|---|---|---|---|---|---|
-| C1 | S5_primary vs chandan_live | reader_a | LongMemEval all | not run: no output from S5_primary, chandan_live on longmemeval |  |  |  |  |  |  |
-| C2 | S5_primary vs chandan_live | reader_b | LongMemEval all | not run: no output from S5_primary, chandan_live on longmemeval |  |  |  |  |  |  |
+| C1 | S5_primary vs chandan_live | reader_a | LongMemEval all | 499 (refused 1, missing 0/0) | 0.543 vs 0.467 | +0.076 | 76/38 of 114 discordant | 0.0005 | 0.0005, significant |  |
+| C2 | S5_primary vs chandan_live | reader_b | LongMemEval all | 499 (refused 1, missing 0/0) | 0.832 vs 0.623 | +0.208 | 121/17 of 138 discordant | 0.0000 | 0.0000, significant |  |
 | C3 | S5_primary vs graphiti | reader_a | GRAPHITI_150 | not run: graphiti dropped: recorded as not run |  |  |  |  |  |  |
 | C4 | S5_primary vs graphiti | reader_b | GRAPHITI_150 | not run: graphiti dropped: recorded as not run |  |  |  |  |  |  |
 | C5 | S5_primary vs chandan_live | reader_a | MHRAG_ANSWER | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |
 | C6 | S5_primary vs chandan_live | reader_b | READER_B_MHRAG | not run: no output from chandan_live on multihoprag |  |  |  |  |  |  |
 
+Robustness table: the wrong answers the second judge called right are flipped and the test is rerun. This never changes the primary judge.
+
+| test | accuracy a vs b (re-judged) | delta | wins/losses | p | outcome differs |
+|---|---|---|---|---|---|
+| C1 | 0.677 vs 0.663 | +0.014 | 70/63 | 0.6030 | yes |
+| C2 | 0.850 vs 0.677 | +0.172 | 107/21 | 0.0000 | no |
+
 ### T7, non-inferiority on the local set
 
 | test | arms (a vs b) | metric | n | means a vs b | delta | 95 percent CI | p | wins/ties/losses | Holm adjusted p, verdict | label |
 |---|---|---|---|---|---|---|---|---|---|---|
-| T7 | S5_primary vs ours_cheap | joint_recall | not run: no output from S5_primary on longmemeval |  |  |  |  |  |  |  |
+| T7 | S5_primary vs ours_cheap | joint_recall | 120 (refused 0, missing 0/0) | 0.933 vs 0.950 | -0.017 | [-0.042, +0.000] | 0.4956 | 0/118/2 | not in Holm | T7: holds |
 
-T7 rule: losses minus wins is n/a; the limit is 3; not run. The CI is beside it and is not the rule.
+T7 rule: losses minus wins is 2; the limit is 3; holds. The CI is beside it and is not the rule.
 
 ## Predictions (section 10), written before any build
 
@@ -309,13 +354,13 @@ Each prediction with its fixed number and band, the measured value or paired del
 
 | prediction | statement | predicted | band | measured | 95 percent CI | n | label | note |
 |---|---|---|---|---|---|---|---|---|
-| T1_overall | T1 overall positive, about 0.02 (band 0.03 either side) | +0.02, band [-0.01, +0.05] | [-0.010, +0.050] | n/a | n/a | n/a | **untested** | no output from S5_primary, chandan_live on longmemeval |
-| T1_multi_session | S5_primary beats chandan_live on JointRecall@4k by at least 0.05 on multi-session (half-width about 0.07) | at least +0.05, half-width 0.07 (band from -0.02) | [-0.020, open] | n/a | n/a | n/a | **untested** | no output from S5_primary, chandan_live on longmemeval |
-| T1_temporal_reasoning | S5_primary beats chandan_live by at least 0.03 on temporal-reasoning (half-width about 0.08) | at least +0.03, half-width 0.08 (band from -0.05) | [-0.050, open] | n/a | n/a | n/a | **untested** | no output from S5_primary, chandan_live on longmemeval |
-| T1_local_set | S5_primary within 0.02 of chandan_live on the local set | within 0.02 (band [-0.02, +0.02]) | [-0.020, +0.020] | n/a | n/a | n/a | **untested** | no output from S5_primary, chandan_live on longmemeval |
-| S4_over_ours_cheap | S4_static beats ours_cheap by 0.02 to 0.04 | +0.02 to +0.04 | [+0.020, +0.040] | n/a | n/a | n/a | **untested** | no output from S4_static on longmemeval |
-| S5_gain_from_planner | Most of the S5 over S4 gain comes from the planner on temporal and multi-session, not from the overlay | planner share above the overlay share | n/a | n/a | n/a | n/a | **untested** | no output from S5_primary, S4_static on longmemeval |
-| T5_branch | T5 lands in the adds material branch | adds material | n/a | not run | n/a | n/a | **untested** | the T5 four-branch reading of section 9 |
+| T1_overall | T1 overall positive, about 0.02 (band 0.03 either side) | +0.02, band [-0.01, +0.05] | [-0.010, +0.050] | +0.371 | [+0.324, +0.420] | 469 | **not confirmed** | S5_primary minus chandan_live, LongMemEval answerable |
+| T1_multi_session | S5_primary beats chandan_live on JointRecall@4k by at least 0.05 on multi-session (half-width about 0.07) | at least +0.05, half-width 0.07 (band from -0.02) | [-0.020, open] | +0.628 | [+0.537, +0.711] | 121 | **consistent with, not confirmed** | S5_primary minus chandan_live, LongMemEval answerable, multi-session |
+| T1_temporal_reasoning | S5_primary beats chandan_live by at least 0.03 on temporal-reasoning (half-width about 0.08) | at least +0.03, half-width 0.08 (band from -0.05) | [-0.050, open] | +0.492 | [+0.397, +0.579] | 126 | **consistent with, not confirmed** | S5_primary minus chandan_live, LongMemEval answerable, temporal-reasoning |
+| T1_local_set | S5_primary within 0.02 of chandan_live on the local set | within 0.02 (band [-0.02, +0.02]) | [-0.020, +0.020] | +0.000 | [-0.058, +0.058] | 120 | **consistent with, not confirmed** | S5_primary minus chandan_live, LOCAL_120 |
+| S4_over_ours_cheap | S4_static beats ours_cheap by 0.02 to 0.04 | +0.02 to +0.04 | [+0.020, +0.040] | +0.019 | [+0.004, +0.036] | 470 | **not confirmed** | S4_static minus ours_cheap, LongMemEval answerable |
+| S5_gain_from_planner | Most of the S5 over S4 gain comes from the planner on temporal and multi-session, not from the overlay | planner share above the overlay share | n/a | S5_minus_S4 -0.011, overlay_R3_minus_R0 -0.002, planner -0.009, by_type temporal-reasoning S5_minus_S4 +0.000, overlay +0.000, planner +0.000, n +127.000, multi-session S5_minus_S4 -0.025, overlay -0.008, planner -0.017, n +121.000 | n/a | n/a | **contradicted** | planner share = (S5_primary minus S4_static) minus (R3 minus R0); consistent when the planner share exceeds the overlay share overall and is positive on both types |
+| T5_branch | T5 lands in the adds material branch | adds material | n/a | no measurable effect | n/a | n/a | **contradicted** | the T5 four-branch reading of section 9 |
 | largest_community_share | The largest community share is above 50 percent without topic weighting and drops under it | plain above 0.50, topic-weighted below plain | n/a | plain_nodes +0.091, topic_nodes +0.093, plain_units +0.110, topic_units +0.111 | n/a | n/a | **contradicted** | share over the phrases of the pruned graph (nodes); the share over sub-units is beside it (design gap: the design does not say which share) |
 | graphiti_gap | graphiti session-level JointRecall@4k is below S5_primary on GRAPHITI_150 by 0.02 to 0.06 (half-width about 0.04) | +0.02 to +0.06, half-width 0.04 (band [-0.02, +0.10]) | [-0.020, +0.100] | n/a | n/a | n/a | **untested** | Graphiti dropped or partial: recorded as untested |
 | mhrag_comparison | MultiHop-RAG: S5_primary beats chandan_live on fact-level joint recall for comparison queries by at least 0.05 | at least +0.05 | [+0.050, open] | n/a | n/a | n/a | **untested** | no output from chandan_live on multihoprag |
@@ -323,12 +368,26 @@ Each prediction with its fixed number and band, the measured value or paired del
 | closed_book_floor_comparison_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (comparison_query) | at least +0.10 | [+0.100, open] | +0.087 | n/a | 150 | **not confirmed** | accuracy 0.620, majority-class rate 0.533 (commonest gold answer 'yes') |
 | closed_book_floor_inference_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (inference_query) | at least +0.10 | [+0.100, open] | +0.527 | n/a | 150 | **consistent with, not confirmed** | accuracy 0.887, majority-class rate 0.360 (commonest gold answer 'sam bankman-fried') |
 | closed_book_floor_temporal_query | closed_book accuracy on answerable MultiHop-RAG queries exceeds the per-type majority-class rate by at least 0.10 (temporal_query) | at least +0.10 | [+0.100, open] | +0.093 | n/a | 150 | **not confirmed** | accuracy 0.547, majority-class rate 0.453 (commonest gold answer 'no') |
-| family_C_same_sign_LongMemEval | The S5_primary minus chandan_live accuracy difference (Family C) has the same sign under Reader A and Reader B on LongMemEval | same sign under both readers | n/a | n/a | n/a | n/a | **untested** | C1 and C2; a zero delta under either reader counts as contradicted |
+| family_C_same_sign_LongMemEval | The S5_primary minus chandan_live accuracy difference (Family C) has the same sign under Reader A and Reader B on LongMemEval | same sign under both readers | n/a | reader_a_delta +0.076, reader_b_delta +0.208 | n/a | n/a | **consistent with, not confirmed** | C1 and C2; a zero delta under either reader counts as contradicted |
 | family_C_same_sign_MultiHop-RAG | The S5_primary minus chandan_live accuracy difference (Family C) has the same sign under Reader A and Reader B on MultiHop-RAG | same sign under both readers | n/a | n/a | n/a | n/a | **untested** | C5 and C6; a zero delta under either reader counts as contradicted |
 
 ## Failure buckets
 
 Bucket 5 is tested first: a wrong answer on an answerable question that the two judges disagree on. Every other wrong answer is tested against buckets 1 to 4 in order, first match wins. Bucket 5 is decidable for the head-to-head arms; for the other arms it is decidable on the audited sample only, and the undecidable count is shown.
+
+### S2_lazy, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 21 | 0 | 0 | 0 | 1 | 20 | 18 |
+| multi-session | 73 | 3 | 0 | 1 | 0 | 69 | 66 |
+| single-session-assistant | 5 | 0 | 0 | 2 | 3 | 0 | 4 |
+| single-session-preference | 17 | 0 | 0 | 0 | 2 | 15 | 17 |
+| single-session-user | 9 | 1 | 0 | 0 | 0 | 8 | 7 |
+| temporal-reasoning | 90 | 1 | 0 | 1 | 5 | 83 | 82 |
+| all | 215 | 5 | 0 | 4 | 11 | 195 | 194 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 5. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
 
 ### S2_lazy, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
@@ -340,6 +399,20 @@ Bucket 5 is tested first: a wrong answer on an answerable question that the two 
 | all | 125 | 4 | 0 | 5 | 101 | 15 | 108 |
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### S4_static, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 22 | 0 | 0 | 0 | 1 | 21 | 20 |
+| multi-session | 74 | 5 | 0 | 4 | 0 | 65 | 67 |
+| single-session-assistant | 5 | 0 | 0 | 2 | 3 | 0 | 4 |
+| single-session-preference | 16 | 0 | 0 | 0 | 2 | 14 | 15 |
+| single-session-user | 9 | 0 | 0 | 0 | 0 | 9 | 9 |
+| temporal-reasoning | 89 | 3 | 0 | 4 | 3 | 79 | 78 |
+| all | 215 | 8 | 0 | 10 | 9 | 188 | 193 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 6. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
 
 ### S4_static, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
@@ -377,6 +450,20 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
 
+### S5_overlay_P0, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 21 | 0 | 0 | 0 | 1 | 20 | 18 |
+| multi-session | 77 | 4 | 0 | 6 | 0 | 67 | 71 |
+| single-session-assistant | 11 | 0 | 0 | 3 | 6 | 2 | 11 |
+| single-session-preference | 21 | 0 | 0 | 1 | 5 | 15 | 19 |
+| single-session-user | 8 | 0 | 0 | 0 | 0 | 8 | 8 |
+| temporal-reasoning | 92 | 4 | 0 | 4 | 3 | 81 | 81 |
+| all | 230 | 8 | 0 | 14 | 15 | 193 | 208 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 5. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
 ### S5_overlay_P0, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
 | type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
@@ -387,6 +474,20 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 | all | 153 | 3 | 0 | 49 | 95 | 6 | 139 |
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### S5_overlay_R0, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 19 | 0 | 0 | 0 | 1 | 18 | 18 |
+| multi-session | 73 | 3 | 0 | 4 | 0 | 66 | 65 |
+| single-session-assistant | 5 | 0 | 0 | 2 | 3 | 0 | 5 |
+| single-session-preference | 19 | 0 | 0 | 0 | 6 | 13 | 17 |
+| single-session-user | 9 | 0 | 0 | 0 | 0 | 9 | 9 |
+| temporal-reasoning | 94 | 1 | 0 | 3 | 3 | 87 | 87 |
+| all | 219 | 4 | 0 | 9 | 13 | 193 | 201 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 7. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
 
 ### S5_overlay_R0, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
@@ -399,6 +500,20 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
 
+### S5_overlay_R2, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 20 | 0 | 0 | 0 | 1 | 19 | 19 |
+| multi-session | 80 | 5 | 0 | 5 | 0 | 70 | 69 |
+| single-session-assistant | 7 | 0 | 0 | 2 | 4 | 1 | 6 |
+| single-session-preference | 21 | 0 | 0 | 0 | 5 | 16 | 19 |
+| single-session-user | 7 | 1 | 0 | 0 | 0 | 6 | 6 |
+| temporal-reasoning | 95 | 4 | 0 | 4 | 3 | 84 | 85 |
+| all | 230 | 10 | 0 | 11 | 13 | 196 | 204 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 6. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
 ### S5_overlay_R2, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
 | type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
@@ -409,6 +524,20 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 | all | 137 | 2 | 0 | 40 | 88 | 7 | 127 |
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### S5_planner_oracle, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 20 | 0 | 0 | 0 | 1 | 19 | 17 |
+| multi-session | 76 | 5 | 0 | 3 | 0 | 68 | 68 |
+| single-session-assistant | 5 | 0 | 0 | 2 | 2 | 1 | 5 |
+| single-session-preference | 23 | 0 | 0 | 0 | 5 | 18 | 20 |
+| single-session-user | 7 | 0 | 0 | 0 | 0 | 7 | 6 |
+| temporal-reasoning | 92 | 2 | 0 | 3 | 4 | 83 | 82 |
+| all | 223 | 7 | 0 | 8 | 12 | 196 | 198 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 7. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
 
 ### S5_planner_oracle, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
@@ -421,6 +550,20 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 1. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
 
+### S5_planner_rules, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 22 | 0 | 0 | 0 | 1 | 21 | 20 |
+| multi-session | 73 | 2 | 0 | 2 | 0 | 69 | 65 |
+| single-session-assistant | 6 | 0 | 0 | 3 | 2 | 1 | 6 |
+| single-session-preference | 22 | 0 | 0 | 0 | 5 | 17 | 19 |
+| single-session-user | 7 | 1 | 0 | 0 | 0 | 6 | 5 |
+| temporal-reasoning | 91 | 1 | 0 | 1 | 4 | 85 | 85 |
+| all | 221 | 4 | 0 | 6 | 12 | 199 | 200 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 7. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
 ### S5_planner_rules, multihoprag, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
 
 | type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
@@ -431,6 +574,34 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 | all | 118 | 1 | 0 | 22 | 81 | 14 | 106 |
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### S5_primary, longmemeval, reader_a, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 20 | 0 | 0 | 0 | 1 | 19 | 0 |
+| multi-session | 78 | 39 | 0 | 2 | 0 | 37 | 0 |
+| single-session-assistant | 7 | 0 | 0 | 3 | 3 | 1 | 0 |
+| single-session-preference | 23 | 0 | 0 | 0 | 5 | 18 | 0 |
+| single-session-user | 6 | 4 | 0 | 0 | 0 | 2 | 0 |
+| temporal-reasoning | 93 | 24 | 0 | 3 | 3 | 63 | 0 |
+| all | 227 | 67 | 0 | 8 | 12 | 140 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 7. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
+### S5_primary, longmemeval, reader_b, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 4 | 1 | 0 | 0 | 0 | 3 | 0 |
+| multi-session | 36 | 1 | 0 | 4 | 0 | 31 | 0 |
+| single-session-assistant | 5 | 0 | 0 | 2 | 3 | 0 | 0 |
+| single-session-preference | 6 | 3 | 0 | 0 | 1 | 2 | 0 |
+| single-session-user | 4 | 1 | 0 | 0 | 0 | 3 | 0 |
+| temporal-reasoning | 26 | 3 | 0 | 3 | 2 | 18 | 0 |
+| all | 81 | 9 | 0 | 9 | 6 | 57 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 1. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
 
 ### S5_primary, multihoprag, reader_a, budget 4,000 tokens
 
@@ -450,6 +621,74 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 | comparison_query | 11 | 3 | 0 | 4 | 2 | 2 | 0 |
 | temporal_query | 13 | 3 | 0 | 0 | 10 | 0 | 0 |
 | all | 24 | 6 | 0 | 4 | 12 | 2 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### S5_primary_norule, longmemeval, reader_a, budget 4,000 tokens (bucket 5 on the audited sample)
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 13 | 0 | 0 | 0 | 2 | 11 | 11 |
+| multi-session | 84 | 3 | 0 | 6 | 42 | 33 | 75 |
+| single-session-assistant | 5 | 0 | 0 | 1 | 3 | 1 | 5 |
+| single-session-preference | 21 | 0 | 0 | 0 | 9 | 12 | 18 |
+| single-session-user | 13 | 0 | 0 | 0 | 4 | 9 | 13 |
+| temporal-reasoning | 87 | 4 | 0 | 3 | 21 | 59 | 80 |
+| all | 223 | 7 | 0 | 10 | 81 | 125 | 202 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 6. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
+### chandan_full, longmemeval, reader_a, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 29 | 0 | 0 | 0 | 17 | 12 | 0 |
+| multi-session | 101 | 49 | 0 | 0 | 42 | 10 | 0 |
+| single-session-assistant | 1 | 0 | 0 | 0 | 0 | 1 | 0 |
+| single-session-preference | 17 | 1 | 0 | 0 | 4 | 12 | 0 |
+| single-session-user | 19 | 12 | 0 | 0 | 4 | 3 | 0 |
+| temporal-reasoning | 106 | 38 | 1 | 0 | 39 | 28 | 0 |
+| all | 273 | 100 | 1 | 0 | 106 | 66 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 3. Knowledge-update cases where the superseding clause could not fire: 5. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### chandan_full, longmemeval, reader_b, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 17 | 0 | 0 | 0 | 16 | 1 | 0 |
+| multi-session | 86 | 11 | 0 | 0 | 67 | 8 | 0 |
+| single-session-preference | 3 | 0 | 0 | 0 | 3 | 0 | 0 |
+| single-session-user | 10 | 4 | 0 | 0 | 4 | 2 | 0 |
+| temporal-reasoning | 72 | 12 | 0 | 0 | 51 | 9 | 0 |
+| all | 188 | 27 | 0 | 0 | 141 | 20 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
+
+### chandan_live, longmemeval, reader_a, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 26 | 0 | 0 | 0 | 17 | 9 | 0 |
+| multi-session | 99 | 50 | 0 | 0 | 39 | 10 | 0 |
+| single-session-assistant | 2 | 0 | 0 | 0 | 0 | 2 | 0 |
+| single-session-preference | 15 | 1 | 0 | 0 | 4 | 10 | 0 |
+| single-session-user | 17 | 9 | 0 | 0 | 4 | 4 | 0 |
+| temporal-reasoning | 106 | 38 | 1 | 0 | 39 | 28 | 0 |
+| all | 265 | 98 | 1 | 0 | 103 | 63 | 0 |
+
+Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 2. Knowledge-update cases where the superseding clause could not fire: 3. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
+
+### chandan_live, longmemeval, reader_b, budget 4,000 tokens
+
+| type | wrong | 5 judge disagreement | 1 index failure | 2 retrieval failure | 3 context assembly failure | 4 reader failure | bucket 5 undecidable |
+|---|---|---|---|---|---|---|---|
+| knowledge-update | 16 | 0 | 0 | 0 | 16 | 0 | 0 |
+| multi-session | 84 | 11 | 0 | 0 | 66 | 7 | 0 |
+| single-session-preference | 3 | 0 | 0 | 0 | 3 | 0 | 0 |
+| single-session-user | 10 | 3 | 0 | 0 | 5 | 2 | 0 |
+| temporal-reasoning | 72 | 13 | 0 | 0 | 50 | 9 | 0 |
+| all | 185 | 27 | 0 | 0 | 140 | 18 | 0 |
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 0. Knowledge-update bucket 3 cases where the clause fired: 0, of which the gold turn is the earlier of the two by timestamp: 0.
 
@@ -531,26 +770,40 @@ Evidence units truncated or half covered whose cut-off part does not contain the
 
 Evidence units truncated or half covered whose cut-off part does not contain the gold answer, counted as inside: 0. Knowledge-update cases where the superseding clause could not fire: 5. Knowledge-update bucket 3 cases where the clause fired: 1, of which the gold turn is the earlier of the two by timestamp: 1.
 
-Knowledge-update bucket 3 cases where the gold turn is the earlier of the two by timestamp, all arms and readers: 5 of 5 cases where the clause fired. The section 8 rule names the turn holding the gold answer as the superseding turn; when the question asks about the earlier fact that turn is the superseded one and the clause fires backwards, so the reader can discount these.
+Knowledge-update bucket 3 cases where the gold turn is the earlier of the two by timestamp, all arms and readers: 15 of 15 cases where the clause fired. The section 8 rule names the turn holding the gold answer as the superseding turn; when the question asks about the earlier fact that turn is the superseded one and the clause fires backwards, so the reader can discount these.
 
 ## Judges
 
-Candidate primary judge: gemini-2.5-flash-lite. Second judge: gpt-5.4. Pooled agreement on the audit sample: 1,136 of 1,287 verdicts, 0.883. Threshold 0.900. Primary judge decided before any test: **gpt-5.4**. Second judge column: gemini-2.5-flash-lite.
+Candidate primary judge: gemini-2.5-flash-lite. Second judge: gpt-5.4. Pooled agreement on the audit sample: 1,753 of 2,000 verdicts, 0.876. Threshold 0.900. Primary judge decided before any test: **gpt-5.4**. Second judge column: gemini-2.5-flash-lite.
 
 | arm | corpus | reader | n | agree | agreement |
 |---|---|---|---|---|---|
+| S2_lazy | longmemeval | reader_a | 50 | 42 | 0.840 |
 | S2_lazy | multihoprag | reader_a | 60 | 56 | 0.933 |
+| S4_static | longmemeval | reader_a | 50 | 40 | 0.800 |
 | S4_static | multihoprag | reader_a | 60 | 53 | 0.883 |
 | S5_noPGR | longmemeval | reader_a | 50 | 41 | 0.820 |
 | S5_noPGR | multihoprag | reader_a | 60 | 56 | 0.933 |
+| S5_overlay_P0 | longmemeval | reader_a | 50 | 40 | 0.800 |
 | S5_overlay_P0 | multihoprag | reader_a | 60 | 55 | 0.917 |
+| S5_overlay_R0 | longmemeval | reader_a | 50 | 45 | 0.900 |
 | S5_overlay_R0 | multihoprag | reader_a | 60 | 53 | 0.883 |
+| S5_overlay_R2 | longmemeval | reader_a | 50 | 40 | 0.800 |
 | S5_overlay_R2 | multihoprag | reader_a | 60 | 58 | 0.967 |
+| S5_planner_oracle | longmemeval | reader_a | 50 | 43 | 0.860 |
 | S5_planner_oracle | multihoprag | reader_a | 60 | 54 | 0.900 |
+| S5_planner_rules | longmemeval | reader_a | 50 | 46 | 0.920 |
 | S5_planner_rules | multihoprag | reader_a | 60 | 58 | 0.967 |
+| S5_primary | longmemeval | reader_a | 50 | 45 | 0.900 |
+| S5_primary | longmemeval | reader_b | 50 | 47 | 0.940 |
 | S5_primary | multihoprag | reader_a | 60 | 53 | 0.883 |
 | S5_primary | multihoprag | reader_b | 20 | 20 | 1.000 |
-| chandan_full_uncut | longmemeval | chandan_own | 37 | 35 | 0.946 |
+| S5_primary_norule | longmemeval | reader_a | 50 | 42 | 0.840 |
+| chandan_full | longmemeval | reader_a | 50 | 41 | 0.820 |
+| chandan_full | longmemeval | reader_b | 50 | 48 | 0.960 |
+| chandan_full_uncut | longmemeval | chandan_own | 50 | 47 | 0.940 |
+| chandan_live | longmemeval | reader_a | 50 | 40 | 0.800 |
+| chandan_live | longmemeval | reader_b | 50 | 46 | 0.920 |
 | closed_book | longmemeval | reader_a | 50 | 30 | 0.600 |
 | closed_book | longmemeval | reader_b | 50 | 28 | 0.560 |
 | closed_book | multihoprag | reader_a | 60 | 53 | 0.883 |
@@ -566,9 +819,14 @@ Candidate primary judge: gemini-2.5-flash-lite. Second judge: gpt-5.4. Pooled ag
 | ours_cheap_norule | longmemeval | reader_a | 50 | 41 | 0.820 |
 | ours_sentence_norule | longmemeval | reader_a | 50 | 42 | 0.840 |
 
-Decision as recorded by the qa stage: made on 1,287 pooled verdicts, 1,136 agreeing, agreement 0.883, primary gpt-5.4.
+Decision as recorded by the qa stage: made on 1,200 pooled verdicts, 1,012 agreeing, agreement 0.843, primary gpt-5.4, at 2026-09-07T03:04:23+00:00.
 
-No qa audit history is kept yet: the history starts with the next qa invocation, and the first-pass figure is the one recorded above.
+First pass: 1,287 pooled verdicts, agreement 0.883, primary gpt-5.4 (2026-09-06T22:24:41+00:00). Every qa invocation:
+
+| timestamp | n | agreement | primary | note |
+|---|---|---|---|---|
+| 2026-09-06T22:24:41+00:00 | 1,287 | 0.883 | gpt-5.4 | seeded from the qa_audit.json written before the history was kept; the timestamp is that file's modification time |
+| 2026-09-07T03:04:23+00:00 | 1,200 | 0.843 | gpt-5.4 |  |
 
 ## Answering accuracy, primary judge
 
@@ -578,26 +836,39 @@ The second judge is a separate column and is never merged. A question with no ou
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| chandan_full_uncut | 4,000 | 379 | 0 | 0.691 | 0.671 | 0.962 | 0.754 | 0.594 | 0.976 | 0.440 | 0.865 | 0.612 | 0.757 (n 37, disagree 2) |
-| S4_static | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary_norule | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_rules | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_oracle | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R2 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_P0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S2_lazy | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
+| chandan_full_uncut | 4,000 | 500 | 0 | 0.692 | 0.679 | 0.900 | 0.756 | 0.579 | 0.982 | 0.433 | 0.886 | 0.602 | 0.760 (n 50, disagree 3) |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 ### reader_a, longmemeval
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S2_lazy | 4,000 | 500 | 0 | 0.566 | 0.543 | 0.933 | 0.705 | 0.451 | 0.911 | 0.433 | 0.871 | 0.323 | 0.620 (n 50, disagree 8) |
+| S2_lazy | 8,000 | 500 | 0 | 0.522 | 0.502 | 0.833 | 0.654 | 0.376 | 0.911 | 0.233 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
+| S4_static | 4,000 | 500 | 0 | 0.564 | 0.543 | 0.900 | 0.679 | 0.444 | 0.911 | 0.467 | 0.871 | 0.331 | 0.660 (n 50, disagree 10) |
+| S4_static | 8,000 | 500 | 0 | 0.524 | 0.504 | 0.833 | 0.654 | 0.376 | 0.911 | 0.267 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
 | S5_noPGR | 4,000 | 500 | 0 | 0.550 | 0.528 | 0.900 | 0.718 | 0.391 | 0.893 | 0.233 | 0.886 | 0.361 | 0.700 (n 50, disagree 9) |
 | S5_noPGR | 8,000 | 500 | 0 | 0.544 | 0.519 | 0.933 | 0.731 | 0.383 | 0.893 | 0.300 | 0.843 | 0.346 | n/a (n 0, disagree 0) |
+| S5_overlay_P0 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.705 | 0.421 | 0.804 | 0.300 | 0.886 | 0.308 | 0.680 (n 50, disagree 10) |
+| S5_overlay_P0 | 8,000 | 500 | 0 | 0.544 | 0.521 | 0.900 | 0.667 | 0.398 | 0.875 | 0.300 | 0.871 | 0.361 | n/a (n 0, disagree 0) |
+| S5_overlay_R0 | 4,000 | 500 | 0 | 0.558 | 0.534 | 0.933 | 0.731 | 0.451 | 0.911 | 0.367 | 0.871 | 0.293 | 0.700 (n 50, disagree 5) |
+| S5_overlay_R0 | 8,000 | 500 | 0 | 0.524 | 0.506 | 0.800 | 0.667 | 0.353 | 0.911 | 0.200 | 0.857 | 0.346 | n/a (n 0, disagree 0) |
+| S5_overlay_R2 | 4,000 | 500 | 0 | 0.536 | 0.511 | 0.933 | 0.718 | 0.398 | 0.875 | 0.300 | 0.900 | 0.286 | 0.660 (n 50, disagree 10) |
+| S5_overlay_R2 | 8,000 | 500 | 0 | 0.534 | 0.513 | 0.867 | 0.667 | 0.368 | 0.893 | 0.500 | 0.871 | 0.301 | n/a (n 0, disagree 0) |
+| S5_planner_oracle | 4,000 | 500 | 0 | 0.546 | 0.526 | 0.867 | 0.705 | 0.421 | 0.911 | 0.233 | 0.900 | 0.308 | 0.640 (n 50, disagree 7) |
+| S5_planner_oracle | 8,000 | 500 | 0 | 0.526 | 0.504 | 0.867 | 0.628 | 0.368 | 0.911 | 0.400 | 0.829 | 0.331 | n/a (n 0, disagree 0) |
+| S5_planner_rules | 4,000 | 500 | 0 | 0.556 | 0.530 | 0.967 | 0.705 | 0.451 | 0.893 | 0.267 | 0.900 | 0.316 | 0.660 (n 50, disagree 4) |
+| S5_planner_rules | 8,000 | 500 | 0 | 0.518 | 0.491 | 0.933 | 0.667 | 0.346 | 0.893 | 0.333 | 0.814 | 0.331 | n/a (n 0, disagree 0) |
+| S5_primary | 4,000 | 500 | 0 | 0.542 | 0.517 | 0.933 | 0.718 | 0.414 | 0.875 | 0.233 | 0.914 | 0.301 | 0.377 (n 260, disagree 69) |
+| S5_primary | 8,000 | 500 | 0 | 0.526 | 0.500 | 0.933 | 0.641 | 0.361 | 0.875 | 0.400 | 0.871 | 0.323 | 0.302 (n 235, disagree 71) |
+| S5_primary_norule | 4,000 | 500 | 0 | 0.550 | 0.526 | 0.933 | 0.808 | 0.368 | 0.911 | 0.300 | 0.814 | 0.346 | 0.700 (n 50, disagree 8) |
+| S5_primary_norule | 8,000 | 500 | 0 | 0.574 | 0.551 | 0.933 | 0.833 | 0.376 | 0.911 | 0.533 | 0.871 | 0.331 | n/a (n 0, disagree 0) |
+| chandan_full | 4,000 | 500 | 0 | 0.448 | 0.419 | 0.900 | 0.603 | 0.233 | 0.982 | 0.433 | 0.729 | 0.203 | 0.416 (n 298, disagree 101) |
+| chandan_full | 8,000 | 500 | 0 | 0.512 | 0.485 | 0.933 | 0.641 | 0.316 | 0.982 | 0.433 | 0.814 | 0.293 | 0.355 (n 242, disagree 86) |
+| chandan_live | 4,000 | 500 | 0 | 0.466 | 0.436 | 0.933 | 0.641 | 0.256 | 0.964 | 0.500 | 0.757 | 0.203 | 0.411 (n 285, disagree 99) |
+| chandan_live | 8,000 | 500 | 0 | 0.536 | 0.509 | 0.967 | 0.718 | 0.353 | 0.982 | 0.400 | 0.857 | 0.286 | 0.359 (n 231, disagree 83) |
+| chandan_live_cal | 4,000 | 18 | 0 | 0.389 | 0.389 | n/a | 0.000 | 0.333 | 1.000 | 0.000 | 0.667 | 0.333 | n/a (n 0, disagree 0) |
+| chandan_live_cal | 8,000 | 18 | 0 | 0.556 | 0.556 | n/a | 0.667 | 0.333 | 1.000 | 0.000 | 0.667 | 0.667 | n/a (n 0, disagree 0) |
 | closed_book | 4,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | 0.420 (n 50, disagree 20) |
 | closed_book | 8,000 | 500 | 0 | 0.078 | 0.019 | 1.000 | 0.090 | 0.090 | 0.054 | 0.000 | 0.086 | 0.083 | n/a (n 0, disagree 0) |
 | oracle_full | 4,000 | 500 | 0 | 0.620 | 0.600 | 0.933 | 0.846 | 0.429 | 0.982 | 0.433 | 0.871 | 0.436 | 0.840 (n 50, disagree 6) |
@@ -608,17 +879,6 @@ The second judge is a separate column and is never merged. A question with no ou
 | ours_cheap_norule | 8,000 | 500 | 0 | 0.542 | 0.521 | 0.867 | 0.769 | 0.368 | 0.946 | 0.333 | 0.843 | 0.301 | n/a (n 0, disagree 0) |
 | ours_sentence_norule | 4,000 | 500 | 0 | 0.560 | 0.536 | 0.933 | 0.821 | 0.391 | 0.946 | 0.333 | 0.829 | 0.323 | 0.620 (n 50, disagree 8) |
 | ours_sentence_norule | 8,000 | 500 | 0 | 0.546 | 0.523 | 0.900 | 0.821 | 0.338 | 0.964 | 0.267 | 0.843 | 0.323 | n/a (n 0, disagree 0) |
-| S4_static | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary_norule | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_rules | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_oracle | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R2 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_P0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S2_lazy | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 ### reader_a, multihoprag
@@ -656,20 +916,12 @@ The second judge is a separate column and is never merged. A question with no ou
 
 | arm | budget | n | missing | all | answerable | abstention or null | knowledge-update | multi-session | single-session-assistant | single-session-preference | single-session-user | temporal-reasoning | second judge | cheap judge | agreement |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S5_primary | 4,000 | 500 | 0 | 0.832 | 0.828 | 0.900 | 0.936 | 0.714 | 0.911 | 0.800 | 0.943 | 0.805 | 0.828 (n 500, disagree 20) | 0.828 (n 500) | 0.960 |
+| chandan_full | 4,000 | 500 | 0 | 0.618 | 0.600 | 0.900 | 0.769 | 0.338 | 1.000 | 0.900 | 0.857 | 0.459 | 0.660 (n 500, disagree 33) | 0.660 (n 500) | 0.934 |
+| chandan_live | 4,000 | 500 | 0 | 0.624 | 0.606 | 0.900 | 0.782 | 0.353 | 1.000 | 0.900 | 0.857 | 0.459 | 0.666 (n 500, disagree 33) | 0.666 (n 500) | 0.934 |
 | closed_book | 4,000 | 500 | 0 | 0.074 | 0.017 | 0.967 | 0.077 | 0.083 | 0.000 | 0.100 | 0.086 | 0.083 | 0.486 (n 500, disagree 214) | 0.486 (n 500) | 0.572 |
 | oracle_full | 4,000 | 500 | 0 | 0.858 | 0.857 | 0.867 | 0.962 | 0.692 | 0.982 | 0.933 | 0.957 | 0.842 | 0.858 (n 500, disagree 18) | 0.858 (n 500) | 0.964 |
 | ours_cheap | 4,000 | 500 | 0 | 0.844 | 0.838 | 0.933 | 0.923 | 0.759 | 0.946 | 0.800 | 0.943 | 0.797 | 0.834 (n 500, disagree 23) | 0.834 (n 500) | 0.954 |
-| S4_static | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_primary_norule | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_rules | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_planner_oracle | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_R2 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S5_overlay_P0 | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| S2_lazy | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_live | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
-| chandan_full | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 | graphiti | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent | absent |
 
 Cheap judge column: gemini-2.5-flash-lite scored every Reader B record, not only the wrong ones, because the primary judge gpt-5.4 is the same model as Reader B (design section 14 item 3).
@@ -687,7 +939,7 @@ Cheap judge column: gemini-2.5-flash-lite scored every Reader B record, not only
 
 Cheap judge column: gemini-2.5-flash-lite scored every Reader B record, not only the wrong ones, because the primary judge gpt-5.4 is the same model as Reader B (design section 14 item 3).
 
-Absent on longmemeval: S4_static (not run in the retrieve pass); S5_primary (not run in the retrieve pass); S5_primary_norule (not run in the retrieve pass); S5_planner_rules (not run in the retrieve pass); S5_planner_oracle (not run in the retrieve pass); S5_overlay_R0 (not run in the retrieve pass); S5_overlay_R2 (not run in the retrieve pass); S5_overlay_P0 (not run in the retrieve pass); S2_lazy (not run in the retrieve pass); chandan_live (export present, not run in the retrieve pass); chandan_full (export present, not run in the retrieve pass); graphiti (no export).
+Absent on longmemeval: graphiti (no export).
 Absent on multihoprag: chandan_live (no export); chandan_full (no export).
 
 ## Cost and time
@@ -696,42 +948,41 @@ Index-time spend is charged to every arm that reads the tables it built: post-gr
 
 | arm | corpus | index USD charged | components | query calls per question | query tokens in per question | query tokens out per question | query USD | seconds per question | questions | state |
 |---|---|---|---|---|---|---|---|---|---|---|
-| S2_lazy | longmemeval | 60.63 | topics, graph, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S2_lazy | longmemeval | 64.97 | topics, graph, pgr_build (complete build, 500 of 500 spaces) | 16.872 | 1,517.4 | 33.4 | 0.08 | 5.258 | 500 | run |
 | S2_lazy | multihoprag | 0.00 | topics, graph | 17.201 | 2,147.1 | 37.7 | 0.59 | 3.579 | 2,556 | run |
-| S4_static | longmemeval | 60.63 | topics, graph, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S4_static | longmemeval | 64.97 | topics, graph, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.018 | 500 | run |
 | S4_static | multihoprag | 0.00 | topics, graph | 0.000 | 0 | 0 | 0.00 | 0.041 | 2,556 | run |
-| S5_noPGR | longmemeval | 0.28 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.035 | 500 | run |
+| S5_noPGR | longmemeval | 0.28 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.012 | 500 | run |
 | S5_noPGR | multihoprag | 0.03 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.034 | 2,556 | run |
-| S5_overlay_P0 | longmemeval | 60.91 | topics, graph, overlay, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_overlay_P0 | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.015 | 500 | run |
 | S5_overlay_P0 | multihoprag | 0.03 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.043 | 2,556 | run |
-| S5_overlay_R0 | longmemeval | 60.63 | topics, graph, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_overlay_R0 | longmemeval | 64.97 | topics, graph, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.013 | 500 | run |
 | S5_overlay_R0 | multihoprag | 0.00 | topics, graph | 0.000 | 0 | 0 | 0.00 | 0.033 | 2,556 | run |
-| S5_overlay_R2 | longmemeval | 60.91 | topics, graph, overlay, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_overlay_R2 | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.015 | 500 | run |
 | S5_overlay_R2 | multihoprag | 0.03 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.042 | 2,556 | run |
-| S5_planner_oracle | longmemeval | 60.91 | topics, graph, overlay, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_planner_oracle | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.013 | 500 | run |
 | S5_planner_oracle | multihoprag | 0.03 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.034 | 2,556 | run |
-| S5_planner_rules | longmemeval | 60.91 | topics, graph, overlay, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_planner_rules | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.015 | 500 | run |
 | S5_planner_rules | multihoprag | 0.03 | topics, graph, overlay | 0.000 | 0 | 0 | 0.00 | 0.033 | 2,556 | run |
-| S5_primary | longmemeval | 60.91 | topics, graph, overlay, pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | not run in the retrieve pass |
+| S5_primary | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 1.000 | 198.0 | 1.7 | 0.01 | 0.016 | 500 | run |
 | S5_primary | multihoprag | 0.03 | topics, graph, overlay | 1.000 | 238.9 | 2.3 | 0.06 | 0.256 | 2,556 | run |
-| chandan_full | longmemeval | 60.63 | pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | 2.996 | 201.4 | 61.0 | 0.02 | 2.635 | 467 | export present, not run in the retrieve pass |
-| chandan_full_uncut | longmemeval | 60.63 | pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | n/a | n/a | n/a | 0.00 | n/a | 0 | run |
-| chandan_live | longmemeval | 60.63 | pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | 2.996 | 201.4 | 61.0 | 0.02 | 2.635 | 467 | export present, not run in the retrieve pass |
+| S5_primary_norule | longmemeval | 65.25 | topics, graph, overlay, pgr_build (complete build, 500 of 500 spaces) | 0.000 | 0 | 0 | 0.00 | 0.016 | 500 | run |
+| S5_primary_norule | multihoprag | 0.03 | topics, graph, overlay | n/a | n/a | n/a | 0.00 | n/a | 0 | absent |
+| chandan_full | longmemeval | 64.97 | pgr_build (complete build, 500 of 500 spaces) | 2.996 | 201.1 | 60.6 | 0.02 | 2.608 | 500 | run |
+| chandan_full_uncut | longmemeval | 64.97 | pgr_build (complete build, 500 of 500 spaces) | n/a | n/a | n/a | 0.00 | n/a | 0 | run |
+| chandan_live | longmemeval | 64.97 | pgr_build (complete build, 500 of 500 spaces) | 2.996 | 201.1 | 60.6 | 0.02 | 2.608 | 500 | run |
+| chandan_live_cal | longmemeval | 0.00 | none | 3.000 | 358.1 | 290 | 0.02 | 0.051 | 18 | absent |
 | closed_book | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.000 | 500 | run |
 | closed_book | multihoprag | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.000 | 2,556 | run |
 | oracle_full | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.000 | 500 | run |
 | oracle_full | multihoprag | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.000 | 2,556 | run |
-| ours_cheap | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.069 | 500 | run |
+| ours_cheap | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.036 | 500 | run |
 | ours_cheap | multihoprag | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.034 | 2,556 | run |
-| ours_cheap_norule | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.037 | 500 | run |
-| ours_sentence_norule | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.038 | 500 | run |
-| planner | longmemeval | 0.00 | none | 1.000 | 198.0 | 1.7 | 0.01 | 0.000 | 500 | pseudo-arm |
-| S5_primary_norule | longmemeval | absent | absent | absent | absent | absent | absent | absent | absent | not run in the retrieve pass |
+| ours_cheap_norule | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.019 | 500 | run |
+| ours_sentence_norule | longmemeval | 0.00 | none | 0.000 | 0 | 0 | 0.00 | 0.017 | 500 | run |
 | graphiti | longmemeval | absent | absent | absent | absent | absent | absent | absent | absent | no export |
 | chandan_live | multihoprag | absent | absent | absent | absent | absent | absent | absent | absent | no export |
 | chandan_full | multihoprag | absent | absent | absent | absent | absent | absent | absent | absent | no export |
-
-The planner row on longmemeval is a pseudo-arm, not a system: its calls are the LLM planner decisions shared by the S5 arms (S5_primary, S5_primary_norule, S5_noPGR, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0), made once per question and cached. At the study price its 500 calls cost USD 0.01. In the last pass 500 of 500 were served from the cache and 0 were paid. The pass that paid for them is not in the ledger: the ledger began after it, so its spend is known only from the log of that pass.
 
 Index-time builds as metered:
 
@@ -740,7 +991,7 @@ Index-time builds as metered:
 | longmemeval | topics | 0.00 | 0 | 0 | 0 | 620.6 | S4_static, S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0, S2_lazy |
 | longmemeval | graph | 0.00 | 0 | 0 | 0 | 3,915.6 | S4_static, S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0, S2_lazy |
 | longmemeval | overlay | 0.28 | 2,566 | 1,782,503 | 257,991 | 659.0 | S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R2, S5_overlay_P0 |
-| longmemeval | pgr_build (partial build snapshot, 467 of 500 spaces, build in progress) | 60.63 | 131,521 | 198,024,569 | 93,581,726 | 164,099.8 | (default charge list) |
+| longmemeval | pgr_build (complete build, 500 of 500 spaces) | 64.97 | 140,784 | 212,039,860 | 100,316,515 | 175,679.3 | (default charge list) |
 | multihoprag | topics | 0.00 | 0 | 0 | 0 | 62.6 | S4_static, S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0, S2_lazy |
 | multihoprag | graph | 0.00 | 0 | 0 | 0 | 214.9 | S4_static, S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0, S2_lazy |
 | multihoprag | overlay | 0.03 | 291 | 178,695 | 34,947 | 72.8 | S5_primary, S5_primary_norule, S5_noPGR, S5_planner_rules, S5_planner_oracle, S5_overlay_R2, S5_overlay_P0 |
@@ -749,12 +1000,23 @@ Post-graph-rag builds (the runner's run logs under data/part1/pgr; a log with no
 
 | corpus | state | in progress | running job tags | stopped | spaces exported | spaces wanted | population | runner meter USD so far |
 |---|---|---|---|---|---|---|---|---|
-| longmemeval | partial build snapshot, 467 of 500 spaces, build in progress | yes | pgr-lme-full-s1, pgr-lme-full-s2, pgr-lme-full-s3 | none | 467 | 500 | ORDER | 62.40 |
+| longmemeval | complete build, 500 of 500 spaces | no | none | none | 500 | 500 | ORDER | 66.87 |
 | multihoprag | partial build snapshot, 0 of 1 spaces, build stopped at its cap | no | none | pgr-mhrag-full: cap: spend 10.0071 USD exceeds the cap of 10.00 | 0 | 1 | ORDER | 10.01 |
 
 Spend ledger (section 11): every invocation of each stage, appended at the end of the invocation, a capped one included; the sum per stage is read against the cap of that stage.
 
-No ledger rows yet: the ledger starts with the first invocation of a stage after it was added, so the passes before it are known only from their last-pass meters below and the run logs.
+| stage | section 11 cap USD | cap covers | ledger sum USD | over cap | invocations | per corpus |
+|---|---|---|---|---|---|---|
+| index | 15.00 | overlay generation 15 | 0.00 | no | 0 | none |
+| retrieve | 35.00 | planner 10 and S2 relevance tests 25 | 0.08 | no | 1 | longmemeval 0.08 (1 invocations) |
+| qa | 100.00 | answering and judging 100 across both corpora, both readers and the chandan_full_uncut reader | 0.02 | no | 1 | longmemeval 0.02 (1 invocations) |
+
+one row per invocation of a stage on a corpus, appended at the end of every invocation including a capped one; an invocation over both corpora is written to each corpus ledger, counted in each corpus sum and once in the stage total
+
+| stage | corpora | timestamp | job tag | tag | arms | readers | budgets | cap USD | USD | calls | by tier | stopped | commit |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| retrieve | lme | 2026-09-07T01:51:04+00:00 | none | none | S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, S5_primary_norule, chandan_full, chandan_live, chandan_live_cal, closed_book, oracle_full, ours_cheap, ours_cheap_norule, ours_sentence_norule | none | 4,000, 8,000 | 35.00 | 0.08 | 8,312 | vertex-flash 0.08 | no | 9e454cc |
+| qa | lme | 2026-09-07T03:04:23+00:00 | none | none | S2_lazy, S4_static, S5_noPGR, S5_overlay_P0, S5_overlay_R0, S5_overlay_R2, S5_planner_oracle, S5_planner_rules, S5_primary, S5_primary_norule, chandan_full, chandan_live, chandan_live_cal, closed_book, oracle_full, ours_cheap, ours_cheap_norule, ours_sentence_norule | reader_a, reader_b | 4,000, 8,000 | 40.00 | 0.02 | 1,002 | gemini-2.5-flash-lite 0.02 | no | 13e1ed8 |
 
 Answering:
 
@@ -763,13 +1025,25 @@ Answering:
  "longmemeval": {
   "answering_cap_usd": 34.0,
   "judging_stopped": null,
-  "n_records": 7879,
+  "n_records": 20536,
   "partial": {},
   "populations": {
    "chandan_own": 500,
    "chandan_subset": null,
    "per_arm": {
+    "S2_lazy": 500,
+    "S4_static": 500,
     "S5_noPGR": 500,
+    "S5_overlay_P0": 500,
+    "S5_overlay_R0": 500,
+    "S5_overlay_R2": 500,
+    "S5_planner_oracle": 500,
+    "S5_planner_rules": 500,
+    "S5_primary": 500,
+    "S5_primary_norule": 500,
+    "chandan_full": 500,
+    "chandan_live": 500,
+    "chandan_live_cal": 18,
     "closed_book": 500,
     "oracle_full": 500,
     "ours_cheap": 500,
@@ -953,17 +1227,11 @@ Last-pass meter totals (the meter of the most recent invocation of each stage on
  },
  "qa_lme": {
   "by_tier": {
-   "azure-gpt54": {
-    "calls": 7022,
-    "tokens_in": 3938730,
-    "tokens_out": 55025,
-    "usd": 5.473663
-   },
    "gemini-2.5-flash-lite": {
-    "calls": 10511,
-    "tokens_in": 53624563,
-    "tokens_out": 380454,
-    "usd": 5.514638
+    "calls": 1002,
+    "tokens_in": 191946,
+    "tokens_out": 1003,
+    "usd": 0.019596
    }
   },
   "prices_as_of": "2026-08-19",
@@ -1045,8 +1313,8 @@ Last-pass meter totals (the meter of the most recent invocation of each stage on
     "out": 5.0
    }
   },
-  "total_calls": 17533,
-  "total_usd": 10.9883
+  "total_calls": 1002,
+  "total_usd": 0.019596
  },
  "qa_mhrag": {
   "by_tier": {
@@ -1146,7 +1414,14 @@ Last-pass meter totals (the meter of the most recent invocation of each stage on
   "total_usd": 10.9883
  },
  "retrieve_lme": {
-  "by_tier": {},
+  "by_tier": {
+   "vertex-flash": {
+    "calls": 8312,
+    "tokens_in": 747394,
+    "tokens_out": 16212,
+    "usd": 0.081224
+   }
+  },
   "prices_as_of": "2026-08-19",
   "prices_usd_per_mtok": {
    "azure-gpt54": {
@@ -1226,8 +1501,8 @@ Last-pass meter totals (the meter of the most recent invocation of each stage on
     "out": 5.0
    }
   },
-  "total_calls": 0,
-  "total_usd": 0
+  "total_calls": 8312,
+  "total_usd": 0.081224
  },
  "retrieve_mhrag": {
   "by_tier": {
@@ -1339,32 +1614,60 @@ Non-null queries 2,255; all facts located for 2,255 (1.000). Facts 6,084, locate
 | ours_cheap_norule | longmemeval | 8,000 | 0 |
 | ours_sentence_norule | longmemeval | 4,000 | 0 |
 | ours_sentence_norule | longmemeval | 8,000 | 0 |
+| S4_static | longmemeval | 4,000 | 0 |
+| S4_static | longmemeval | 8,000 | 0 |
+| S4_static | multihoprag | 4,000 | 0 |
+| S4_static | multihoprag | 8,000 | 0 |
+| S5_primary | longmemeval | 4,000 | 0 |
+| S5_primary | longmemeval | 8,000 | 0 |
+| S5_primary | multihoprag | 4,000 | 0 |
+| S5_primary | multihoprag | 8,000 | 0 |
+| S5_primary_norule | longmemeval | 4,000 | 0 |
+| S5_primary_norule | longmemeval | 8,000 | 0 |
 | S5_noPGR | longmemeval | 4,000 | 0 |
 | S5_noPGR | longmemeval | 8,000 | 0 |
 | S5_noPGR | multihoprag | 4,000 | 0 |
 | S5_noPGR | multihoprag | 8,000 | 0 |
-| S4_static | multihoprag | 4,000 | 0 |
-| S4_static | multihoprag | 8,000 | 0 |
-| S5_primary | multihoprag | 4,000 | 0 |
-| S5_primary | multihoprag | 8,000 | 0 |
+| S5_planner_rules | longmemeval | 4,000 | 0 |
+| S5_planner_rules | longmemeval | 8,000 | 0 |
 | S5_planner_rules | multihoprag | 4,000 | 0 |
 | S5_planner_rules | multihoprag | 8,000 | 0 |
+| S5_planner_oracle | longmemeval | 4,000 | 0 |
+| S5_planner_oracle | longmemeval | 8,000 | 0 |
 | S5_planner_oracle | multihoprag | 4,000 | 0 |
 | S5_planner_oracle | multihoprag | 8,000 | 0 |
+| S5_overlay_R0 | longmemeval | 4,000 | 0 |
+| S5_overlay_R0 | longmemeval | 8,000 | 0 |
 | S5_overlay_R0 | multihoprag | 4,000 | 0 |
 | S5_overlay_R0 | multihoprag | 8,000 | 0 |
+| S5_overlay_R2 | longmemeval | 4,000 | 0 |
+| S5_overlay_R2 | longmemeval | 8,000 | 0 |
 | S5_overlay_R2 | multihoprag | 4,000 | 0 |
 | S5_overlay_R2 | multihoprag | 8,000 | 0 |
+| S5_overlay_P0 | longmemeval | 4,000 | 0 |
+| S5_overlay_P0 | longmemeval | 8,000 | 0 |
 | S5_overlay_P0 | multihoprag | 4,000 | 0 |
 | S5_overlay_P0 | multihoprag | 8,000 | 0 |
+| S2_lazy | longmemeval | 4,000 | 0 |
+| S2_lazy | longmemeval | 8,000 | 0 |
 | S2_lazy | multihoprag | 4,000 | 0 |
 | S2_lazy | multihoprag | 8,000 | 0 |
+| chandan_live | longmemeval | 4,000 | 0 |
+| chandan_live | longmemeval | 8,000 | 0 |
+| chandan_full | longmemeval | 4,000 | 0 |
+| chandan_full | longmemeval | 8,000 | 0 |
+| chandan_live_cal | longmemeval | 4,000 | 0 |
+| chandan_live_cal | longmemeval | 8,000 | 0 |
 
-No refused ids.
+- chandan_live refused 1 ids, dropped from every pair with that arm: 0bc8ad92
+- chandan_full refused 1 ids, dropped from every pair with that arm: 0bc8ad92
+- chandan_full_uncut refused 1 ids, dropped from every pair with that arm: 0bc8ad92
 
 Partial retrieval runs (a cap stopped the stage): none.
 
 Answering withdrawn under the answering cap (section 5 order; only the Family C tests under that reader are labelled partial): none.
+
+Arms run on a subset of their design population: chandan_live_cal (18 questions).
 
 ## Disclosures (sections 12 and 13)
 
@@ -1386,9 +1689,9 @@ Answering withdrawn under the answering cap (section 5 order; only the Family C 
 - Graph hub rule order (design gap): the hub rule runs before graphrag's counting and pruning: co-occurrence, PMI and the node and edge rules see the surviving phrases only, and graphrag's one ego node is the highest-degree content phrase left after the hub rule.
 - Graph phrase normalisation: every article token (a, an, the) stripped from the lemma.
 - graphrag's ego-node rule removed one content phrase after the hub rule: 'another option'.
-- The calibration row (chandan_live_cal, CHANDAN_CAL_18 with his own models) was not run.
+- The calibration row (chandan_live_cal, CHANDAN_CAL_18 with his own models) is reported beside the study-model row.
 - On multihoprag the arms that read post-graph-rag's tables (S4_static, S5_primary, S5_planner_rules, S5_planner_oracle, S5_overlay_R0, S5_overlay_R2, S5_overlay_P0, S2_lazy) were run without post-graph-rag tables (source: index steps relation_vectors (the spaces present when the index was built)); their rows and every test that reads them carry that label.
-- Arms absent on longmemeval: S4_static (not run in the retrieve pass); S5_primary (not run in the retrieve pass); S5_primary_norule (not run in the retrieve pass); S5_planner_rules (not run in the retrieve pass); S5_planner_oracle (not run in the retrieve pass); S5_overlay_R0 (not run in the retrieve pass); S5_overlay_R2 (not run in the retrieve pass); S5_overlay_P0 (not run in the retrieve pass); S2_lazy (not run in the retrieve pass); chandan_live (export present, not run in the retrieve pass); chandan_full (export present, not run in the retrieve pass); graphiti (no export).
+- Arms absent on longmemeval: graphiti (no export).
 - Arms absent on multihoprag: chandan_live (no export); chandan_full (no export).
 
 ## Published numbers beside chandan_live (section 12)
