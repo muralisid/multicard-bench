@@ -716,3 +716,20 @@ run or any test in section 9 was computed.
    cross-family column for the Reader B rows (the cheap judge on every
    Reader B record, not only the wrong ones) beside the primary verdicts, so
    the reader can see whether same-model judging moved those rows.
+4. 2026-09-07, the post-graph-rag MultiHop-RAG build: at the study model the
+   extraction ran to the output limit on long articles under his default
+   prompt (recorded in pgr.md item 5 before the cap bound), and the build
+   stopped at its USD 10 cap with 592 of 609 articles indexed and no query
+   run. The cap for that build is raised to USD 25, taken from the
+   verification reserve (section 11 sum 455, hard total unchanged at 500),
+   and the build resumed (his package skips documents already indexed). No
+   other rule changes. The relaunch happened after the LongMemEval
+   retrieval numbers of every arm had been read, and before any MultiHop-RAG
+   number involving his arms existed. On relaunch the runner treated the 592
+   indexed documents as leftover rows (its resume marker for the single
+   MultiHop-RAG space is written only after the export) and dropped them, so
+   the build restarts from the first article. The cap for this build is
+   therefore USD 35 in total (10 spent in the first attempt, up to 25 in the
+   restart), taken from the verification reserve and the section 11 slack;
+   the section 11 sum becomes 465, the hard total stays 500. This is a runner
+   defect and a spend consequence, not a change to any measurement rule.
