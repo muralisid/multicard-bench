@@ -79,11 +79,20 @@ exactly what the rendering budget costs.
 | arm | joint@4 | joint@10 | joint@20 | joint@50 | joint@100 | JointRecall@4k | JointRecall@8k |
 |---|---|---|---|---|---|---|---|
 | ours_cheap | 0.335 | 0.577 | 0.870 | 0.964 | 0.969 | 0.255 | 0.420 |
-| S2_lazy | 0.275 | 0.557 | 0.885 | 0.966 | 0.969 | 0.205 | 0.369 |
+| S2_lazy (see the note below) | 0.275 | 0.557 | 0.885 | 0.966 | 0.969 | 0.205 | 0.369 |
 | S4_static | 0.256 | 0.543 | 0.882 | 0.966 | 0.969 | 0.185 | 0.361 |
 | S5_planner_rules | 0.248 | 0.520 | 0.825 | 0.933 | 0.944 | 0.205 | 0.345 |
 | S5_primary | 0.191 | 0.467 | 0.794 | 0.936 | 0.947 | 0.136 | 0.283 |
 | S5_overlay_P0 | 0.178 | 0.434 | 0.692 | 0.917 | 0.938 | 0.135 | 0.271 |
+
+Two corrections to how these rows may be used, both found by the adversarial
+recheck of the mechanism analysis (docs/part1/MECHANISM.md). First, S2_lazy
+logs a candidate list of 218 units where every other arm logs 100, so its
+candidate-level recall is not comparable across arms and is not quoted here.
+Second, at the 8,000-token budget the arms are not budget matched on
+LongMemEval: they fill 6,200 to 7,586 of the 8,000 tokens because the
+candidate list runs out, so cross-arm claims there are unsound. The 4,000-token
+rows are matched and are the ones to read.
 
 Three facts follow.
 
@@ -94,8 +103,19 @@ Three facts follow.
    full system for 46.7 percent. That is a ranking failure, not a budget one.
 3. The budget then takes another large bite from everyone. The plain fusion
    drops from 57.7 percent at depth 10 to 25.5 percent inside a 4,000-token
-   context, because a 4,000-token budget holds about eight of our chunks and
+   context, because a 4,000-token budget holds about nine of our chunks and
    the ranking has to have put all two to four evidence documents inside them.
+
+The mechanism behind point 2 is measured in docs/part1/MECHANISM.md and is not
+what this session first assumed. The added channels do not fetch junk from
+nowhere; they reorder documents the keyword and dense channels already found,
+and under reciprocal rank fusion a unit carrying a topic vote and a community
+vote outranks an evidence chunk carrying only keyword and dense votes. The
+median rank at which every evidence document has first appeared moves from 12
+under the plain fusion to 15.5 with equal channel weights and 17 with the
+planner weights, against a rendered window of nine. On chat memory the same
+reorder is nearly free, because a 4,000-token budget renders about 50 of a
+55 to 62 unit candidate list.
 
 The difficulty scales exactly with how many documents a question needs, for the
 plain fusion at depth 10:
