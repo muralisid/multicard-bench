@@ -596,9 +596,11 @@ Full detail in docs/part1/PUBLISHED-COMPARISON.md.
    declared logic, is worth seven times more than every structural layer put
    together.
 2. On document multi-hop the layers hurt, significantly and in the same
-   direction at both budgets. The mechanism looks like budget economics, not
-   bad structure: the evidence is in the candidate list, and the expansion
-   spends the budget on the wrong containers.
+   direction at both budgets. The mechanism is measured in section 13, and it
+   is a ranking effect inside a small rendered window. The explanation this
+   session first offered, that the expansion spends the budget on containers
+   already found, was refuted by the verifiers: the expansion renders nothing
+   at all on that corpus.
 3. The overlay does not beat its placebo on either corpus. The LLM planner is
    behind the deterministic rules planner on both. The oracle planner, which is
    an upper bound on routing, is not better than the rules either. That is
@@ -607,8 +609,10 @@ Full detail in docs/part1/PUBLISHED-COMPARISON.md.
 4. Against post-graph-rag on the S split at a fixed budget, our arms are far
    ahead (0.957 against 0.574 at 4k, 0.970 against 0.804 at 8k), but the honest
    explanation is his retrieval unit, not his index quality: his candidate-level
-   recall is 0.998. The interesting comparison is not the headline; it is that
-   a system which finds the evidence can still fail to show it to the reader.
+   recall is 0.998. A system which finds the evidence can still fail to show it
+   to the reader. The claim that does not depend on the budget at all is the
+   cost one in section 12: his index costs USD 66.87 and 144,281 model calls,
+   ours costs nothing, and inside our own system his tables are worth 0.002.
 5. Under a strong reader the cheap retriever on LongMemEval is 1.4 points from
    the evidence ceiling. On that corpus there is almost nothing left for any
    index to win. The room that remains is in temporal and preference questions
