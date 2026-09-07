@@ -1,4 +1,4 @@
-# The cost result: a better answer with no model calls at index time
+# The cost result: a better answer at an index cost of nothing
 
 Written 2026-09-07. Every number is read from a file the experiment wrote.
 This is the headline finding of Part 1 and it is stated here on its own,
@@ -8,8 +8,17 @@ because it is easy to lose inside the mechanism analysis.
 
 On LongMemEval_S, at the same rendered-token budget, with the same reader and
 the same judge, our index puts more of the marked evidence in front of the
-reader than post-graph-rag does, and it does so without sending a single
-document to a language model before the question is asked.
+reader than post-graph-rag does, at an index cost of nothing.
+
+One precision that the claim needs, and that an earlier draft of this document
+did not carry. The arms that score 0.947 and 0.957 read post-graph-rag's
+extracted entities, relations and aliases as two of their six channels, so
+those two arms do rest on his upfront extraction even though they add little
+because of it. The arms that send no document to a language model before the
+question is asked are S5_noPGR at 0.945 and ours_cheap at 0.938, and both of
+them are still far above his 0.574. So the no-upfront-extraction version of
+the claim stands on those two rows, and the difference between them and the
+arms that use his tables is 0.002.
 
 ## Index cost, 500 questions, 61.2 million tokens of corpus
 
@@ -19,21 +28,26 @@ index embeds every unit once, fits topics, builds a noun-phrase graph and its
 communities, and computes the topic-community alignment. Only the overlay
 calls a model.
 
-| system | model calls at index time | cost | JointRecall at 4,000 tokens |
-|---|---|---|---|
-| post-graph-rag, study model (gemini-2.5-flash-lite, the cheapest available) | 144,281 | USD 66.87 | 0.574 |
-| post-graph-rag, his own published models (gemini-3.7-flash index) | not run in full | USD 361 projected from the 17-question calibration row | 0.611 on those 17 |
-| ours, every layer including the overlay | 2,566 | USD 0.28 | 0.947 |
-| ours, overlay dropped, which raises the score | 0 | USD 0.00 | 0.949 |
-| ours_cheap, no model call at index or query time | 0 | USD 0.00 | 0.938 |
+| system | index-time model calls | index cost | query calls per question | JointRecall at 4,000 tokens |
+|---|---|---|---|---|
+| post-graph-rag, study model (gemini-2.5-flash-lite, the cheapest available) | 140,784 | USD 64.97 | 2 (USD 1.90 over 500) | 0.574 |
+| post-graph-rag, his own published models (gemini-3.7-flash index) | not run in full | USD 361 projected from the 17 questions that run metered | 2 | 0.611 on the 18 calibration questions |
+| ours, every layer including the overlay | 2,566 | USD 0.28 | 1 (the planner) | 0.947 |
+| ours, overlay dropped, which raises the score | 0 | USD 0.00 | 1 | 0.949 |
+| ours, overlay dropped and none of his tables (S5_noPGR) | 0 | USD 0.00 | 1 | 0.945 |
+| ours_cheap, no model call at index or query time | 0 | USD 0.00 | 0 | 0.938 |
 
-Ratios: 238 times cheaper than his cheapest build, 1,283 times cheaper than
-his published configuration, and without limit once the overlay is dropped.
-Per million tokens of corpus indexed: his USD 1.09, ours USD 0.006.
+Ratios on index cost alone: 231 times cheaper than his cheapest build, and
+without limit once the overlay is dropped. On his own models the projection is
+USD 361 over the 17 questions that run metered, or USD 391 taken per session
+over the same run; either way it is over a thousand times our index cost.
+Per million tokens of the 61.2 million his protocol indexes: his USD 1.06 for
+the index and USD 1.09 including his query calls, ours USD 0.005.
 
 Wall time for our index: 112 minutes of CPU on one laptop, of which 65 minutes
-is spaCy over 998,042 sub-units. His build took 13.3 hours across four
-parallel shards against a hosted API.
+is the noun-phrase graph stage and 62 of those are spaCy over 998,042
+sub-units. His build took 13.3 hours across four parallel shards against a
+hosted API.
 
 ## Query cost
 
@@ -62,8 +76,8 @@ comparison:
 
 | arm | reader gpt-5.4 | reader gemini-2.5-flash-lite |
 |---|---|---|
-| S5_primary | 0.832 | 0.543 |
-| post-graph-rag | 0.624 | 0.467 |
+| S5_primary | 0.832 | 0.542 |
+| post-graph-rag | 0.624 | 0.466 |
 
 Paired, at 4,000 tokens: T1 on retrieval is plus 0.371, CI [+0.324, +0.420],
 188 wins to 14 losses, significant after Holm. On answers under the strong
@@ -93,7 +107,7 @@ channels. Switching those channels off changes almost nothing:
 | LongMemEval, 8,000 tokens | 0.964 | 0.964 | 0.000 |
 | MultiHop-RAG, both budgets | identical | identical | 0.000 |
 
-USD 66.87 and 144,281 model calls of upfront extraction were worth two
+USD 64.97 and 140,784 model calls of upfront extraction were worth two
 thousandths of joint recall on one corpus and nothing on the other. On
 MultiHop-RAG the relation and entity channels returned zero hits in the entire
 candidates file.

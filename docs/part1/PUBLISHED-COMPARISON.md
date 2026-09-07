@@ -22,52 +22,63 @@ comparison lives.
 
 The MultiHop-RAG paper (arXiv 2401.15391, Table 5) reports MRR@10, MAP@10,
 Hits@10 and Hits@4 over the same 609 articles and the same non-null queries we
-ran. Its best row is voyage-02 embeddings with the bge-reranker-large reranker.
-Its chunk is 256 tokens; ours is about 500 tokens with no overlap.
+ran. Its best row is voyage-02 embeddings with the bge-reranker-large
+reranker. Its chunk is 256 tokens; ours is about 500 tokens with no overlap.
 
-Our rows below are computed on the ranking before any budget cut, which is what
-the paper measures. n is 2,255 for every row.
+The paper's Hit@K is the mean FRACTION of a query's evidence that appears in
+the top K, which is a recall. An earlier version of this document computed
+"at least one evidence item in the top K", which is a different and much
+easier quantity, and it made the comparison look better than it is. The final
+verification of 2026-09-07 caught that; the tables below use the paper's
+definition and the claim is correspondingly narrower.
+
+Our rows are computed on the ranking before any budget cut, which is what the
+paper measures. n is 2,255 for every row.
 
 Document level: a document counts as relevant when the query's evidence list
 names it, and the unit ranking is folded to the first appearance of each
-document.
+document. This is a coarser unit than the paper's, so it flatters us.
 
 | arm | MRR@10 | MAP@10 | Hits@10 | Hits@4 |
 |---|---|---|---|---|
-| ours_cheap | 0.757 | 0.574 | 0.992 | 0.917 |
-| S2_lazy | 0.736 | 0.537 | 0.987 | 0.894 |
-| S4_static | 0.706 | 0.512 | 0.985 | 0.877 |
-| S5_overlay_R0 | 0.681 | 0.485 | 0.979 | 0.849 |
-| S5_planner_rules | 0.664 | 0.489 | 0.983 | 0.848 |
-| S5_planner_oracle | 0.635 | 0.454 | 0.972 | 0.837 |
-| S5_overlay_R2 | 0.634 | 0.449 | 0.966 | 0.840 |
-| S5_primary | 0.618 | 0.438 | 0.970 | 0.826 |
-| S5_overlay_P0 | 0.582 | 0.411 | 0.955 | 0.804 |
+| ours_cheap | 0.757 | 0.574 | 0.822 | 0.624 |
+| S2_lazy | 0.736 | 0.537 | 0.800 | 0.574 |
+| S4_static | 0.706 | 0.512 | 0.792 | 0.554 |
+| S5_planner_rules | 0.664 | 0.489 | 0.782 | 0.535 |
+| S5_primary | 0.618 | 0.438 | 0.748 | 0.493 |
+| S5_overlay_P0 | 0.582 | 0.411 | 0.724 | 0.471 |
 | **published best: voyage-02 with bge-reranker-large** | **0.586** | **0.480** | **0.747** | **0.663** |
 
-Unit level, closer in kind to the paper's chunk-level rows: a retrieved chunk
+Unit level, closest in kind to the paper's chunk-level rows: a retrieved chunk
 counts as relevant when it belongs to an evidence document.
 
 | arm | MRR@10 | MAP@10 | Hits@10 | Hits@4 |
 |---|---|---|---|---|
-| ours_cheap | 0.745 | 0.362 | 0.973 | 0.883 |
-| S4_static | 0.693 | 0.297 | 0.962 | 0.840 |
-| S5_primary | 0.601 | 0.251 | 0.930 | 0.776 |
+| ours_cheap | 0.745 | 0.362 | 0.421 | 0.228 |
+| S4_static | 0.693 | 0.297 | 0.359 | 0.188 |
+| S5_primary | 0.601 | 0.251 | 0.338 | 0.170 |
 | **published best** | **0.586** | **0.480** | **0.747** | **0.663** |
 
-Reading. On the metrics the paper itself publishes, our plain fused retrieval
-is ahead of its best baseline on MRR and clearly ahead on both Hits figures,
-and its MAP is higher at document level and lower at unit level. Our chunk is
-twice the size of theirs, which flatters Hits, so the honest claim is narrow:
-a reciprocal rank fusion of BM25 and a 22-million-parameter encoder, with no
-reranker and no model call, lands in the same band as a commercial embedding
-model with a cross-encoder reranker on this benchmark. It does not need to be
-better than that to be interesting. It is two orders of magnitude cheaper.
+Reading, stated at the strength the numbers support and no further. Our plain
+fused retrieval is ahead of the published best on MRR@10 under both unit
+definitions, 0.757 and 0.745 against 0.586, so it puts a first piece of
+evidence higher up the list. On the other three metrics it depends entirely on
+the unit: at document level it is ahead on MAP@10 and Hits@10 and behind on
+Hits@4; at unit level, which is closer in kind to what the paper measured, it
+is behind on all three, and well behind on the two Hits figures.
 
-The second reading matters more for our own design. Every arm that adds our
-layers is below the plain fusion on every one of these metrics, and the
-placebo overlay arm is the worst of all. The added layers do not merely spend
-the budget badly. They also push evidence down the ranking.
+So the defensible claim is narrow. A reciprocal rank fusion of BM25 and a
+22-million-parameter local encoder, with no reranker and no model call, ranks
+the first evidence item better than a commercial embedding model with a
+cross-encoder reranker on this benchmark, and is otherwise in the same
+neighbourhood rather than ahead of it. It is not a better retriever. It is a
+comparable one that costs nothing, and the cost is the point.
+
+The second reading is about our own design and does not depend on the paper at
+all. Every arm that adds our layers is below the plain fusion on all four
+metrics under both unit definitions, and the placebo overlay arm is the worst
+of them. The added layers do not merely spend the budget badly. They also push
+evidence down the ranking.
 
 ## 2. Where our MultiHop-RAG result actually comes from
 
@@ -191,9 +202,11 @@ are the reason this document does not compare accuracy across papers.
 Can be claimed:
 
 - On the MultiHop-RAG paper's own retrieval metrics, a cheap fusion of BM25 and
-  a small local encoder is in the same band as the published best baseline,
-  which uses a commercial embedding model and a cross-encoder reranker, with
-  the chunk-size caveat stated.
+  a small local encoder ranks the first evidence item higher than the published
+  best baseline (MRR@10 0.757 and 0.745 against 0.586) and is otherwise in the
+  same neighbourhood, ahead at document level and behind at unit level. It is
+  not a better retriever. The retrieval unit differs between the two systems
+  and that is stated wherever the numbers appear.
 - Our added layers are worse than that fusion on every published metric, on
   both corpora, at ranking level as well as at budget level. This is our own
   result against our own baseline and needs no cross-paper comparison.
@@ -205,7 +218,11 @@ Cannot be claimed:
 - That we beat Zep, or post-graph-rag, on answer accuracy. The readers and
   judges differ and we could not match theirs; the OpenAI key is dead and the
   Azure deployment carries no gpt-4o.
-- That our retrieval beats the MultiHop-RAG baselines exactly, because the
-  chunk size differs.
+- That our retrieval beats the MultiHop-RAG baselines. It does not, except on
+  MRR@10. The chunk size differs, and under the unit definition closest to
+  theirs we are behind on MAP@10 and on both Hits figures.
+- Any figure computed with a non-standard denominator without saying so. The
+  unit-level MAP@10 here divides by the relevant items that exist, capped at
+  10, which is the standard definition.
 - Anything about Graphiti or about post-graph-rag on MultiHop-RAG, since both
   arms were stopped.

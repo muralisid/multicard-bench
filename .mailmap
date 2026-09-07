@@ -1,6 +1,11 @@
-# The published commits were authored from an address on a second GitHub account.
-# The commits themselves are left alone, because the guide cites specific commit
-# hashes as the provenance for every published number and rewriting history would
-# invalidate them. This maps the identity for git log, shortlog and blame.
-Murali Sid <murali.sid@gmail.com> <murali@fn7.io>
-Murali Sid <murali.sid@gmail.com> <murali.sid@fn7.io>
+# The canonical identity for this repository is Murali Sid <murali@fn7.io>,
+# which CLAUDE.md fixes as the author and committer of every commit. One early
+# commit was authored from an address on a second GitHub account. The commit
+# itself is left alone, because the guide cites specific commit hashes as the
+# provenance for published numbers and rewriting history would invalidate them.
+# This maps that one address onto the canonical identity for git log, shortlog
+# and blame. An earlier version of this file had the mapping the other way
+# round, so all 69 commits displayed under the second account; the final
+# verification of 2026-09-07 caught it.
+Murali Sid <murali@fn7.io> <murali.sid@gmail.com>
+Murali Sid <murali@fn7.io> <murali.sid@fn7.io>

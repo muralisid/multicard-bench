@@ -198,6 +198,17 @@ def pass_section(m: dict) -> list[str]:
     if d2:
         lines.append(f"D2 reading of T2: {d2.get('label', 'n/a')} (Graphiti status {d2.get('graphiti_status', 'n/a')}).")
         lines.append("")
+    # Design section 14 item 6: the verdict above and the owner's disposition
+    # must travel together, and neither may be quoted without the other.
+    if not q.get("passed") and (q.get("T8a_run") is False or q.get("T8a_delta") is None):
+        lines.append("The owner accepted the two absent tests on 2026-09-07 (\"T2 and T8 not run is "
+                     "fine\"). The rule above is not rewritten, because it was fixed before any "
+                     "result. His disposition, which must be quoted beside the verdict and never "
+                     "instead of it: the study is read on what was run. On that reading T1 is "
+                     "shown, T7 holds, T8b is negative and significant against our own cheap "
+                     "floor, and T2 and T8a are absent by decision rather than by failure. Design "
+                     "section 14 item 6 carries the same wording.")
+        lines.append("")
     sb = m.get("second_build") or (m.get("tests") or {}).get("second_build") or {}
     if sb.get("evaluated") is False:
         lines.append(f"Second post-graph-rag build (section 9): first build cost so far USD "

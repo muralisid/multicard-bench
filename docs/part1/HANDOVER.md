@@ -22,9 +22,13 @@ The clean-room experiment repository. Python 3.11 with uv; run anything with
 holds the binding rules (clean room, git identity, no em dashes, boundary grep
 before any push, cost caps). Part 1 commits, most recent first:
 
+The table below is the state at the first version of this file. For the
+current list run `git log --oneline` in the bench; this document has been
+revised several times since and the table is not kept in step.
+
 | commit | what |
 |---|---|
-| b69041b | this handover |
+| b69041b | the first version of this handover |
 | b79da45 | design section 14 item 4, MultiHop-RAG cap amendment |
 | 9e454cc | report hygiene from the independent recomputation |
 | a8e922b | design amendment 3, the pooled audit figure |
@@ -70,7 +74,7 @@ before any push, cost caps). Part 1 commits, most recent first:
   `src/multicard/run.py`, which registers them as `part1_index`,
   `part1_retrieve`, `part1_qa`, `part1_report`.
 - `scripts/part1_subsets.py`, which produced the subsets file.
-- `tests/test_part1_*.py`, eleven files; the whole suite is 322 tests.
+- `tests/test_part1_*.py`, eleven files; the whole suite is 335 tests.
 - Reused from the earlier work: `src/multicard/experiments/e5_longmemeval.py`
   (the speaker rule, the reader rules, the official judge prompts, the unit
   split), `src/multicard/metrics/` (ranking, paired statistics),
@@ -279,7 +283,7 @@ extractor.
 ## 5. What was built
 
 Code under src/multicard/part1/ in the bench, plus two runners outside it.
-Committed; 322 tests pass.
+Committed; 335 tests pass.
 
 - units.py, render.py, score.py: the unit tables (turns, sub-units, chunks,
   sentences), the rendering rule (rank order until the budget is full, then
@@ -355,7 +359,8 @@ Points to carry over:
 1. The best arm is the all-channel fusion with no model call at query time.
    Adding the LLM planner and the overlay costs a little (0.957 to 0.947).
 2. The overlay is indistinguishable from its own placebo at the candidate level
-   and worth about 0.011 at the rendered level (R3 0.947, P0 0.938, R0 0.949),
+   and worth plus 0.009 against its placebo and minus 0.002 against no overlay
+   (R3 0.947, P0 0.938, R0 0.949),
    which is inside the noise of this test. On its own evidence the overlay is
    not reconciling anything.
 3. The speaker rule (quarantine assistant turns unless the question is about
@@ -366,9 +371,13 @@ Points to carry over:
    the whole session document, about 10,000 characters, so two of them fill the
    budget. At 8,000 tokens he reaches 0.804. This is a unit-size effect, and it
    is the single most important thing to understand about the comparison.
-5. His own models help him: 0.611 against 0.574 at 4k on the calibration
-   subset, and 0.889 against 0.804 at 8k. The calibration row is 18 questions,
-   so it is a direction, not a measurement.
+5. His own models change nothing. On the 18 calibration questions his own
+   configuration (gemini-3.7-flash index, gemini-3.6-flash answer) and the
+   study model score identically, 0.611 at 4k and 0.889 at 8k, question by
+   question with zero differences. An earlier version of this document
+   compared 0.611 against the 0.574 measured over all 470 questions, which is
+   a different population, and read a model effect into a population
+   difference. There is no measured model effect.
 
 Answering, all 500 questions, primary judge gpt-5.4 with the official prompts.
 Reader A is the cheap study model, Reader B is gpt-5.4.
@@ -468,7 +477,7 @@ the first 20 by date, which is a weakness of the pilot design and is recorded.
 
 ## 9. Cost and time
 
-Proxy-metered, whole programme to date: USD 101. The breakdown: his LongMemEval
+Proxy-metered, whole programme: USD 102. The breakdown: his LongMemEval
 index USD 72.9 across four shards (13.3 hours, 500 spaces, 15 questions with a
 refused document), his calibration row USD 13.3, his MultiHop-RAG index USD
 12.8 for the first attempt plus USD 1.1 for the restart so far, the Graphiti
@@ -491,7 +500,7 @@ phrases, 251 and 256 communities, 291 flagged pairs, 84 links.
 ## 10. What is finished and what is not
 
 Finished: the design and its three review rounds, the environment, the code
-with 322 passing tests, the frozen index on both corpora, every arm of ours
+with 335 passing tests, the frozen index on both corpora, every arm of ours
 through retrieval and answering on both corpora, post-graph-rag on
 LongMemEval through retrieval and answering, the calibration row on his own
 models, the report with the gate tests, the mechanism analysis, the published

@@ -737,8 +737,9 @@ run or any test in section 9 was computed.
 5. 2026-09-07, the owner stopped the post-graph-rag MultiHop-RAG build at 72
    of 609 articles: "actually stop it. Let's not do his system." His reason
    was sequencing, TG-VGRAG first, and the build served only T8a. T8a is
-   therefore recorded as not run, with the reason, alongside T2. The pass rule
-   then rests on T1 and T7, both on LongMemEval, and the report says so. T8b,
+   therefore recorded as not run, with the reason, alongside T2. An earlier
+   version of this item went on to say that the pass rule then rests on T1 and
+   T7; that is superseded by item 6, which keeps the rule as written. T8b,
    our system against our own cheap floor on MultiHop-RAG, was already
    computed and stands: minus 0.119 fact-level joint recall, CI [-0.137,
    -0.101], p 0.0001, significant after Holm. What T8a would have measured,

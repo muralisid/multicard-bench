@@ -19,21 +19,21 @@ The machinery does the same thing on both corpora. It widens the candidate pool 
 
 2. Evidence
 
-1. At 4,000 tokens news renders 9.22 to 9.43 units at 424 to 443 tokens each; chat renders 48.0 to 55.0 units at 73 to 83 tokens each.
-2. That is 9.2 to 9.4 percent of a 100-unit news candidate list, against 49 to 55 units of a 55 to 62 unit chat list.
+1. At 4,000 tokens news renders 9.22 to 9.43 units at 424 to 434 tokens each; chat renders 48.0 to 55.0 units at 73 to 83 tokens each.
+2. That is 9.2 to 9.4 percent of a 100-unit news candidate list, against 48 to 55 units of a 55 to 62 unit chat list.
 3. The render step costs 62 to 71 points on news (ours_cheap 0.8736 candidate to 0.2554 rendered, S4_static 0.8971 to 0.1854) and 1.1 to 1.5 points on chat (0.9489 to 0.9383, 0.9702 to 0.9574).
-4. Median rank at which every evidence document has appeared on news: ours_cheap 12.0, S2_lazy 14.0, planner rules 15.0, S4_static 15.5, planner oracle 16.0, S5_primary 17.0, overlay P0 19.0.
+4. Median rank at which every evidence document has appeared on news, over the queries where every evidence document is inside the logged 100-unit candidate list: ours_cheap 12.0, S2_lazy 14.0, planner rules 15.0, S4_static 15.5, planner oracle 16.0, S5_primary 17.0, overlay P0 19.0. Over all 2,255 queries the same medians are 13, 15, 16, 16, 18, 19 and 21.
 5. Share of news queries with all evidence documents inside the first nine ranks: 0.4151, 0.3614, 0.3477, 0.3401, 0.3002, 0.2887, 0.2749, against measured joint recall 0.2554, 0.2053, 0.2053, 0.1854, 0.1508, 0.1361, 0.1348.
 6. Read the same rankings deeper and the equal-weight arm catches the floor: 0.8727 against 0.8767 at k=50 and 0.9685 against 0.9694 at k=100, while S5_primary is still 0.0226 behind at k=100.
 7. A news query needs 2 documents on 1,169 queries, 3 on 774 and 4 on 312, mean 2.620.
 8. The relation and entity channels never fire on news, 0 hits in the whole candidates file against 274,126 for relation on chat, and S5_noPGR equals S5_primary at 0.1361 and 0.2834.
 9. Lazy expansion renders 0 units and 0 tokens on news, in all nine arms, at both budgets.
-10. On chat, container expansion is 0.52 to 2.67 percent of rendered tokens and deep filler from the fused tail is 15.4 to 17.9 percent.
-11. The news loss splits as -0.0501 for adding topic and community at weight 1, -0.0200 for expansion depth, -0.0324 for the planner weight rows and -0.0169 for the overlay, total -0.1193.
+10. On chat, container expansion is 0.4 to 1.7 percent of rendered tokens and deep filler from the fused tail is 9.9 to 12.4 percent, over the arms with an expansion depth above zero.
+11. The news loss is a ladder of four arm steps, not four isolated mechanisms: ours_cheap to S2_lazy -0.0501, S2_lazy to S4_static -0.0200, S4_static to S5_overlay_R0 -0.0324, S5_overlay_R0 to S5_primary -0.0169, total -0.1193. Each rung differs from the one above by more than one thing, so the labels are the arms, and the attribution to a mechanism is an inference from the arm definitions rather than a measured decomposition.
 12. The lexical weight row, the only one that sets topic and community to zero, is the one place the system beats the floor on news: 0.3491 against 0.3047 on 699 queries; the thematic row (topic 3, community 2) scores 0.1348 against 0.4000 on 230 queries.
 13. The LLM planner labels 1,312 of 2,255 news queries cross-topic, which sets community 3 and topic 2 against dense 1 and bm25 1.
 14. No overlay is the best overlay on both corpora: news R0 0.1530, R2 0.1455, R3 0.1361, placebo P0 0.1348; chat R0 0.9489, R2 0.9489, R3 0.9468, P0 0.9383.
-15. The chat gain is 12 wins to 3 losses for S4_static (p = 0.035) and 13 wins to 9 losses for S5_primary (p = 0.52), out of 470; the news loss is 118 to 276 and 111 to 380 out of 2,255, both p below 1e-14.
+15. The chat gain is 12 wins to 3 losses for S4_static and 13 wins to 9 losses for S5_primary, out of 470; the two-sided sign test on the discordant pairs gives 0.035 and 0.52, and the 10,000-permutation paired test that the design fixes gives 0.036 and 0.520; the news loss is 118 to 276 and 111 to 380 out of 2,255, both p below 1e-14.
 16. The declared speaker rule, which runs on chat and on no news arm, is worth 0.9383 against 0.8000 for the floor and 0.9468 against 0.7660 for S5_primary.
 17. Doubling the news budget to 8,000 tokens doubles the slots to about 18 and lifts every arm, and the ordering holds (floor 0.4200, S2_lazy 0.3694, S4_static 0.3605, rules 0.3446, S5_primary 0.2834).
 
