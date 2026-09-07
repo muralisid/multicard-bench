@@ -99,7 +99,8 @@ so the rebuild costs CPU time and no money. The committed 177 MB includes the
 frozen index artifacts (topics, the noun-phrase graph, both community variants,
 the overlay proposals and link sets), so the index does not have to be refitted
 either.
-- `results/e5_longmemeval*/`, the earlier experiment this builds on.
+
+`results/e5_longmemeval*/` holds the earlier experiment this work builds on.
 
 **Data**, all gitignored: `data/raw/longmemeval_s.json` (265 MB),
 `data/raw/multihoprag/` (20 MB), `data/part1/pgr/` (4.2 GB, his exported
