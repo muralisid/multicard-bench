@@ -4,6 +4,151 @@ Written 2026-09-07 morning IST, for handover. Every number here is read from a
 file the experiment wrote. Where a run is still going, it says so. Nothing here
 is published anywhere.
 
+## 0. Where everything is
+
+Two private git repositories, plus a tools directory that is deliberately
+outside both. Nothing is pushed anywhere and nothing is public.
+
+### The bench: /Users/muralisid/github_other/multicard-bench
+
+The clean-room experiment repository. Python 3.11 with uv; run anything with
+`cd /Users/muralisid/github_other/multicard-bench && uv run ...`. Its CLAUDE.md
+holds the binding rules (clean room, git identity, no em dashes, boundary grep
+before any push, cost caps). Part 1 commits, most recent first:
+
+| commit | what |
+|---|---|
+| b69041b | this handover |
+| b79da45 | design section 14 item 4, MultiHop-RAG cap amendment |
+| 9e454cc | report hygiene from the independent recomputation |
+| a8e922b | design amendment 3, the pooled audit figure |
+| d8239df | the cross-family judge column |
+| 17ceed9 | design section 14 item 3 |
+| 1b5614a | retry on transient network and service errors |
+| 066d194 | fused arms fill the budget; design section 14 items 1 and 2 |
+| 09925ad | the Part 1 build, integration and review fixes |
+| b8c1e20 | design v4, environment records, MultiHop-RAG loader, graph deps |
+| d430230 | the earlier e5 LongMemEval experiment this builds on |
+
+**Documents.**
+
+- `docs/PART1-DESIGN.md`, version 4 plus section 14. Every rule, every arm,
+  every test, every prediction, and every change made after a number was read.
+  Read this first; the code implements it and cites its section numbers.
+- `docs/part1/RUNBOOK.md`, the exact commands in order, with wall times, caps
+  and resume behaviour for every stage.
+- `docs/part1/REVIEW-FIXES.md`, what the five post-build reviewers found and
+  what was done about each finding.
+- `docs/part1/HANDOVER.md`, this file.
+- `docs/part1/env/`, the environment records: `postgres.md`, `proxy.md`,
+  `models.json` (the model survey and prices), `pgr.md` (post-graph-rag's
+  configuration, the written decisions, and every observation about his
+  package), `pgr-schema.md` (his Postgres schema), `graphiti.md` (including
+  the pilot table), `bench.md`, `infra.md`.
+- `docs/part1/prompts/planner.txt`, the planner prompt, byte-identical to the
+  copy the runner reads.
+- `docs/part1/subsets.json` and `subsets.sha256`, every fixed subset and the
+  seeded question order, drawn before any model call.
+
+**Code.**
+
+- `src/multicard/part1/`: `units.py` (unit tables, chunking, fact location),
+  `render.py` (the rendering rule), `score.py` (coverage and joint recall),
+  `topics.py` (BERTopic), `graph.py` (noun-phrase graph, communities),
+  `overlay.py` (the topic-community bridge and its placebo), `retrieve.py`
+  (channels, fusion, expansion, the arms), `planner.py` (the weight table, the
+  rules, the oracle, the LLM planner), `competitors.py` (reading his and Zep's
+  exports as units), `evaluate.py` (readers, judges, buckets, tests, the pass
+  rule), `report.py` (REPORT.md from the metrics files only), `subsets.py`.
+- `src/multicard/experiments/part1.py`, the four stages, and
+  `src/multicard/run.py`, which registers them as `part1_index`,
+  `part1_retrieve`, `part1_qa`, `part1_report`.
+- `scripts/part1_subsets.py`, which produced the subsets file.
+- `tests/test_part1_*.py`, eleven files; the whole suite is 322 tests.
+- Reused from the earlier work: `src/multicard/experiments/e5_longmemeval.py`
+  (the speaker rule, the reader rules, the official judge prompts, the unit
+  split), `src/multicard/metrics/` (ranking, paired statistics),
+  `src/multicard/index/` (encoder with its on-disk cache, BM25),
+  `src/multicard/llm/` (Vertex and Azure clients, the cost meter),
+  `src/multicard/data/` (the LongMemEval and MultiHop-RAG loaders).
+
+**Results.** `results/part1/`:
+
+- `REPORT.md` and `metrics.json`, the report and the file it is generated from.
+- `qa_audit.json`, the judge audit and its history.
+- `<corpus>/index/{topics,graph,overlay}/`, the frozen index artifacts as
+  parquet, with a diagnostics file each.
+- `<corpus>/retrieve/`: `scores_4000.jsonl` and `scores_8000.jsonl` (per
+  question per arm, every metric), `rankings.json`, `candidates.json` (the
+  fused top 100 with per-channel provenance), `contexts_4000.jsonl` and
+  `contexts_8000.jsonl` (the exact text each reader saw), `planner.json`,
+  `per_query.csv`, `metrics.json`, `cost_ledger.jsonl`.
+- `<corpus>/qa/answers.jsonl` and `metrics.json`, every answer with both
+  judges' verdicts.
+- `buckets.jsonl`, the failure bucket of every wrong answer.
+- `logs/`, the stdout of every stage run, and the chain scripts that ran them.
+- `results/part1_smoke/`, the 5 plus 5 question smoke, labelled and not a
+  study result.
+- `results/e5_longmemeval*/`, the earlier experiment this builds on.
+
+**Data**, all gitignored: `data/raw/longmemeval_s.json` (265 MB),
+`data/raw/multihoprag/` (20 MB), `data/part1/pgr/` (4.2 GB, his exported
+tables, one directory per question for LongMemEval), `data/part1/pgr_cal/`
+(85 MB, the calibration row), `data/part1/graphiti_pilot/`,
+`data/cache/part1/` (255 MB, relation vectors), `data/cache/embeddings/`
+(3.1 GB, the encoder cache shared with the earlier work).
+
+### The programme record: /Users/muralisid/github_other/multicard-retrieval-research
+
+Private, never pushed. `program/knowledge/pov-04-topic-guided-vector-graph.md`
+holds Murali's position in his own words, the adopted proposal verbatim, the
+four review comments verbatim, and the execution plan. `program/worklog.md` is
+the append-only diary of every session, including every number as it landed.
+`program/hypothesis-register.md` carries rows H-TG-1 to H-TG-5.
+`program/review-queue.md` holds the decisions he was asked for and gave.
+
+### The tools: /Users/muralisid/github_other/part1-tools
+
+Deliberately outside both repositories, because these are other people's
+systems and their virtual environments.
+
+- `pgr/run_spaces.py`, the post-graph-rag runner (74 KB), with its own venv,
+  the question lists it was run with in `lists/`, and its logs and pid files in
+  `out/logs/`.
+- `graphiti/run_groups.py`, the Graphiti runner (71 KB), same layout.
+- `post-graph-rag-src/`, his repository cloned at tag v1.12.0, read-only
+  reference for his harness, prompts and configuration.
+- `litellm/`, the proxy: `config.yaml`, `start.sh`, `stop.sh`, the request
+  logging callback, and `tokens_by_model.py` which sums spend by job tag.
+- `neo4j/start.sh` and `stop.sh`; `pgdata/`, the Postgres cluster.
+- `env/`, the live copies of the environment records, the request log
+  `requests.jsonl` (every model call by job tag), and the pid files.
+- `prompts/planner.txt`.
+
+### Services and how to bring them up
+
+    /Users/muralisid/github_other/part1-tools/litellm/start.sh
+    LC_ALL=C /opt/homebrew/opt/postgresql@17/bin/pg_ctl \
+        -D /Users/muralisid/github_other/part1-tools/pgdata \
+        -l /Users/muralisid/github_other/part1-tools/env/postgres.log -w start
+    /Users/muralisid/github_other/part1-tools/neo4j/start.sh   # Graphiti only
+
+Postgres is on port 5433, the proxy on 127.0.0.1:4000, Neo4j on bolt 7687.
+Stop scripts sit beside each start script. Everything runs as the user; no
+sudo anywhere.
+
+### How to reproduce a stage
+
+    cd /Users/muralisid/github_other/multicard-bench
+    uv run mcb run part1_index    --corpus lme   --max-usd 15 --n-process 4
+    uv run mcb run part1_retrieve --corpus lme   --max-usd 35 --workers 4
+    uv run mcb run part1_qa       --corpus all   --readers reader_a,reader_b --max-usd 40
+    uv run mcb run part1_report   --graphiti-status dropped
+
+Every stage skips work whose output exists, and every model reply is cached, so
+a rerun is cheap. The full commands for the competitor runners, with their caps
+and resume behaviour, are in `docs/part1/RUNBOOK.md`.
+
 ## 1. What was being tested and why
 
 Murali's position, in his words: he is not keen on graph traversal the way
