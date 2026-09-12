@@ -1,0 +1,50 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "longmemeval_s",
+      "source": "https://huggingface.co/datasets/xiaowu0162/longmemeval",
+      "source_sha256": "08d8dad4be43ee2049a22ff5674eb86725d0ce5ff434cde2627e5e8e7e117894",
+      "counts": {
+        "corpus": 246930,
+        "questions": 500,
+        "groups": 500
+      },
+      "protocol_notes": [
+        "Repeated session IDs retain each dated occurrence with a distinct unit ID; source IDs and positions are preserved."
+      ],
+      "variant": "s",
+      "repeated_session_questions": 15,
+      "output_sha256": {
+        "corpus.jsonl": "79fd4efb553c14c0d14fb7925ce0568e29d92da6c639a586dc7351587a16eee2",
+        "questions.jsonl": "8c90aa635c632bbf825164ab1d36114e4ddd5f9e1da778ca24eaa729f79e03a6"
+      }
+    },
+    "corpus_sha256": "79fd4efb553c14c0d14fb7925ce0568e29d92da6c639a586dc7351587a16eee2",
+    "questions_sha256": "8c90aa635c632bbf825164ab1d36114e4ddd5f9e1da778ca24eaa729f79e03a6",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "688fe5b808f0410efaea06d555f5b79aa038c20c8a665613e3a9ee885f9e68b6",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788804733.312163,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0
+}

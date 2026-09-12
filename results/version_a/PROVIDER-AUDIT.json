@@ -1,0 +1,32 @@
+{
+  "verified_utc": "2026-09-07T18:25:01.874503+00:00",
+  "scope": "Version A benchmark execution only",
+  "project": "scout7ai",
+  "routes": {
+    "reader": "vertex_ai/gemini-3.6-flash",
+    "judge": "vertex_ai/gemini-2.5-flash-lite"
+  },
+  "retrieval_and_storage": "local Mac",
+  "evidence": "live localhost4000/model/info and version-a tagged proxy request log",
+  "other_cloud_model_providers": [],
+  "historical_part1_azure_used": true,
+  "live_routes": {
+    "gemini-3.6-flash": {
+      "model": "vertex_ai/gemini-3.6-flash",
+      "vertex_project": "scout7ai",
+      "vertex_location": "global"
+    },
+    "gemini-2.5-flash-lite": {
+      "model": "vertex_ai/gemini-2.5-flash-lite",
+      "vertex_project": "scout7ai",
+      "vertex_location": "us-central1"
+    }
+  },
+  "version_a_logged_models": {
+    "vertex_ai/gemini-3.6-flash": 2743,
+    "vertex_ai/gemini-2.5-flash-lite": 1979
+  },
+  "version_a_logged_statuses": {
+    "success": 4722
+  }
+}

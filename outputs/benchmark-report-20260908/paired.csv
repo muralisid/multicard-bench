@@ -1,0 +1,101 @@
+test,dataset,cohort,comparison,n,histories,metric,reference,new,delta,ci_low,ci_high,wins,losses,ties
+LoCoMo,locomo,headline,B-A,77,10,Judge accuracy,0.6103896103896104,0.5454545454545454,-0.06493506493506493,-0.125,0.0,2,7,68
+LoCoMo,locomo,headline,C-B,77,10,Judge accuracy,0.5454545454545454,0.5454545454545454,0.0,-0.09375,0.07894736842105263,4,4,69
+LoCoMo,locomo,headline,D-C,77,10,Judge accuracy,0.5454545454545454,0.5584415584415584,0.012987012987012988,-0.058841036414565825,0.09375,4,3,70
+LoCoMo,locomo,headline,C-A,77,10,Judge accuracy,0.6103896103896104,0.5454545454545454,-0.06493506493506493,-0.15384615384615385,0.011768207282913145,2,7,68
+LoCoMo,locomo,headline,D-A,77,10,Judge accuracy,0.6103896103896104,0.5584415584415584,-0.05194805194805195,-0.10810810810810811,0.013893779342722977,1,5,71
+LoCoMo adversarial,locomo,adversarial,B-A,23,9,Judge accuracy,0.9130434782608695,1.0,0.08695652173913043,0.0,0.2,2,0,21
+LoCoMo adversarial,locomo,adversarial,C-B,23,9,Judge accuracy,1.0,1.0,0.0,0.0,0.0,0,0,23
+LoCoMo adversarial,locomo,adversarial,D-C,23,9,Judge accuracy,1.0,0.9130434782608695,-0.08695652173913043,-0.15384615384615385,0.0,0,2,21
+LoCoMo adversarial,locomo,adversarial,C-A,23,9,Judge accuracy,0.9130434782608695,1.0,0.08695652173913043,0.0,0.2,2,0,21
+LoCoMo adversarial,locomo,adversarial,D-A,23,9,Judge accuracy,0.9130434782608695,0.9130434782608695,0.0,-0.12003030303030303,0.0967741935483871,1,1,21
+MuSiQue,musique,headline,B-A,100,1,F1,0.5301118326118326,0.4976228771228771,-0.03248895548895549,,,10,16,74
+MuSiQue,musique,headline,C-B,100,1,F1,0.4976228771228771,0.4986424849660144,0.0010196078431372552,,,6,6,88
+MuSiQue,musique,headline,D-C,100,1,F1,0.4986424849660144,0.5381680716943875,0.039525586728373106,,,16,13,71
+MuSiQue,musique,headline,C-A,100,1,F1,0.5301118326118326,0.4986424849660144,-0.031469347645818234,,,11,18,71
+MuSiQue,musique,headline,D-A,100,1,F1,0.5301118326118326,0.5381680716943875,0.008056239082554872,,,12,14,74
+2WikiMultiHopQA,2wikimultihopqa,headline,B-A,100,1,F1,0.5718326447635911,0.5805641025641025,0.00873145780051151,,,6,8,86
+2WikiMultiHopQA,2wikimultihopqa,headline,C-B,100,1,F1,0.5805641025641025,0.608897435897436,0.028333333333333335,,,5,2,93
+2WikiMultiHopQA,2wikimultihopqa,headline,D-C,100,1,F1,0.608897435897436,0.5540641025641025,-0.05483333333333333,,,5,10,85
+2WikiMultiHopQA,2wikimultihopqa,headline,C-A,100,1,F1,0.5718326447635911,0.608897435897436,0.037064791133844845,,,9,7,84
+2WikiMultiHopQA,2wikimultihopqa,headline,D-A,100,1,F1,0.5718326447635911,0.5540641025641025,-0.01776854219948849,,,5,11,84
+LongMemEval S,longmemeval_s,headline,B-A,100,100,Judge accuracy,0.72,0.75,0.03,-0.04,0.1,8,5,87
+LongMemEval S,longmemeval_s,headline,C-B,100,100,Judge accuracy,0.75,0.74,-0.01,-0.08,0.05,5,6,89
+LongMemEval S,longmemeval_s,headline,D-C,100,100,Judge accuracy,0.74,0.75,0.01,-0.04,0.06,4,3,93
+LongMemEval S,longmemeval_s,headline,C-A,100,100,Judge accuracy,0.72,0.74,0.02,-0.05,0.09,7,5,88
+LongMemEval S,longmemeval_s,headline,D-A,100,100,Judge accuracy,0.72,0.75,0.03,-0.04,0.09,7,4,89
+LongMemEval oracle,longmemeval_oracle,headline,B-A,100,100,Judge accuracy,0.76,0.74,-0.02,-0.07,0.03,3,5,92
+LongMemEval oracle,longmemeval_oracle,headline,C-B,100,100,Judge accuracy,0.74,0.8,0.06,0.02,0.11,6,0,94
+LongMemEval oracle,longmemeval_oracle,headline,D-C,100,100,Judge accuracy,0.8,0.76,-0.04,-0.11,0.02,3,7,90
+LongMemEval oracle,longmemeval_oracle,headline,C-A,100,100,Judge accuracy,0.76,0.8,0.04,-0.02,0.1,7,3,90
+LongMemEval oracle,longmemeval_oracle,headline,D-A,100,100,Judge accuracy,0.76,0.76,0.0,-0.08,0.08,8,8,84
+MultiHop-RAG,multihoprag,headline,B-A,100,1,Judge accuracy,0.53,0.54,0.01,,,7,6,87
+MultiHop-RAG,multihoprag,headline,C-B,100,1,Judge accuracy,0.54,0.56,0.02,,,8,6,86
+MultiHop-RAG,multihoprag,headline,D-C,100,1,Judge accuracy,0.56,0.57,0.01,,,5,4,91
+MultiHop-RAG,multihoprag,headline,C-A,100,1,Judge accuracy,0.53,0.56,0.03,,,5,2,93
+MultiHop-RAG,multihoprag,headline,D-A,100,1,Judge accuracy,0.53,0.57,0.04,,,7,3,90
+FactConsolidation SH 6K,factconsolidation_sh_6k,headline,B-A,100,1,Substring EM,1.0,0.87,-0.13,,,0,13,87
+FactConsolidation SH 6K,factconsolidation_sh_6k,headline,C-B,100,1,Substring EM,0.87,0.84,-0.03,,,0,3,97
+FactConsolidation SH 6K,factconsolidation_sh_6k,headline,D-C,100,1,Substring EM,0.84,0.86,0.02,,,3,1,96
+FactConsolidation SH 6K,factconsolidation_sh_6k,headline,C-A,100,1,Substring EM,1.0,0.84,-0.16,,,0,16,84
+FactConsolidation SH 6K,factconsolidation_sh_6k,headline,D-A,100,1,Substring EM,1.0,0.86,-0.14,,,0,14,86
+FactConsolidation MH 6K,factconsolidation_mh_6k,headline,B-A,100,1,Substring EM,0.6,0.57,-0.03,,,20,23,57
+FactConsolidation MH 6K,factconsolidation_mh_6k,headline,C-B,100,1,Substring EM,0.57,0.55,-0.02,,,11,13,76
+FactConsolidation MH 6K,factconsolidation_mh_6k,headline,D-C,100,1,Substring EM,0.55,0.59,0.04,,,13,9,78
+FactConsolidation MH 6K,factconsolidation_mh_6k,headline,C-A,100,1,Substring EM,0.6,0.55,-0.05,,,20,25,55
+FactConsolidation MH 6K,factconsolidation_mh_6k,headline,D-A,100,1,Substring EM,0.6,0.59,-0.01,,,18,19,63
+FactConsolidation SH 32K,factconsolidation_sh_32k,headline,B-A,100,1,Substring EM,0.92,0.92,0.0,,,5,5,90
+FactConsolidation SH 32K,factconsolidation_sh_32k,headline,C-B,100,1,Substring EM,0.92,0.79,-0.13,,,2,15,83
+FactConsolidation SH 32K,factconsolidation_sh_32k,headline,D-C,100,1,Substring EM,0.79,0.91,0.12,,,14,2,84
+FactConsolidation SH 32K,factconsolidation_sh_32k,headline,C-A,100,1,Substring EM,0.92,0.79,-0.13,,,3,16,81
+FactConsolidation SH 32K,factconsolidation_sh_32k,headline,D-A,100,1,Substring EM,0.92,0.91,-0.01,,,4,5,91
+FactConsolidation MH 32K,factconsolidation_mh_32k,headline,B-A,100,1,Substring EM,0.17,0.18,0.01,,,8,7,85
+FactConsolidation MH 32K,factconsolidation_mh_32k,headline,C-B,100,1,Substring EM,0.18,0.08,-0.1,,,4,14,82
+FactConsolidation MH 32K,factconsolidation_mh_32k,headline,D-C,100,1,Substring EM,0.08,0.25,0.17,,,18,1,81
+FactConsolidation MH 32K,factconsolidation_mh_32k,headline,C-A,100,1,Substring EM,0.17,0.08,-0.09,,,3,12,85
+FactConsolidation MH 32K,factconsolidation_mh_32k,headline,D-A,100,1,Substring EM,0.17,0.25,0.08,,,17,9,74
+FactConsolidation SH 64K,factconsolidation_sh_64k,headline,B-A,100,1,Substring EM,0.86,0.9,0.04,,,7,3,90
+FactConsolidation SH 64K,factconsolidation_sh_64k,headline,C-B,100,1,Substring EM,0.9,0.74,-0.16,,,2,18,80
+FactConsolidation SH 64K,factconsolidation_sh_64k,headline,D-C,100,1,Substring EM,0.74,0.9,0.16,,,18,2,80
+FactConsolidation SH 64K,factconsolidation_sh_64k,headline,C-A,100,1,Substring EM,0.86,0.74,-0.12,,,5,17,78
+FactConsolidation SH 64K,factconsolidation_sh_64k,headline,D-A,100,1,Substring EM,0.86,0.9,0.04,,,8,4,88
+FactConsolidation MH 64K,factconsolidation_mh_64k,headline,B-A,100,1,Substring EM,0.15,0.16,0.01,,,6,5,89
+FactConsolidation MH 64K,factconsolidation_mh_64k,headline,C-B,100,1,Substring EM,0.16,0.15,-0.01,,,8,9,83
+FactConsolidation MH 64K,factconsolidation_mh_64k,headline,D-C,100,1,Substring EM,0.15,0.16,0.01,,,9,8,83
+FactConsolidation MH 64K,factconsolidation_mh_64k,headline,C-A,100,1,Substring EM,0.15,0.15,0.0,,,8,8,84
+FactConsolidation MH 64K,factconsolidation_mh_64k,headline,D-A,100,1,Substring EM,0.15,0.16,0.01,,,9,8,83
+FactConsolidation SH 262K,factconsolidation_sh_262k,headline,B-A,100,1,Substring EM,0.74,0.79,0.05,,,10,5,85
+FactConsolidation SH 262K,factconsolidation_sh_262k,headline,C-B,100,1,Substring EM,0.79,0.6,-0.19,,,6,25,69
+FactConsolidation SH 262K,factconsolidation_sh_262k,headline,D-C,100,1,Substring EM,0.6,0.69,0.09,,,13,4,83
+FactConsolidation SH 262K,factconsolidation_sh_262k,headline,C-A,100,1,Substring EM,0.74,0.6,-0.14,,,5,19,76
+FactConsolidation SH 262K,factconsolidation_sh_262k,headline,D-A,100,1,Substring EM,0.74,0.69,-0.05,,,10,15,75
+FactConsolidation MH 262K,factconsolidation_mh_262k,headline,B-A,100,1,Substring EM,0.09,0.08,-0.01,,,2,3,95
+FactConsolidation MH 262K,factconsolidation_mh_262k,headline,C-B,100,1,Substring EM,0.08,0.08,0.0,,,3,3,94
+FactConsolidation MH 262K,factconsolidation_mh_262k,headline,D-C,100,1,Substring EM,0.08,0.08,0.0,,,3,3,94
+FactConsolidation MH 262K,factconsolidation_mh_262k,headline,C-A,100,1,Substring EM,0.09,0.08,-0.01,,,2,3,95
+FactConsolidation MH 262K,factconsolidation_mh_262k,headline,D-A,100,1,Substring EM,0.09,0.08,-0.01,,,3,4,93
+PersonaMem v2 32K,personamem_v2_32k,headline,B-A,100,77,MCQ accuracy,0.45,0.5,0.05,0.01020408163265306,0.09377467105263144,5,0,95
+PersonaMem v2 32K,personamem_v2_32k,headline,C-B,100,77,MCQ accuracy,0.5,0.5,0.0,0.0,0.0,0,0,100
+PersonaMem v2 32K,personamem_v2_32k,headline,D-C,100,77,MCQ accuracy,0.5,0.44,-0.06,-0.14545895851721094,0.02040816326530612,4,10,86
+PersonaMem v2 32K,personamem_v2_32k,headline,C-A,100,77,MCQ accuracy,0.45,0.5,0.05,0.01020408163265306,0.09377467105263144,5,0,95
+PersonaMem v2 32K,personamem_v2_32k,headline,D-A,100,77,MCQ accuracy,0.45,0.44,-0.01,-0.10526315789473684,0.07548707957342075,8,9,83
+PersonaMem v2 128K,personamem_v2_128k,headline,B-A,100,78,MCQ accuracy,0.41,0.4,-0.01,-0.057167774086378735,0.031578947368421054,2,3,95
+PersonaMem v2 128K,personamem_v2_128k,headline,C-B,100,78,MCQ accuracy,0.4,0.39,-0.01,-0.03260869565217391,0.0,0,1,99
+PersonaMem v2 128K,personamem_v2_128k,headline,D-C,100,78,MCQ accuracy,0.39,0.42,0.03,-0.04672897196261682,0.11224489795918367,8,5,87
+PersonaMem v2 128K,personamem_v2_128k,headline,C-A,100,78,MCQ accuracy,0.41,0.39,-0.02,-0.07072510822510822,0.021052631578947368,2,4,94
+PersonaMem v2 128K,personamem_v2_128k,headline,D-A,100,78,MCQ accuracy,0.41,0.42,0.01,-0.051573521432447096,0.08165369240479685,6,5,89
+BEAM 100K,beam_100k,headline,B-A,100,20,Rubric mean,0.3902083333333333,0.3797083333333333,-0.0105,-0.0612752557544757,0.0348195030473511,3,6,91
+BEAM 100K,beam_100k,headline,C-B,100,20,Rubric mean,0.3797083333333333,0.37095833333333333,-0.00875,-0.0625,0.048324579831932744,5,5,90
+BEAM 100K,beam_100k,headline,D-C,100,20,Rubric mean,0.37095833333333333,0.381,0.010041666666666667,-0.04357562603354594,0.06029027698480666,16,12,72
+BEAM 100K,beam_100k,headline,C-A,100,20,Rubric mean,0.3902083333333333,0.37095833333333333,-0.01925,-0.059595635089209856,0.01738875598086113,2,6,92
+BEAM 100K,beam_100k,headline,D-A,100,20,Rubric mean,0.3902083333333333,0.381,-0.009208333333333334,-0.059485731792717086,0.0337569444444444,13,12,75
+BEAM 500K,beam_500k,headline,B-A,100,32,Rubric mean,0.26766666666666666,0.247125,-0.020541666666666666,-0.05607946537990196,0.016341851096874385,6,8,86
+BEAM 500K,beam_500k,headline,C-B,100,32,Rubric mean,0.247125,0.24125,-0.005875000000000001,-0.046817531179138325,0.03376053370786513,4,9,87
+BEAM 500K,beam_500k,headline,D-C,100,32,Rubric mean,0.24125,0.27391666666666664,0.03266666666666666,-0.014670370370370375,0.08181893189318931,17,3,80
+BEAM 500K,beam_500k,headline,C-A,100,32,Rubric mean,0.26766666666666666,0.24125,-0.026416666666666665,-0.06601072607260726,0.010715120160213613,3,10,87
+BEAM 500K,beam_500k,headline,D-A,100,32,Rubric mean,0.26766666666666666,0.27391666666666664,0.0062499999999999995,-0.04750168010752689,0.060167755255255244,13,9,78
+BEAM 1M,beam_1m,headline,B-A,100,34,Rubric mean,0.26666666666666666,0.27569444444444446,0.009027777777777779,-0.020052597990777337,0.0411739777432712,4,5,91
+BEAM 1M,beam_1m,headline,C-B,100,34,Rubric mean,0.27569444444444446,0.28075,0.005055555555555556,-0.02329562991021324,0.029929428111744903,7,3,90
+BEAM 1M,beam_1m,headline,D-C,100,34,Rubric mean,0.28075,0.28975,0.009,-0.02596133025795519,0.04909370199692775,11,8,81
+BEAM 1M,beam_1m,headline,C-A,100,34,Rubric mean,0.26666666666666666,0.28075,0.014083333333333333,-0.014528012576023087,0.04506332983927323,8,4,88
+BEAM 1M,beam_1m,headline,D-A,100,34,Rubric mean,0.26666666666666666,0.28975,0.023083333333333334,-0.013017180735930736,0.06163985148514848,12,6,82

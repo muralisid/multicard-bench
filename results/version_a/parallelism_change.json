@@ -1,0 +1,7 @@
+{
+  "time": 1788804690.947074,
+  "old_workers": 4,
+  "new_workers": 16,
+  "reason": "Reduce API waiting; unchanged models, prompts, questions and150USDcap",
+  "old_campaign_pid": 86237
+}

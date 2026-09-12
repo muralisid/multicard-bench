@@ -1,0 +1,4050 @@
+{
+  "comparisons": [
+    {
+      "dataset": "2wikimultihopqa",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.571832644763591,
+      "score": 0.5805641025641026,
+      "delta": 0.008731457800511655,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.571832644763591,
+      "delta_vs_A": 0.008731457800511655,
+      "answer_usd": 0.5590019999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3431731999999999,
+      "answer_plus_setup_usd": 0.9021751999999998,
+      "total_serving_cost_per_correct": 0.017022173584905657,
+      "cost_per_correct": 0.010547207547169809,
+      "correct_basis": "exact_match",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.5805641025641026,
+      "score": 0.6088974358974358,
+      "delta": 0.02833333333333321,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.571832644763591,
+      "delta_vs_A": 0.037064791133844865,
+      "answer_usd": 0.5587365,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3431731999999999,
+      "answer_plus_setup_usd": 0.9019096999999998,
+      "total_serving_cost_per_correct": 0.016105530357142853,
+      "cost_per_correct": 0.0099774375,
+      "correct_basis": "exact_match",
+      "changed_contexts": 40,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.6088974358974358,
+      "score": 0.5540641025641025,
+      "delta": -0.05483333333333329,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.571832644763591,
+      "delta_vs_A": -0.017768542199488424,
+      "answer_usd": 0.5676487499999997,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3431731999999999,
+      "answer_plus_setup_usd": 0.9108219499999997,
+      "total_serving_cost_per_correct": 0.017859253921568622,
+      "cost_per_correct": 0.011130367647058818,
+      "correct_basis": "exact_match",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.39020833333333327,
+      "score": 0.3797083333333333,
+      "delta": -0.010499999999999954,
+      "cluster_ci_low": -0.0612752557544757,
+      "cluster_ci_high": 0.0348195030473511,
+      "A_score": 0.39020833333333327,
+      "delta_vs_A": -0.010499999999999954,
+      "answer_usd": 0.5371499999999999,
+      "judge_usd": 0.03262489999999999,
+      "standalone_shared_fact_setup_usd": 0.5893937,
+      "answer_plus_setup_usd": 1.1265437,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 40,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.3797083333333333,
+      "score": 0.37095833333333333,
+      "delta": -0.00874999999999998,
+      "cluster_ci_low": -0.0625,
+      "cluster_ci_high": 0.048324579831932744,
+      "A_score": 0.39020833333333327,
+      "delta_vs_A": -0.019249999999999934,
+      "answer_usd": 0.5360565,
+      "judge_usd": 0.032559899999999996,
+      "standalone_shared_fact_setup_usd": 0.5893937,
+      "answer_plus_setup_usd": 1.1254502,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 40,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.37095833333333333,
+      "score": 0.381,
+      "delta": 0.010041666666666671,
+      "cluster_ci_low": -0.04357562603354594,
+      "cluster_ci_high": 0.06029027698480666,
+      "A_score": 0.39020833333333327,
+      "delta_vs_A": -0.009208333333333263,
+      "answer_usd": 0.5461695000000002,
+      "judge_usd": 0.032621,
+      "standalone_shared_fact_setup_usd": 0.5893937,
+      "answer_plus_setup_usd": 1.1355632000000002,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 99,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_1m",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.26666666666666666,
+      "score": 0.2756944444444444,
+      "delta": 0.009027777777777746,
+      "cluster_ci_low": -0.020052597990777337,
+      "cluster_ci_high": 0.0411739777432712,
+      "A_score": 0.26666666666666666,
+      "delta_vs_A": 0.009027777777777746,
+      "answer_usd": 0.540303,
+      "judge_usd": 0.04369240000000002,
+      "standalone_shared_fact_setup_usd": 0.6658013,
+      "answer_plus_setup_usd": 1.2061043,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 43,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_1m",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.2756944444444444,
+      "score": 0.28075000000000006,
+      "delta": 0.005055555555555646,
+      "cluster_ci_low": -0.02329562991021324,
+      "cluster_ci_high": 0.029929428111744903,
+      "A_score": 0.26666666666666666,
+      "delta_vs_A": 0.014083333333333392,
+      "answer_usd": 0.5429332499999998,
+      "judge_usd": 0.043760900000000026,
+      "standalone_shared_fact_setup_usd": 0.6658013,
+      "answer_plus_setup_usd": 1.20873455,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 43,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_1m",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.28075000000000006,
+      "score": 0.28975,
+      "delta": 0.008999999999999952,
+      "cluster_ci_low": -0.02596133025795519,
+      "cluster_ci_high": 0.04909370199692775,
+      "A_score": 0.26666666666666666,
+      "delta_vs_A": 0.023083333333333345,
+      "answer_usd": 0.5433442500000002,
+      "judge_usd": 0.043881199999999995,
+      "standalone_shared_fact_setup_usd": 0.6658013,
+      "answer_plus_setup_usd": 1.2091455500000001,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 95,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_500k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.26766666666666666,
+      "score": 0.247125,
+      "delta": -0.020541666666666653,
+      "cluster_ci_low": -0.05607946537990196,
+      "cluster_ci_high": 0.016341851096874385,
+      "A_score": 0.26766666666666666,
+      "delta_vs_A": -0.020541666666666653,
+      "answer_usd": 0.5443125,
+      "judge_usd": 0.033153199999999994,
+      "standalone_shared_fact_setup_usd": 0.6474272000000001,
+      "answer_plus_setup_usd": 1.1917397,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 50,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_500k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.247125,
+      "score": 0.24125,
+      "delta": -0.005875000000000019,
+      "cluster_ci_low": -0.046817531179138325,
+      "cluster_ci_high": 0.03376053370786513,
+      "A_score": 0.26766666666666666,
+      "delta_vs_A": -0.02641666666666667,
+      "answer_usd": 0.5468497500000001,
+      "judge_usd": 0.03288149999999999,
+      "standalone_shared_fact_setup_usd": 0.6474272000000001,
+      "answer_plus_setup_usd": 1.1942769500000003,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 50,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_500k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 700,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.24125,
+      "score": 0.27391666666666664,
+      "delta": 0.03266666666666665,
+      "cluster_ci_low": -0.014670370370370375,
+      "cluster_ci_high": 0.08181893189318931,
+      "A_score": 0.26766666666666666,
+      "delta_vs_A": 0.006249999999999978,
+      "answer_usd": 0.5495220000000001,
+      "judge_usd": 0.03283429999999999,
+      "standalone_shared_fact_setup_usd": 0.6474272000000001,
+      "answer_plus_setup_usd": 1.1969492000000002,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 98,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.09,
+      "score": 0.08,
+      "delta": -0.009999999999999995,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.09,
+      "delta_vs_A": -0.009999999999999995,
+      "answer_usd": 0.6175672500000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3497642999999997,
+      "answer_plus_setup_usd": 0.9673315499999998,
+      "total_serving_cost_per_correct": 0.12091644374999998,
+      "cost_per_correct": 0.07719590625000002,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.08,
+      "score": 0.08,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.09,
+      "delta_vs_A": -0.009999999999999995,
+      "answer_usd": 0.6396284999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3497642999999997,
+      "answer_plus_setup_usd": 0.9893927999999996,
+      "total_serving_cost_per_correct": 0.12367409999999995,
+      "cost_per_correct": 0.07995356249999999,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 1
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.08,
+      "score": 0.08,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.09,
+      "delta_vs_A": -0.009999999999999995,
+      "answer_usd": 0.6390194999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.3497642999999997,
+      "answer_plus_setup_usd": 0.9887837999999995,
+      "total_serving_cost_per_correct": 0.12359797499999994,
+      "cost_per_correct": 0.07987743749999998,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.17,
+      "score": 0.18,
+      "delta": 0.009999999999999981,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.17,
+      "delta_vs_A": 0.009999999999999981,
+      "answer_usd": 0.59949225,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09509989999999996,
+      "answer_plus_setup_usd": 0.6945921499999999,
+      "total_serving_cost_per_correct": 0.03858845277777777,
+      "cost_per_correct": 0.033305125,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.18,
+      "score": 0.08,
+      "delta": -0.09999999999999999,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.17,
+      "delta_vs_A": -0.09000000000000001,
+      "answer_usd": 0.6387817500000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09509989999999996,
+      "answer_plus_setup_usd": 0.73388165,
+      "total_serving_cost_per_correct": 0.09173520625,
+      "cost_per_correct": 0.07984771875000002,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.08,
+      "score": 0.25,
+      "delta": 0.16999999999999998,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.17,
+      "delta_vs_A": 0.07999999999999999,
+      "answer_usd": 0.6207675000000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09509989999999996,
+      "answer_plus_setup_usd": 0.7158674,
+      "total_serving_cost_per_correct": 0.028634696,
+      "cost_per_correct": 0.024830700000000004,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 99,
+      "empty_answers": 1
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.15,
+      "score": 0.16,
+      "delta": 0.010000000000000009,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.15,
+      "delta_vs_A": 0.010000000000000009,
+      "answer_usd": 0.6038062499999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.17488390000000012,
+      "answer_plus_setup_usd": 0.77869015,
+      "total_serving_cost_per_correct": 0.048668134375,
+      "cost_per_correct": 0.03773789062499999,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.16,
+      "score": 0.15,
+      "delta": -0.010000000000000009,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.15,
+      "delta_vs_A": 0.0,
+      "answer_usd": 0.6323070000000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.17488390000000012,
+      "answer_plus_setup_usd": 0.8071909000000002,
+      "total_serving_cost_per_correct": 0.05381272666666668,
+      "cost_per_correct": 0.042153800000000005,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.15,
+      "score": 0.16,
+      "delta": 0.010000000000000009,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.15,
+      "delta_vs_A": 0.010000000000000009,
+      "answer_usd": 0.6217155000000003,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.17488390000000012,
+      "answer_plus_setup_usd": 0.7965994000000004,
+      "total_serving_cost_per_correct": 0.049787462500000025,
+      "cost_per_correct": 0.03885721875000002,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.6,
+      "score": 0.57,
+      "delta": -0.030000000000000027,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.6,
+      "delta_vs_A": -0.030000000000000027,
+      "answer_usd": 0.5678220000000002,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.017294200000000003,
+      "answer_plus_setup_usd": 0.5851162000000002,
+      "total_serving_cost_per_correct": 0.010265196491228073,
+      "cost_per_correct": 0.009961789473684214,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.57,
+      "score": 0.55,
+      "delta": -0.019999999999999907,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.6,
+      "delta_vs_A": -0.04999999999999993,
+      "answer_usd": 0.5750047499999996,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.017294200000000003,
+      "answer_plus_setup_usd": 0.5922989499999997,
+      "total_serving_cost_per_correct": 0.010769071818181812,
+      "cost_per_correct": 0.010454631818181811,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.55,
+      "score": 0.59,
+      "delta": 0.039999999999999925,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.6,
+      "delta_vs_A": -0.010000000000000009,
+      "answer_usd": 0.56584725,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.017294200000000003,
+      "answer_plus_setup_usd": 0.5831414500000001,
+      "total_serving_cost_per_correct": 0.00988375338983051,
+      "cost_per_correct": 0.009590631355932204,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.74,
+      "score": 0.79,
+      "delta": 0.050000000000000044,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.74,
+      "delta_vs_A": 0.050000000000000044,
+      "answer_usd": 0.4885290000000002,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.35457870000000014,
+      "answer_plus_setup_usd": 0.8431077000000003,
+      "total_serving_cost_per_correct": 0.010672249367088611,
+      "cost_per_correct": 0.006183911392405066,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.79,
+      "score": 0.6,
+      "delta": -0.19000000000000006,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.74,
+      "delta_vs_A": -0.14,
+      "answer_usd": 0.5126174999999998,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.35457870000000014,
+      "answer_plus_setup_usd": 0.8671962,
+      "total_serving_cost_per_correct": 0.014453269999999999,
+      "cost_per_correct": 0.008543624999999997,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.6,
+      "score": 0.69,
+      "delta": 0.08999999999999997,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.74,
+      "delta_vs_A": -0.050000000000000044,
+      "answer_usd": 0.49087125,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.35457870000000014,
+      "answer_plus_setup_usd": 0.8454499500000001,
+      "total_serving_cost_per_correct": 0.012252897826086958,
+      "cost_per_correct": 0.007114076086956521,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 99,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.92,
+      "score": 0.92,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.92,
+      "delta_vs_A": 0.0,
+      "answer_usd": 0.4504042500000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09590850000000001,
+      "answer_plus_setup_usd": 0.5463127500000001,
+      "total_serving_cost_per_correct": 0.005938182065217392,
+      "cost_per_correct": 0.004895698369565218,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.92,
+      "score": 0.79,
+      "delta": -0.13,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.92,
+      "delta_vs_A": -0.13,
+      "answer_usd": 0.48534150000000004,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09590850000000001,
+      "answer_plus_setup_usd": 0.58125,
+      "total_serving_cost_per_correct": 0.007357594936708861,
+      "cost_per_correct": 0.006143563291139241,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.79,
+      "score": 0.91,
+      "delta": 0.12,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.92,
+      "delta_vs_A": -0.010000000000000009,
+      "answer_usd": 0.4588439999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.09590850000000001,
+      "answer_plus_setup_usd": 0.5547525,
+      "total_serving_cost_per_correct": 0.006096181318681318,
+      "cost_per_correct": 0.005042241758241757,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 99,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.86,
+      "score": 0.9,
+      "delta": 0.040000000000000036,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.86,
+      "delta_vs_A": 0.040000000000000036,
+      "answer_usd": 0.4598819999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.16992910000000008,
+      "answer_plus_setup_usd": 0.6298111,
+      "total_serving_cost_per_correct": 0.006997901111111111,
+      "cost_per_correct": 0.0051097999999999985,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.9,
+      "score": 0.74,
+      "delta": -0.16000000000000003,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.86,
+      "delta_vs_A": -0.12,
+      "answer_usd": 0.48118425,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.16992910000000008,
+      "answer_plus_setup_usd": 0.65111335,
+      "total_serving_cost_per_correct": 0.008798829054054054,
+      "cost_per_correct": 0.006502489864864865,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.74,
+      "score": 0.9,
+      "delta": 0.16000000000000003,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.86,
+      "delta_vs_A": 0.040000000000000036,
+      "answer_usd": 0.45389549999999995,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.16992910000000008,
+      "answer_plus_setup_usd": 0.6238246000000001,
+      "total_serving_cost_per_correct": 0.006931384444444445,
+      "cost_per_correct": 0.005043283333333333,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 1.0,
+      "score": 0.87,
+      "delta": -0.13,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 1.0,
+      "delta_vs_A": -0.13,
+      "answer_usd": 0.44272500000000015,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.0176966,
+      "answer_plus_setup_usd": 0.46042160000000015,
+      "total_serving_cost_per_correct": 0.005292202298850576,
+      "cost_per_correct": 0.005088793103448277,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.87,
+      "score": 0.84,
+      "delta": -0.030000000000000027,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 1.0,
+      "delta_vs_A": -0.16000000000000003,
+      "answer_usd": 0.46050675000000013,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.0176966,
+      "answer_plus_setup_usd": 0.47820335000000014,
+      "total_serving_cost_per_correct": 0.005692897023809525,
+      "cost_per_correct": 0.0054822232142857155,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 100,
+      "scope": "full",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 0.84,
+      "score": 0.86,
+      "delta": 0.020000000000000018,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 1.0,
+      "delta_vs_A": -0.14,
+      "answer_usd": 0.4517107499999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.0176966,
+      "answer_plus_setup_usd": 0.4694073499999999,
+      "total_serving_cost_per_correct": 0.005458224999999999,
+      "cost_per_correct": 0.005252450581395347,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 100,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 77,
+      "requested": 77,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.6103896103896104,
+      "score": 0.5454545454545454,
+      "delta": -0.06493506493506496,
+      "cluster_ci_low": -0.125,
+      "cluster_ci_high": 0.0,
+      "A_score": 0.6103896103896104,
+      "delta_vs_A": -0.06493506493506496,
+      "answer_usd": 0.42666525000000005,
+      "judge_usd": 0.0007332000000000001,
+      "standalone_shared_fact_setup_usd": 0.07139566146103897,
+      "answer_plus_setup_usd": 0.49806091146103904,
+      "total_serving_cost_per_correct": 0.011858593130024738,
+      "cost_per_correct": 0.01015869642857143,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 75,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 77,
+      "requested": 77,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.5454545454545454,
+      "score": 0.5454545454545454,
+      "delta": 0.0,
+      "cluster_ci_low": -0.09375,
+      "cluster_ci_high": 0.07894736842105263,
+      "A_score": 0.6103896103896104,
+      "delta_vs_A": -0.06493506493506496,
+      "answer_usd": 0.43318950000000006,
+      "judge_usd": 0.0007415999999999999,
+      "standalone_shared_fact_setup_usd": 0.07139566146103897,
+      "answer_plus_setup_usd": 0.504585161461039,
+      "total_serving_cost_per_correct": 0.012013932415739025,
+      "cost_per_correct": 0.010314035714285717,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 75,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 77,
+      "requested": 77,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.5454545454545454,
+      "score": 0.5584415584415584,
+      "delta": 0.012987012987012991,
+      "cluster_ci_low": -0.058841036414565825,
+      "cluster_ci_high": 0.09375,
+      "A_score": 0.6103896103896104,
+      "delta_vs_A": -0.051948051948051965,
+      "answer_usd": 0.4386157499999999,
+      "judge_usd": 0.0007481000000000001,
+      "standalone_shared_fact_setup_usd": 0.07139566146103897,
+      "answer_plus_setup_usd": 0.5100114114610389,
+      "total_serving_cost_per_correct": 0.011860730499093928,
+      "cost_per_correct": 0.010200366279069766,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 77,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "B-A",
+      "paired": 23,
+      "requested": 23,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.9130434782608695,
+      "score": 1.0,
+      "delta": 0.08695652173913049,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.2,
+      "A_score": 0.9130434782608695,
+      "delta_vs_A": 0.08695652173913049,
+      "answer_usd": 0.13729425,
+      "judge_usd": 0.00017839999999999997,
+      "standalone_shared_fact_setup_usd": 0.02075413853896104,
+      "answer_plus_setup_usd": 0.15804838853896105,
+      "total_serving_cost_per_correct": 0.00687166906691135,
+      "cost_per_correct": 0.005969315217391305,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 23,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "C-B",
+      "paired": 23,
+      "requested": 23,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.0,
+      "A_score": 0.9130434782608695,
+      "delta_vs_A": 0.08695652173913049,
+      "answer_usd": 0.1396095,
+      "judge_usd": 0.00017839999999999997,
+      "standalone_shared_fact_setup_usd": 0.02075413853896104,
+      "answer_plus_setup_usd": 0.16036363853896105,
+      "total_serving_cost_per_correct": 0.006972332110389611,
+      "cost_per_correct": 0.006069978260869565,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 23,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "D-C",
+      "paired": 23,
+      "requested": 23,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 1.0,
+      "score": 0.9130434782608695,
+      "delta": -0.08695652173913049,
+      "cluster_ci_low": -0.15384615384615385,
+      "cluster_ci_high": 0.0,
+      "A_score": 0.9130434782608695,
+      "delta_vs_A": 0.0,
+      "answer_usd": 0.13700775000000004,
+      "judge_usd": 0.0001873,
+      "standalone_shared_fact_setup_usd": 0.02075413853896104,
+      "answer_plus_setup_usd": 0.1577618885389611,
+      "total_serving_cost_per_correct": 0.007512470882807671,
+      "cost_per_correct": 0.006524178571428573,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 23,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.76,
+      "score": 0.74,
+      "delta": -0.020000000000000018,
+      "cluster_ci_low": -0.07,
+      "cluster_ci_high": 0.03,
+      "A_score": 0.76,
+      "delta_vs_A": -0.020000000000000018,
+      "answer_usd": 0.46959449999999997,
+      "judge_usd": 0.0017298,
+      "standalone_shared_fact_setup_usd": 0.47036319999999987,
+      "answer_plus_setup_usd": 0.9399576999999999,
+      "total_serving_cost_per_correct": 0.01270213108108108,
+      "cost_per_correct": 0.006345871621621621,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 81,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.74,
+      "score": 0.8,
+      "delta": 0.06000000000000005,
+      "cluster_ci_low": 0.02,
+      "cluster_ci_high": 0.11,
+      "A_score": 0.76,
+      "delta_vs_A": 0.040000000000000036,
+      "answer_usd": 0.48316799999999993,
+      "judge_usd": 0.0017000000000000001,
+      "standalone_shared_fact_setup_usd": 0.47036319999999987,
+      "answer_plus_setup_usd": 0.9535311999999998,
+      "total_serving_cost_per_correct": 0.011919139999999998,
+      "cost_per_correct": 0.006039599999999999,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 81,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.8,
+      "score": 0.76,
+      "delta": -0.040000000000000036,
+      "cluster_ci_low": -0.11,
+      "cluster_ci_high": 0.02,
+      "A_score": 0.76,
+      "delta_vs_A": 0.0,
+      "answer_usd": 0.48604050000000015,
+      "judge_usd": 0.0017185000000000004,
+      "standalone_shared_fact_setup_usd": 0.47036319999999987,
+      "answer_plus_setup_usd": 0.9564037000000001,
+      "total_serving_cost_per_correct": 0.012584259210526317,
+      "cost_per_correct": 0.006395269736842108,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 82,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.72,
+      "score": 0.75,
+      "delta": 0.030000000000000027,
+      "cluster_ci_low": -0.04,
+      "cluster_ci_high": 0.1,
+      "A_score": 0.72,
+      "delta_vs_A": 0.030000000000000027,
+      "answer_usd": 0.5153227499999999,
+      "judge_usd": 0.0016958000000000003,
+      "standalone_shared_fact_setup_usd": 0.4605896000000001,
+      "answer_plus_setup_usd": 0.97591235,
+      "total_serving_cost_per_correct": 0.013012164666666666,
+      "cost_per_correct": 0.006870969999999999,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 83,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.75,
+      "score": 0.74,
+      "delta": -0.010000000000000009,
+      "cluster_ci_low": -0.08,
+      "cluster_ci_high": 0.05,
+      "A_score": 0.72,
+      "delta_vs_A": 0.020000000000000018,
+      "answer_usd": 0.5199847500000001,
+      "judge_usd": 0.0017329000000000003,
+      "standalone_shared_fact_setup_usd": 0.4605896000000001,
+      "answer_plus_setup_usd": 0.9805743500000002,
+      "total_serving_cost_per_correct": 0.013251004729729732,
+      "cost_per_correct": 0.007026820945945947,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 83,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 500,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.74,
+      "score": 0.75,
+      "delta": 0.010000000000000009,
+      "cluster_ci_low": -0.04,
+      "cluster_ci_high": 0.06,
+      "A_score": 0.72,
+      "delta_vs_A": 0.030000000000000027,
+      "answer_usd": 0.5192512500000002,
+      "judge_usd": 0.0017307999999999998,
+      "standalone_shared_fact_setup_usd": 0.4605896000000001,
+      "answer_plus_setup_usd": 0.9798408500000002,
+      "total_serving_cost_per_correct": 0.013064544666666669,
+      "cost_per_correct": 0.006923350000000003,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 89,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "multihoprag",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 2556,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.53,
+      "score": 0.54,
+      "delta": 0.010000000000000009,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.53,
+      "delta_vs_A": 0.010000000000000009,
+      "answer_usd": 0.5491905000000001,
+      "judge_usd": 0.0013235000000000009,
+      "standalone_shared_fact_setup_usd": 0.3982582000000001,
+      "answer_plus_setup_usd": 0.9474487000000003,
+      "total_serving_cost_per_correct": 0.0175453462962963,
+      "cost_per_correct": 0.010170194444444447,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 82,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "multihoprag",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 2556,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.54,
+      "score": 0.56,
+      "delta": 0.020000000000000018,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.53,
+      "delta_vs_A": 0.030000000000000027,
+      "answer_usd": 0.5484517499999999,
+      "judge_usd": 0.0013321000000000003,
+      "standalone_shared_fact_setup_usd": 0.3982582000000001,
+      "answer_plus_setup_usd": 0.94670995,
+      "total_serving_cost_per_correct": 0.01690553482142857,
+      "cost_per_correct": 0.009793781249999998,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 82,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "multihoprag",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 2556,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.56,
+      "score": 0.57,
+      "delta": 0.009999999999999898,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.53,
+      "delta_vs_A": 0.039999999999999925,
+      "answer_usd": 0.5431612499999998,
+      "judge_usd": 0.0013279000000000008,
+      "standalone_shared_fact_setup_usd": 0.3982582000000001,
+      "answer_plus_setup_usd": 0.9414194499999999,
+      "total_serving_cost_per_correct": 0.016516130701754384,
+      "cost_per_correct": 0.009529144736842103,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 99,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "musique",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.5301118326118326,
+      "score": 0.49762287712287717,
+      "delta": -0.03248895548895542,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.5301118326118326,
+      "delta_vs_A": -0.03248895548895542,
+      "answer_usd": 0.5859015,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.40040580000000003,
+      "answer_plus_setup_usd": 0.9863073,
+      "total_serving_cost_per_correct": 0.02144146304347826,
+      "cost_per_correct": 0.012736989130434782,
+      "correct_basis": "exact_match",
+      "changed_contexts": 99,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "musique",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.49762287712287717,
+      "score": 0.4986424849660143,
+      "delta": 0.0010196078431371491,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.5301118326118326,
+      "delta_vs_A": -0.03146934764581827,
+      "answer_usd": 0.585798,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.40040580000000003,
+      "answer_plus_setup_usd": 0.9862038000000001,
+      "total_serving_cost_per_correct": 0.02241372272727273,
+      "cost_per_correct": 0.01331359090909091,
+      "correct_basis": "exact_match",
+      "changed_contexts": 57,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "musique",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 1000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "f1",
+      "reference_score": 0.4986424849660143,
+      "score": 0.5381680716943875,
+      "delta": 0.0395255867283732,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "A_score": 0.5301118326118326,
+      "delta_vs_A": 0.008056239082554928,
+      "answer_usd": 0.5855100000000002,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.40040580000000003,
+      "answer_plus_setup_usd": 0.9859158000000002,
+      "total_serving_cost_per_correct": 0.020976931914893623,
+      "cost_per_correct": 0.012457659574468089,
+      "correct_basis": "exact_match",
+      "changed_contexts": 97,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.41,
+      "score": 0.4,
+      "delta": -0.009999999999999953,
+      "cluster_ci_low": -0.057167774086378735,
+      "cluster_ci_high": 0.031578947368421054,
+      "A_score": 0.41,
+      "delta_vs_A": -0.009999999999999953,
+      "answer_usd": 0.5929619999999999,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.2591589000000001,
+      "answer_plus_setup_usd": 0.8521209,
+      "total_serving_cost_per_correct": 0.021303022499999998,
+      "cost_per_correct": 0.014824049999999997,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 63,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.4,
+      "score": 0.39,
+      "delta": -0.010000000000000009,
+      "cluster_ci_low": -0.03260869565217391,
+      "cluster_ci_high": 0.0,
+      "A_score": 0.41,
+      "delta_vs_A": -0.019999999999999962,
+      "answer_usd": 0.59367825,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.2591589000000001,
+      "answer_plus_setup_usd": 0.85283715,
+      "total_serving_cost_per_correct": 0.02186761923076923,
+      "cost_per_correct": 0.01522251923076923,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 7,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.39,
+      "score": 0.42,
+      "delta": 0.02999999999999997,
+      "cluster_ci_low": -0.04672897196261682,
+      "cluster_ci_high": 0.11224489795918367,
+      "A_score": 0.41,
+      "delta_vs_A": 0.010000000000000009,
+      "answer_usd": 0.5871405,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.2591589000000001,
+      "answer_plus_setup_usd": 0.8462994,
+      "total_serving_cost_per_correct": 0.020149985714285716,
+      "cost_per_correct": 0.013979535714285713,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 84,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.45,
+      "score": 0.5,
+      "delta": 0.04999999999999999,
+      "cluster_ci_low": 0.01020408163265306,
+      "cluster_ci_high": 0.09377467105263144,
+      "A_score": 0.45,
+      "delta_vs_A": 0.04999999999999999,
+      "answer_usd": 0.5906017500000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.31592839999999994,
+      "answer_plus_setup_usd": 0.90653015,
+      "total_serving_cost_per_correct": 0.018130603000000002,
+      "cost_per_correct": 0.011812035000000004,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 67,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.5,
+      "score": 0.5,
+      "delta": 0.0,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.0,
+      "A_score": 0.45,
+      "delta_vs_A": 0.04999999999999999,
+      "answer_usd": 0.5918167500000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.31592839999999994,
+      "answer_plus_setup_usd": 0.90774515,
+      "total_serving_cost_per_correct": 0.018154903,
+      "cost_per_correct": 0.011836335000000002,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 5,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 100,
+      "requested": 100,
+      "full_dataset": 5000,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "mcq",
+      "reference_score": 0.5,
+      "score": 0.44,
+      "delta": -0.06,
+      "cluster_ci_low": -0.14545895851721094,
+      "cluster_ci_high": 0.02040816326530612,
+      "A_score": 0.45,
+      "delta_vs_A": -0.010000000000000009,
+      "answer_usd": 0.5935050000000001,
+      "judge_usd": 0,
+      "standalone_shared_fact_setup_usd": 0.31592839999999994,
+      "answer_plus_setup_usd": 0.9094334,
+      "total_serving_cost_per_correct": 0.020668940909090907,
+      "cost_per_correct": 0.01348875,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 86,
+      "empty_answers": 0
+    }
+  ],
+  "by_type": [
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "B-A",
+      "type": "bridge_comparison",
+      "paired": 24,
+      "delta": 0.06862745098039215
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "B-A",
+      "type": "comparison",
+      "paired": 24,
+      "delta": 0.0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "B-A",
+      "type": "compositional",
+      "paired": 41,
+      "delta": -0.014634146341463414
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "B-A",
+      "type": "inference",
+      "paired": 11,
+      "delta": -0.015810276679841896
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "C-B",
+      "type": "bridge_comparison",
+      "paired": 24,
+      "delta": 0.08333333333333333
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "C-B",
+      "type": "comparison",
+      "paired": 24,
+      "delta": 0.0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "C-B",
+      "type": "compositional",
+      "paired": 41,
+      "delta": 0.02032520325203252
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "C-B",
+      "type": "inference",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "D-C",
+      "type": "bridge_comparison",
+      "paired": 24,
+      "delta": -0.1388888888888889
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "D-C",
+      "type": "comparison",
+      "paired": 24,
+      "delta": 0.0
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "D-C",
+      "type": "compositional",
+      "paired": 41,
+      "delta": -0.03008130081300813
+    },
+    {
+      "dataset": "2wikimultihopqa",
+      "comparison": "D-C",
+      "type": "inference",
+      "paired": 11,
+      "delta": -0.08333333333333333
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": -0.075
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.02
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": 0.0125
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": 0.05
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.05
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": -0.025
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.004999999999999999
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.025
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": -0.025
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": 0.15
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.020416666666666666
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": -0.0625
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.01111111111111111
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": 0.2
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": -0.03333333333333333
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "B-A",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.025
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": 0.05
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": -0.01111111111111111
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": 0.04166666666666667
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": -0.03333333333333333
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": 0.08333333333333333
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.02
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "C-B",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.01
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.05
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": -0.03333333333333335
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": 0.15
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": 0.03333333333333333
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "summarization",
+      "paired": 10,
+      "delta": -0.02
+    },
+    {
+      "dataset": "beam_1m",
+      "comparison": "D-C",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": -0.025
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": -0.08333333333333333
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": -0.033333333333333326
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.03624999999999999
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "B-A",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "abstention",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": 0.08333333333333333
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": -0.09583333333333334
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "summarization",
+      "paired": 10,
+      "delta": -0.04625
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "C-B",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "abstention",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "contradiction_resolution",
+      "paired": 10,
+      "delta": 0.175
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "event_ordering",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "information_extraction",
+      "paired": 10,
+      "delta": -0.0875
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "instruction_following",
+      "paired": 10,
+      "delta": -0.05
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "knowledge_update",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "multi_session_reasoning",
+      "paired": 10,
+      "delta": 0.03333333333333333
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "preference_following",
+      "paired": 10,
+      "delta": 0.04583333333333332
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "summarization",
+      "paired": 10,
+      "delta": 0.06
+    },
+    {
+      "dataset": "beam_500k",
+      "comparison": "D-C",
+      "type": "temporal_reasoning",
+      "paired": 10,
+      "delta": 0.15
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": -0.01
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.0
+    },
+    {
+      "dataset": "factconsolidation_mh_262k",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.0
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.01
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": -0.1
+    },
+    {
+      "dataset": "factconsolidation_mh_32k",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.17
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.01
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": -0.01
+    },
+    {
+      "dataset": "factconsolidation_mh_64k",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.01
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": -0.03
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": -0.02
+    },
+    {
+      "dataset": "factconsolidation_mh_6k",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 100,
+      "delta": 0.04
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.05
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": -0.19
+    },
+    {
+      "dataset": "factconsolidation_sh_262k",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.09
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.0
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": -0.13
+    },
+    {
+      "dataset": "factconsolidation_sh_32k",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.12
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.04
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": -0.16
+    },
+    {
+      "dataset": "factconsolidation_sh_64k",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.16
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": -0.13
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": -0.03
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 100,
+      "delta": 0.02
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 14,
+      "delta": -0.14285714285714285
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "open_domain",
+      "paired": 5,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 42,
+      "delta": -0.023809523809523808
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "temporal",
+      "paired": 16,
+      "delta": -0.125
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 14,
+      "delta": 0.07142857142857142
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "open_domain",
+      "paired": 5,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 42,
+      "delta": -0.047619047619047616
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "temporal",
+      "paired": 16,
+      "delta": 0.0625
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 14,
+      "delta": 0.07142857142857142
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "open_domain",
+      "paired": 5,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 42,
+      "delta": 0.023809523809523808
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "temporal",
+      "paired": 16,
+      "delta": -0.0625
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "adversarial",
+      "paired": 23,
+      "delta": 0.08695652173913043
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "adversarial",
+      "paired": 23,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "adversarial",
+      "paired": 23,
+      "delta": -0.08695652173913043
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": 0.13333333333333333
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": -0.07407407407407407
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "B-A",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": -0.07407407407407407
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": 0.14814814814814814
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.07142857142857142
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "C-B",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": 0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": -0.06666666666666667
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": -0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": 0.16666666666666666
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_oracle",
+      "comparison": "D-C",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": -0.1111111111111111
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": 0.06666666666666667
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": -0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": 0.3333333333333333
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.07142857142857142
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "B-A",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": -0.06666666666666667
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": 0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "C-B",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": -0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "knowledge-update",
+      "paired": 15,
+      "delta": 0.13333333333333333
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "multi-session",
+      "paired": 27,
+      "delta": -0.037037037037037035
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "single-session-assistant",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "single-session-preference",
+      "paired": 6,
+      "delta": -0.3333333333333333
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "single-session-user",
+      "paired": 14,
+      "delta": 0.0
+    },
+    {
+      "dataset": "longmemeval_s",
+      "comparison": "D-C",
+      "type": "temporal-reasoning",
+      "paired": 27,
+      "delta": 0.07407407407407407
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "B-A",
+      "type": "comparison_query",
+      "paired": 33,
+      "delta": 0.030303030303030304
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "B-A",
+      "type": "inference_query",
+      "paired": 32,
+      "delta": 0.0625
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "B-A",
+      "type": "null_query",
+      "paired": 12,
+      "delta": 0.0
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "B-A",
+      "type": "temporal_query",
+      "paired": 23,
+      "delta": -0.08695652173913043
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "C-B",
+      "type": "comparison_query",
+      "paired": 33,
+      "delta": -0.06060606060606061
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "C-B",
+      "type": "inference_query",
+      "paired": 32,
+      "delta": 0.03125
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "C-B",
+      "type": "null_query",
+      "paired": 12,
+      "delta": 0.0
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "C-B",
+      "type": "temporal_query",
+      "paired": 23,
+      "delta": 0.13043478260869565
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "D-C",
+      "type": "comparison_query",
+      "paired": 33,
+      "delta": 0.030303030303030304
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "D-C",
+      "type": "inference_query",
+      "paired": 32,
+      "delta": 0.03125
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "D-C",
+      "type": "null_query",
+      "paired": 12,
+      "delta": 0.0
+    },
+    {
+      "dataset": "multihoprag",
+      "comparison": "D-C",
+      "type": "temporal_query",
+      "paired": 23,
+      "delta": -0.043478260869565216
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "2hop",
+      "paired": 52,
+      "delta": 0.001043827966904892
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "3hop1",
+      "paired": 24,
+      "delta": -0.03693783068783069
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "3hop2",
+      "paired": 7,
+      "delta": -0.03571428571428571
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "4hop1",
+      "paired": 11,
+      "delta": -0.18181818181818182
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "4hop2",
+      "paired": 3,
+      "delta": 0.16666666666666666
+    },
+    {
+      "dataset": "musique",
+      "comparison": "B-A",
+      "type": "4hop3",
+      "paired": 3,
+      "delta": -0.2222222222222222
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "2hop",
+      "paired": 52,
+      "delta": -0.008333333333333333
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "3hop1",
+      "paired": 24,
+      "delta": 0.05147058823529412
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "3hop2",
+      "paired": 7,
+      "delta": -0.09999999999999999
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "4hop1",
+      "paired": 11,
+      "delta": -0.09090909090909091
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "4hop2",
+      "paired": 3,
+      "delta": 0.3333333333333333
+    },
+    {
+      "dataset": "musique",
+      "comparison": "C-B",
+      "type": "4hop3",
+      "paired": 3,
+      "delta": 0.0
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "2hop",
+      "paired": 52,
+      "delta": 0.05693708001400309
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "3hop1",
+      "paired": 24,
+      "delta": -0.052739385227775326
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "3hop2",
+      "paired": 7,
+      "delta": 0.15584415584415584
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "4hop1",
+      "paired": 11,
+      "delta": 0.13636363636363635
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "4hop2",
+      "paired": 3,
+      "delta": -0.3333333333333333
+    },
+    {
+      "dataset": "musique",
+      "comparison": "D-C",
+      "type": "4hop3",
+      "paired": 3,
+      "delta": 0.2222222222222222
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": -0.1
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": -0.09090909090909091
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "B-A",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": 0.07692307692307693
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "C-B",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": -0.07692307692307693
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.09090909090909091
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": -0.058823529411764705
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": 0.2
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": -0.09090909090909091
+    },
+    {
+      "dataset": "personamem_v2_128k",
+      "comparison": "D-C",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": 0.15384615384615385
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": 0.09523809523809523
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": 0.11764705882352941
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": 0.09090909090909091
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "B-A",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "C-B",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "anti_stereotypical_pref",
+      "paired": 17,
+      "delta": 0.11764705882352941
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "ask_to_forget",
+      "paired": 21,
+      "delta": -0.14285714285714285
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "health_and_medical_conditions",
+      "paired": 11,
+      "delta": 0.0
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "neutral_preferences",
+      "paired": 17,
+      "delta": -0.17647058823529413
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "sensitive_info",
+      "paired": 10,
+      "delta": 0.1
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "stereotypical_pref",
+      "paired": 11,
+      "delta": -0.09090909090909091
+    },
+    {
+      "dataset": "personamem_v2_32k",
+      "comparison": "D-C",
+      "type": "therapy_background",
+      "paired": 13,
+      "delta": -0.15384615384615385
+    }
+  ],
+  "budget": [
+    {
+      "run": "bcd-B-2wikimultihopqa",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.559002
+    },
+    {
+      "run": "bcd-B-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 40,
+      "usd": 0.217005
+    },
+    {
+      "run": "bcd-B-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 102,
+      "usd": 0.008628
+    },
+    {
+      "run": "bcd-B-beam_1m",
+      "role": "answer",
+      "status": "done",
+      "calls": 43,
+      "usd": 0.230724
+    },
+    {
+      "run": "bcd-B-beam_1m",
+      "role": "judge",
+      "status": "done",
+      "calls": 136,
+      "usd": 0.013238300000000001
+    },
+    {
+      "run": "bcd-B-beam_500k",
+      "role": "answer",
+      "status": "done",
+      "calls": 50,
+      "usd": 0.26720775
+    },
+    {
+      "run": "bcd-B-beam_500k",
+      "role": "judge",
+      "status": "done",
+      "calls": 95,
+      "usd": 0.011932400000000001
+    },
+    {
+      "run": "bcd-B-factconsolidation_mh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.61756725
+    },
+    {
+      "run": "bcd-B-factconsolidation_mh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.59949225
+    },
+    {
+      "run": "bcd-B-factconsolidation_mh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.60380625
+    },
+    {
+      "run": "bcd-B-factconsolidation_mh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.567822
+    },
+    {
+      "run": "bcd-B-factconsolidation_sh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.488529
+    },
+    {
+      "run": "bcd-B-factconsolidation_sh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.45040425
+    },
+    {
+      "run": "bcd-B-factconsolidation_sh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.459882
+    },
+    {
+      "run": "bcd-B-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 102,
+      "usd": 0.45152175
+    },
+    {
+      "run": "bcd-B-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 106,
+      "usd": 0.5984715
+    },
+    {
+      "run": "bcd-B-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 57,
+      "usd": 0.0005746000000000001
+    },
+    {
+      "run": "bcd-B-longmemeval_oracle",
+      "role": "answer",
+      "status": "done",
+      "calls": 81,
+      "usd": 0.38561025
+    },
+    {
+      "run": "bcd-B-longmemeval_oracle",
+      "role": "judge",
+      "status": "done",
+      "calls": 47,
+      "usd": 0.0008701
+    },
+    {
+      "run": "bcd-B-longmemeval_s",
+      "role": "answer",
+      "status": "done",
+      "calls": 83,
+      "usd": 0.425976
+    },
+    {
+      "run": "bcd-B-longmemeval_s",
+      "role": "judge",
+      "status": "done",
+      "calls": 59,
+      "usd": 0.0010226
+    },
+    {
+      "run": "bcd-B-multihoprag",
+      "role": "answer",
+      "status": "done",
+      "calls": 82,
+      "usd": 0.45009224999999997
+    },
+    {
+      "run": "bcd-B-multihoprag",
+      "role": "judge",
+      "status": "done",
+      "calls": 46,
+      "usd": 0.0006553
+    },
+    {
+      "run": "bcd-B-musique",
+      "role": "answer",
+      "status": "done",
+      "calls": 99,
+      "usd": 0.57966825
+    },
+    {
+      "run": "bcd-B-personamem_v2_128k",
+      "role": "answer",
+      "status": "done",
+      "calls": 63,
+      "usd": 0.37117275
+    },
+    {
+      "run": "bcd-B-personamem_v2_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 67,
+      "usd": 0.39636975
+    },
+    {
+      "run": "bcd-C-2wikimultihopqa",
+      "role": "answer",
+      "status": "done",
+      "calls": 40,
+      "usd": 0.22523625
+    },
+    {
+      "run": "bcd-C-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 40,
+      "usd": 0.2159115
+    },
+    {
+      "run": "bcd-C-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 93,
+      "usd": 0.0086154
+    },
+    {
+      "run": "bcd-C-beam_1m",
+      "role": "answer",
+      "status": "done",
+      "calls": 43,
+      "usd": 0.23335424999999999
+    },
+    {
+      "run": "bcd-C-beam_1m",
+      "role": "judge",
+      "status": "done",
+      "calls": 142,
+      "usd": 0.012195300000000001
+    },
+    {
+      "run": "bcd-C-beam_500k",
+      "role": "answer",
+      "status": "done",
+      "calls": 50,
+      "usd": 0.269745
+    },
+    {
+      "run": "bcd-C-beam_500k",
+      "role": "judge",
+      "status": "done",
+      "calls": 93,
+      "usd": 0.0114339
+    },
+    {
+      "run": "bcd-C-factconsolidation_mh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.6396285
+    },
+    {
+      "run": "bcd-C-factconsolidation_mh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.63878175
+    },
+    {
+      "run": "bcd-C-factconsolidation_mh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.632307
+    },
+    {
+      "run": "bcd-C-factconsolidation_mh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.57500475
+    },
+    {
+      "run": "bcd-C-factconsolidation_sh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.5126175
+    },
+    {
+      "run": "bcd-C-factconsolidation_sh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.4853415
+    },
+    {
+      "run": "bcd-C-factconsolidation_sh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.48118425
+    },
+    {
+      "run": "bcd-C-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 102,
+      "usd": 0.4694565
+    },
+    {
+      "run": "bcd-C-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 106,
+      "usd": 0.60854925
+    },
+    {
+      "run": "bcd-C-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 52,
+      "usd": 0.0005447000000000001
+    },
+    {
+      "run": "bcd-C-longmemeval_oracle",
+      "role": "answer",
+      "status": "done",
+      "calls": 81,
+      "usd": 0.39918375
+    },
+    {
+      "run": "bcd-C-longmemeval_oracle",
+      "role": "judge",
+      "status": "done",
+      "calls": 41,
+      "usd": 0.0007117
+    },
+    {
+      "run": "bcd-C-longmemeval_s",
+      "role": "answer",
+      "status": "done",
+      "calls": 83,
+      "usd": 0.430638
+    },
+    {
+      "run": "bcd-C-longmemeval_s",
+      "role": "judge",
+      "status": "done",
+      "calls": 45,
+      "usd": 0.0008382
+    },
+    {
+      "run": "bcd-C-multihoprag",
+      "role": "answer",
+      "status": "done",
+      "calls": 82,
+      "usd": 0.4493535
+    },
+    {
+      "run": "bcd-C-multihoprag",
+      "role": "judge",
+      "status": "done",
+      "calls": 38,
+      "usd": 0.0005591
+    },
+    {
+      "run": "bcd-C-musique",
+      "role": "answer",
+      "status": "done",
+      "calls": 57,
+      "usd": 0.3346425
+    },
+    {
+      "run": "bcd-C-personamem_v2_128k",
+      "role": "answer",
+      "status": "done",
+      "calls": 7,
+      "usd": 0.0415395
+    },
+    {
+      "run": "bcd-C-personamem_v2_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 5,
+      "usd": 0.02949525
+    },
+    {
+      "run": "bcd-D-2wikimultihopqa",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.56764875
+    },
+    {
+      "run": "bcd-D-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 107,
+      "usd": 0.584409
+    },
+    {
+      "run": "bcd-D-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 319,
+      "usd": 0.030011100000000002
+    },
+    {
+      "run": "bcd-D-beam_1m",
+      "role": "answer",
+      "status": "done",
+      "calls": 95,
+      "usd": 0.51791775
+    },
+    {
+      "run": "bcd-D-beam_1m",
+      "role": "judge",
+      "status": "done",
+      "calls": 409,
+      "usd": 0.033054
+    },
+    {
+      "run": "bcd-D-beam_500k",
+      "role": "answer",
+      "status": "done",
+      "calls": 98,
+      "usd": 0.53769825
+    },
+    {
+      "run": "bcd-D-beam_500k",
+      "role": "judge",
+      "status": "done",
+      "calls": 287,
+      "usd": 0.025876100000000003
+    },
+    {
+      "run": "bcd-D-factconsolidation_mh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.6390195
+    },
+    {
+      "run": "bcd-D-factconsolidation_mh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 99,
+      "usd": 0.614256
+    },
+    {
+      "run": "bcd-D-factconsolidation_mh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.6217155
+    },
+    {
+      "run": "bcd-D-factconsolidation_mh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.56584725
+    },
+    {
+      "run": "bcd-D-factconsolidation_sh_262k",
+      "role": "answer",
+      "status": "done",
+      "calls": 99,
+      "usd": 0.4868025
+    },
+    {
+      "run": "bcd-D-factconsolidation_sh_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 99,
+      "usd": 0.454551
+    },
+    {
+      "run": "bcd-D-factconsolidation_sh_64k",
+      "role": "answer",
+      "status": "done",
+      "calls": 100,
+      "usd": 0.4538955
+    },
+    {
+      "run": "bcd-D-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 102,
+      "usd": 0.460239
+    },
+    {
+      "run": "bcd-D-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 110,
+      "usd": 0.6327075
+    },
+    {
+      "run": "bcd-D-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 58,
+      "usd": 0.0006057
+    },
+    {
+      "run": "bcd-D-longmemeval_oracle",
+      "role": "answer",
+      "status": "done",
+      "calls": 82,
+      "usd": 0.40909125
+    },
+    {
+      "run": "bcd-D-longmemeval_oracle",
+      "role": "judge",
+      "status": "done",
+      "calls": 44,
+      "usd": 0.0008119000000000001
+    },
+    {
+      "run": "bcd-D-longmemeval_s",
+      "role": "answer",
+      "status": "done",
+      "calls": 89,
+      "usd": 0.46719075
+    },
+    {
+      "run": "bcd-D-longmemeval_s",
+      "role": "judge",
+      "status": "done",
+      "calls": 51,
+      "usd": 0.0009533
+    },
+    {
+      "run": "bcd-D-multihoprag",
+      "role": "answer",
+      "status": "done",
+      "calls": 99,
+      "usd": 0.5368725
+    },
+    {
+      "run": "bcd-D-multihoprag",
+      "role": "judge",
+      "status": "done",
+      "calls": 45,
+      "usd": 0.0006599
+    },
+    {
+      "run": "bcd-D-musique",
+      "role": "answer",
+      "status": "done",
+      "calls": 97,
+      "usd": 0.56859375
+    },
+    {
+      "run": "bcd-D-personamem_v2_128k",
+      "role": "answer",
+      "status": "done",
+      "calls": 84,
+      "usd": 0.4909005
+    },
+    {
+      "run": "bcd-D-personamem_v2_32k",
+      "role": "answer",
+      "status": "done",
+      "calls": 86,
+      "usd": 0.5112795
+    },
+    {
+      "run": "bcd-extract-2wikimultihopqa",
+      "role": "extract",
+      "status": "done",
+      "calls": 712,
+      "usd": 0.3431732
+    },
+    {
+      "run": "bcd-extract-beam_100k",
+      "role": "extract",
+      "status": "done",
+      "calls": 970,
+      "usd": 0.5893937
+    },
+    {
+      "run": "bcd-extract-beam_1m",
+      "role": "extract",
+      "status": "done",
+      "calls": 1132,
+      "usd": 0.6658013
+    },
+    {
+      "run": "bcd-extract-beam_500k",
+      "role": "extract",
+      "status": "done",
+      "calls": 1085,
+      "usd": 0.6474272000000001
+    },
+    {
+      "run": "bcd-extract-factconsolidation_mh_262k",
+      "role": "extract",
+      "status": "done",
+      "calls": 485,
+      "usd": 0.34976430000000003
+    },
+    {
+      "run": "bcd-extract-factconsolidation_mh_32k",
+      "role": "extract",
+      "status": "done",
+      "calls": 132,
+      "usd": 0.0950999
+    },
+    {
+      "run": "bcd-extract-factconsolidation_mh_64k",
+      "role": "extract",
+      "status": "done",
+      "calls": 244,
+      "usd": 0.1748839
+    },
+    {
+      "run": "bcd-extract-factconsolidation_mh_6k",
+      "role": "extract",
+      "status": "done",
+      "calls": 26,
+      "usd": 0.0172942
+    },
+    {
+      "run": "bcd-extract-factconsolidation_sh_262k",
+      "role": "extract",
+      "status": "done",
+      "calls": 490,
+      "usd": 0.3545787
+    },
+    {
+      "run": "bcd-extract-factconsolidation_sh_32k",
+      "role": "extract",
+      "status": "done",
+      "calls": 134,
+      "usd": 0.09590850000000001
+    },
+    {
+      "run": "bcd-extract-factconsolidation_sh_64k",
+      "role": "extract",
+      "status": "done",
+      "calls": 239,
+      "usd": 0.1699291
+    },
+    {
+      "run": "bcd-extract-factconsolidation_sh_6k",
+      "role": "extract",
+      "status": "done",
+      "calls": 26,
+      "usd": 0.0176966
+    },
+    {
+      "run": "bcd-extract-locomo",
+      "role": "extract",
+      "status": "done",
+      "calls": 606,
+      "usd": 0.0921498
+    },
+    {
+      "run": "bcd-extract-longmemeval_oracle",
+      "role": "extract",
+      "status": "done",
+      "calls": 317,
+      "usd": 0.1609846
+    },
+    {
+      "run": "bcd-extract-longmemeval_s",
+      "role": "extract",
+      "status": "done",
+      "calls": 958,
+      "usd": 0.46058960000000004
+    },
+    {
+      "run": "bcd-extract-multihoprag",
+      "role": "extract",
+      "status": "done",
+      "calls": 501,
+      "usd": 0.3982582
+    },
+    {
+      "run": "bcd-extract-musique",
+      "role": "extract",
+      "status": "done",
+      "calls": 739,
+      "usd": 0.40040580000000003
+    },
+    {
+      "run": "bcd-extract-personamem_v2_128k",
+      "role": "extract",
+      "status": "done",
+      "calls": 818,
+      "usd": 0.2591234
+    },
+    {
+      "run": "bcd-extract-personamem_v2_32k",
+      "role": "extract",
+      "status": "done",
+      "calls": 827,
+      "usd": 0.3159284
+    }
+  ]
+}

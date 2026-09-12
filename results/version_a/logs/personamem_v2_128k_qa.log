@@ -1,0 +1,9 @@
+{"started_at": "2026-09-07T21:28:22+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "personamem_v2_128k", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 16, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 816, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 1616, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 2416, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 3216, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 4016, "total": 5000}
+{"dataset": "personamem_v2_128k", "stage": "qa", "done": 4816, "total": 5000}
+{"started_at": "2026-09-08T01:16:50+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "personamem_v2_128k", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}

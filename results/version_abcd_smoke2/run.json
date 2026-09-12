@@ -1,0 +1,58 @@
+{
+  "config": {
+    "version": "bcd-screen-1",
+    "seed": 13,
+    "sample_size": 100,
+    "context_tokens": 4000,
+    "piece_tokens": 500,
+    "max_unit_tokens": 1000,
+    "detect_depth": 30,
+    "extract_units_per_query": 8,
+    "extract_pieces_per_query": 12,
+    "extractor": "gemini-2.5-flash-lite",
+    "extract_output_tokens": 2048,
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "rrf_k": 60,
+    "weights": {
+      "base": 1.0,
+      "topics": 0.2,
+      "communities": 0.2,
+      "relations": 0.4
+    },
+    "max_usd": 60,
+    "job_max_usd": 10
+  },
+  "sample_size": 10,
+  "datasets": [
+    "locomo",
+    "beam_100k"
+  ],
+  "code_sha256": {
+    "facts.py": "dea164424269ddbcd4172a5863b99121819f6281f89056e50433c9b6d91c8eca",
+    "runner.py": "96676ed29fa150bc248df8bbb953b45d7d8609d2311c370c194f4ba6a25bd891",
+    "temporal.py": "c47c2ac2e1c4d5029b555647097e4a39f5b74a14cb9223e4340aedbdb7821fe6",
+    "graph.py": "3a1f6f9eb8f59b5a98ac264630ac2195dcfcdad5b8eaa6805c43b7762f4b8acd",
+    "__init__.py": "6a42755453f04d4b3fac2ce0d8eb51e88a8176e045d136d2b460180191b4151c",
+    "common.py": "0da9878931aced4de68f2101df0b27e79d7938a2063e382df65f5208b88e9e06",
+    "report.py": "b9e917c36c10055560e7b86fd99c0a5c242829f887019b8506e5bd366977ff41"
+  },
+  "baseline_code_sha256": {
+    "runner.py": "fd0011edb0dbcaa8cd05efac849012925311dfbce670fdc6eba74c905d4e8586",
+    "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+    "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+    "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+  },
+  "data_sha256": {
+    "locomo": {
+      "corpus.jsonl": "de774074b207612792fd4aeae4f5ed7fe39628ff247e419ccfa5caf349dd2e22",
+      "questions.jsonl": "e94013a438a30ad91d777aae0d70cfe6fe233584d90b4a995aff70319265021c",
+      "manifest.json": "07bc256c6830cf12f61ee8dcf8d9141f0252f8b8f22bf86337fd906f4aca29e4"
+    },
+    "beam_100k": {
+      "corpus.jsonl": "d6fb952b1714f1e367e41d968e8dedb1fec912585f9887de148e09cbdbdffc0c",
+      "questions.jsonl": "ca8ba570284b36439a76522c0ede7b2bbd59cb921d9e1286b1305b77920b99ce",
+      "manifest.json": "8bc18afd3d889f6ca2cc5b23202b9d6fbc638d4fc52bb7ec12a453fb5fa41750"
+    }
+  }
+}

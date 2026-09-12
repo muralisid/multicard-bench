@@ -1,0 +1,8 @@
+{
+  "at": "2026-09-07T18:22:58.446389+00:00",
+  "old_index_workers": 1,
+  "new_index_workers": 2,
+  "qa_workers": 16,
+  "reason": "Allow other datasets to index alongside LongMemEval; unchanged frozen evaluation protocol",
+  "checkpoint_pending_calls": 0
+}

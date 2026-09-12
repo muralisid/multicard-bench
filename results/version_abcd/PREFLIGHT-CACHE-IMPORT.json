@@ -1,0 +1,9 @@
+{
+  "sources": [
+    "results/version_abcd_smoke",
+    "results/version_abcd_smoke2"
+  ],
+  "calls": 349,
+  "usd": 0.38770325,
+  "note": "These are completed real API calls, carried into the shared cap once. No result scores or structured fact caches imported."
+}

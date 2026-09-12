@@ -1,0 +1,79 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "beam_100k",
+      "variant": "beam_100k",
+      "sources": [
+        {
+          "url": "https://huggingface.co/datasets/Mohammadta/BEAM",
+          "revision": "3205395e897e7318c7b094ef4e6047b9b82dbb03",
+          "file": "100K-00000-of-00001.parquet",
+          "sha256": "c0519be25907005ba873c927c50877471d550873039d96c041554d0075a78ace"
+        }
+      ],
+      "counts": {
+        "corpus_records": 5732,
+        "corpus_words": 1800770,
+        "questions": 400,
+        "answerable_questions": 360,
+        "questions_with_evidence": 355,
+        "unresolved_source_ids": 0,
+        "groups": 20
+      },
+      "question_types": {
+        "abstention": 40,
+        "contradiction_resolution": 40,
+        "event_ordering": 40,
+        "information_extraction": 40,
+        "instruction_following": 40,
+        "knowledge_update": 40,
+        "multi_session_reasoning": 40,
+        "preference_following": 40,
+        "summarization": 40,
+        "temporal_reasoning": 40
+      },
+      "protocol_notes": [
+        "Full author-provided split; corpus contains only chat messages, never plans, profiles, questions or rubrics.",
+        "Each conversation is isolated. Messages retained intact in source order; time anchors carried forward.",
+        "The HF split is named 100K; some paper descriptions call it 128K. Do not silently relabel.",
+        "Reference responses can disagree with rubrics. Official rubric, not lexical reference overlap, controls judgement.",
+        "Official score averages independent {0,0.5,1} rubric-item judgements per question. No universal binary threshold.",
+        "Event ordering also reports Kendall tau-b times F1 after LLM alignment; keep separate from rubric mean.",
+        "Gold source IDs are mapped to messages for retrieval diagnostics; missing references are counted, never guessed.",
+        "Scoring source: mohammadtavakoli78/BEAM@b2da22eac88bb0874c64665f13457eb99835774a, src/evaluation/compute_metrics.py."
+      ],
+      "paid_api_calls": 0,
+      "output_sha256": {
+        "corpus.jsonl": "d6fb952b1714f1e367e41d968e8dedb1fec912585f9887de148e09cbdbdffc0c",
+        "questions.jsonl": "ca8ba570284b36439a76522c0ede7b2bbd59cb921d9e1286b1305b77920b99ce"
+      }
+    },
+    "corpus_sha256": "d6fb952b1714f1e367e41d968e8dedb1fec912585f9887de148e09cbdbdffc0c",
+    "questions_sha256": "ca8ba570284b36439a76522c0ede7b2bbd59cb921d9e1286b1305b77920b99ce",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": 1,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "7f4c38f84b4c6e312fd4b7050487838111683d6ae556a7ccb2ec0e0b0317561c",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788803262.517802,
+  "budget_usd": 2.0,
+  "run_budget_usd": 1.0
+}

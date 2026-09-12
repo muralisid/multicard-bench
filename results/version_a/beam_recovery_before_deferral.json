@@ -1,0 +1,30 @@
+{
+  "pid": 96844,
+  "status": "running",
+  "datasets": {
+    "beam_100k": {
+      "status": "running",
+      "command": [
+        "/Users/muralisid/github_other/multicard-bench/.venv/bin/python",
+        "-m",
+        "multicard.version_a.recover_beam",
+        "--datasets",
+        "beam_100k",
+        "--stage",
+        "qa",
+        "--workers",
+        "16",
+        "--output",
+        "/Users/muralisid/github_other/multicard-bench/results/version_a",
+        "--data",
+        "/Users/muralisid/github_other/multicard-bench/data/version_a",
+        "--max-usd",
+        "150",
+        "--run-max-usd",
+        "40"
+      ],
+      "log": "/Users/muralisid/github_other/multicard-bench/results/version_a/logs/beam_100k_recovery.log"
+    }
+  },
+  "updated_at": "2026-09-08T00:47:10.444866+00:00"
+}

@@ -1,0 +1,3 @@
+answer,answer_cached,answer_key,answer_seconds,answer_tokens_in,answer_tokens_out,answer_usd,cash_usd,context_tokens,correct,id,incremental_answer_usd,incremental_judge_usd,judge,judge_keys,judge_usd,metric,reader,score,seconds,supplementary,type
+B,False,13636b3e1c4d8767155fb23697203ba49749f0596f3a686240dde822f7566806,6.373703791003209,4559,736,0.00617925,0.00617925,4000,0.0,personamem_v2_32k:q00001,0.00617925,0,,[],0,mcq,gemini-3.6-flash,0.0,6.376631457998883,{},therapy_background
+C,False,0d1bbc3efc7bb2b2d1fa54768197023d995ea14ea4eb500d0b0a6aa4ea682282,6.994519625033718,4448,735,0.00609225,0.00609225,4000,0.0,personamem_v2_32k:q00000,0.00609225,0,,[],0,mcq,gemini-3.6-flash,0.0,6.997218124975916,{},anti_stereotypical_pref

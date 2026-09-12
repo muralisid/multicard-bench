@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-08T00:52:19.511027+00:00",
+  "deferred": [
+    "beam_10m"
+  ],
+  "reason": "User requested leaving BEAM 10M out until the other datasets succeed. Resume only following a later user decision.",
+  "active_datasets": [
+    "locomo",
+    "musique",
+    "2wikimultihopqa",
+    "longmemeval_s",
+    "longmemeval_oracle",
+    "multihoprag",
+    "factconsolidation_sh_6k",
+    "factconsolidation_mh_6k",
+    "factconsolidation_sh_32k",
+    "factconsolidation_mh_32k",
+    "factconsolidation_sh_64k",
+    "factconsolidation_mh_64k",
+    "factconsolidation_sh_262k",
+    "factconsolidation_mh_262k",
+    "personamem_v2_32k",
+    "personamem_v2_128k",
+    "beam_100k",
+    "beam_500k",
+    "beam_1m"
+  ],
+  "cached_work_preserved": true,
+  "original_question_count": 20342,
+  "active_question_count": 20142,
+  "deferred_question_count": 200
+}

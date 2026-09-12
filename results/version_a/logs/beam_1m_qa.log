@@ -1,0 +1,42 @@
+{"started_at": "2026-09-08T00:45:27+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "beam_1m", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"dataset": "beam_1m", "stage": "qa", "done": 16, "total": 700}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 223, in <module>
+    main()
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 216, in main
+    qa(data, out, args)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 166, in qa
+    raise failed[0]
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 159, in qa
+    result = future.result()
+             ^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 107, in evaluate_one
+    result = evaluate_beam(q, pred, judge)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/scale_scoring.py", line 110, in evaluate_beam
+    judgements.append(parse_beam_rubric(response["text"]))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/scale_scoring.py", line 43, in parse_beam_rubric
+    parsed = json.loads(text)
+             ^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Invalid \escape: line 3 column 284 (char 301)
+{"started_at": "2026-09-08T01:16:52+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "beam_1m", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}

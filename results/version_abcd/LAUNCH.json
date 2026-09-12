@@ -1,0 +1,14 @@
+{
+  "pid": 5961,
+  "caffeinate_pid": 5962,
+  "at": "2026-09-08T01:29:46.830395+00:00",
+  "provider": "Vertex only",
+  "datasets": 19,
+  "questions_per_arm": 1900,
+  "new_arms": [
+    "B",
+    "C",
+    "D"
+  ],
+  "budget_usd": 60
+}

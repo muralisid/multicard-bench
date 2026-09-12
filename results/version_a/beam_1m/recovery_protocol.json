@@ -1,0 +1,14 @@
+{
+  "overlay_sha256": "a7f866927b9f8c1986e0fde2495bd6ddd3b61f1fdf0c921a355c4759cc526dca",
+  "base_code_sha256": {
+    "runner.py": "fd0011edb0dbcaa8cd05efac849012925311dfbce670fdc6eba74c905d4e8586",
+    "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+    "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c",
+    "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218"
+  },
+  "changes": [
+    "Wait up to 150 seconds for an identical in-flight call; never submit a duplicate.",
+    "Parse illegal backslash escapes as literal characters; preserve numeric rubric scores."
+  ],
+  "unchanged": "Model requests, prompts, token caps, datasets, retrieval, cached responses and cost accounting"
+}

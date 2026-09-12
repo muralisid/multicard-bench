@@ -1,0 +1,2 @@
+{"response_sha256": "f18bed98d091501912a95a11eade1b2b084d3a4977278735a6c9139b7c65ded6", "score": 0.0, "repair": "make_illegal_backslash_escapes_literal"}
+{"response_sha256": "1f95ac56b41ef7068e6f52d838389fbc92bbe7d057cc674ed77cade7b040f746", "score": 1.0, "repair": "make_illegal_backslash_escapes_literal"}

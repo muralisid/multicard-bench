@@ -1,0 +1,26 @@
+{
+  "pytest": {
+    "passed": 403,
+    "skipped": 1,
+    "seconds": 42.24,
+    "skip_reason": "Optional upstream LoCoMo stemmed-F1 helper requires nltk; primary judge evaluation is available.",
+    "verified_utc": "2026-09-07T18:24:43.499535+00:00"
+  },
+  "smoke_variants": [
+    "factconsolidation_sh_6k",
+    "factconsolidation_mh_6k",
+    "locomo",
+    "personamem_v2_32k",
+    "beam_100k"
+  ],
+  "index_llm_calls": 0,
+  "empty_answer_amendment_tests": {
+    "passed": 31,
+    "seconds": 0.32,
+    "command": ".venv/bin/python -m pytest tests/test_version_a_empty_answer.py tests/test_version_a_core.py tests/test_version_a_reporting.py tests/test_version_a_client.py -q"
+  },
+  "beam_recovery_tests": {
+    "passed": 21,
+    "seconds": 1.95
+  }
+}

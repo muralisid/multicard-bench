@@ -1,0 +1,98 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "locomo",
+      "variant": "locomo10_all_categories",
+      "source_url": "https://raw.githubusercontent.com/snap-research/locomo/3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376/data/locomo10.json",
+      "source_revision": "3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376",
+      "source_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+      "license": "CC-BY-NC-4.0",
+      "diagnostics": {
+        "caption_turns": 1226,
+        "unresolved_evidence": [
+          {
+            "question_id": "conv-42:q0058",
+            "unresolved": [
+              "D10:19"
+            ]
+          },
+          {
+            "question_id": "conv-42:q0088",
+            "unresolved": [
+              "D"
+            ]
+          },
+          {
+            "question_id": "conv-43:q0018",
+            "unresolved": [
+              "D:11:26"
+            ]
+          },
+          {
+            "question_id": "conv-47:q0038",
+            "unresolved": [
+              "D4:36"
+            ]
+          },
+          {
+            "question_id": "conv-50:q0069",
+            "unresolved": [
+              "D30:05"
+            ]
+          }
+        ]
+      },
+      "protocol_differences": [
+        "Version A retrieves raw turns and supplied BLIP captions, never generated observations or summaries.",
+        "Primary judge accuracy uses categories 1-4 (1540 questions); 446 category-5 abstention questions are separate.",
+        "Original LoCoMo reports category-specific stemmed F1; judge accuracy is a distinct metric.",
+        "Compound evidence labels are split when unambiguous; unresolvable source labels are recorded, not repaired.",
+        "Question-level retrieval recall with incomplete source evidence must be reported separately."
+      ],
+      "schema_version": 1,
+      "groups": 10,
+      "corpus_records": 5882,
+      "questions": 1986,
+      "headline_questions": 1540,
+      "question_types": {
+        "adversarial": 446,
+        "multi_hop": 282,
+        "open_domain": 96,
+        "single_hop": 841,
+        "temporal": 321
+      },
+      "corpus_characters": 816870,
+      "output_sha256": {
+        "corpus.jsonl": "de774074b207612792fd4aeae4f5ed7fe39628ff247e419ccfa5caf349dd2e22",
+        "questions.jsonl": "e94013a438a30ad91d777aae0d70cfe6fe233584d90b4a995aff70319265021c"
+      }
+    },
+    "corpus_sha256": "de774074b207612792fd4aeae4f5ed7fe39628ff247e419ccfa5caf349dd2e22",
+    "questions_sha256": "e94013a438a30ad91d777aae0d70cfe6fe233584d90b4a995aff70319265021c",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "688fe5b808f0410efaea06d555f5b79aa038c20c8a665613e3a9ee885f9e68b6",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788803340.572098,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0
+}

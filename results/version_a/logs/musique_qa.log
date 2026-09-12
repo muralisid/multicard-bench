@@ -1,0 +1,23 @@
+{"started_at": "2026-09-07T18:19:40+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "musique", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"dataset": "musique", "stage": "qa", "done": 16, "total": 1000}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 219, in <module>
+    main()
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 212, in main
+    qa(data, out, args)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 152, in qa
+    for future in as_completed(futures):
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/concurrent/futures/_base.py", line 243, in as_completed
+    waiter.event.wait(wait_timeout)
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/threading.py", line 629, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/threading.py", line 327, in wait
+    waiter.acquire()
+KeyboardInterrupt
+{"started_at": "2026-09-07T18:22:58+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "musique", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"dataset": "musique", "stage": "qa", "done": 453, "total": 1000}
+{"started_at": "2026-09-07T18:31:02+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "musique", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"started_at": "2026-09-08T01:16:43+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "musique", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "qa", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}

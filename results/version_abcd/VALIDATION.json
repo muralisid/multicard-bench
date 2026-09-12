@@ -1,0 +1,25 @@
+{
+  "full_suite": {
+    "passed": 429,
+    "skipped": 1,
+    "seconds": 24.11
+  },
+  "final_bcd_targeted": {
+    "passed": 19,
+    "seconds": 2.77
+  },
+  "preflight_variants": [
+    "factconsolidation_sh_6k",
+    "locomo",
+    "beam_100k"
+  ],
+  "preflight_arms": [
+    "B",
+    "C",
+    "D"
+  ],
+  "preflight_api_usd_included_in_cap": 0.38770325,
+  "scope_excludes": [
+    "beam_10m"
+  ]
+}

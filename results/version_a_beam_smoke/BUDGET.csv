@@ -1,0 +1,2 @@
+actual_answer_usd,actual_api_usd,actual_judge_usd,available,budget_limit_usd,calls,committed_usd,dataset,done_calls,error_calls,error_events,note,pending_calls,role_attribution_available,unresolved_reserved_usd
+0.005538,0.0056582,0.00012020000000000002,True,1.0,2,0.0056582,beam_100k,2,0,0,"Done costs are metered usage; unresolved reservations are budget holds, not confirmed spend. Cached cross-dataset calls belong to the first paying run.",0,True,0

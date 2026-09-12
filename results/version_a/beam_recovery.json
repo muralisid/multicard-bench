@@ -1,0 +1,79 @@
+{
+  "pid": 97181,
+  "status": "complete",
+  "datasets": {
+    "beam_100k": {
+      "status": "complete",
+      "command": [
+        "/Users/muralisid/github_other/multicard-bench/.venv/bin/python",
+        "-m",
+        "multicard.version_a.recover_beam",
+        "--datasets",
+        "beam_100k",
+        "--stage",
+        "qa",
+        "--workers",
+        "16",
+        "--output",
+        "/Users/muralisid/github_other/multicard-bench/results/version_a",
+        "--data",
+        "/Users/muralisid/github_other/multicard-bench/data/version_a",
+        "--max-usd",
+        "150",
+        "--run-max-usd",
+        "40"
+      ],
+      "log": "/Users/muralisid/github_other/multicard-bench/results/version_a/logs/beam_100k_recovery.log",
+      "exit_code": 0
+    },
+    "beam_500k": {
+      "status": "complete",
+      "command": [
+        "/Users/muralisid/github_other/multicard-bench/.venv/bin/python",
+        "-m",
+        "multicard.version_a.recover_beam",
+        "--datasets",
+        "beam_500k",
+        "--stage",
+        "qa",
+        "--workers",
+        "16",
+        "--output",
+        "/Users/muralisid/github_other/multicard-bench/results/version_a",
+        "--data",
+        "/Users/muralisid/github_other/multicard-bench/data/version_a",
+        "--max-usd",
+        "150",
+        "--run-max-usd",
+        "40"
+      ],
+      "log": "/Users/muralisid/github_other/multicard-bench/results/version_a/logs/beam_500k_recovery.log",
+      "exit_code": 0
+    },
+    "beam_1m": {
+      "status": "complete",
+      "command": [
+        "/Users/muralisid/github_other/multicard-bench/.venv/bin/python",
+        "-m",
+        "multicard.version_a.recover_beam",
+        "--datasets",
+        "beam_1m",
+        "--stage",
+        "qa",
+        "--workers",
+        "16",
+        "--output",
+        "/Users/muralisid/github_other/multicard-bench/results/version_a",
+        "--data",
+        "/Users/muralisid/github_other/multicard-bench/data/version_a",
+        "--max-usd",
+        "150",
+        "--run-max-usd",
+        "40"
+      ],
+      "log": "/Users/muralisid/github_other/multicard-bench/results/version_a/logs/beam_1m_recovery.log",
+      "exit_code": 0
+    }
+  },
+  "updated_at": "2026-09-08T01:16:53.047943+00:00"
+}

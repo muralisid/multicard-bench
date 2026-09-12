@@ -1,0 +1,79 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "multihoprag",
+      "variant": "Full train split, including null questions",
+      "source": "https://huggingface.co/datasets/yixuantt/MultiHopRAG",
+      "revision": "71ac0d0bd1f951d2d6b70311f7d2ae404e1ffa82",
+      "source_files": {
+        "corpus.jsonl": {
+          "sha256": "ceefc85586e501dd891eec8eae6a0708c0b14d1c2ba8ca8f3f5f2ef5487e12f3",
+          "bytes": 6636094
+        },
+        "queries.jsonl": {
+          "sha256": "9561ec22a5d61cc4811037400ab79b32bf768b9e4c16151a172fcb1ae2b2b18d",
+          "bytes": 4130671
+        }
+      },
+      "protocol": {
+        "corpus_unit": "Part 1 paragraph-aware 500-MiniLM-token chunks with no overlap; overlong sentences remain whole",
+        "parent_id": "Original article ID; question evidence_ids refer to parents, so fold chunk ranking to distinct parents before scoring",
+        "retrieval": "Article-coverage proxy: distinct gold-article recall; 2,255 nonnull questions. Nulls excluded from retrieval denominator",
+        "answering": "Answer accuracy including 301 null questions; published paper top-six chunks differs from a fixed token budget",
+        "leakage_control": "Evidence facts exist only in raw evaluation data; normalized corpus contains article text only",
+        "comparison_note": "Retrieving one chunk does not establish that the supporting fact was returned. Parent recall and budget coverage are article proxies, not the paper's evidence-fact Hits@K"
+      },
+      "schema_version": 1,
+      "counts": {
+        "corpus": 3376,
+        "questions": 2556,
+        "groups": 1,
+        "evidence_questions": 2255,
+        "question_types": {
+          "comparison_query": 856,
+          "inference_query": 816,
+          "null_query": 301,
+          "temporal_query": 583
+        },
+        "parent_documents": 609
+      },
+      "output_files": {
+        "corpus.jsonl": {
+          "sha256": "7324d736477e2141faed7472800e7c67d64af1294a8057314d009020044d5e03",
+          "bytes": 7106599
+        },
+        "questions.jsonl": {
+          "sha256": "fae61e9b76ad2f301f719b59003b915db263d05fdd109e829776079fc87af55e",
+          "bytes": 1250651
+        }
+      }
+    },
+    "corpus_sha256": "7324d736477e2141faed7472800e7c67d64af1294a8057314d009020044d5e03",
+    "questions_sha256": "fae61e9b76ad2f301f719b59003b915db263d05fdd109e829776079fc87af55e",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "688fe5b808f0410efaea06d555f5b79aa038c20c8a665613e3a9ee885f9e68b6",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788804432.090443,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0
+}

@@ -1,0 +1,24 @@
+variable,value,purpose
+Arm A,BM25 + local MiniLM dense retrieval; raw source evidence,Zero ingestion LLM calls; baseline
+Arm B,A + cached facts from detected source text,Test whether fact compression improves evidence per token
+Arm C,"B + validity intervals, supersession and source replacement",Test whether handling changed facts reduces stale answers
+Arm D,"C + topic index, community index and relation traversal",Test whether graph links improve evidence ranking
+Reader / provider,Gemini 3.6 Flash / Google Vertex AI,Same reader across every arm
+Judge / extractor,Gemini 2.5 Flash Lite / Google Vertex AI,Judging only where required; B/C/D fact extraction
+Evidence budget,"4,000 MiniLM WordPiece tokens including source labels",Same reader evidence allowance; nominal corpus size is separate
+Answer allowance,768 provider output tokens; includes hidden reasoning,Empty answers score zero; no quality retries
+Judge allowance,64 output tokens; BEAM rubric 512,Preserve dataset-specific metric
+A retrieval,BM25 + all-MiniLM-L6-v2; equal RRF weights; k=60; top 100/channel,Local lexical and embedding search
+Dense windows,"200 tokens, overlap 30; max window score folded to parent source",Long source units remain retrievable
+Sample,100 questions/dataset; proportional type strata; seed 13,Same IDs in A/B/C/D; all 100-question MAB variants are full
+B detection,Up to 8 units from first 30 A ranks; at most 12 fixed 500-token pieces/query,Bound extraction cost; not exhaustive fact coverage
+B extraction,"At most 16 facts/piece; 2,048 output tokens; units over 1,000 tokens stay raw",Quote/object grounding required; invalid output falls back to raw
+Fact cache,"Key includes namespace, source piece, metadata, prompt and model parameters",Reuse extraction across arms and questions; new protocol means new key
+Memory state,Discover all sampled queries' evidence per history before answering,Warm shared memory; setup charged separately; not online cold-start replay
+C supersession,Matching subject/predicate/scope; exclusive state; strict date or benchmark serial,Preserve history/events/multi-value facts; no guessed temporal order
+D topics,"TF-IDF + MiniBatchKMeans, seed 13, up to 32 topics",Local topic membership and separate inverted index
+D communities,Leiden on source projection with shared entities; filter entity hubs,Local community membership and separate inverted index
+D relationships,Typed source/entity/fact nodes and edges; two-hop traversal,"Graph covers discovered evidence, not all corpus facts"
+D fusion weights,Base 1.0; topic 0.2; community 0.2; relation 0.4; RRF k=60,Fixed before screening; no evaluation-answer tuning
+API price inputs,Reader input/output $0.75/$3.75 per million; Lite $0.10/$0.40,Recorded-token cost estimates; not a reconciled cloud invoice
+Concurrency / caps,16 QA workers; A cap $150; B/C/D shared cap $60; program cap $500,Persistent reservation ledger before each request

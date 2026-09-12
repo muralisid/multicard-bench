@@ -1,0 +1,2 @@
+{"group": "global", "documents": 3376, "source_tokens": 1423563, "build_seconds": 334.49336075002793, "cache_hit": false, "storage_bytes": 13323047, "llm_calls": 0, "llm_usd": 0}
+{"group": "global", "documents": 3376, "source_tokens": 1423563, "build_seconds": 7.8955423749866895, "cache_hit": true, "storage_bytes": 13323047, "llm_calls": 0, "llm_usd": 0}

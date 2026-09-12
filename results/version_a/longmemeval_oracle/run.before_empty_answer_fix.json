@@ -1,0 +1,45 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "longmemeval_oracle",
+      "source": "https://huggingface.co/datasets/xiaowu0162/longmemeval",
+      "source_sha256": "08d8dad4be43ee2049a22ff5674eb86725d0ce5ff434cde2627e5e8e7e117894",
+      "counts": {
+        "corpus": 10960,
+        "questions": 500,
+        "groups": 500
+      },
+      "protocol_notes": [
+        "Oracle is derived by retaining marked evidence sessions only."
+      ],
+      "variant": "oracle"
+    },
+    "corpus_sha256": "61b632d0a08bea6298b11fac1811b93744ebfcb2cd19a7280ca05b6c42f53db6",
+    "questions_sha256": "bab484a28cf700e7270f47b4c382ae5686fcc7320821042dd4eedadbb3890237",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "688fe5b808f0410efaea06d555f5b79aa038c20c8a665613e3a9ee885f9e68b6",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788803703.708161,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0
+}

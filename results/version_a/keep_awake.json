@@ -1,0 +1,5 @@
+{
+  "campaign_pid": 88323,
+  "caffeinate_pid": 88324,
+  "scope": "Prevent idle system sleep only until the campaign process exits"
+}

@@ -1,0 +1,4 @@
+dataset,comparison,type,paired,delta
+factconsolidation_sh_6k,B-A,single_hop,2,0.0
+factconsolidation_sh_6k,C-B,single_hop,2,0.0
+factconsolidation_sh_6k,D-C,single_hop,2,0.0

@@ -1,0 +1,2 @@
+{"group": "beam_10m:1", "documents": 19895, "source_tokens": 12672628, "build_seconds": 2901.477163832984, "cache_hit": false, "storage_bytes": 116745501, "llm_calls": 0, "llm_usd": 0}
+{"group": "beam_10m:2", "documents": 19057, "source_tokens": 11880925, "build_seconds": 2681.0885140420287, "cache_hit": false, "storage_bytes": 110053887, "llm_calls": 0, "llm_usd": 0}

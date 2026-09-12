@@ -1,0 +1,99 @@
+{"started_at": "2026-09-07T22:55:57+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "beam_10m", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+Token indices sequence length is longer than the specified maximum sequence length for this model (781 > 256). Running this sequence through the model will result in indexing errors
+{"dataset": "beam_10m", "stage": "retrieve", "done": 20, "total": 200}
+{"dataset": "beam_10m", "stage": "retrieve", "done": 40, "total": 200}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 223, in <module>
+    main()
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 214, in main
+    retrieve(data, out, args.limit)
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/runner.py", line 59, in retrieve
+    index = HybridIndex(documents, encoder, Path("data/cache/version_a/index"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/version_a/core.py", line 124, in __init__
+    vectors.append(encoder.encode(windows[start:start + 4096]))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/src/multicard/index/encoder.py", line 65, in encode
+    v = self.model.encode(
+        ^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/sentence_transformers/util/decorators.py", line 41, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/sentence_transformers/sentence_transformer/model.py", line 662, in encode
+    out_features = self(features, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/sentence_transformers/base/model.py", line 517, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/sentence_transformers/base/modules/transformer.py", line 1196, in forward
+    model_output = model_method(**filtered_kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/models/bert/modeling_bert.py", line 1000, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/models/bert/modeling_bert.py", line 650, in forward
+    layer_outputs = layer_module(
+                    ^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/models/bert/modeling_bert.py", line 588, in forward
+    layer_output = apply_chunking_to_forward(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/pytorch_utils.py", line 257, in apply_chunking_to_forward
+    return forward_fn(*input_tensors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/models/bert/modeling_bert.py", line 596, in feed_forward_chunk
+    intermediate_output = self.intermediate(attention_output)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/transformers/models/bert/modeling_bert.py", line 512, in forward
+    hidden_states = self.dense(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/muralisid/github_other/multicard-bench/.venv/lib/python3.11/site-packages/torch/nn/modules/linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

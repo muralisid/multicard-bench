@@ -48,3 +48,13 @@ FREEZE
 /results/part1*/**/contexts_*.jsonl
 /results/part1*/**/candidates.json
 /results/part1*/**/rankings.json
+
+# Version A source excerpts and local model call cache.
+/results/version_a*/**/retrieval.jsonl
+/results/version_a*/**/calls.sqlite*
+
+# B/C/D source excerpts and source-derived fact/graph artifacts stay local.
+/results/version_abcd*/**/contexts.jsonl
+/results/version_abcd*/**/sample.json
+/results/version_abcd*/**/groups/
+/results/version_abcd*/_facts/

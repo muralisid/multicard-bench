@@ -1,0 +1,15 @@
+run,role,status,calls,usd
+bcd-B-beam_100k,answer,done,5,0.027579
+bcd-B-beam_100k,judge,done,30,0.0014056000000000001
+bcd-B-locomo,answer,done,9,0.05091
+bcd-B-locomo,judge,done,3,3.3400000000000005e-05
+bcd-C-beam_100k,answer,done,5,0.02815125
+bcd-C-beam_100k,judge,done,20,0.0012926
+bcd-C-locomo,answer,done,9,0.05166
+bcd-C-locomo,judge,done,5,5.51e-05
+bcd-D-beam_100k,answer,done,9,0.04987275
+bcd-D-beam_100k,judge,done,26,0.0020280000000000003
+bcd-D-locomo,answer,done,10,0.057083999999999996
+bcd-D-locomo,judge,done,6,6.330000000000001e-05
+bcd-extract-beam_100k,extract,done,116,0.0725011
+bcd-extract-locomo,extract,done,78,0.0101791

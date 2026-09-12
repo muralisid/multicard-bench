@@ -1,0 +1,10 @@
+dataset,cohort,comparison,paired,requested,full_dataset,scope,status,metric,reference_score,score,delta,cluster_ci_low,cluster_ci_high,answer_usd,judge_usd,standalone_shared_fact_setup_usd,answer_plus_setup_usd,total_serving_cost_per_correct,cost_per_correct,correct_basis,changed_contexts,empty_answers
+beam_100k,headline,B-A,10,10,400,screen,complete,beam_rubric_mean,0.225,0.225,0.0,0.0,0.0,0.0553545,0.0030001999999999997,0.07250109999999999,0.12785559999999999,,,,5,0
+beam_100k,headline,C-B,10,10,400,screen,complete,beam_rubric_mean,0.225,0.325,0.1,0.0,0.3,0.05592674999999999,0.0029227000000000003,0.07250109999999999,0.12842784999999998,,,,5,0
+beam_100k,headline,D-C,10,10,400,screen,complete,beam_rubric_mean,0.325,0.325,0.0,-0.3,0.3,0.05455275,0.0029018,0.07250109999999999,0.12705384999999997,,,,9,0
+locomo,headline,B-A,8,8,1986,screen,complete,judge,0.5,0.375,-0.125,-0.5,0.0,0.045134999999999995,7.99e-05,0.006744300000000001,0.051879299999999996,0.0172931,0.015044999999999998,binary_correct,7,0
+locomo,headline,C-B,8,8,1986,screen,complete,judge,0.375,0.375,0.0,0.0,0.0,0.0452475,8.410000000000001e-05,0.006744300000000001,0.051991800000000005,0.0173306,0.0150825,binary_correct,7,0
+locomo,headline,D-C,8,8,1986,screen,complete,judge,0.375,0.25,-0.125,-0.5,0.0,0.04542525,7.92e-05,0.006744300000000001,0.05216955,0.026084775,0.022712625,binary_correct,8,0
+locomo,adversarial,B-A,2,2,1986,screen,complete,judge,1.0,1.0,0.0,,,0.01160625,1.4900000000000001e-05,0.0034348,0.01504105,0.007520525,0.005803125,binary_correct,2,0
+locomo,adversarial,C-B,2,2,1986,screen,complete,judge,1.0,1.0,0.0,,,0.01224375,1.4900000000000001e-05,0.0034348,0.01567855,0.007839275,0.006121875,binary_correct,2,0
+locomo,adversarial,D-C,2,2,1986,screen,complete,judge,1.0,1.0,0.0,,,0.011658749999999999,1.4900000000000001e-05,0.0034348,0.015093549999999999,0.0075467749999999995,0.0058293749999999995,binary_correct,2,0

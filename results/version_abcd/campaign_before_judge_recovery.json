@@ -1,0 +1,29 @@
+{
+  "pid": 5961,
+  "status": "incomplete",
+  "datasets": {
+    "locomo": "complete",
+    "musique": "complete",
+    "2wikimultihopqa": "complete",
+    "longmemeval_s": "complete",
+    "longmemeval_oracle": "complete",
+    "multihoprag": "complete",
+    "factconsolidation_sh_6k": "complete",
+    "factconsolidation_mh_6k": "complete",
+    "factconsolidation_sh_32k": "complete",
+    "factconsolidation_mh_32k": "complete",
+    "factconsolidation_sh_64k": "complete",
+    "factconsolidation_mh_64k": "complete",
+    "factconsolidation_sh_262k": "complete",
+    "factconsolidation_mh_262k": "complete",
+    "personamem_v2_32k": "complete",
+    "personamem_v2_128k": "complete",
+    "beam_100k": "complete",
+    "beam_500k": "complete",
+    "beam_1m": "failed"
+  },
+  "budget_usd": 60,
+  "errors": {
+    "beam_1m": "Expecting ',' delimiter: line 3 column 158 (char 175)"
+  }
+}

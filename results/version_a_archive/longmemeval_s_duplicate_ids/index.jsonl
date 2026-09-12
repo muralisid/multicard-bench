@@ -1,0 +1,3 @@
+{"group": "e47becba", "documents": 550, "source_tokens": 108087, "build_seconds": 21.67270183400251, "cache_hit": false, "storage_bytes": 1337350, "llm_calls": 0, "llm_usd": 0}
+{"group": "118b2229", "documents": 497, "source_tokens": 110115, "build_seconds": 22.465338042005897, "cache_hit": false, "storage_bytes": 1320028, "llm_calls": 0, "llm_usd": 0}
+{"group": "51a45a95", "documents": 529, "source_tokens": 110152, "build_seconds": 17.483509542013053, "cache_hit": false, "storage_bytes": 1333048, "llm_calls": 0, "llm_usd": 0}

@@ -1,0 +1,15 @@
+{"started_at": "2026-09-07T17:49:00+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "locomo", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "4", "--max-usd", "150", "--run-max-usd", "40"]}
+{"dataset": "locomo", "stage": "retrieve", "done": 199, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 304, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 497, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 757, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 999, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 1157, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 1347, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 1586, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 1782, "total": 1986}
+{"dataset": "locomo", "stage": "retrieve", "done": 1986, "total": 1986}
+{"started_at": "2026-09-07T18:12:11+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "locomo", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"started_at": "2026-09-07T18:22:58+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "locomo", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"started_at": "2026-09-07T18:31:01+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "locomo", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+{"started_at": "2026-09-08T01:16:42+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "locomo", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}

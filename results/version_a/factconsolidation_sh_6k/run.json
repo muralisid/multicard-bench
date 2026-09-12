@@ -1,0 +1,68 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "factconsolidation_sh_6k",
+      "variant": "factconsolidation_sh_6k",
+      "sources": [
+        {
+          "url": "https://huggingface.co/datasets/ai-hyz/MemoryAgentBench",
+          "revision": "7ea066982b140a19337e17e60d45d4076e042faf",
+          "file": "Conflict_Resolution-00000-of-00001.parquet",
+          "sha256": "24d5c3f09ce0ce15625cb9f8a98f44f0d864ca6c94d7b4ad04eb697ca3a5ff45"
+        }
+      ],
+      "counts": {
+        "corpus_records": 26,
+        "corpus_words": 5180,
+        "questions": 100,
+        "answerable_questions": 100,
+        "questions_with_evidence": 0,
+        "unresolved_source_ids": 0,
+        "groups": 1
+      },
+      "question_types": {
+        "single_hop": 100
+      },
+      "protocol_notes": [
+        "Full author-provided variant, 100 questions; no question subsampling.",
+        "Corpus contains only original context, including superseded and counterfactual facts in order.",
+        "200-word chunks with 30-word overlap. Numeric fact serials preserved; no world-knowledge repair.",
+        "No gold evidence IDs supplied. Answer containment is not evidence recall.",
+        "Official accuracy is maximum normalized substring match across reference answers.",
+        "Scoring source: HUST-AI-HYZ/MemoryAgentBench@fe1735de8cf8b9908e1e3d3b5612afc815698062, utils/eval_other_utils.py."
+      ],
+      "paid_api_calls": 0,
+      "output_sha256": {
+        "corpus.jsonl": "3a3a366cc39a3d624efb04e41e7869014e3e9316482877d4c7c768283bf7dbcc",
+        "questions.jsonl": "c2921084d6d3659c0c3122d6bf6363f9d6d099b7683d4b1d4dbb6994e997c2bd"
+      }
+    },
+    "corpus_sha256": "3a3a366cc39a3d624efb04e41e7869014e3e9316482877d4c7c768283bf7dbcc",
+    "questions_sha256": "c2921084d6d3659c0c3122d6bf6363f9d6d099b7683d4b1d4dbb6994e997c2bd",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "fd0011edb0dbcaa8cd05efac849012925311dfbce670fdc6eba74c905d4e8586",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788805963.493927,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0
+}

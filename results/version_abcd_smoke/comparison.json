@@ -1,0 +1,123 @@
+{
+  "comparisons": [
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 100,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.008796749999999999,
+      "judge_usd": 0,
+      "cost_per_correct": 0.0043983749999999995,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 100,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.00894975,
+      "judge_usd": 0,
+      "cost_per_correct": 0.004474875,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 100,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "substring_exact_match",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.00852825,
+      "judge_usd": 0,
+      "cost_per_correct": 0.004264125,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    }
+  ],
+  "by_type": [
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "factconsolidation_sh_6k",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 2,
+      "delta": 0.0
+    }
+  ],
+  "budget": [
+    {
+      "run": "bcd-B-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 2,
+      "usd": 0.008796749999999999
+    },
+    {
+      "run": "bcd-C-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 2,
+      "usd": 0.00894975
+    },
+    {
+      "run": "bcd-D-factconsolidation_sh_6k",
+      "role": "answer",
+      "status": "done",
+      "calls": 2,
+      "usd": 0.00852825
+    },
+    {
+      "run": "bcd-extract-factconsolidation_sh_6k",
+      "role": "extract",
+      "status": "done",
+      "calls": 12,
+      "usd": 0.0086133
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "identity": {
+    "config": {
+      "version": "a1",
+      "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+      "window_tokens": 200,
+      "overlap_tokens": 30,
+      "channel_depth": 100,
+      "rrf_k": 60,
+      "context_tokens": 4000,
+      "seed": 13,
+      "speaker_filter": false,
+      "context_tokenizer": "MiniLM WordPiece"
+    },
+    "manifest": {
+      "dataset": "musique",
+      "variant": "HippoRAG 2 released 1,000-question sample; shared full sampled corpus",
+      "source": "https://huggingface.co/datasets/osunlp/HippoRAG_2",
+      "revision": "5ec05b38deecc3318bb432c69865959c56058990",
+      "source_files": {
+        "musique_corpus.json": {
+          "sha256": "73157a03ce3f0b1a5673dd5dc12bb970c24976dbffc688af9eecdd758c97ffcb",
+          "bytes": 6239261
+        },
+        "musique.json": {
+          "sha256": "98ed4e21d3076532f6388d42320fb809599c63a0d8dffca8ece5e41922be6b46",
+          "bytes": 12543629
+        }
+      },
+      "protocol": {
+        "source_evaluation": "https://github.com/OSU-NLP-Group/HippoRAG/blob/1438aba3fc44ff10573e5a5e1e7cc3c7f9794aff/main.py",
+        "corpus_unit": "Whole title + newline + paragraph, unchanged from release",
+        "retrieval": "Mean gold-passage Recall@5 and all-evidence coverage, answerable questions only",
+        "answering": "Maximum normalized token F1 and exact match over answer and answer_aliases",
+        "reference_answer_context": "Top five whole passages in the HippoRAG 2 evaluation",
+        "leakage_control": "No supporting flags, answers, decompositions, or query-specific contexts in corpus; one global search pool",
+        "scoring_note": "Our token budget, encoder, reader and judge must be disclosed separately from the released dataset"
+      },
+      "schema_version": 1,
+      "counts": {
+        "corpus": 11656,
+        "questions": 1000,
+        "groups": 1,
+        "evidence_questions": 1000,
+        "question_types": {
+          "2hop": 518,
+          "3hop1": 243,
+          "3hop2": 73,
+          "4hop1": 108,
+          "4hop2": 27,
+          "4hop3": 31
+        }
+      },
+      "output_files": {
+        "corpus.jsonl": {
+          "sha256": "53fa9cb6845193274f8c18ce6cc8fd63a67d0f8bbc0d850123571feafafa0c82",
+          "bytes": 7235740
+        },
+        "questions.jsonl": {
+          "sha256": "bca7f8bffe27495d94e9a3ff1ed9767423a95d7de6bbfe152edebf7122c5e770",
+          "bytes": 462051
+        }
+      }
+    },
+    "corpus_sha256": "53fa9cb6845193274f8c18ce6cc8fd63a67d0f8bbc0d850123571feafafa0c82",
+    "questions_sha256": "bca7f8bffe27495d94e9a3ff1ed9767423a95d7de6bbfe152edebf7122c5e770",
+    "reader": "gemini-3.6-flash",
+    "judge": "gemini-2.5-flash-lite",
+    "limit": null,
+    "code_sha256": {
+      "core.py": "9ab4cf3f211b0f3bc770d0255aa6d946cd2369f173fb9d8bb0803afaa7f2a218",
+      "client.py": "c0e8b18e75627424c9237122ad0524307d646fdf17f2c8484a65a6afc0a38987",
+      "runner.py": "fd0011edb0dbcaa8cd05efac849012925311dfbce670fdc6eba74c905d4e8586",
+      "scale_scoring.py": "dbac491ccf097bfed07807bfb3f2c277abbb583d6e4b55440668d3f2e2eb4d3c"
+    }
+  },
+  "git_sha": "156b605e3094b3e09a34e45ad3284a379941a9fa",
+  "started": 1788803428.187972,
+  "budget_usd": 150.0,
+  "run_budget_usd": 40.0,
+  "protocol_amendments": [
+    {
+      "id": "empty-answer-zero-2026-09-07",
+      "at": "2026-09-07T18:31:01.708790+00:00",
+      "reason": "Empty billed reader output is scored zero without retry, retained in denominator and serving cost",
+      "old_runner_sha256": "688fe5b808f0410efaea06d555f5b79aa038c20c8a665613e3a9ee885f9e68b6",
+      "new_runner_sha256": "fd0011edb0dbcaa8cd05efac849012925311dfbce670fdc6eba74c905d4e8586",
+      "unchanged": "All nonempty response evaluation, model requests, token allowances, retrieval, datasets and caches",
+      "previous_answer_records": 1000,
+      "prior_identity_file": "run.before_empty_answer_fix.json"
+    }
+  ]
+}

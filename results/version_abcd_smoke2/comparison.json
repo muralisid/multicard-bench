@@ -1,0 +1,646 @@
+{
+  "comparisons": [
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 10,
+      "requested": 10,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.225,
+      "score": 0.225,
+      "delta": 0.0,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.0,
+      "answer_usd": 0.0553545,
+      "judge_usd": 0.0030001999999999997,
+      "standalone_shared_fact_setup_usd": 0.07250109999999999,
+      "answer_plus_setup_usd": 0.12785559999999999,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 5,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 10,
+      "requested": 10,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.225,
+      "score": 0.325,
+      "delta": 0.1,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.3,
+      "answer_usd": 0.05592674999999999,
+      "judge_usd": 0.0029227000000000003,
+      "standalone_shared_fact_setup_usd": 0.07250109999999999,
+      "answer_plus_setup_usd": 0.12842784999999998,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 5,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "beam_100k",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 10,
+      "requested": 10,
+      "full_dataset": 400,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "beam_rubric_mean",
+      "reference_score": 0.325,
+      "score": 0.325,
+      "delta": 0.0,
+      "cluster_ci_low": -0.3,
+      "cluster_ci_high": 0.3,
+      "answer_usd": 0.05455275,
+      "judge_usd": 0.0029018,
+      "standalone_shared_fact_setup_usd": 0.07250109999999999,
+      "answer_plus_setup_usd": 0.12705384999999997,
+      "total_serving_cost_per_correct": null,
+      "cost_per_correct": null,
+      "correct_basis": null,
+      "changed_contexts": 9,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "B-A",
+      "paired": 8,
+      "requested": 8,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.5,
+      "score": 0.375,
+      "delta": -0.125,
+      "cluster_ci_low": -0.5,
+      "cluster_ci_high": 0.0,
+      "answer_usd": 0.045134999999999995,
+      "judge_usd": 7.99e-05,
+      "standalone_shared_fact_setup_usd": 0.006744300000000001,
+      "answer_plus_setup_usd": 0.051879299999999996,
+      "total_serving_cost_per_correct": 0.0172931,
+      "cost_per_correct": 0.015044999999999998,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 7,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "C-B",
+      "paired": 8,
+      "requested": 8,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.375,
+      "score": 0.375,
+      "delta": 0.0,
+      "cluster_ci_low": 0.0,
+      "cluster_ci_high": 0.0,
+      "answer_usd": 0.0452475,
+      "judge_usd": 8.410000000000001e-05,
+      "standalone_shared_fact_setup_usd": 0.006744300000000001,
+      "answer_plus_setup_usd": 0.051991800000000005,
+      "total_serving_cost_per_correct": 0.0173306,
+      "cost_per_correct": 0.0150825,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 7,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "headline",
+      "comparison": "D-C",
+      "paired": 8,
+      "requested": 8,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 0.375,
+      "score": 0.25,
+      "delta": -0.125,
+      "cluster_ci_low": -0.5,
+      "cluster_ci_high": 0.0,
+      "answer_usd": 0.04542525,
+      "judge_usd": 7.92e-05,
+      "standalone_shared_fact_setup_usd": 0.006744300000000001,
+      "answer_plus_setup_usd": 0.05216955,
+      "total_serving_cost_per_correct": 0.026084775,
+      "cost_per_correct": 0.022712625,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 8,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "B-A",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.01160625,
+      "judge_usd": 1.4900000000000001e-05,
+      "standalone_shared_fact_setup_usd": 0.0034348,
+      "answer_plus_setup_usd": 0.01504105,
+      "total_serving_cost_per_correct": 0.007520525,
+      "cost_per_correct": 0.005803125,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "C-B",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.01224375,
+      "judge_usd": 1.4900000000000001e-05,
+      "standalone_shared_fact_setup_usd": 0.0034348,
+      "answer_plus_setup_usd": 0.01567855,
+      "total_serving_cost_per_correct": 0.007839275,
+      "cost_per_correct": 0.006121875,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    },
+    {
+      "dataset": "locomo",
+      "cohort": "adversarial",
+      "comparison": "D-C",
+      "paired": 2,
+      "requested": 2,
+      "full_dataset": 1986,
+      "scope": "screen",
+      "status": "complete",
+      "metric": "judge",
+      "reference_score": 1.0,
+      "score": 1.0,
+      "delta": 0.0,
+      "cluster_ci_low": null,
+      "cluster_ci_high": null,
+      "answer_usd": 0.011658749999999999,
+      "judge_usd": 1.4900000000000001e-05,
+      "standalone_shared_fact_setup_usd": 0.0034348,
+      "answer_plus_setup_usd": 0.015093549999999999,
+      "total_serving_cost_per_correct": 0.0075467749999999995,
+      "cost_per_correct": 0.0058293749999999995,
+      "correct_basis": "binary_correct",
+      "changed_contexts": 2,
+      "empty_answers": 0
+    }
+  ],
+  "by_type": [
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "abstention",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "contradiction_resolution",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "event_ordering",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "information_extraction",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "instruction_following",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "knowledge_update",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "multi_session_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "preference_following",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "summarization",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "B-A",
+      "type": "temporal_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "abstention",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "contradiction_resolution",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "event_ordering",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "information_extraction",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "instruction_following",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "knowledge_update",
+      "paired": 1,
+      "delta": 1.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "multi_session_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "preference_following",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "summarization",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "C-B",
+      "type": "temporal_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "abstention",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "contradiction_resolution",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "event_ordering",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "information_extraction",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "instruction_following",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "knowledge_update",
+      "paired": 1,
+      "delta": -1.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "multi_session_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "preference_following",
+      "paired": 1,
+      "delta": 1.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "summarization",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "beam_100k",
+      "comparison": "D-C",
+      "type": "temporal_reasoning",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "multi_hop",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "open_domain",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "single_hop",
+      "paired": 4,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "temporal",
+      "paired": 2,
+      "delta": -0.5
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "multi_hop",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "open_domain",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "single_hop",
+      "paired": 4,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "temporal",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "multi_hop",
+      "paired": 1,
+      "delta": -1.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "open_domain",
+      "paired": 1,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "single_hop",
+      "paired": 4,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "temporal",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "B-A",
+      "type": "adversarial",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "C-B",
+      "type": "adversarial",
+      "paired": 2,
+      "delta": 0.0
+    },
+    {
+      "dataset": "locomo",
+      "comparison": "D-C",
+      "type": "adversarial",
+      "paired": 2,
+      "delta": 0.0
+    }
+  ],
+  "budget": [
+    {
+      "run": "bcd-B-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 5,
+      "usd": 0.027579
+    },
+    {
+      "run": "bcd-B-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 30,
+      "usd": 0.0014056000000000001
+    },
+    {
+      "run": "bcd-B-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 9,
+      "usd": 0.05091
+    },
+    {
+      "run": "bcd-B-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 3,
+      "usd": 3.3400000000000005e-05
+    },
+    {
+      "run": "bcd-C-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 5,
+      "usd": 0.02815125
+    },
+    {
+      "run": "bcd-C-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 20,
+      "usd": 0.0012926
+    },
+    {
+      "run": "bcd-C-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 9,
+      "usd": 0.05166
+    },
+    {
+      "run": "bcd-C-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 5,
+      "usd": 5.51e-05
+    },
+    {
+      "run": "bcd-D-beam_100k",
+      "role": "answer",
+      "status": "done",
+      "calls": 9,
+      "usd": 0.04987275
+    },
+    {
+      "run": "bcd-D-beam_100k",
+      "role": "judge",
+      "status": "done",
+      "calls": 26,
+      "usd": 0.0020280000000000003
+    },
+    {
+      "run": "bcd-D-locomo",
+      "role": "answer",
+      "status": "done",
+      "calls": 10,
+      "usd": 0.057083999999999996
+    },
+    {
+      "run": "bcd-D-locomo",
+      "role": "judge",
+      "status": "done",
+      "calls": 6,
+      "usd": 6.330000000000001e-05
+    },
+    {
+      "run": "bcd-extract-beam_100k",
+      "role": "extract",
+      "status": "done",
+      "calls": 116,
+      "usd": 0.0725011
+    },
+    {
+      "run": "bcd-extract-locomo",
+      "role": "extract",
+      "status": "done",
+      "calls": 78,
+      "usd": 0.0101791
+    }
+  ]
+}

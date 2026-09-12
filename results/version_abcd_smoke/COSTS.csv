@@ -1,0 +1,5 @@
+run,role,status,calls,usd
+bcd-B-factconsolidation_sh_6k,answer,done,2,0.008796749999999999
+bcd-C-factconsolidation_sh_6k,answer,done,2,0.00894975
+bcd-D-factconsolidation_sh_6k,answer,done,2,0.00852825
+bcd-extract-factconsolidation_sh_6k,extract,done,12,0.0086133

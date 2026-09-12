@@ -1,0 +1,10 @@
+{"group": "conv-26", "documents": 419, "source_tokens": 15790, "build_seconds": 6.949026916990988, "cache_hit": true, "storage_bytes": 597832, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-30", "documents": 369, "source_tokens": 12085, "build_seconds": 1.9593126670224592, "cache_hit": false, "storage_bytes": 526409, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-41", "documents": 663, "source_tokens": 23404, "build_seconds": 2.765313707990572, "cache_hit": false, "storage_bytes": 945537, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-42", "documents": 629, "source_tokens": 19556, "build_seconds": 2.5623988329898566, "cache_hit": false, "storage_bytes": 897195, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-43", "documents": 680, "source_tokens": 23334, "build_seconds": 2.8518648329772986, "cache_hit": false, "storage_bytes": 970045, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-44", "documents": 675, "source_tokens": 22564, "build_seconds": 3.264751125010662, "cache_hit": false, "storage_bytes": 962879, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-47", "documents": 689, "source_tokens": 21157, "build_seconds": 3.0542675420292653, "cache_hit": false, "storage_bytes": 982989, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-48", "documents": 681, "source_tokens": 19899, "build_seconds": 2.76162220799597, "cache_hit": false, "storage_bytes": 971343, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-49", "documents": 509, "source_tokens": 17065, "build_seconds": 2.5177746250410564, "cache_hit": false, "storage_bytes": 726124, "llm_calls": 0, "llm_usd": 0}
+{"group": "conv-50", "documents": 568, "source_tokens": 21636, "build_seconds": 3.1318001250037923, "cache_hit": false, "storage_bytes": 810215, "llm_calls": 0, "llm_usd": 0}

@@ -1,0 +1,7 @@
+{
+  "overlay_sha256": "26bcde6fb7c69b07f751cb948118170e84743c07f9d7f702be34761242fa9b82",
+  "original_run_sha256": "b8a71fc5c148ea2fdaa24528fa92bf67bb8897e24608899bbd05e4ba675627f1",
+  "recovery": "For malformed JSON reason text only, preserve the sole leading score in {0,0.5,1}. Reject duplicate score fields and ambiguous forms.",
+  "unchanged": "Frozen package code, request prompts, model parameters, samples, contexts, raw cached responses and usage ledgers.",
+  "quality_retry": false
+}

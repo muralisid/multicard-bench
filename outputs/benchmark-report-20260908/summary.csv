@@ -1,0 +1,21 @@
+dataset,test,cohort,metric,full_n,paired_n,A_full,status,scope,A,B,C,D,D_minus_A,best
+locomo,LoCoMo,headline,Judge accuracy,1540,77,0.612987012987013,complete,screen,0.6103896103896104,0.5454545454545454,0.5454545454545454,0.5584415584415584,-0.051948051948051965,A
+locomo,LoCoMo adversarial,adversarial,Judge accuracy,446,23,0.8789237668161435,complete,screen,0.9130434782608695,1.0,1.0,0.9130434782608695,0.0,B/C
+musique,MuSiQue,headline,F1,1000,100,0.4866983214390207,complete,screen,0.5301118326118326,0.4976228771228771,0.4986424849660144,0.5381680716943875,0.008056239082554928,D
+2wikimultihopqa,2WikiMultiHopQA,headline,F1,1000,100,0.6572217736542484,complete,screen,0.5718326447635911,0.5805641025641025,0.608897435897436,0.5540641025641025,-0.017768542199488535,C
+longmemeval_s,LongMemEval S,headline,Judge accuracy,500,100,0.782,complete,screen,0.72,0.75,0.74,0.75,0.030000000000000027,B/D
+longmemeval_oracle,LongMemEval oracle,headline,Judge accuracy,500,100,0.8,complete,screen,0.76,0.74,0.8,0.76,0.0,C
+multihoprag,MultiHop-RAG,headline,Judge accuracy,2556,100,0.4953051643192488,complete,screen,0.53,0.54,0.56,0.57,0.039999999999999925,D
+factconsolidation_sh_6k,FactConsolidation SH 6K,headline,Substring EM,100,100,1.0,complete,full,1.0,0.87,0.84,0.86,-0.14,A
+factconsolidation_mh_6k,FactConsolidation MH 6K,headline,Substring EM,100,100,0.6,complete,full,0.6,0.57,0.55,0.59,-0.010000000000000009,A
+factconsolidation_sh_32k,FactConsolidation SH 32K,headline,Substring EM,100,100,0.92,complete,full,0.92,0.92,0.79,0.91,-0.010000000000000009,A/B
+factconsolidation_mh_32k,FactConsolidation MH 32K,headline,Substring EM,100,100,0.17,complete,full,0.17,0.18,0.08,0.25,0.07999999999999999,D
+factconsolidation_sh_64k,FactConsolidation SH 64K,headline,Substring EM,100,100,0.86,complete,full,0.86,0.9,0.74,0.9,0.040000000000000036,B/D
+factconsolidation_mh_64k,FactConsolidation MH 64K,headline,Substring EM,100,100,0.15,complete,full,0.15,0.16,0.15,0.16,0.010000000000000009,B/D
+factconsolidation_sh_262k,FactConsolidation SH 262K,headline,Substring EM,100,100,0.74,complete,full,0.74,0.79,0.6,0.69,-0.050000000000000044,B
+factconsolidation_mh_262k,FactConsolidation MH 262K,headline,Substring EM,100,100,0.09,complete,full,0.09,0.08,0.08,0.08,-0.009999999999999995,A
+personamem_v2_32k,PersonaMem v2 32K,headline,MCQ accuracy,5000,100,0.449,complete,screen,0.45,0.5,0.5,0.44,-0.010000000000000009,B/C
+personamem_v2_128k,PersonaMem v2 128K,headline,MCQ accuracy,5000,100,0.4204,complete,screen,0.41,0.4,0.39,0.42,0.010000000000000009,D
+beam_100k,BEAM 100K,headline,Rubric mean,400,100,0.36401339285714285,complete,screen,0.3902083333333333,0.3797083333333333,0.37095833333333333,0.381,-0.009208333333333318,A
+beam_500k,BEAM 500K,headline,Rubric mean,700,100,0.3117819858712716,complete,screen,0.26766666666666666,0.247125,0.24125,0.27391666666666664,0.006249999999999978,D
+beam_1m,BEAM 1M,headline,Rubric mean,700,100,0.3169187023294166,complete,screen,0.26666666666666666,0.27569444444444446,0.28075,0.28975,0.023083333333333345,D

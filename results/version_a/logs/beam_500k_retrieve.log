@@ -1,0 +1,38 @@
+{"started_at": "2026-09-07T21:40:30+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "beam_500k", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
+Token indices sequence length is longer than the specified maximum sequence length for this model (406 > 256). Running this sequence through the model will result in indexing errors
+{"dataset": "beam_500k", "stage": "retrieve", "done": 20, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 40, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 60, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 80, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 100, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 120, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 140, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 160, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 180, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 200, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 220, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 240, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 260, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 280, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 300, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 320, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 340, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 360, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 380, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 400, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 420, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 440, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 460, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 480, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 500, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 520, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 540, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 560, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 580, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 600, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 620, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 640, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 660, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 680, "total": 700}
+{"dataset": "beam_500k", "stage": "retrieve", "done": 700, "total": 700}
+{"started_at": "2026-09-08T01:16:48+00:00", "command": ["/Users/muralisid/github_other/multicard-bench/.venv/bin/python", "-m", "multicard.version_a.runner", "--datasets", "beam_500k", "--data", "/Users/muralisid/github_other/multicard-bench/data/version_a", "--output", "/Users/muralisid/github_other/multicard-bench/results/version_a", "--stage", "retrieve", "--reader", "gemini-3.6-flash", "--judge", "gemini-2.5-flash-lite", "--workers", "16", "--max-usd", "150", "--run-max-usd", "40"]}
